@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>读者服务</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="../../static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+  <!-- Page level plugin CSS-->
+  <link href="../../static/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="../../static/css/sb-admin.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+  <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
+
+    <a class="navbar-brand mr-1" href="index.html">读者服务</a>
+
+    <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Navbar Search -->
+    <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+          <button class="btn btn-primary" type="button">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <!-- Navbar -->
+    <ul class="navbar-nav ml-auto ml-md-0">
+      <li class="nav-item dropdown no-arrow mx-1">
+        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-bell fa-fw"></i>
+          <span class="badge badge-danger">9+</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown no-arrow mx-1">
+        <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-envelope fa-fw"></i>
+          <span class="badge badge-danger">7</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown no-arrow">
+        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-user-circle fa-fw"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+          <a class="dropdown-item" href="#">Settings</a>
+          <a class="dropdown-item" href="#">Activity Log</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+        </div>
+      </li>
+    </ul>
+
+  </nav>
+
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="sidebar navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="../borrowTips">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>借还图书</span>
+        </a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="../bookReservation">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>图书预约</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="../compensation">
+          <i class="fas fa-fw fa-table"></i>
+          <span>赔偿损失</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="../cd">
+          <i class="fas fa-fw fa-table"></i>
+          <span>随书光盘与检索</span></a>
+      </li>
+    </ul>
+
+    <div id="content-wrapper">
+
+      <div class="container-fluid">
+
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+          <li><a class="nav-link" href="../bookReservation">进行图书预约</a></li>
+          <li><a class="nav-link" href="../bookReservationBooked">已预约图书</a></li>
+          <li><a class="nav-link" href="../bookReservationTips">图书预约说明</a></li>
+        </ol>
+
+        <div class="card mb-3">
+          <div class="card-header">
+            <i class="fas fa-chart-area"></i>
+            图书预约说明</div>
+          <div class="card-body">
+            <i class="fas fa-chart-area"></i>
+              1、拥有借书权限的读者均可使用预约服务。每人同时期可预约最多2册图书。</br>
+            <p></p>
+            2、预约方式：读者可以在书目查询系统或官方微信中提交预约请求。</br>
+            <p></p>
+            3、预约只针对“可借”状态的图书，馆藏地为“储备书库”的图书不能预约。</br>
+            <p></p>
+
+<div align="center"><img alt="1" data-entity-type="file" data-entity-uuid="6a8be47f-6e86-4791-85c1-45baec8504d6" src="../../static/img/bookreservation.jpg" class="align-center" /><p> </p>
+        </div>
+
+            4、各个分馆间均可进行预约图书的传递。</br>
+            <p></p>
+            5、预约取书地：可选择文理图书馆图书外借处、江安图书馆服务台、工学图书馆服务台、医学图书馆服务台中的1个为取书地。</br>
+            <p></p>
+            6、预约有效期：读者提交图书预约请求有效期默认为10天（有图书在架的情况）或90天（全部被外借的情况）。过了有效期未被满足的预约请求会被系统自动删除。</br>
+            <p></p>
+            7、预约信息查询：当预约请求的图书到达取书地后（可供外借），系统将发送邮件通知，也可通过“预约图书取书清单”查询预约信息。如使用移动图书馆并绑定手机号，可获得短信提醒；如关注四川大学图书馆官方微信并绑定一卡通，可获得微信提醒。提交预约请求前，请确保已登记的联系资料正确无误，尤其是“联系电话”和“E-mail地址”。</br>
+            <p></p>
+            8、到馆保留时间：保留时间为7个工作日。请留意预约请求的图书到馆情况，并在保留时间内及时到图书馆办理借书手续。超期未取的图书将被送回原馆藏地分馆。</br>
+            <p></p>
+            9、失约处理：对3次未取预约图书的读者，将暂停其预约权限1个月。读者的预约权限被暂停。</br>
+            <p></p>
+            10、寒暑假期间，由于无法运送图书，不能预约在架（没有被外借）的图书。</br>
+            <p></p>
+            &nbsp;&nbsp;&nbsp;&nbsp;备注：当具有相同书目信息、分馆、馆藏地的图书中，还有图书在架（没有被外借）时，取书地为除图书所在分馆外的其他3个取书点。
+          </div>
+        </div>
+
+
+
+        <div class="card mb-3">
+          <div class="card-header">
+            <i class="fas fa-chart-area"></i>
+            预约流程</div>
+          <div class="card-body">
+            <i class="fas fa-chart-area"></i>
+            1.读者首先登录书目查询系统（查询机上或个人电脑上均可登录）。</br>
+            <p></p>
+            2. 查询到所需要的图书，确认同一分馆的所有单册均已外借。点击进入该书的馆藏信息。</br>
+            <p></p>
+            3. 可见到所有外借单册的前面有“预约”链接，点击预约链接进入预约请求。</br>
+            <p></p>
+            4. 确认email和电话无误，从下拉列表中选择预约图书的取书地点，完成以上操作点击确定，进入预约信息页面。</br>
+            <p></p>
+            5. 再点击确定即可完成预约。</br>
+            <p></p>
+            6. 读者点击菜单上方的“我的图书馆”查看预约信息是否存在。点击“我的流通”，可看见预约书籍的数量，最大数量为2本。
+          </div>
+        </div>
+
+
+      <!-- /.container-fluid -->
+
+      <!-- Sticky Footer -->
+      <footer class="sticky-footer">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright © 数字图书馆 2019</span>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+    <!-- /.content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-primary" href="login.html">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="../../static/vendor/jquery/jquery.min.js"></script>
+  <script src="../../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="../../static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Page level plugin JavaScript-->
+  <script src="../../static/vendor/chart.js/Chart.min.js"></script>
+  <script src="../../static/vendor/datatables/jquery.dataTables.js"></script>
+  <script src="../../static/vendor/datatables/dataTables.bootstrap4.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="../../static/js/sb-admin.min.js"></script>
+
+  <!-- Demo scripts for this page-->
+  <script src="../../static/js/demo/datatables-demo.js"></script>
+  <script src="../../static/js/demo/chart-area-demo.js"></script>
+
+</body>
+
+</html>

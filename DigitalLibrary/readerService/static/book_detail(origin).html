@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>显示某类图书信息</title>
+    <style type="text/css">
+            .clear{
+                clear:both;
+            }
+            #top_left{
+                width:300px;
+                float:left;
+            }
+            #top_right{
+                width:350px;
+                float:right;
+                margin-top: 30px;
+                font-size: 13px;
+            }
+            #top_right img{
+                margin-bottom: -5px;
+            }
+            #top_right a{
+                text-decoration: none;
+                color:#06F;
+            }
+            #top_right a:hover{
+                color:#909;
+            }
+
+            /*----------*/
+            #content{
+                width:900px;
+                margin:5px auto 15px
+            }
+            #content_top{
+                text-align: right;
+                font-size:13px;
+            }
+            #content_buttom{
+                border:1px solid #999;
+                background-color: #FCFDEF;
+                PADDING:10px 15px;
+            }
+            #content_buttom h1{
+                font-size: 15px;
+                display:inline;
+            }
+            #content_buttom span{
+                font-size:10px;
+            }
+            #productlist_img img{
+                width:100%;
+            }
+            .book{
+                float:left;
+                width:25%;
+                text-align:center;
+                padding:10px 0px;
+            }
+            .booking img{
+                width:130px;
+                height:196px;
+            }
+            #jumpPage{
+                text-align:center;
+                margin:10px;
+            }
+            #jumpPage a{
+                border:1px solid #9AAFE5;
+                padding:2px 6px;
+                text-decoration: none;
+                color: #9AAFE5;
+            }
+            #jumpPage a:hover{
+                border:1px solid #2B66A5;
+                color:#2B66A5;
+            }
+            .current{
+                background-color: blue;
+            }
+        </style>
+</head>
+<body>
+<!--整个页面-->
+        <div id="page">
+            <!--content-->
+            <div id="content">
+                <h1>{{ label.labelname }}类书籍</h1>
+                <hr>
+
+                <span>详情</span>
+                <hr>
+
+                <div>
+                    <table width="100%">
+                        <tr>
+                             {% for book in books %}
+                                <td>
+                                    <div>
+                                        <img alt="book" src="/static/image/test.png">
+                                    </div>
+                                    <div>
+                                        <span>书名：{{book.btitle}}</span><br/>
+                                        <span>作者：{{ book.bauthor }}</span>
+                                    </div>
+                                </td>
+                             {% endfor %}
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+</body>
+</html>

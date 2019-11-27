@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>数字图书馆馆藏资源</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+  <!-- Page level plugin CSS-->
+  <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="css/sb-admin.css" rel="stylesheet">
+
+  <!--表单样式-->
+  <style>
+    ::-moz-placeholder {
+		color: #9fa3a7;
+	}
+
+	::-webkit-input-placeholder {
+		color: #9fa3a7;
+	}
+
+	:-ms-input-placeholder {
+		color: #9fa3a7;
+	}
+
+
+	.pc-kk-form{
+		padding:15px 20px;
+	}
+	.pc-kk-form-list{
+		background:#fff;
+		border:1px solid #e5e5e5;
+		border-radius:5px;
+		height:44px;
+		line-height:44px;
+		margin-bottom:10px;
+	}
+	.pc-kk-form-list input{
+		width:100%;
+		border:none;
+		background:none;
+		color:#9fa3a7;
+		font-size:14px;
+		height: 36px;
+		padding: 4px 10px;
+	}
+	.pc-kk-form-list textarea{
+		background:none;
+		border:none;
+		height:60px;
+		padding:10px;
+		resize:none;
+		width:94%;
+		line-height:22px;
+		color:#9fa3a7;
+		font-size:14px;
+	}
+	.nice-select{
+		position: relative;
+		background: #fff url(images/a2.jpg) no-repeat right center;
+		background-size:18px;
+		width:47%;
+		float:left;
+		border:1px solid #e5e5e5;
+		border-radius:5px;
+		height:44px;
+		line-height:44px;
+	}
+
+	.nice-select ul{
+		width: 100%;
+		display: none;
+		position: absolute;
+		left: -1px;
+		top: 44px;
+		overflow: hidden;
+		background-color: #fff;
+		max-height: 150px;
+		overflow-y: auto;
+		border: 1px solid #b9bcbf;
+		z-index: 9999;
+		border-radius:5px;
+
+	}
+	.nice-select ul li{
+		padding-left:10px;
+	}
+	.nice-select ul li:hover{
+		background:#f8f4f4;
+	}
+	.pc-kk-form-list-clear{
+		background:none;
+		border:none;
+	}
+	.pc-kk-form-btn button{
+		background:#ec5224;
+		color:#fff;
+		border:none;
+		width:100%;
+		height:50px;
+		line-height:50px;
+		font-size:16px;
+		border-radius:50px;
+	}
+  </style>
+
+</head>
+
+<body id="page-top">
+
+  <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
+
+    <a class="navbar-brand mr-1" href="index.html">读者服务</a>
+
+    <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Navbar Search -->
+    <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="搜索..." aria-label="Search" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+          <button class="btn btn-primary" type="button">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <!-- Navbar -->
+    <ul class="navbar-nav ml-auto ml-md-0">
+      <li class="nav-item dropdown no-arrow mx-1">
+        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-bell fa-fw"></i>
+          <span class="badge badge-danger">9+</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown no-arrow mx-1">
+        <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-envelope fa-fw"></i>
+          <span class="badge badge-danger">7</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown no-arrow">
+        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-user-circle fa-fw"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+          <a class="dropdown-item" href="#">Settings</a>
+          <a class="dropdown-item" href="#">Activity Log</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+        </div>
+      </li>
+    </ul>
+
+  </nav>
+
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="sidebar navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="book_labe_kf.html">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>讲座预约</span>
+        </a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link" href="book_labe_kf.html" >
+          <i class="fas fa-fw fa-folder"></i>
+          <span>音频资源</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="book_labe_kf.html">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>视频资源</span></a>
+      </li>
+    </ul>
+
+    <div id="content-wrapper">
+
+      <div class="container-fluid">
+
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="#">讲座预约</a>
+          </li>
+          <li class="breadcrumb-item active">读者服务</li>
+        </ol>
+
+        <!--预约表单-->
+        <div class="pc-kk-form" style="width:800px;margin:auto;">
+            <form action="">
+              <div class="pc-kk-form-list">
+                <input type="text" placeholder="姓名">
+              </div>
+              <div class="pc-kk-form-list pc-kk-form-list-clear">
+                <div class="nice-select" name="nice-select" style="float:right">
+                  <input type="text" value="性别" readonly>
+                  <ul>
+                    <li data-value="male">男</li>
+                    <li data-value="female">女</li>
+                  </ul>
+                </div>
+                <div class="nice-select" name="nice-select">
+                    <input type="text" value="参加人数" readonly>
+                    <ul>
+                      <li data-value="4">1</li>
+                      <li data-value="5">2</li>
+                      <li data-value="6">3</li>
+                      <li data-value="7">4</li>
+                      <li data-value="8">5</li>
+                      <li data-value="9">6</li>
+                    </ul>
+                  </div>
+              </div>
+              <div class="pc-kk-form-list">
+                <input type="email" placeholder="邮箱">
+              </div>
+              <div class="pc-kk-form-list">
+                <input type="tel" placeholder="联系方式">
+              </div>
+              <div class="pc-kk-form-list pc-kk-form-list-clear">
+                <div class="nice-select" name="nice-select">
+                  <input type="text" value="预约场次" readonly>
+                  <ul>
+                    <li data-value="time1">9:00-11:00</li>
+                    <li data-value="time2">14:00-16:00</li>
+                    <li data-value="time3">19:00-21:00</li>
+                  </ul>
+          
+                </div>
+                <div class="nice-select" name="nice-select" style="float:right">
+                  <input type="text" value="主讲人" readonly>
+                  <ul>
+                    <li data-value="USA">李明</li>
+                    <li data-value="Britain">张敏</li>
+                    <li data-value="Britain">陈杰</li>
+                  </ul>
+          
+                </div>
+              </div>
+              <div class="pc-kk-form-list pc-kk-form-list-clear">
+                <div class="nice-select" name="nice-select" style="width:100%">
+                  <input type="text" value="讲座主题" readonly>
+                  <ul>
+                    <li data-value="Level1">挖掘学习、研究的宝库——如何利用图书馆</li>
+                    <li data-value="Level2">中文期刊全文数据库的检索与利用</li>
+                    <li data-value="Level3">英文期刊全文数据库的检索与利用</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="pc-kk-form-list" style="height:auto">
+                <textarea>备注</textarea>
+              </div>
+              <div class="pc-kk-form-btn">
+                <button>提交</button>
+              </div>
+            </form>
+          </div>
+          
+          
+          <script type="text/javascript" src="js/jquery.js"></script>
+          
+          <script>
+          
+            $('[name="nice-select"]').click(function(e){
+          
+              $('[name="nice-select"]').find('ul').hide();
+          
+              $(this).find('ul').show();
+          
+              e.stopPropagation();
+          
+            });
+          
+            $('[name="nice-select"] li').hover(function(e){
+          
+              $(this).toggleClass('on');
+          
+              e.stopPropagation();
+          
+            });
+          
+            $('[name="nice-select"] li').click(function(e){
+          
+              var val = $(this).text();
+          
+              $(this).parents('[name="nice-select"]').find('input').val(val);
+          
+              $('[name="nice-select"] ul').hide();
+          
+              e.stopPropagation();
+          
+            });
+          
+            $(document).click(function(){
+          
+              $('[name="nice-select"] ul').hide();
+          
+            });
+          
+          </script>
+        
+      
+      <!-- /.container-fluid -->
+
+      <!-- Sticky Footer -->
+      <footer class="sticky-footer">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright © 五朵金花</span>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+    <!-- /.content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-primary" href="login.html">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Page level plugin JavaScript-->
+  <script src="vendor/chart.js/Chart.min.js"></script>
+  <script src="vendor/datatables/jquery.dataTables.js"></script>
+  <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="js/sb-admin.min.js"></script>
+
+  <!-- Demo scripts for this page-->
+  <script src="js/demo/datatables-demo.js"></script>
+  <script src="js/demo/chart-area-demo.js"></script>
+
+</body>
+
+</html>
