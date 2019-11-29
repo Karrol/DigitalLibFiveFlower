@@ -1,0 +1,41 @@
+{% extends "infoCenter/base.html" %}
+
+{% block title %}信息中心{% endblock title %}
+
+{% block sideNews %}
+<div class="dropdown-menu" aria-labelledby="pagesDropdown">
+    {% for column in news_intro_columns %}
+    <a class="dropdown-item" href="{{ column.get_absolute_url }}">{{ column.columnName }}</a>
+    {% endfor %}
+</div>
+{% endblock sideNews %}
+
+{% block breadrums %}
+<div class="container-fluid">
+    <h3>栏目简介</h3>
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="">新闻公告</a>
+        </li>
+        <li class="breadcrumb-item active">栏目简介</li>
+    </ol>
+</div>
+{% endblock breadrums %}
+
+{% block pagecontent %}
+    <hr>
+    {% for column in news_intro_columns %}
+        <div class="container-fluid">
+            <div class="card mb-3">
+              <div class="card-header">
+                    <i class="fas fa-table"></i>
+                {{ column.columnName }}
+              </div>
+              <div class="card-body">
+                <p>{{ column.abstract }}</p>
+              </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock pagecontent %}

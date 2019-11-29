@@ -1,0 +1,26 @@
+{% extends "service/serviceBase.html" %}
+
+{% block breadrums %}
+    <div class="container-fluid">
+        <h2>栏目简介</h2>
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/service/libBrief">服务指南</a>
+            </li>
+            <li class="breadcrumb-item active">{{ intro.serviceCategory.categoryName }}</li>
+        </ol>
+    </div>
+{% endblock breadrums %}
+
+{% block pagecontent %}
+    <h2 align = "center">{{ intro.serviceTitle  }}</h2>
+    <p align = "center" class = "one gray">发表时间：<em>{{ intro.servicePubdate }}</em>&nbsp;&nbsp;&nbsp;&nbsp;作者：<em>{{ intro.serviceAuthor }}</em></p>
+    <hr/>
+    <div id="main">
+        <p>
+            {{ intro.serviceContent|safe }}
+        </p>
+    </div>
+{% endblock pagecontent %}
+

@@ -1,3 +1,109 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render
+from django.http import HttpResponse
+from .models import newsColumn_info, newsArticle_info, weekbook_info, booktop_info
+from django.shortcuts import render, redirect
 
-# Create your views here.
+#新闻
+#新闻栏目简介
+def newsIntro(request):
+    news_intro_columns = newsColumn_info.objects.filter(nav_display = True)
+    return render(request, 'infoCenter/newsIntro.html',{'news_intro_columns':news_intro_columns})
+
+# 新闻列表
+def newsColumn(request, columnSlug):
+    news_intro_columns = newsColumn_info.objects.filter(nav_display=True)
+    news_column = newsColumn_info.objects.get(columnSlug=columnSlug)
+    news_column_articles = newsArticle_info.objects.filter(newsColumn=news_column.pk)
+
+    return render(request, 'infoCenter/newsColumn.html', {
+        'news_column': news_column,
+        'news_intro_columns': news_intro_columns,
+        'news_column_articles':news_column_articles
+    })
+
+
+# 新闻文章详情
+def newsDetail(request, newsSlug, pk):
+    news_intro_columns = newsColumn_info.objects.filter(nav_display=True)
+    news_article = newsArticle_info.objects.get(pk=pk)
+
+    all_article = newsArticle_info.objects.all()
+    curr_article = None
+    previous_index = 0
+    next_index = 0
+    previous_article = None
+    next_article = None
+
+    for index, article in enumerate(all_article):
+        if index == 0:
+            previous_index = 0
+            next_index = index + 1
+        elif index == len(all_article) - 1:
+            previous_index = index - 1
+            next_index = index
+        else:
+            previous_index = index - 1
+            next_index = index + 1
+
+        if article.newsSlug == newsSlug:
+            curr_article = news_article
+            previous_article = all_article[previous_index]
+            next_article = all_article[next_index]
+            break
+
+    if newsSlug != news_article.newsSlug:
+        return redirect(news_article, permanent=True)
+
+    section_list = curr_article.newsContent.split('\n')
+
+    return render(request, 'infoCenter/newsDetail.html', {
+        'news_intro_columns': news_intro_columns,
+        'news_article': news_article,
+        'curr_article': curr_article,
+        'section_list': section_list,
+        'previous_article': previous_article,
+        'next_article': next_article
+    })
+
+
+#每周一书
+#每周一书列表
+def recBookList(request):
+    news_intro_columns = newsColumn_info.objects.filter(nav_display=True)
+
+    now_recbook = weekbook_info.objects.filter(now_display=True)
+    past_recbooks = weekbook_info.objects.filter(past_display=True)
+
+    return render(request, 'infoCenter/recBookList.html', {
+        'now_recbook': now_recbook,
+        'past_recbooks': past_recbooks,
+        'news_intro_columns': news_intro_columns,
+    })
+
+#每周一书历史详情
+def recBookDetail(request, bookID, pk):
+    news_intro_columns = newsColumn_info.objects.filter(nav_display=True)
+
+    past_recbook = weekbook_info.objects.get(pk=pk)
+    past_recbook_list = weekbook_info.objects.filter(past_display=True).exclude(bookID=bookID)
+    now_recbook = weekbook_info.objects.filter(now_display=True)
+
+    return render(request, 'infoCenter/recBookHis.html', {
+        'news_intro_columns': news_intro_columns,
+        'past_recbook': past_recbook,
+        'past_recbook_list': past_recbook_list,
+        'now_recbook': now_recbook
+    })
+
+#排行榜
+#排行榜列表
+def rankList(request):
+    news_intro_columns = newsColumn_info.objects.filter(nav_display=True)
+
+    ranklist_books = booktop_info.objects.filter(pub_display=True)
+
+    return render(request, 'infoCenter/rankList.html',{
+        'news_intro_columns':news_intro_columns,
+        'ranklist_books':ranklist_books
+    })
