@@ -47,8 +47,6 @@ class book_info(models.Model):
     index = models.CharField(max_length=16, null=True, verbose_name='索引')
     bookTranslator = models.CharField('译者', max_length=30, blank=True)
     price = models.DecimalField('书籍价格', max_digits=8, decimal_places=2)
-    #图书馆员信息外键
-    librarian = models.ForeignKey(librarian_info, on_delete=models.CASCADE)
     page = models.IntegerField('图书页码', max_length=10, blank=True)
 
     def __str__(self):
