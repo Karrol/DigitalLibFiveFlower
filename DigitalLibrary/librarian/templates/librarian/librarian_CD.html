@@ -63,7 +63,19 @@
                         <a href="/librarian_book/"><i class="glyphicon glyphicon-chevron-right"></i> 图书管理</a>
                     </li>
                     <li>
+                        <a href="/librarian_ebook/"><i class="glyphicon glyphicon-chevron-right"></i> 电子图书管理</a>
+                    </li>
+                    <li>
+                        <a href="/librarian_bookshelf/"><i class="glyphicon glyphicon-chevron-right"></i> 书架管理</a>
+                    </li>
+                    <li>
+                        <a href="/librarian_CD/"><i class="glyphicon glyphicon-chevron-right"></i> 光盘管理</a>
+                    </li>
+                    <li>
                         <a href="/librarian_user/"><i class="glyphicon glyphicon-chevron-right"></i> 读者管理</a>
+                    </li>
+                    <li>
+                        <a href="/librarian_usertype/"><i class="glyphicon glyphicon-chevron-right"></i> 读者类型管理</a>
                     </li>
                     <li>
                         <a href="/librarian_booktype/"><i class="glyphicon glyphicon-chevron-right"></i> 图书分类管理</a>
@@ -92,7 +104,7 @@
                                 <form class="form-horizontal" action="/books/selectServlet" method="post">
                                 <input type="hidden" name="tip" value="1">
                         			<div class="col-lg-7 form-group">
-                                        <label class="col-lg-4 control-label" for="query_bname">图书名称</label>
+                                        <label class="col-lg-4 control-label" for="query_bname">光碟名称</label>
                                         <div class="col-lg-8">
                                             <input class="form-control" id="bookName" name="name" type="text" value="">
                                             <label class="control-label" for="query_bname" style="display: none;"></label>
@@ -118,9 +130,9 @@
                         <table id="data_list" class="table table-hover table-bordered" cellspacing="0" width="100%">
                             <thead>
                             <tr>
-                                <th>图书号</th>
-                                <th>图书类型</th>
-                                <th>图书名称</th>
+                                <th>光碟号</th>
+                                <th>光碟类型</th>
+                                <th>光碟名称</th>
                                 <th>作者名称</th>
                                  <th>出版社</th>
                                 <th>总数量</th>
@@ -130,19 +142,18 @@
                             </thead>
 
 								<tbody>
-	                         	   	<td><%= bean.getCard() %></td>
-	                                <td><%= bean.getType() %></td>
-	                                <td><%= bean.getName() %></td>
-	                                <td><%= bean.getAutho() %></td>
-	                                <td><%= bean.getPress() %></td>
-	                                <td><%= bean.getNum() %></td>
+	                         	   	<td></td>
+	                                <td></td>
+	                                <td></td>
+	                                <td></td>
+	                                <td></td>
+	                                <td></td>
 <td><button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#updateModal"
 id="btn_update" onclick="showInfo2('<%= bean.getBid() %>','<%= bean.getCard() %>','<%= bean.getType() %>','<%= bean.getName() %>'
 ,'<%= bean.getAutho() %>','<%= bean.getPress() %>','<%= bean.getNum() %>')">修改</button>
 <button type="button" class="btn btn-danger btn-xs" onclick="deletebook(<%= bean.getBid() %>)">删除</button>
 	</td>
                           	  </tbody>
-                       <%} %>
                         </table>
                     </div>
                 </div>

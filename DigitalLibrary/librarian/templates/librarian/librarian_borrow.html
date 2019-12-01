@@ -63,7 +63,19 @@
                         <a href="/librarian_book/"><i class="glyphicon glyphicon-chevron-right"></i> 图书管理</a>
                     </li>
                     <li>
+                        <a href="/librarian_ebook/"><i class="glyphicon glyphicon-chevron-right"></i> 电子图书管理</a>
+                    </li>
+                    <li>
+                        <a href="/librarian_bookshelf/"><i class="glyphicon glyphicon-chevron-right"></i> 书架管理</a>
+                    </li>
+                    <li>
+                        <a href="/librarian_CD/"><i class="glyphicon glyphicon-chevron-right"></i> 光盘管理</a>
+                    </li>
+                    <li>
                         <a href="/librarian_user/"><i class="glyphicon glyphicon-chevron-right"></i> 读者管理</a>
+                    </li>
+                    <li>
+                        <a href="/librarian_usertype/"><i class="glyphicon glyphicon-chevron-right"></i> 读者类型管理</a>
                     </li>
                     <li>
                         <a href="/librarian_booktype/"><i class="glyphicon glyphicon-chevron-right"></i> 图书分类管理</a>
@@ -113,27 +125,19 @@
 
 
                             <!---在此插入信息-->
-                             <%
-                             ArrayList<HistoryBean> bookdata = new ArrayList<HistoryBean>();
-                             bookdata = (ArrayList<HistoryBean>)request.getAttribute("data");
-                           if(bookdata==null){
-                        	   BookDao bookdao = new BookDao();
-                        	   bookdata = (ArrayList<HistoryBean>)bookdao.get_HistoryListInfo2(1);
-                           }
-  for (HistoryBean bean : bookdata){
-  %>
-                            	<tbody>
-	                         	   	<td><%= bean.getCard() %></td>
-	                         	   	<td><%= bean.getBookname() %></td>
-	                                <td><%= bean.getAdminname() %></td>
-	                                <td><%= bean.getUsername() %></td>
-	                                <td><%= bean.getBegintime() %></td>
-	                                <td><%= bean.getEndtime() %></td>
+<tbody>
+	                         	   	<td>5</td>
+	                         	   	<td>小王子</td>
+	                                <td>myx</td>
+	                                <td>孟赟祥</td>
+	                                <td>2019.10.1</td>
+	                                <td>2019.11.1</td>
 <td><button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#updateModal"
 id="btn_update" onclick="haibook(<%= bean.getHid() %>)">还书</button>
 	</td>
                           	  </tbody>
-                       <%} %>
+
+
                         </table>
                     </div>
                 </div>

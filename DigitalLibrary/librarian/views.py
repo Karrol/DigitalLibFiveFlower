@@ -1,6 +1,8 @@
 from django.shortcuts import render,redirect
 from django.http import  HttpResponse
-from test1.models import reader_info,book_info,bookborrow_info,bookback_info
+from librarian.models import bookborrow_info,bookback_info
+from search.models import ebook_info ,bookEntity_info
+from login.models import reader_info
 from . import forms
 import hashlib
 # Create your views here.
@@ -12,10 +14,10 @@ def hash_code(s, salt='mysite'):#
 
 
 def index(request):
-    return render(request, 'test1/librarian.html')
+    return render(request, 'librarian/librarian.html')
 
 def librarian_book(request):
-    books = book_info.objects.all()
+    books = bookEntity_info.objects.all()
     new_book_form = forms.NewBookForm()
     change_book_form = forms.ChangeBookForm
     context = {
@@ -23,28 +25,28 @@ def librarian_book(request):
         'new_user_form':new_book_form,
         'change_user_form':change_book_form,
     }
-    return render(request, 'test1/librarian_book.html',context)
+    return render(request, 'librarian/librarian_book.html',context)
 
 def librarian_CD(request):
-    return render(request, 'test1/librarian_CD.html')
+    return render(request, 'librarian/librarian_CD.html')
 
 def librarian_bookshelf(request):
-    return render(request, 'test1/librarian_booktype.html')
+    return render(request, 'librarian/librarian_booktype.html')
 
 def librarian_ebook(request):
-    return render(request, 'test1/librarian_ebook.html')
+    return render(request, 'librarian/librarian_ebook.html')
 
 def librarian_usertype(request):
-    return render(request, 'test1/librarian_usertype.html')
+    return render(request, 'librarian/librarian_usertype.html')
 
 def librarian_booktype(request):
-    return render(request, 'test1/librarian_booktype.html')
+    return render(request, 'librarian/librarian_booktype.html')
 
 def librarian_borrow(request):
-    return render(request, 'test1/librarian_borrow.html')
+    return render(request, 'librarian/librarian_borrow.html')
 
 def librarian_history(request):
-    return render(request, 'test1/librarian_history.html')
+    return render(request, 'librarian/librarian_history.html')
 
 def librarian_user(request):
     users = reader_info.objects.all()
@@ -55,7 +57,7 @@ def librarian_user(request):
         'new_user_form':new_user_form,
         'change_user_form':change_user_form,
     }
-    return render(request, 'test1/librarian_user.html',context)
+    return render(request, 'librarian/librarian_user.html',context)
 
 def add_user_to_database(request):
     new_user_form = forms.NewUserForm(request.POST)
