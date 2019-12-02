@@ -20,7 +20,7 @@ def index(request):
     context = {
         'searchForm': SearchForm(),
     }
-    return render(request, 'library/login.html', context)
+    return render(request, 'search/index.html', context)
 
 
 

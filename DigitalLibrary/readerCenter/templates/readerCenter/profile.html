@@ -31,7 +31,7 @@
                             <span>姓名：{{reader.name}}</span><br>
                             <span>联系电话：{{reader.phone}}</span><br>
                             <span>邮箱：{{reader.email}}</span><br>
-                            <span></span><br>
+                            <br>
 
                         </table>
 
@@ -48,10 +48,11 @@
               <div class="card-body">
                       <div class="table-responsive">
                           <table class="table table-bordered"  width="100%" cellspacing="0">
-                              <span>证件类型：{{reader.idType}}</span><br>
-                              <span>证件号码：{{reader.idNumber}}</span><br>
-                              <span>读者类型：{{reader.readertypeName}}</span><br>
-                              
+                              <span>余额情况：{{reader.balance}}</span><br>
+                              <span>最大可借数：{{reader.max_borrowing}}</span><br>
+                              <span>注册日期：{{reader.inTime}}</span>
+                              <br>
+
                           </table>
                                 
                       </div>
@@ -72,7 +73,7 @@
                     <i class="fas text-muted"></i><a href="{%url 'readerCenter:changeinfo'%}">修改个人信息</a>
                   </button>
                   <button class="btn" type="button">
-                    <i class="fas text-muted"></i><a href="{%url 'library:set_password' %}">修改密码</a>
+                    <i class="fas text-muted"></i><a href="{%url 'login:set_password' %}">修改密码</a>
                   </button>
               </div>
               

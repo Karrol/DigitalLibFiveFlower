@@ -18,7 +18,7 @@
                 {% elif state == 'empty' %}
                     <h2> 密码不能为空 </h2>
                 {% elif state == 'user_exist' %}
-                    <h2> 户已经存在,<a href="{%url 'login:login'%}">请点击此登录</a> </h2>
+                    <h2> 用户已经存在,<a href="{%url 'login:login'%}">请点击此处跳转登录界面</a> </h2>
                 {% endif %}
             </div>
         </div>
