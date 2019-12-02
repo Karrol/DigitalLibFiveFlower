@@ -23,7 +23,7 @@ from readerCenter.models import readerLibrary,readerSearchlist,Borrowing
 # 个人中心页面-个人资料
 def profile(request):
     if not request.user.is_authenticated:
-        return redirect("library:user_login")
+        return redirect("login:user_login")
 
     id = request.user.id
     try:

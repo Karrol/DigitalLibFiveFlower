@@ -28,4 +28,4 @@ urlpatterns = [
                 path('mylib/', views.mylib, name='mylib'),
 
     
-              ]
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 

@@ -68,8 +68,8 @@
                 </ul>
             {% else %}
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/login/">登陆</a></li>
-                    <li><a href="/register/">注册</a></li>
+                    <li><a href="{%url 'login:login'%}">登陆</a></li>
+                    <li><a href="{%url 'login:user_register'%}">注册</a></li>
                 </ul>
 
             {% endif %}

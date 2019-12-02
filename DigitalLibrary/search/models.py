@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 from django.db import models
-
+from login.models import librarian_info
 
 import uuid, os
 
@@ -19,7 +19,7 @@ class bookshelf_info(models.Model):
 
 #图书实体的基本信息
 class bookEntity_info(models.Model):
-    bookID = models.IntegerField('图书财产ID', primary_key=True,max_length=10)
+    bookID = models.IntegerField('图书财产ID', primary_key=True)
     location = models.CharField(max_length=64, default=u'图书馆1楼', verbose_name='位置')
     quantity = models.IntegerField(default=1, verbose_name='数量')
     booksearchID = models.CharField('索书号',unique=True, max_length=10)
@@ -47,28 +47,9 @@ class book_info(models.Model):
     index = models.CharField(max_length=16, null=True, verbose_name='索引')
     bookTranslator = models.CharField('译者', max_length=30, blank=True)
     price = models.DecimalField('书籍价格', max_digits=8, decimal_places=2)
-    page = models.IntegerField('图书页码', max_length=10, blank=True)
+    page = models.IntegerField('图书页码',blank=True)
 
     def __str__(self):
         return self.title + self.author
-
-
-class booktype_info(models.Model):
-    btID= models.CharField('图书类型ID', primary_key=True, max_length=10)
-    btName = models.CharField('图书类型的名字', max_length=50)
-    bookType = models.BooleanField('可外借/馆内阅读', default=True)
-
-
-
-class ebook_info(models.Model):
-    ebookID = models.IntegerField('图书财产ID', primary_key=True)
-    ebookName = models.CharField('书名', max_length=70)
-    ebookAuthor = models.CharField('作者', max_length=30, blank=True)
-    ebookTranslator = models.CharField('译者', max_length=30, blank=True)
-    ebookPress = models.CharField('出版社', max_length=70)
-    ebookIntime=models.DateTimeField('图书入库时间')
-    ebookISBN= models.CharField('书的isbn号', max_length=10)
-    ebookPage = models.IntegerField('图书页码',  blank=True)
-    ebookResource = models.CharField('电子图书资源内容的存储地址', max_length=200)
 
 #关于书籍类型的表尚未建立

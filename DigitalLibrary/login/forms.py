@@ -24,7 +24,7 @@ class LoginForm(forms.Form):
 
 class RegisterForm(forms.Form):
     username = forms.CharField(
-        label=u'用户名/注册手机：',
+        label=u'用户名/手机号码：',
         widget=forms.TextInput(attrs={
             'class': 'form-control',
             'name': 'username',
@@ -57,13 +57,13 @@ class RegisterForm(forms.Form):
         }),
     )
     email = forms.CharField(
-        label=u'邮箱：',
+        label=u'电子邮件：',
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'name': 'phone',
-            'id': 'id_phone',
+            'name': 'email',
+            'id': 'id_email',
         }),
-       required=False,
+        required=False,
     )
 
     photo = forms.FileField(
