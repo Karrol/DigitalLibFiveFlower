@@ -96,8 +96,8 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
           <a class="dropdown-item" href="{% url 'participate:article_list' %}">交流论坛</a>
-          <a class="dropdown-item" href="{% url 'recommend:recommend_goodbook' %}">好书推荐</a>
-          <a class="dropdown-item" href="{% url 'donation:donation_rules' %}">图书捐赠</a>
+          <a class="dropdown-item" href="#">好书推荐</a>
+          <a class="dropdown-item" href="{% url 'participate:donation_rules' %}">图书捐赠</a>
           <a class="dropdown-item" href="404.html">推荐书目</a>
         </div>
       </li>
@@ -153,7 +153,7 @@
                     {% if user.is_authenticated %}
                         <div>
                             <form
-                                action="{% url 'comment:post_comment' article.id %}"
+                                action="{% url 'participate:post_comment' article.id %}"
                                 method="POST"
                             >
                             {% csrf_token %}
@@ -163,13 +163,12 @@
                                             我也要发言：
                                         </strong>
                                     </label>
-                                    <!--用富文本编辑器代替<textarea>-->
-                                    <!--<textarea
+                                    <textarea
                                         type="text"
                                         class="form-control"
                                         id="body"
                                         name="body"
-                                        rows="2"></textarea> -->
+                                        rows="2"></textarea>
                                     <div>
                                         <!--comment_form.media是编辑器自身的渲染代码，comment_form.body则是评论正文字段。-->
                                         {{ comment_form.media }}
@@ -297,11 +296,11 @@
   <script src="/static/mobankf/js/demo/datatables-demo.js"></script>
   <script src="/static/mobankf/js/demo/chart-area-demo.js"></script>
 
-  <!--增加弹窗功能--!>
+  <!--增加弹窗功能-->
   <!-- bootstrap.js 依赖 jquery.js 和popper.js，因此在这里引入 -->
-  <script src="{% static 'jquery/jquery-3.3.1.js' %}"></script>
+  <script src="/static/jquery/jquery-3.3.1.js"></script>
   <!-- 引入layer.js -->
-  <script src="{% static 'layer/layer.js' %}"></script>
+  <script src="/static/layer/layer.js"></script>
 
 
 </body>

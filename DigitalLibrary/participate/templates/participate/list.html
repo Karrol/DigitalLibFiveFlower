@@ -96,7 +96,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
           <a class="dropdown-item" href="{% url 'participate:article_list' %}">交流论坛</a>
-          <a class="dropdown-item" href="{% url 'participate:recommend_goodbook' %}">好书推荐</a>
+          <a class="dropdown-item" href="#">好书推荐</a>
           <a class="dropdown-item" href="{% url 'participate:donation_rules' %}">图书捐赠</a>
           <a class="dropdown-item" href="404.html">推荐书目</a>
         </div>
@@ -113,12 +113,12 @@
                   <ol class="breadcrumb">
                       <li class="breadcrumb-item">
                           <!-- 所有类似地方加上 tag 参数，如排序、翻页等。实现带参数的交叉查询 -->
-                          <a href="{% url 'article:article_list' %}?search={{ search }}&column={{ column }}&tag={{ tag }}">
+                          <a href="{% url 'participate:article_list' %}?search={{ search }}&column={{ column }}&tag={{ tag }}">
                               最新
                           </a>
                       </li>
                       <li class="breadcrumb-item">
-                          <a href="{% url 'article:article_list' %}?order=total_views&search={{ search }}&column={{ column }}&tag={{ tag }}">
+                          <a href="{% url 'participate:article_list' %}?order=total_views&search={{ search }}&column={{ column }}&tag={{ tag }}">
                               最热
                           </a>
                       </li>
@@ -186,7 +186,7 @@
                           <!--标签-->
                           <span>
                               {% for tag in article.tags.all %}
-                                  <a href="{% url 'article:article_list' %}?tag={{ tag }}"
+                                  <a href="{% url 'participate:article_list' %}?tag={{ tag }}"
                                     class="badge badge-secondary"
                                   >
                                       {{ tag }}
@@ -197,7 +197,7 @@
                           <!-- 标题 -->
                           <h4>
                               <b>
-                                  <a href="{% url 'article:article_detail' article.id %}"
+                                  <a href="{% url 'participate:article_detail' article.id %}"
                                     style="color: black;"
                                   >
                                       {{ article.title }}

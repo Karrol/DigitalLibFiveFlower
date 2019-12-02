@@ -20,6 +20,10 @@
   <!-- Custom styles for this template-->
   <link href="/static/mobankf/css/sb-admin.css" rel="stylesheet">
 
+
+
+
+
 </head>
 
 <body id="page-top">
@@ -35,7 +39,7 @@
     <!-- Navbar Search -->
     <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+        <input type="text" class="form-control" placeholder="搜索..." aria-label="Search" aria-describedby="basic-addon2">
         <div class="input-group-append">
           <button class="btn btn-primary" type="button">
             <i class="fas fa-search"></i>
@@ -110,73 +114,65 @@
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="#">编辑文章</a>
+            <a href="{% url 'participate:donation_rules' %}">图书捐赠</a>
           </li>
-          <li class="breadcrumb-item active">交流论坛</li>
           <li class="breadcrumb-item active">读者参与</li>
         </ol>
 
-        <!--更新文章-->
+        <!-- Icon Cards-->
+
+
+        <!--正文-->
         <div class="container">
+
             <div class="row">
-                <div class="col-12">
-                    <br>
-                    <!-- 提交文章的表单 -->
-                    <!--enctype="multipart/form-data"这个属性的意思是表单提交时不对字符编码。表单里带有文件时，一定要加上它-->
-                    <form method="post" action="." enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <!--文章标题-->
-                        <div class="form-group">
-                            <label for="title">文章标题</label>
-                            <!-- 在 value 属性中指定文本框的初始值为旧的内容，即 article 对象中的 title 字段 -->
-                            <input type="text" class="form-control" id="title" name="title" value="{{ article.title }}">
-                        </div>
+              <!--附加导航-->
+              <div class="col-lg-3">
 
-                        <!--文章标题图-->
-                        <div class="form-group">
-                           <label for="avatar">标题图</label>
-                           <input type="file" class="form-control-file" name="avatar" id="avatar">
-                        </div>
-
-
-                        <!-- 文章栏目 -->
-                        <div class="form-group">
-                            <label for="column">栏目</label>
-                            <select class="form-control"
-                                    id="column"
-                                    name="column"
-                            >
-                                    <option value="none">请选择栏目..</option>
-                                {% for column in columns %}
-                                    <option value="{{ column.id }}"
-                                        {% if column.id == article.column.id %}
-                                            selected
-                                        {% endif %}
-                                    >
-                                        {{ column }}
-                                    </option>
-                                {% endfor %}
-                            </select>
-                        </div>
-
-                        <!-- 文章标签-->
-                        <div class="form-group">
-                             <label for="tags">标签</label>
-                             <input type="text" class="form-control col-3" id="tags" name="tags"
-                                value="{{ tags }}">
-                        </div>
-
-                        <!--文章正文-->
-                        <div class="form-group">
-                            <label for="body">文章正文</label>
-                            <!-- 文本域不需要 value 属性，直接在标签体中嵌入数据即可 -->
-                            <textarea type="text" class="form-control" id="body" name="body" rows="12">{{ article.body }}</textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">完成</button>
-                    </form>
+                <h1 class="my-4">图书捐赠</h1>
+                <div class="list-group">
+                  <a href="{% url 'participate:donation_rules' %}" class="list-group-item">捐赠须知</a>
+                  <a href="{% url 'participate:donation_treatments' %}" class="list-group-item">捐赠处理</a>
+                  <a href="{% url 'participate:donation_contact' %}" class="list-group-item">联系方式</a>
                 </div>
+
+              </div>
+              <!-- /.col-lg-3 -->
+
+              <div class="col-lg-9">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fas fa-chart-area"></i>
+                        捐赠须知
+                    </div>
+                    <div class="card-body" >
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;四川大学图书馆欢迎本校师生、校友及社会各界人士向图书馆捐赠图书。四川大学图书馆将向所有捐赠者出具感谢函，但因馆藏空间有限，图书馆需根据馆藏特色和受赠图书质量进行筛选处理，敬请捐赠者知晓以下条例。</p>
+                        <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一、凡符合以下条件的图书将被纳入馆藏：</b><br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1、内容符合本校科学研究范围；<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2、为正式出版物；但酌情接受具有较高学术价值和收藏价值的非正式出版物；<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. 内容适合大学及以上程度读者利用； <br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. 为本馆缺藏，或本馆需增加复本的图书，复本量以1－3册为宜。 <br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5. 川大师生的著作将入藏“明远文库”1册，其余复本将存放相关藏书区域，供读者使用。 <br/><br/>
+                        <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;二、凡有下列情况之一的图书一般不纳入馆藏： </b><br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. 违反中华人民共和国著作权法之规定的图书； <br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 非正式出版物（具有学术价值的手稿等除外）； <br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. 破损图书；  <br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. 內有划线、注记、眉批的图书；(若为海內外孤本或为名人批注，则不在此限)  <br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5. 內容陈旧的图书；  <br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6. 不成套的图书；  <br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7. 基本上不具学术参考价值的图书； <br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8. 不符合本馆馆藏发展政策的图书；<br/><br/>
+                    </div>
+                    </div>
+                </div>
+              </div>
+              <!-- /.col-lg-9 -->
             </div>
+            <!-- /.row -->
+
         </div>
+
+        <!-- DataTables Example -->
 
 
       </div>
@@ -186,7 +182,7 @@
       <footer class="sticky-footer">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright © Your Website 2019</span>
+            <span>Copyright © 五朵金花 2019</span>
           </div>
         </div>
       </footer>
@@ -239,8 +235,6 @@
   <!-- Demo scripts for this page-->
   <script src="/static/mobankf/js/demo/datatables-demo.js"></script>
   <script src="/static/mobankf/js/demo/chart-area-demo.js"></script>
-
-
 
 </body>
 

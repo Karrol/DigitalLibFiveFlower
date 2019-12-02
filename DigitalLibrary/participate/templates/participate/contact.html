@@ -20,6 +20,10 @@
   <!-- Custom styles for this template-->
   <link href="/static/mobankf/css/sb-admin.css" rel="stylesheet">
 
+
+
+
+
 </head>
 
 <body id="page-top">
@@ -35,7 +39,7 @@
     <!-- Navbar Search -->
     <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+        <input type="text" class="form-control" placeholder="搜索..." aria-label="Search" aria-describedby="basic-addon2">
         <div class="input-group-append">
           <button class="btn btn-primary" type="button">
             <i class="fas fa-search"></i>
@@ -110,73 +114,57 @@
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="#">编辑文章</a>
+            <a href="{% url 'participate:donation_rules' %}">图书捐赠</a>
           </li>
-          <li class="breadcrumb-item active">交流论坛</li>
           <li class="breadcrumb-item active">读者参与</li>
         </ol>
 
-        <!--更新文章-->
+        <!-- Icon Cards-->
+
+
+        <!--正文-->
         <div class="container">
+
             <div class="row">
-                <div class="col-12">
-                    <br>
-                    <!-- 提交文章的表单 -->
-                    <!--enctype="multipart/form-data"这个属性的意思是表单提交时不对字符编码。表单里带有文件时，一定要加上它-->
-                    <form method="post" action="." enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <!--文章标题-->
-                        <div class="form-group">
-                            <label for="title">文章标题</label>
-                            <!-- 在 value 属性中指定文本框的初始值为旧的内容，即 article 对象中的 title 字段 -->
-                            <input type="text" class="form-control" id="title" name="title" value="{{ article.title }}">
-                        </div>
+              <!--附加导航-->
+              <div class="col-lg-3">
 
-                        <!--文章标题图-->
-                        <div class="form-group">
-                           <label for="avatar">标题图</label>
-                           <input type="file" class="form-control-file" name="avatar" id="avatar">
-                        </div>
-
-
-                        <!-- 文章栏目 -->
-                        <div class="form-group">
-                            <label for="column">栏目</label>
-                            <select class="form-control"
-                                    id="column"
-                                    name="column"
-                            >
-                                    <option value="none">请选择栏目..</option>
-                                {% for column in columns %}
-                                    <option value="{{ column.id }}"
-                                        {% if column.id == article.column.id %}
-                                            selected
-                                        {% endif %}
-                                    >
-                                        {{ column }}
-                                    </option>
-                                {% endfor %}
-                            </select>
-                        </div>
-
-                        <!-- 文章标签-->
-                        <div class="form-group">
-                             <label for="tags">标签</label>
-                             <input type="text" class="form-control col-3" id="tags" name="tags"
-                                value="{{ tags }}">
-                        </div>
-
-                        <!--文章正文-->
-                        <div class="form-group">
-                            <label for="body">文章正文</label>
-                            <!-- 文本域不需要 value 属性，直接在标签体中嵌入数据即可 -->
-                            <textarea type="text" class="form-control" id="body" name="body" rows="12">{{ article.body }}</textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">完成</button>
-                    </form>
+                <h1 class="my-4">图书捐赠</h1>
+                <div class="list-group">
+                  <a href="{% url 'participate:donation_rules' %}" class="list-group-item">捐赠须知</a>
+                  <a href="{% url 'participate:donation_treatments' %}" class="list-group-item">捐赠处理</a>
+                  <a href="{% url 'participate:donation_contact' %}" class="list-group-item">联系方式</a>
                 </div>
+
+              </div>
+              <!-- /.col-lg-3 -->
+
+              <div class="col-lg-9">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fas fa-chart-area"></i>
+                        联系方式
+                    </div>
+                    <div class="card-body" >
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. 捐赠者可将赠书就近送到任一分馆的文献服务中心服务台，也可直接送至四川大学图书馆资源建设中心，联系电话： 028-85408393  </p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 邮寄可按以下地址：成都市一环路南一段24号四川大学图书馆资源建设中心，邮政编码： 610065</p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. 若本地捐赠者欲捐赠图书较多，可与图书馆联系，由图书馆派员提取。联系电话：028-85412292  </p>
+
+                    </div>
+                    </div>
+                </div>
+              </div>
+              <!-- /.col-lg-9 -->
             </div>
+            <!-- /.row -->
+
         </div>
+
+
+        <!-- Area Chart Example-->
+
+
+        <!-- DataTables Example -->
 
 
       </div>
@@ -186,7 +174,7 @@
       <footer class="sticky-footer">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright © Your Website 2019</span>
+            <span>Copyright © 五朵金花 2019</span>
           </div>
         </div>
       </footer>
@@ -239,8 +227,6 @@
   <!-- Demo scripts for this page-->
   <script src="/static/mobankf/js/demo/datatables-demo.js"></script>
   <script src="/static/mobankf/js/demo/chart-area-demo.js"></script>
-
-
 
 </body>
 
