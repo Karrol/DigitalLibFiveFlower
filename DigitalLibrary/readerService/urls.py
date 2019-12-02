@@ -12,4 +12,5 @@ urlpatterns = [
     path('cdInfo/', views.cdInfo, name='cdInfo'),
     path('renewal/', views.renewal, name='renewal'),
     path('serviceTime/', views.serviceTime, name='serviceTime'),
+    path('bookReser$',views.bookReservationBooked)
 ]
