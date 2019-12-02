@@ -11,8 +11,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 import json
 
-from library.models import Book, Reader, User
-from library.models import article_info,weekbook
+from login.models import Reader, User
+from search.models import book_info
 from .forms import Change_reader_infoForm
 from readerCenter.models import readerLibrary,readerSearchlist,Borrowing
 
@@ -50,8 +50,6 @@ def readerChangeinfo(request):
         # photo的上传有问题，还有就是要给读者原始信息的提示
         reader.photo = request.POST.get('photo', '')
         reader.email = request.POST.get('email', '')
-        reader.idType = request.POST.get('idType', '')
-        reader.idNumber = request.POST.get('idNumber', '')
         reader.save()
         state = 'success'
     context = {
@@ -101,7 +99,7 @@ def showNotice(request):
     if notice.articleID.startswith('week'):
         # 获取书籍的信息
         wbook = weekbook.objects.get(articleID=articleID)
-        wbook_info = Book.objects.get(pk=wbook.ISBN.ISBN)
+        wbook_info = book_info.objects.get(pk=wbook.ISBN.ISBN)
         state = 'weekbook_notice'
         # wbook.ISBN=wbook_info
         # wbook.save()
@@ -159,7 +157,7 @@ def readerOperateBook(request):
         r.max_borrowing += 1
         r.save()
 
-        bk = Book.objects.get(ISBN=b.ISBN_id)
+        bk = book_info.objects.get(ISBN=b.ISBN_id)
         bk.quantity += 1
         bk.save()
 
@@ -229,14 +227,14 @@ def add_to_searchlist(request):
         # 实现数据库添加操作，实现“查询界面”的数据传递到“查询结果”页面
         for item in variables.split(','):  # 拆分多个ISBN号连结而成的字符串，形成ISBN号列表
             # 定义一个临时的书籍对象来存储数据信息
-            bk = Book.objects.get(ISBN=item)
+            bk = book_info.objects.get(ISBN=item)
             # bk.quantity -= 1   #电子书不需要库存减一
             bk.save()
             date = timezone.now()
             # 在表“mysearchlist”中创建记录存bk对象的数据
             searchlist = readerSearchlist.objects.create(
                 reader=reader,
-                ISBN=bk,  # 注意：这样赋值后，书的ISBN是个BOOK实例！？以致于在template代码中有Book.ISBN.ISBN的变量出现
+                ISBN=bk,  # 注意：这样赋值后，书的ISBN是个BOOK实例！？以致于在template代码中有book_info.ISBN.ISBN的变量出现
                 search_date=date)
             searchlist.save()
         state = 'success'  # 数据库存取操作完成
@@ -339,8 +337,8 @@ def delete_from_mylib(request):
     '''if not ISBN:
         return HttpResponse('there is no such an ISBN')
     try:
-        book = Book.objects.get(pk=ISBN)
-    except Book.DoesNotExist:
+        book = book_info.objects.get(pk=ISBN)
+    except book_info.DoesNotExist:
         return HttpResponse('there is no such an ISBN')'''
 
     action = request.GET.get('action', None)
@@ -374,14 +372,14 @@ def add_to_searchlist(request):
         # 实现数据库添加操作，实现“查询界面”的数据传递到“查询结果”页面
         for item in variables.split(','):  # 拆分多个ISBN号连结而成的字符串，形成ISBN号列表
             # 定义一个临时的书籍对象来存储数据信息
-            bk = Book.objects.get(ISBN=item)
+            bk = book_info.objects.get(ISBN=item)
             # bk.quantity -= 1   #电子书不需要库存减一
             bk.save()
             date = timezone.now()
             # 在表“mysearchlist”中创建记录存bk对象的数据
             searchlist = readerSearchlist.objects.create(
                 reader=reader,
-                ISBN=bk,  # 注意：这样赋值后，书的ISBN是个BOOK实例！？以致于在template代码中有Book.ISBN.ISBN的变量出现
+                ISBN=bk,  # 注意：这样赋值后，书的ISBN是个BOOK实例！？以致于在template代码中有book_info.ISBN.ISBN的变量出现
                 search_date=date)
             searchlist.save()
         state = 'success'  # 数据库存取操作完成

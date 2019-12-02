@@ -10,7 +10,7 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import book_info
-from library.models import Reader
+from login.models import Reader
 from readerCenter.models import Borrowing,readerLibrary
 from .forms import SearchForm
 
