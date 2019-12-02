@@ -27,4 +27,14 @@ urlpatterns = [
 
     # 更新文章
     path('articleUpdate/<int:id>/', views.article_update, name='article_update'),
+
+    # 发表评论
+    path('postComment/<int:article_id>/', views.post_comment, name='post_comment'),
+
+    # 捐赠须知
+    path('donationRules/', views.donation_rules, name='donation_rules'),
+    # 捐赠处理
+    path('donationTreatments/', views.donation_treatments, name='donation_treatments'),
+    # 联系方式
+    path('donationContact/', views.donation_contact, name='donation_contact'),
 ]

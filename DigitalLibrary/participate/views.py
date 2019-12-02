@@ -6,11 +6,10 @@ from django.http import HttpResponse
 # 导入数据模型ArticlePost
 from .models import ArticlePost
 
-# 引入markdown模块
-import markdown
+
 
 # 引入redirect重定向模块
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 # 引入HttpResponse
 from django.http import HttpResponse
 # 引入刚才定义的ArticlePostForm表单类
@@ -26,6 +25,9 @@ from django.db.models import Q
 
 # 引入栏目Model
 from .models import ArticleColumn
+
+# 导入评论Model
+from .models import Comment
 
 # Create your views here.
 # 视图函数
@@ -74,7 +76,7 @@ def article_list(request):
     # 需要传递给模板（templates）的对象，并按照order排序
     context = {'articles': articles, 'order': order, 'search': search, 'column': column, 'tag': tag, }
     # render函数：载入模板，并返回context对象
-    return render(request, 'article/list.html', context)
+    return render(request, 'participate/list.html', context)
 
 # 文章详情
 def article_detail(request, id):
@@ -83,6 +85,10 @@ def article_detail(request, id):
     # 浏览量+1
     article.total_views += 1
     article.save(update_fields=['total_views'])
+
+    # 取出文章评论
+    comments = Comment.objects.filter(article=id)
+
 
     # 将markdown语法渲染成html样式
     article.body = markdown.markdown(article.body,
@@ -95,7 +101,7 @@ def article_detail(request, id):
              'markdown.extensions.TOC',
          ])
     # 需要传递给模板的对象
-    context = { 'article': article }
+    context = {'article': article, 'comments': comments}
     # 载入模板，并返回context对象
     return render(request, 'participate/detail.html', context)
 
@@ -204,3 +210,31 @@ def article_update(request, id):
         context = {'article': article, 'article_post_form': article_post_form, 'columns': columns, 'tags': ','.join([x for x in article.tags.names()]),}
         # 将响应返回到模板中
         return render(request, 'article/update.html', context)
+
+    # 文章评论
+    def post_comment(request, article_id):
+        article = get_object_or_404(ArticlePost, id=article_id)
+
+        # 处理 POST 请求
+        if request.method == 'POST':
+            comment_form = ArticlePostForm(request.POST)
+            if comment_form.is_valid():
+                new_comment = comment_form.save(commit=False)
+                new_comment.article = article
+                new_comment.user = request.user
+                new_comment.save()
+                return redirect(article)
+            else:
+                return HttpResponse("表单内容有误，请重新填写。")
+        # 处理错误请求
+        else:
+            return HttpResponse("发表评论仅接受POST请求。")
+
+    def donation_rules(request):
+        return render(request, 'participate/rules.html')
+
+    def donation_treatments(request):
+        return render(request, 'participate/treatments.html')
+
+    def donation_contact(request):
+        return render(request, 'participate/contact.html')

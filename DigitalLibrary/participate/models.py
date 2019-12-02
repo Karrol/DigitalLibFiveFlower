@@ -12,8 +12,6 @@ from PIL import Image
 from django.urls import reverse
 
 
-
-
 # Create your models here.
 # 文章栏目模型
 class ArticleColumn(models.Model):
