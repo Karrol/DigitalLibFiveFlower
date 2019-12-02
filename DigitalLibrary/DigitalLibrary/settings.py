@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     'readerCenter',
     'readerService',
     'search',
-    'service'
+    'service',
+    'DjangoUeditor',
+    'taggit',
 ]
 
 MIDDLEWARE = [

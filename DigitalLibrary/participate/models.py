@@ -8,7 +8,6 @@ from taggit.managers import TaggableManager
 
 # 导入Image处理图片
 from PIL import Image
-
 # Create your models here.
 # 文章栏目模型
 class ArticleColumn(models.Model):

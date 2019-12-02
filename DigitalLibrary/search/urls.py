@@ -16,4 +16,4 @@ urlpatterns = [
                 path('bookDetail/', views.book_detail, name='bookDetail'),
                  
     
-              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
+              ]
