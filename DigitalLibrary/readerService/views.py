@@ -1,14 +1,6 @@
 from django.shortcuts import render
 
-#from booktest.models import bookInfo
 
-#def showBooks(request):
-#    books = bookInfo.objects.all()
-#    return render(request,'formanager/showBooks.html',{'books':books})
-
-# Create your views here.
-
-#新增一个帖子
 from readerService.models import bookReser
 
 def bookReservation(request):
