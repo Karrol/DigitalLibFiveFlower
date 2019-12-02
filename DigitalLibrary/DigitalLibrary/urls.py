@@ -29,8 +29,8 @@ import infoCenter.views as infoCenter_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path(r'', login_view.index),
-    path(r'index', login_view.index),
+    path(r'', librarian_view.index),
+    path(r'index', librarian_view.index),
     path(r'login', include('login.urls')),
     path(r'readerCenter', include('readerCenter.urls')),
     path(r'search', include('search.urls')),
