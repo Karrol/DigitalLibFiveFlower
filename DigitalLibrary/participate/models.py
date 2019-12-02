@@ -8,6 +8,10 @@ from taggit.managers import TaggableManager
 
 # 导入Image处理图片
 from PIL import Image
+
+from django.urls import reverse
+
+
 # Create your models here.
 # 文章栏目模型
 class ArticleColumn(models.Model):
@@ -86,4 +90,29 @@ class ArticlePost(models.Model):
     def __str__(self):
         # return self.title 将文章标题返回
         return self.title
+
+    # 获取文章地址
+    def get_absolute_url(self):
+        return reverse('participate:article_detail', args=[self.id])
+
+# 博文的评论
+class Comment(models.Model):
+    article = models.ForeignKey(
+        ArticlePost,
+        on_delete=models.CASCADE,
+        related_name='comments'
+    )
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='comments'
+    )
+    commentbody = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ('created',)
+
+    def __str__(self):
+        return self.commentbody[:20]
 
