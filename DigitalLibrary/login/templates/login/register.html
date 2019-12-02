@@ -1,9 +1,9 @@
-{% extends 'library/base.html' %}
+{% extends 'login/base.html' %}
 
 {% block title %} 请登陆 {% endblock %}
 
 {% load static %}
-<link href="{% static 'library/signin.css' %}" rel="stylesheet">
+<link href="{% static 'login/signin.css' %}" rel="stylesheet">
 
 {% block content %}
 
@@ -18,7 +18,7 @@
                 {% elif state == 'empty' %}
                     <h2> 密码不能为空 </h2>
                 {% elif state == 'user_exist' %}
-                    <h2> 户已经存在 </h2>
+                    <h2> 户已经存在,<a href="{%url 'login:login'%}">请点击此登录</a> </h2>
                 {% endif %}
             </div>
         </div>
@@ -28,7 +28,7 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1">
 
-                <form method="POST" action="/register/" role="form" class="form-horizontal"
+                <form method="POST" action="{%url 'login:user_register'%}" role="form" class="form-horizontal"
                       enctype="multipart/form-data">
                     {% csrf_token %}
                     <h1 class="form-signin-heading text-center">请注册</h1>
