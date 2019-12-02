@@ -14,9 +14,9 @@ def custom_path(instance, filename):
 class person_info(models.Model):
     """Model representing user profile ."""
     ID = models.IntegerField('账户ID', primary_key=True)
-    email = models.EmailField('邮箱', unique=True, max_length=30, blank=False)
+    email = models.EmailField('邮箱',max_length=30, blank=False)
     Sex = models.CharField('性别', max_length=4)
-    Name = models.CharField('用户名', max_length=30)
+    IDname = models.CharField('用户名', max_length=30)
     Password = models.CharField('密码', max_length=30)
 
 
@@ -26,11 +26,11 @@ class Reader(person_info):
         verbose_name_plural = '读者'
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='读者')
-    name = models.CharField(max_length=16, unique=True, verbose_name='姓名')
-    phone = models.IntegerField(unique=True, verbose_name='电话')
+    name = models.CharField(max_length=16, verbose_name='姓名')
+    phone = models.IntegerField(unique=False, verbose_name='电话')
     max_borrowing = models.IntegerField(default=5, verbose_name='可借数量')
     balance = models.FloatField(default=0.0, verbose_name='余额')
-    photo = models.ImageField(blank=True, upload_to='/media/zhangli', verbose_name='头像')
+    photo = models.ImageField(blank=True, upload_to='media/zhangli', verbose_name='头像')
     # <---demo数据库字段与我们设计的数据库字段分割线-->
     # readerType = models.CharField('读者类型', max_length=11,choices=(('A', '最大可借数目0'), ('B', '最大可借数目15'), ('C', '最大可借数目30')), default='A')
     # telNumber = models.CharField('电话', max_length=20, blank=True)
