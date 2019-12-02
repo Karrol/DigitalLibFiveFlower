@@ -16,7 +16,10 @@ def bookReservation(request):
         return render (request,'readerService/bookReservation.html')
     elif request.method=='POST':
         bookreser =bookReser()
+        bookreser.readerId = request.POST.get('readerId')
         bookreser.book=request.POST.get('book')
+        bookreser.bookId = request.POST.get('bookId')
+        bookreser.returnTime = request.POST.get('returnTime')
         bookreser.place = request.POST.get('place')
         bookreser.save()
         return render (request,'readerService/success.html')

@@ -26,7 +26,7 @@
 
   <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-    <a class="navbar-brand mr-1" href="index.html">读者服务</a>
+    <a class="navbar-brand mr-1" href="../borrowTips">读者服务</a>
 
     <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
       <i class="fas fa-bars"></i>
@@ -125,9 +125,24 @@
 
     <form action="/readerService/bookReservation/" method="POST"><!--提交地址-->
       {% csrf_token %}
-      <input type="text" name="book" class="book" placeholder="请输入图书索书号">
+      <input type="text" name="readerId" class="readerId" placeholder="请输入您的读者ID号">
          <p></p>
-      <input type="text" name="place" class="place" placeholder="请输入取书地点">
+      <input type="text" name="book" class="book" placeholder="请输入想预约的图书名字">
+         <p></p>
+      <input type="text" name="bookId" class="bookId" placeholder="请输入想预约的图书号">
+         <p></p>
+      <input type="text" name="returnTime" class="returnTime" placeholder="请输入预期取书时间">
+         <p></p>
+      <p>请选择取书地点</p>
+      <select type="text" name="place" class="place">
+　　　　<option>工学馆</option>
+　　　　<option></option>
+　　　　<option>江安馆</option>
+       <option></option>
+　　　　<option>医学馆</option>
+       <option></option>
+　　　　<option>文理馆</option>
+　　   </select>
          <p></p>
       <input type="submit" value="提交">
     </form>
