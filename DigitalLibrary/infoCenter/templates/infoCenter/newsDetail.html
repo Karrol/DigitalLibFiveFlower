@@ -1,4 +1,4 @@
-{% extends "infoCenter/base.html" %}
+{% extends "infoCenter/newsBase.html" %}
 
 {% block title %}信息中心{% endblock title %}
 
@@ -12,11 +12,15 @@
 
 {% block breadrums %}
    <div class="container-fluid">
-       <h3>{{ news_article.newsTitle }}</h3>
+       <h2 align = "center">{{ news_article.newsTitle }}</h2>
+        <p align = "center" class = "one gray">发表时间：<em>{{ news_article.newsPubdate }}</em>&nbsp;&nbsp;&nbsp;&nbsp;作者：<em>{{ news_article.newsAuthor }}</em></p>
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
             <a href="{% url 'newsIntro' %}">新闻公告</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a href="{{ news_article.newsColumn.get_absolute_url }}">{{ news_article.newsColumn }}</a>
           </li>
           <li class="breadcrumb-item active">文章详情</li>
         </ol>
@@ -24,8 +28,6 @@
 {% endblock breadrums %}
 
 {% block pagecontent %}
-  <h2 align = "center">{{ news_article.newsTitle }}</h2>
-    <p align = "center" class = "one gray">发表时间：<em>{{ news_article.newsPubdate }}</em>&nbsp;&nbsp;&nbsp;&nbsp;作者：<em>{{ news_article.newsAuthor }}</em></p>
     <hr/>
     <div id="main">
         <p>

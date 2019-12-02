@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import  HttpResponse
 from librarian.models import bookborrow_info,bookback_info
 from search.models import ebook_info ,bookEntity_info
-from login.models import reader_info
+from login.models import Reader
 from . import forms
 import hashlib
 # Create your views here.
@@ -49,7 +49,7 @@ def librarian_history(request):
     return render(request, 'librarian/librarian_history.html')
 
 def librarian_user(request):
-    users = reader_info.objects.all()
+    users = Reader.objects.all()
     new_user_form = forms.NewUserForm()
     change_user_form = forms.ChangeUserForm()
     context = {
@@ -68,7 +68,7 @@ def add_user_to_database(request):
         bookNumber = new_user_form.cleaned_data['bookNumber']
         email = new_user_form.cleaned_data['email']
         sex = new_user_form.cleaned_data['sex']
-        new_reader = reader_info()
+        new_reader = Reader()
         new_reader.Name = username
         new_reader.Password = password  # 使用加密密码
         new_reader.readertypeName = readertypeName
@@ -89,11 +89,11 @@ def change_user_to_database(request):
             bookNumber = change_user_form.cleaned_data['bookNumber']
             email = change_user_form.cleaned_data['email']
             sex = change_user_form.cleaned_data['sex']
-            change_user = reader_info.objects.get(Name = oldusername)
+            change_user = Reader.objects.get(Name = oldusername)
             if change_user:
                 change_user.update(Name = username,Password = password,readertypeName = readertypeName,bookNumber = bookNumber,email = email,Sex = sex)
             return redirect("librarian_user")
 
 def delete_user(request):
-    reader_info.objects.get(Name = request.GET.get("userName")).delete()
+    Reader.objects.get(Name = request.GET.get("userName")).delete()
     return redirect("librarian_user")

@@ -1,4 +1,4 @@
-{% extends "infoCenter/base.html" %}
+{% extends "infoCenter/newsBase.html" %}
 
 {% block title %}信息中心{% endblock title %}
 
@@ -17,9 +17,9 @@
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="">信息中心</a>
+            <a href="{% url 'recBookList'%}">每周一书</a>
         </li>
-        <li class="breadcrumb-item active">每周一书</li>
+        <li class="breadcrumb-item active">{{ book.recTime }}推荐</li>
     </ol>
     {% endfor %}
 </div>

@@ -2,13 +2,14 @@
 
 {% block breadrums %}
     <div class="container-fluid">
-        <h2>栏目简介</h2>
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a href="/service/libBrief">服务指南</a>
             </li>
-            <li class="breadcrumb-item active">{{ intro.serviceCategory.categoryName }}</li>
+            <li class="breadcrumb-item">
+                <a href="{{ intro.serviceCategory.get_absolute_url }}">{{ intro.serviceCategory.categoryName }}</a>
+            <li class="breadcrumb-item active">详情</li>
         </ol>
     </div>
 {% endblock breadrums %}
