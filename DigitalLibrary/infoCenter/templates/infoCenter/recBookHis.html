@@ -1,0 +1,134 @@
+{% extends "infoCenter/newsBase.html" %}
+
+{% block title %}信息中心{% endblock title %}
+
+{% block sideNews %}
+<div class="dropdown-menu" aria-labelledby="pagesDropdown">
+    {% for column in news_intro_columns %}
+    <a class="dropdown-item" href="{{ column.get_absolute_url }}">{{ column.columnName }}</a>
+    {% endfor %}
+</div>
+{% endblock sideNews %}
+
+{% block breadrums %}
+<div class="container-fluid">
+    <h3 class="my-4">往期推荐：《{{ past_recbook.bookName }}》</h3>
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{% url 'recBookList'%}">每周一书</a>
+        </li>
+        <li class="breadcrumb-item active">往期推荐</li>
+    </ol>
+</div>
+{% endblock breadrums %}
+
+{% block pagecontent %}
+<hr>
+    <div class="container-fluid">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    {{ past_recbook.recTime }}
+                </div>
+                <div class="card-body">
+                    <table>
+                        <tr>
+                            <td>
+                                <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
+                                  <div class="carousel-inner" role="listbox">
+                                    <div class="carousel-item active">
+                                      <img class="d-block img-fluid" src="http://placehold.it/400x350" alt="First slide">
+                                    </div>
+                                  </div>
+                                </div>
+                            </td>
+
+                            <td>
+                                <p>
+                                    <h3>{{ past_recbook.bookName }}</h3>
+                                    索书号：<br/>
+                                    馆藏地点：<br/><br/><br/>
+                                    作者：<br/>
+                                    出版社：<br/>
+                                    副标题：<br/>
+                                    译者：<br/>
+                                    出版年：<br/>
+                                    页数：<br/>
+                                    定价：<br/>
+                                    装帧：<br/>
+                                    ISBN：<br/>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <p><b>内容简介：</b> </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <p><b>作者简介：</b></p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    推荐人：{{ past_recbook.promugator }}
+                </div>
+                <div class="card-body">
+                    <table>
+                        <tr>
+                            <td colspan="3">
+                                <p><b>推荐语：</b></p>
+                                <p>{{ past_recbook.Rec_comment | safe }}</p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+    </div>
+
+      <div class="col-lg-9">
+        <br/><br/><hr/>
+        <h3 class="my-4" align="center" >本期推荐</h3>
+        <div class="container-fluid">
+            {% for book in now_recbook %}
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fas fa-table"></i>
+                        {{ book.recTime }}
+                    </div>
+                    <div class="card-body">
+                        <p class="card-title">
+                            <a href="{{ book.get_absolute_url }}">《{{ book.bookName }}》</a>
+                        </p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+      </div>
+
+      <div class="col-lg-9">
+        <br/><br/><hr/>
+        <h3 class="my-4" align="center" >往期推荐</h3>
+        <div class="container-fluid">
+            {% for books in past_recbook_list %}
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fas fa-table"></i>
+                        {{ books.recTime }}
+                    </div>
+                    <div class="card-body">
+                        <p class="card-title">
+                            <a href="{{ books.get_absolute_url }}">《{{ books.bookName }}》</a>
+                        </p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+      </div>
+{% endblock pagecontent %}

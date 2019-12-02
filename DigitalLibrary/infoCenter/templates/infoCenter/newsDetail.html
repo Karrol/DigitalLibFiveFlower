@@ -1,0 +1,46 @@
+{% extends "infoCenter/newsBase.html" %}
+
+{% block title %}信息中心{% endblock title %}
+
+{% block sideNews %}
+<div class="dropdown-menu" aria-labelledby="pagesDropdown">
+    {% for column in news_intro_columns %}
+    <a class="dropdown-item" href="{{ column.get_absolute_url }}">{{ column.columnName }}</a>
+    {% endfor %}
+</div>
+{% endblock sideNews %}
+
+{% block breadrums %}
+   <div class="container-fluid">
+       <h2 align = "center">{{ news_article.newsTitle }}</h2>
+        <p align = "center" class = "one gray">发表时间：<em>{{ news_article.newsPubdate }}</em>&nbsp;&nbsp;&nbsp;&nbsp;作者：<em>{{ news_article.newsAuthor }}</em></p>
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{% url 'newsIntro' %}">新闻公告</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a href="{{ news_article.newsColumn.get_absolute_url }}">{{ news_article.newsColumn }}</a>
+          </li>
+          <li class="breadcrumb-item active">文章详情</li>
+        </ol>
+   </div>
+{% endblock breadrums %}
+
+{% block pagecontent %}
+    <hr/>
+    <div id="main">
+        <p>
+            {{ news_article.newsContent|safe }}
+        </p>
+    </div>
+    <br/><hr/>
+    <div>
+        <nav aria-label="...">
+      <ul class="pager">
+        <li><a href="{{ previous_article.get_absolute_url }}">上一篇：{{ previous_article.newsTitle }}</a></li>
+        <li><a href="{{ next_article.get_absolute_url }}">下一篇：{{ next_article.newsTitle }}</a></li>
+      </ul>
+    </nav>
+    </div>
+{% endblock pagecontent %}
