@@ -53,3 +53,20 @@ class book_info(models.Model):
         return self.title + self.author
 
 #关于书籍类型的表尚未建立
+
+class ebook_info(models.Model):
+    ebookID = models.IntegerField('图书财产ID', primary_key=True)
+    ebookName = models.CharField('书名', max_length=70)
+    ebookAuthor = models.CharField('作者', max_length=30, blank=True)
+    ebookTranslator = models.CharField('译者', max_length=30, blank=True)
+    ebookPress = models.CharField('出版社', max_length=70)
+    ebookIntime=models.DateTimeField('图书入库时间')
+    ebookISBN= models.CharField('书的isbn号', max_length=10)
+    ebookPage = models.IntegerField('图书页码',  blank=True)
+    ebookResource = models.CharField('电子图书资源内容的存储地址', max_length=200)
+
+
+class booktype_info(models.Model):
+    btID= models.CharField('图书类型ID', primary_key=True, max_length=10)
+    btName = models.CharField('图书类型的名字', max_length=50)
+    bookType = models.BooleanField('可外借/馆内阅读', default=True)
