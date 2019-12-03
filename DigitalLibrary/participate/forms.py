@@ -2,6 +2,8 @@
 from .models import ArticlePost
 # 引入评论模型
 from .models import Comment
+from django import forms
+
 
 # 写文章的表单类
 class ArticlePostForm(forms.ModelForm):

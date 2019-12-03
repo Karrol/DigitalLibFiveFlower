@@ -212,7 +212,7 @@ def article_update(request, id):
         return render(request, 'article/update.html', context)
 
     # 文章评论
-    def post_comment(request, article_id):
+def post_comment(request, article_id):
         article = get_object_or_404(ArticlePost, id=article_id)
 
         # 处理 POST 请求
@@ -230,11 +230,11 @@ def article_update(request, id):
         else:
             return HttpResponse("发表评论仅接受POST请求。")
 
-    def donation_rules(request):
+def donation_rules(request):
         return render(request, 'participate/rules.html')
 
-    def donation_treatments(request):
+def donation_treatments(request):
         return render(request, 'participate/treatments.html')
 
-    def donation_contact(request):
+def donation_contact(request):
         return render(request, 'participate/contact.html')
