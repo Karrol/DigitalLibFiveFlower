@@ -29,14 +29,13 @@ import infoCenter.views as infoCenter_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path(r'', librarian_view.index),
-    path(r'index', librarian_view.index),
-    path(r'login', include('login.urls')),
-    path(r'readerCenter', include('readerCenter.urls')),
-    path(r'search', include('search.urls')),
-    path(r'participate', include('participate.urls')),
-    path(r'readerService', include('readerService.urls')),
-    path(r'librarian', include('librarian.urls')),
-    path(r'service', include('service.urls')),
-    path(r'infoCenter', include('infoCenter.urls')),
+    url(r'^index/', librarian_view.index),
+    url(r'^login/', include('login.urls',namespace = 'login')),
+    url(r'^readerCenter/', include('readerCenter.urls')),
+    url(r'^search/', include('search.urls')),
+    url(r'^participate/', include('participate.urls')),
+    url(r'^readerService/', include('readerService.urls')),
+    url(r'^librarian/', include('librarian.urls')),
+    url(r'^service/', include('service.urls')),
+    url(r'^infoCenter/', include('infoCenter.urls')),
 ]

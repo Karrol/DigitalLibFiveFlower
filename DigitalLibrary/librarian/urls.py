@@ -3,7 +3,7 @@ from django.conf.urls import url
 import librarian.views as views
 
 urlpatterns = [
-    url(r'^index/', views.index),
+    url(r'^$', views.index, name='index'),
     url(r'^librarian_book', views.librarian_book),
     url(r'^librarian_booktype', views.librarian_booktype),
     url(r'^librarian_borrow', views.librarian_borrow),

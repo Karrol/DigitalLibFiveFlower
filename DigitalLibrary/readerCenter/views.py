@@ -312,7 +312,7 @@ def show_mysearchlist(request):
 # "readerCenter:def mylib"应该完成显示我的图书馆书籍
 def mylib(request):
     if not request.user.is_authenticated:
-        return HttpResponseRedirect('library:login')
+        return HttpResponseRedirect('login:login')
 
     id = request.user.id
     try:
