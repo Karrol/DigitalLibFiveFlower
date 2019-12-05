@@ -29,6 +29,7 @@ class Borrowing(models.Model):
 
     reader = models.ForeignKey(Reader, on_delete=models.CASCADE, verbose_name='读者')
     ISBN = models.ForeignKey(book_info, on_delete=models.CASCADE, verbose_name='ISBN')
+    #借还书的数据是随机生成的，所以是原demo存在还书时间的
     date_issued = models.DateField(verbose_name='借出时间')
     date_due_to_returned = models.DateField(verbose_name='应还时间')
     date_returned = models.DateField(null=True, verbose_name='还书时间')

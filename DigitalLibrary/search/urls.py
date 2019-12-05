@@ -9,7 +9,7 @@ from . import views
 
 urlpatterns = [
                 #检索首页
-                path('searchindex', views.index, name='searchindex'),
+                path('searchindex/', views.index, name='searchindex'),
                 #检索结果页
                 path('searchBook/', views.book_search, name='searchBook'),
                 #图书详情

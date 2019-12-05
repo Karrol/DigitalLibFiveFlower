@@ -15,6 +15,7 @@ from login.models import Reader, User
 from search.models import book_info
 from .forms import Change_reader_infoForm
 from readerCenter.models import readerLibrary,readerSearchlist,Borrowing
+from infoCenter.models import weekbook_info
 
 
 
@@ -60,22 +61,57 @@ def readerChangeinfo(request):
     return render(request, 'readerCenter/readerChangeinfo.html', context)
 
 
-# 个人中心-读者通知界面  （11/19工作，将通知界面和借阅界面写好）
+# 个人中心-读者通知界面
 @login_required
 def readerNotice(request):
     reader = Reader.objects.get(user=request.user)
-    # state = None
+    # 每周一书的通知-仅推荐当周推荐，点击更多可以查看历史推荐
+    book_week = weekbook_info.objects.get(now_display=True)
 
-    notice_week = article_info.objects.filter(columnName='每周一书')
-    notice_lend = article_info.objects.filter(columnName='借阅催还')
+    #实现系统自动进行借阅催还功能
+    state_to_return = None
+    state_over = None
+    # 设变量用来存储应还书、超期书的书名
+    book_to_return = ''
+    book_over_time = ''
+    #判断用户是否有在借图书
+    lending_book=Borrowing.objects.filter(reader=reader)
+    #遍历用户在借书籍
+    for book in lending_book:
+        #获取该图书应还日期
+        lendBookTime=book.date_due_to_returned
+        #判断是否超出还书时间
+        today=datetime.date.today()
+        #判断此书是否已还
+        if book.date_returned:
+            continue
+        else:
+            if today>lendBookTime:
+                #超时，生成催还提醒标题
+                state_over='book_over_time'
+                #获得超时书籍列表
+                book_over_time=book_over_time+','+book.ISBN.title
+            else:
+                # 没有超时，判断距离还书日期是否小于等于3天
+                if (lendBookTime-today)<=3:
+                    # 小于等于，返回催还通知
+                    state_to_return='its_time_to_return'
+                    book_to_return=book_to_return+','+book.ISBN.title
+                else:
+                    #大于，不显示催还通知,用户在借书籍情况的state=none
+                    state_to_return = None
+                    state_over = None
+                
     nowtime = timezone.now()
 
     context = {
         "reader": reader,
-        # "state":state,
-        "notice_week": notice_week,
-        "notice_lend": notice_lend,
+        "state_to_return": state_to_return,
+        "state_over": state_over,
+        "book_week": book_week,
         "nowtime": nowtime,
+        "book_over_time": book_over_time,
+        "book_to_return": book_to_return,
 
     }
     return render(request, 'readerCenter/readerNotice.html', context)
@@ -119,7 +155,7 @@ def showNotice(request):
 # 查询借阅状态页面
 def readerBorrowing(request):
     if not request.user.is_authenticated:
-        return redirect('library:login')
+        return redirect('login:login')
 
     id = request.user.id
     try:

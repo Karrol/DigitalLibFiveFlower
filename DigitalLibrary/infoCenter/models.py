@@ -58,6 +58,7 @@ class newsArticle_info(models.Model):
 @python_2_unicode_compatible
 class weekbook_info(models.Model):
     bookName = models.CharField('书名', max_length=50)
+    #TO DO 张丽：请玉和同学把bookID改为ISBN号，和serach.models中的book_info的ISBN号进行外键关联
     bookID = models.CharField('书籍编码', max_length=10)
     promugator =  models.ForeignKey('auth.User', blank=True, null=True, verbose_name='发布者', on_delete=models.CASCADE)
     recTime =  models.DateField('推荐时间', auto_now_add=True, editable=True)
