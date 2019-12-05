@@ -29,7 +29,7 @@ import infoCenter.views as infoCenter_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^index/', librarian_view.index),
+    url(r'^$', search_view.index, name='index'),
     url(r'^login/', include('login.urls',namespace = 'login')),
     url(r'^readerCenter/', include('readerCenter.urls')),
     url(r'^search/', include('search.urls')),
