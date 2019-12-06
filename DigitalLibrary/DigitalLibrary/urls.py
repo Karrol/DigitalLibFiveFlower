@@ -36,6 +36,7 @@ urlpatterns = [
     url(r'^participate/', include('participate.urls')),
     url(r'^readerService/', include('readerService.urls')),
     url(r'^librarian/', include('librarian.urls')),
-    url(r'^service/', include('service.urls')),
-    url(r'^infoCenter/', include('infoCenter.urls')),
+    url(r'^ueditor/', include('DjangoUeditor.urls')),
+    url(r'infoCenter/', include('infoCenter.urls')),
+    url(r'service/', include('service.urls')),
 ]
