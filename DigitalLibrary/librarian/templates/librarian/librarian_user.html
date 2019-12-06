@@ -61,31 +61,31 @@
             <div class="col-md-2 bootstrap-admin-col-left">
                 <ul class="nav navbar-collapse collapse bootstrap-admin-navbar-side">
                     <li>
-                        <a href="/librarian_book/"><i class="glyphicon glyphicon-chevron-right"></i> 图书管理</a>
+                        <a href="{%url 'librarian:librarian_book'%}"><i class="glyphicon glyphicon-chevron-right"></i> 图书管理</a>
                     </li>
                     <li>
-                        <a href="/librarian_ebook/"><i class="glyphicon glyphicon-chevron-right"></i> 电子图书管理</a>
+                        <a href="{%url 'librarian:librarian_ebook'%}"><i class="glyphicon glyphicon-chevron-right"></i> 电子图书管理</a>
                     </li>
                     <li>
-                        <a href="/librarian_bookshelf/"><i class="glyphicon glyphicon-chevron-right"></i> 书架管理</a>
+                        <a href="{%url 'librarian:librarian_bookshelf'%}"><i class="glyphicon glyphicon-chevron-right"></i> 书架管理</a>
                     </li>
                     <li>
-                        <a href="/librarian_CD/"><i class="glyphicon glyphicon-chevron-right"></i> 光盘管理</a>
+                        <a href="{%url 'librarian:librarian_CD'%}"><i class="glyphicon glyphicon-chevron-right"></i> 光盘管理</a>
                     </li>
                     <li>
-                        <a href="/librarian_user/"><i class="glyphicon glyphicon-chevron-right"></i> 读者管理</a>
+                        <a href="{%url 'librarian:librarian_user'%}"><i class="glyphicon glyphicon-chevron-right"></i> 读者管理</a>
                     </li>
                     <li>
-                        <a href="/librarian_usertype/"><i class="glyphicon glyphicon-chevron-right"></i> 读者类型管理</a>
+                        <a href="{%url 'librarian:librarian_usertype'%}"><i class="glyphicon glyphicon-chevron-right"></i> 读者类型管理</a>
                     </li>
                     <li>
-                        <a href="/librarian_booktype/"><i class="glyphicon glyphicon-chevron-right"></i> 图书分类管理</a>
+                        <a href="{%url 'librarian:librarian_booktype'%}"><i class="glyphicon glyphicon-chevron-right"></i> 图书分类管理</a>
                     </li>
                     <li>
-                        <a href="/librarian_borrow/"><i class="glyphicon glyphicon-chevron-right"></i> 图书借阅信息</a>
+                        <a href="{%url 'librarian:librarian_borrow'%}"><i class="glyphicon glyphicon-chevron-right"></i> 图书借阅信息</a>
                     </li>
                     <li>
-                        <a href="/librarian_history/"><i class="glyphicon glyphicon-chevron-right"></i> 图书归还信息</a>
+                        <a href="{%url 'librarian:librarian_history'%}"><i class="glyphicon glyphicon-chevron-right"></i> 图书归还信息</a>
                     </li>
                 </ul>
 
@@ -183,7 +183,7 @@ id="{{user.Name}}" onclick="showInfo2('myx'，'{{ user.Password }}'，'{{ user.r
                                      <!-------------------------------------------------------------->
 
                                         <!-- 修改模态框（Modal） -->
-                               <form class="form-horizontal" method="post" action="/change_user_to_database/">   <!--保证样式水平不混乱-->
+                               <form class="form-horizontal" method="post" action="{%url 'librarian:change_user_to_database'%}">   <!--保证样式水平不混乱-->
 									<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
 										<div class="modal-dialog">
 											<div class="modal-content">
@@ -281,7 +281,7 @@ id="{{user.Name}}" onclick="showInfo2('myx'，'{{ user.Password }}'，'{{ user.r
 
 
      <!--------------------------------------添加的模糊框------------------------>
-                                 <form class="form-horizontal" method="post" action="/add_user_to_database/">   <!--保证样式水平不混乱-->
+                                 <form class="form-horizontal" method="post" action="{%url 'librarian:add_user_to_database'%}">   <!--保证样式水平不混乱-->
                                         <!-- 模态框（Modal） -->
                                     {% csrf_token %}
 									<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

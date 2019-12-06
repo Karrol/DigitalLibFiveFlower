@@ -1,6 +1,8 @@
 from django.urls import path,include
 from readerService import views
 
+app_name='readerService'
+
 urlpatterns = [
     path('bookReservation/',views.bookReservation, name='bookReservation'),
     path('bookReservationTips/',views.bookReservationTips, name='bookReservationTips'),

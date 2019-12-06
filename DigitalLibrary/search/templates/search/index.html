@@ -24,4 +24,95 @@
         </form>
     </div>
 
+
+   <div style="height:400px;margin: 100px auto auto auto;" class="container" >
+					<div class="carousel slide" id="slidershow" data-ride="carousel" data-interval="2000">
+						<!--计数器-->
+						<ol class="carousel-indicators">
+							<li class="active" data-target="#slidershow" data-slide-to="0"></li>
+							<li data-target="#slidershow" data-slide-to="1"></li>
+							<li data-target="#slidershow" data-slide-to="2"></li>
+						</ol>
+						<!--图片容器-->
+						<div class="carousel-inner">
+							<div class="item active">
+								<img src="http://pic.paopaoche.net/up/2017-7/14994186373424512.jpg"/>
+								<!--添加对应标题和内容-->
+								<div class="carousel-caption">
+									<h4>三国演义</h4>
+									<span>推荐原因</span>
+								</div>
+							</div>
+							<div class="item">
+								<img src="http://img1.imgtn.bdimg.com/it/u=1768985436,2222548898&fm=214&gp=0.jpg"/>
+								<!--添加对应标题和内容-->
+								<div class="carousel-caption">
+									<h4>红楼梦</h4>
+									<span>推荐原因</span>
+								</div>
+							</div>
+							<div class="item">
+								<img src="http://img4.imgtn.bdimg.com/it/u=4099180291,3073107427&fm=26&gp=0.jpg"/>
+								<!--添加对应标题和内容-->
+								<div class="carousel-caption">
+									<h4>水浒传</h4>
+									<span>推荐原因</span>
+								</div>
+							</div>
+							<!--轮播导航-->
+							<a href="#slidershow" data-slide="prev" class="left carousel-control" role="button">
+								<! <img src="media"/> >
+							</a>
+							<a href="#slidershow" data-slide="next" class="right carousel-control" role="button">
+								<! <img src="media"/> >
+							</a>
+						</div>
+					</div>
+				</div>
+
+    </div>
+    <div class="container">
+        <!-- Main hero unit for a primary marketing message or call to action -->
+        <!-- Example row of columns -->
+        <div style="
+
+    width: 550px;
+
+    height: 670px;
+
+    float: left;
+
+    border:1px solid #d8d8d8;
+
+    border-top:2px #bd1e30 solid;
+
+    -webkit-box-sizing: border-box;
+
+    -moz-box-sizing: border-box;
+
+    box-sizing: border-box;" class="row">
+            <li><a href="{%url 'infoCenter:newsIntro'%}">新闻公告</a></li>
+            </div>
+        <div style="
+
+    width: 550px;
+
+    height: 670px;
+
+    float: right;
+
+    border:1px solid #d8d8d8;
+
+    border-top:2px #bd1e30 solid;
+
+    -webkit-box-sizing: border-box;
+
+    -moz-box-sizing: border-box;
+
+    box-sizing: border-box;" class="row">
+            <li><a href="{%url 'readerService:bookReservation'%}">读者服务</a></li>
+            </div>
+        </div>
+
+
 {% endblock %}

@@ -7,6 +7,8 @@ from django.conf import settings
 from django.urls import path
 from . import views
 
+app_name='readerCenter'
+
 urlpatterns = [
                 #个人资料
                 path('profile/', views.profile, name='profile'),

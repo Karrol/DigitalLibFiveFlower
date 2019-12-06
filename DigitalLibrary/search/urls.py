@@ -7,6 +7,8 @@ from django.conf import settings
 from django.urls import path
 from . import views
 
+app_name='search'
+
 urlpatterns = [
                 #检索首页
                 path('searchindex/', views.index, name='searchindex'),

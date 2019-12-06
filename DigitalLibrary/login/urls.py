@@ -5,6 +5,8 @@ from django.conf import settings
 from . import views
 from django.urls import path
 
+app_name='login'
+
 urlpatterns = [
                   #登录
                   path('login/', views.user_login, name='login'),
