@@ -1,5 +1,5 @@
 from django import forms
-
+from login.models import Reader
 
 class NewUserForm(forms.Form):
     gender = (
@@ -26,3 +26,14 @@ class ChangeUserForm(forms.Form):
     bookNumber = forms.IntegerField(label="最大可借图书数", widget=forms.TextInput(attrs={'class': 'form-control'}))
     email = forms.EmailField(label="邮箱地址", widget=forms.EmailInput(attrs={'class': 'form-control'}))
     sex = forms.ChoiceField(label='性别', choices=gender)
+
+'''class NewUserForm(forms.ModelForm):
+    class Meta:
+        model = Reader
+        fields = '__all__'
+
+
+class ChangeUserForm(forms.ModelForm):
+    class Meta:
+        model = Reader
+        fields = '__all__' '''
