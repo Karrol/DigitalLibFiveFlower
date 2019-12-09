@@ -2,6 +2,22 @@ from django import forms
 from .models import person_info,Reader,librarian_info
 from django.contrib.auth.models import User
 class LoginForm(forms.Form):
+    #张丽：widget的attrs是在设置渲染出来的HTML代码中的<textinput class="",name="",id="">
+    role_type = (
+        (0, '读者'),
+        (1, '图书馆员'),
+    )
+    
+    role = forms.ChoiceField(
+        label='登录身份:',
+        widget=forms.Select(attrs={
+            'class': 'form-control',
+            'name': 'role',
+            'id': 'id_role',
+        }),
+        choices=role_type,
+        initial=role_type[0])
+
     username = forms.CharField(
         max_length=16,
         label=u'用户名：',
@@ -21,10 +37,10 @@ class LoginForm(forms.Form):
         }),
     )
 
-
+#张丽：只有读者有注册界面
 class RegisterForm(forms.Form):
     username = forms.CharField(
-        label=u'用户名/手机号码：',
+        label=u'用户名/电子邮箱：',
         widget=forms.TextInput(attrs={
             'class': 'form-control',
             'name': 'username',
@@ -32,7 +48,7 @@ class RegisterForm(forms.Form):
         }),
     )
     name = forms.CharField(
-        label=u'名字：',
+        label=u'读者姓名：',
         widget=forms.TextInput(attrs={
             'class': 'form-control',
             'name': 'name',
@@ -41,7 +57,7 @@ class RegisterForm(forms.Form):
     )
     password = forms.CharField(
         label=u'密码：',
-        widget=forms.TextInput(attrs={
+        widget=forms.PasswordInput(attrs={
             'class': 'form-control',
             'name': 'password',
             'id': 'id_password',
@@ -49,22 +65,22 @@ class RegisterForm(forms.Form):
     )
     re_password = forms.CharField(
         label=u'重复密码：',
-        widget=forms.TextInput(attrs={
+        widget=forms.PasswordInput(attrs={
             'class': 'form-control',
             'type': 'password',
             'name': 're_password',
             'id': 'id_re_password',
         }),
     )
-    email = forms.CharField(
-        label=u'电子邮件：',
+    '''phone = forms.CharField(
+        label=u'联系电话：',
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'name': 'email',
-            'id': 'id_email',
+            'name': 'phone',
+            'id': 'id_phone',
         }),
         required=False,
-    )
+    )  '''
 
     photo = forms.FileField(
         label=u'头像：',
