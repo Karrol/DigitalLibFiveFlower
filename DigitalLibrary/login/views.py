@@ -56,16 +56,16 @@ def librarian_login(request):
         login_form = librarianLogin(request.POST)
         message = "请检查填写的内容！"
         if login_form.is_valid():
-            email = login_form.cleaned_data['username']
+            gonghao = login_form.cleaned_data['username']
             password = login_form.cleaned_data['password']
             try:
                 # 与数据中的User表进行对比
-                user = User.objects.get(username=email)
+                user = User.objects.get(username=gonghao)
                 if user.password == password:
                     # 往session中写值，session可以作为一个字典集合，在HTTP请求时会同时进行传递，可以实现页面传参鸭
                     request.session['is_login'] = True
                     request.session['user_id'] = user.id
-                    request.session['user_email'] = user.username
+                    request.session['user_gonghao'] = user.username
                     #张丽：TO DO 用户存在返回首页，这里的首页暂且search的检索首页
                     return redirect("readerCenter:profile")
                 else:
