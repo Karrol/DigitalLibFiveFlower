@@ -39,4 +39,6 @@ urlpatterns = [
     url(r'^ueditor/', include('DjangoUeditor.urls')),
     url(r'infoCenter/', include('infoCenter.urls')),
     url(r'service/', include('service.urls')),
+    #张丽：登录图形验证码
+    url(r'^captcha', include('captcha.urls')),
 ]

@@ -5,15 +5,17 @@ from django.conf import settings
 from . import views
 from django.urls import path
 
-app_name='login'
+app_name ='login'
 
 urlpatterns = [
-                  #登录
-                  path('login/', views.user_login, name='login'),
+                  #读者登录
+                  path('rlogin/', views.reader_login, name='readerLogin'),
+                  #馆员登录
+                  path('liblogin/', views.librarian_login, name='librarianLogin'),
                   #登出
                   path('logout/', views.user_logout, name='user_logout'),
                   #注册
-                  path('register/', views.user_register, name='user_register'),
+                  path('register/', views.user_register, name='userRegister'),
                   #修改密码
                   path('set_password/', views.set_password, name='set_password'),
     

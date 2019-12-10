@@ -1,112 +1,121 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django import forms
+import datetime
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .models import Reader
-from .forms import LoginForm,RegisterForm,ResetPasswordForm
+from .forms import readerLogin,librarianLogin,RegisterForm,ResetPasswordForm
 
 # Create your views here.
 
-
-#用户登录，通过role角色选择决定跳转页面
-def user_login(request):
-    #避免用户重复登录
-    if request.user.is_authenticated:
-        #TO DO:这里跳转回图书馆首页，逻辑上才通顺
-        return redirect("readerCenter:profile")
-    
-    state = None
-
-    if request.method == 'POST':
-        #获取表单数据
-        userRole=request.POST.get('role')
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        #利用Django内置登录方法进行用户验证
-        user = auth.authenticate(username=username, password=password)
-        if user:
-            #TO DO:如果用户是激活状态的，就登录-这有安全bug
-            if user.is_active:
-                auth.login(request, user)
-                #判断用户分组，读者跳转个人中/检索界面
-                if int(userRole)==0:
-                    return redirect('readerCenter:profile')
-                #馆员跳转管理界面
-                if int(userRole)==1:
-                    return redirect('librarian:index')
-                #防止数据库端在输入馆员信息时出现误操作
-                return HttpResponse(u'Your account do not blong to any type of user in this website.')
-            else:
-                return HttpResponse(u'Your account is disabled.')
-        else:
-            state = 'not_exist_or_password_error'
-
-    context = {
-        'loginForm': LoginForm(),
-        'state': state,
-    }
-
-    return render(request, 'login/login.html', context)
+#reader_login
+def reader_login(request):
+    #禁止用户重复登录
+    if request.session.get('is_login', None):
+        return redirect('/index')
+    #设置Tag用于login.html进行识别
+    Tag='readerLogin'
+    if request.method == "POST":
+        login_form = readerLogin(request.POST)
+        message = "请检查填写的内容！"
+        if login_form.is_valid():
+            email = login_form.cleaned_data['username']
+            password = login_form.cleaned_data['password']
+            try:
+                # 与数据中的User表进行对比
+                user = User.objects.get(username=email)
+                if user.password == password:
+                    # 往session中写值，session可以作为一个字典集合，在HTTP请求时会同时进行传递，可以实现页面传参鸭
+                    request.session['is_login'] = True
+                    request.session['user_id'] = user.id
+                    request.session['user_email'] = user.username
+                    #张丽：TO DO 用户存在返回首页，这里的首页暂且search的检索首页
+                    return redirect("readerCenter:profile")
+                else:
+                    message = "登录密码不正确！"
+            except:
+                message = "读者不存在！"
+        #locals()可以返回views中所有的变量
+        return render(request, 'login/login.html', locals())
+    #没有传输数据的话，就重新返回登录界面，这里也是初始登录界面的渲染
+    login_form = readerLogin()
+    return render(request, 'login/login.html', locals())
 
 
-#用户注册（采用邮箱注册的方式）
+#librarian_login
+def librarian_login(request):
+    # 禁止用户重复登录
+    if request.session.get('is_login', None):
+        return redirect('/index')
+    #判断数据传输模式
+    if request.method == "POST":
+        login_form = readerLogin(request.POST)
+        message = "请检查填写的内容！"
+        if login_form.is_valid():
+            email = login_form.cleaned_data['username']
+            password = login_form.cleaned_data['password']
+            try:
+                # 与数据中的User表进行对比
+                user = User.objects.get(username=email)
+                if user.password == password:
+                    # 往session中写值，session可以作为一个字典集合，在HTTP请求时会同时进行传递，可以实现页面传参鸭
+                    request.session['is_login'] = True
+                    request.session['user_id'] = user.id
+                    request.session['user_email'] = user.username
+                    #张丽：TO DO 用户存在返回首页，这里的首页暂且search的检索首页
+                    return redirect("readerCenter:profile")
+                else:
+                    message = "登录密码不正确！"
+            except:
+                message = "读者不存在！"
+        #locals()可以返回views中所有的变量
+        return render(request, 'login/login.html', locals())
+    #没有传输数据的话，就重新返回登录界面，这里也是初始登录界面的渲染
+    login_form = readerLogin()
+    return render(request, 'login/login.html', locals())
+
+#reader sign in
 def user_register(request):
-    #已登录用户不可在登录状态下注册
-    if request.user.is_authenticated:
-        # TO DO:这里跳转回图书馆首页，逻辑上才通顺
-        return redirect('readerCenter:profile')
-    #实例化注册表单，只有读者需要注册
-    registerForm = RegisterForm()
-    state = None
-    if request.method == 'POST':
-        #为了上传头像
-        registerForm = RegisterForm(request.POST, request.FILES)
-        #首先判断表单的密码输入是否正确，获取password\repeat_password字段
-        password = request.POST.get('password', '')
-        repeat_password = request.POST.get('re_password', '')
-        if password == '' or repeat_password == '':
-            state = 'empty'
-        elif password != repeat_password:
-            state = 'repeat_error'
-        else:
-            #判断用户名是否存在，获取username、name字段
-            username = request.POST.get('username', '')
-            name = request.POST.get('name', '')
-            if User.objects.filter(username=username):
-                state = 'user_exist'
+    if request.session.get('is_login', None):
+        # 登录状态不允许注册。你可以修改这条原则！
+        return redirect("/index/")
+    if request.method == "POST":
+        register_form = RegisterForm(request.POST,request.FILES)
+        nowtime=datetime.date.today()
+        message = "请检查填写的内容！"
+        if register_form.is_valid():  # 获取数据
+            username = register_form.cleaned_data['username']
+            password1 = register_form.cleaned_data['password1']
+            password2 = register_form.cleaned_data['password2']
+            name = register_form.cleaned_data['name']
+            sex = register_form.cleaned_data['sex']
+            if password1 != password2:  # 判断两次密码是否相同
+                message = "两次输入的密码不同！"
+                return render(request, 'login/register.html', locals())
             else:
-                #检查无误后创建新用户
-                #给内置User表单赋值
+                same_email_user = Reader.objects.filter(email=username)
+                if same_email_user:  # 用户名唯一
+                    message = '该邮箱地址已被注册，请使用别的邮箱！'
+                    return render(request, 'login/register.html', locals())
+
+                # 当一切都OK的情况下，创建新用户
                 new_user = User.objects.create(username=username)
-                new_user.set_password(password)
+                new_user.set_password(password1)#set_password方法可以实现密码加密
                 new_user.save()
-                #给Reader表单赋值,email和User中的username应该一致
-                new_reader = Reader.objects.create(user=new_user, name=name, email=username)
-                new_reader.photo = request.FILES['photo']
-                new_reader.save()
-                #用户注册成功：User注册+Reader表中注册
-                state = 'success'
-                #注册成功后自动登录
+                new_reader = Reader.objects.create(user=new_user, name=name, email=username,inTime = nowtime)
+                new_reader.Sex = sex
                 auth.login(request, new_user)
-                
-                context = {
-                    'state': state,
-                    'registerForm': registerForm,
-                }
-                return render(request, 'login/register.html', context)
-    #在没有成功注册时，state=none,此时应返回未提交前的表单
-    context = {
-        'state': state,
-        'registerForm': registerForm,
-    }
+                new_reader.save()
+                message="注册成功"
 
-    return render(request, 'login/register.html', context)
+                return redirect('login:readerLogin')  # 自动跳转到登录页面
+    register_form = RegisterForm()
+    return render(request, 'login/register.html', locals())
 
 
-
-#用户修改验证码
+#用户修改密码
 @login_required
 def set_password(request):
     user = request.user
@@ -137,5 +146,14 @@ def set_password(request):
 #用户登出
 @login_required
 def user_logout(request):
-    auth.logout(request)
-    return redirect("login:login")
+    if not request.session.get('is_login', None):
+        # 如果本来就未登录，也就没有登出一说
+        return redirect("/index/")
+    request.session.flush()
+    # 或者使用下面的方法
+    # del request.session['is_login']
+    # del request.session['user_id']
+    # del request.session['user_name']
+    return redirect("/index/")
+
+

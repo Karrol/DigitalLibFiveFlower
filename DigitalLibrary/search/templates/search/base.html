@@ -42,11 +42,9 @@
 
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="nav navbar-nav">
-            <li><a href="{%url 'search:searchindex'%}">首页</a></li>
+            <li><a href="{%url 'search:searchindex'%}">检索首页</a></li>
             <li><a href="{%url 'readerCenter:showsearchlist'%}">查询结果</a></li>
             <li><a href="{%url 'readerCenter:mylib'%}">我的图书馆</a></li>
-            <li><a href="{%url 'readerService:bookReservation'%}">读者服务</a></li>
-            <li><a href="{%url 'participate:article_list'%}">读者参与</a></li>
             
 
 
@@ -70,7 +68,14 @@
                 </ul>
             {% else %}
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{%url 'login:login'%}">登陆</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">登录<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{%url 'login:readerLogin'%}">读者登录</a></li>
+                            <li><a href="{%url 'login:librarianLogin'%}">馆员登录</a></li>
+                        </ul>
+                    </li>
                     <li><a href="{%url 'login:user_register'%}">注册</a></li>
                 </ul>
 
@@ -86,12 +91,10 @@
     <div class="container" style="text">
         <font  color="#F5F5DC"><h1>数字图书馆馆藏检索</h1></font>
         <font  color="#F5F5DC"><h2>检索、发现</h2></font>
+
     </div>
 
 </header>
-
-
-
 
 {% block content %}
 {% endblock %}

@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'service',
     'DjangoUeditor',
     'taggit',
+    'captcha',
 ]
 
 MIDDLEWARE = [

@@ -15,7 +15,7 @@ class Change_reader_infoForm(forms.ModelForm):
         model = Reader
         #设置转换字段，必选，属性值为'__all__'时全部转换
         #fields = '__all__'
-        fields = ['name','photo','email']
+        fields = ['name','email']
         #禁止模型转换的字段，可选，若设置了该属性，fields则可以不设置
         exclude = ['user','phone','max_borrowing','balance','status','intTime','readertypeName']
         #设置HTML元素控件的label标签，可选
