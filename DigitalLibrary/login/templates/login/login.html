@@ -9,7 +9,8 @@
      <div class="container myContainer">
         <div class="row">
             <div class="col-md-4 col-md-offset-4 ">
-              <form class='form-login' action="{%url 'login:readerLogin'%}" method="post">
+                {% if tag == 'readerLogin' %}
+                <form class='form-login' action="{%url 'login:readerLogin'%}" method="post">
 
                   {% if message %}
                       <div class="alert alert-warning">{{ message }}</div>
@@ -35,6 +36,7 @@
                   <button type="submit" class="btn btn-primary pull-right">提交</button>
 
               </form>
+                {%endif%}
             {% if tag == 'librarianLogin' %}
               <form class='form-login' action="{%url 'login:librarianLogin'%}" method="post">
 

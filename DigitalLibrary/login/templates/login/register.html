@@ -7,22 +7,6 @@
 
 {% block content %}
 
-    {% if state %}
-        <div class="col-md-2 col-md-offset-5">
-            <div class="alert alert-warning">
-                <a href="#" class="close" data-dismiss="alert">&times;</a>
-                {% if state == 'success' %}
-                    <h2> 注册成功！ </h2>
-                {% elif state == 'repeat_error' %}
-                    <h2> 密码重复错误 </h2>
-                {% elif state == 'empty' %}
-                    <h2> 密码不能为空 </h2>
-                {% elif state == 'user_exist' %}
-                    <h2> 用户已经存在,<a href="{%url 'login:login'%}">请点击此处跳转登录界面</a> </h2>
-                {% endif %}
-            </div>
-        </div>
-    {% endif %}
 
      <div class="container">
         <div class="col-md-4 col-md-offset-4">

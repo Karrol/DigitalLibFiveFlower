@@ -16,7 +16,7 @@ def reader_login(request):
     if request.session.get('is_login', None):
         return redirect('/index')
     #设置Tag用于login.html进行识别
-    Tag='readerLogin'
+    tag='readerLogin'
     if request.method == "POST":
         login_form = readerLogin(request.POST)
         message = "请检查填写的内容！"
@@ -49,9 +49,11 @@ def librarian_login(request):
     # 禁止用户重复登录
     if request.session.get('is_login', None):
         return redirect('/index')
+    tag = 'librarianLogin'
     #判断数据传输模式
     if request.method == "POST":
-        login_form = readerLogin(request.POST)
+
+        login_form = librarianLogin(request.POST)
         message = "请检查填写的内容！"
         if login_form.is_valid():
             email = login_form.cleaned_data['username']
@@ -73,7 +75,7 @@ def librarian_login(request):
         #locals()可以返回views中所有的变量
         return render(request, 'login/login.html', locals())
     #没有传输数据的话，就重新返回登录界面，这里也是初始登录界面的渲染
-    login_form = readerLogin()
+    login_form = librarianLogin()
     return render(request, 'login/login.html', locals())
 
 #reader sign in
@@ -110,7 +112,7 @@ def user_register(request):
                 new_reader.save()
                 message="注册成功"
 
-                return redirect('login:readerLogin')  # 自动跳转到登录页面
+                return redirect('login:userRegister')  # 自动跳转到登录页面
     register_form = RegisterForm()
     return render(request, 'login/register.html', locals())
 
