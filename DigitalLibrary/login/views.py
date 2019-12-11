@@ -23,20 +23,19 @@ def reader_login(request):
         if login_form.is_valid():
             email = login_form.cleaned_data['username']
             password = login_form.cleaned_data['password']
-            try:
-                # 与数据中的User表进行对比
-                user = User.objects.get(username=email)
-                if user.password == password:
-                    # 往session中写值，session可以作为一个字典集合，在HTTP请求时会同时进行传递，可以实现页面传参鸭
+            user = auth.authenticate(username=email, password=password)
+            if user:
+                if user.is_active:
+                    auth.login(request, user)
                     request.session['is_login'] = True
                     request.session['user_id'] = user.id
                     request.session['user_email'] = user.username
-                    #张丽：TO DO 用户存在返回首页，这里的首页暂且search的检索首页
-                    return redirect("readerCenter:profile")
+                    # 张丽：TO DO 用户存在返回首页
+                    return redirect('/index')
                 else:
-                    message = "登录密码不正确！"
-            except:
-                message = "读者不存在！"
+                    return HttpResponse(u'账号不能通行')
+            else:
+                message = "登录密码不正确或读者不存在！"
         #locals()可以返回views中所有的变量
         return render(request, 'login/login.html', locals())
     #没有传输数据的话，就重新返回登录界面，这里也是初始登录界面的渲染
@@ -58,27 +57,27 @@ def librarian_login(request):
         if login_form.is_valid():
             gonghao = login_form.cleaned_data['username']
             password = login_form.cleaned_data['password']
-            try:
-                # 与数据中的User表进行对比
-                user = User.objects.get(username=gonghao)
-                if user.password == password:
-                    # 往session中写值，session可以作为一个字典集合，在HTTP请求时会同时进行传递，可以实现页面传参鸭
+            user = auth.authenticate(username=gonghao, password=password)
+
+            if user:
+                if user.is_active:
+                    auth.login(request, user)
                     request.session['is_login'] = True
                     request.session['user_id'] = user.id
-                    request.session['user_gonghao'] = user.username
-                    #张丽：TO DO 用户存在返回首页，这里的首页暂且search的检索首页
-                    return redirect("readerCenter:profile")
+                    request.session['user_email'] = user.username
+                    # 张丽：TO DO 用户存在返回首页
+                    return redirect('/index')
                 else:
-                    message = "登录密码不正确！"
-            except:
-                message = "读者不存在！"
+                    return HttpResponse(u'账号不能通行')
+            else:
+                message = "登录密码不正确或读者不存在！"
         #locals()可以返回views中所有的变量
         return render(request, 'login/login.html', locals())
     #没有传输数据的话，就重新返回登录界面，这里也是初始登录界面的渲染
     login_form = librarianLogin()
     return render(request, 'login/login.html', locals())
 
-#reader sign in
+#reader sign in ,利用了Django内置的登录和注册方法实现用户注册，可以保证密码加密
 def user_register(request):
     if request.session.get('is_login', None):
         # 登录状态不允许注册。你可以修改这条原则！
@@ -112,7 +111,7 @@ def user_register(request):
                 new_reader.save()
                 message="注册成功"
 
-                return redirect('login:userRegister')  # 自动跳转到登录页面
+                return render(request, 'login/register.html', locals())
     register_form = RegisterForm()
     return render(request, 'login/register.html', locals())
 
