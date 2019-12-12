@@ -49,7 +49,7 @@
 
 
         </ul>
-           {% if request.session.is_login %}
+           {% if user.is_authenticated %}
 
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
@@ -83,10 +83,9 @@
       </div>
     </div>
   </nav> <!--navbar end-->
+    
+<header class="jumbotron myJumbotron" style="background-image: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1576160277343&di=42646912620af2364ae0defa1d1f1f56&imgtype=0&src=http%3A%2F%2Fupload.art.ifeng.com%2F2017%2F0724%2F1500875463781.jpg');">
 
-
-
-<header class="jumbotron myJumbotron" src="{%static 'img/home_backgroud.jpg'%}">
 
     <div class="container" style="text">
         <font  color="#F5F5DC"><h1>数字图书馆馆藏检索</h1></font>

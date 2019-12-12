@@ -34,6 +34,13 @@ def index(request):
     
     return render(request, 'search/index.html', context)
 
+def test(request):
+    news = newsArticle_info.objects.order_by('-newsPubdate')[:10]
+    context = {
+        'searchForm': SearchForm(),
+        'news': news,
+    }
+    return render(request, 'search/index_test.html',context)
 
 
 #书籍检索结果页

@@ -6,7 +6,7 @@
 {% block content %}
 
     <div class="container myContainer">
-        <form action="{%url 'search:searchBook'%}" method="GET"
+        <form action="{%url 'search:searchBook'%}" method="GET">
             <div class="row col-lg-7 col-lg-offset-3">
 
                 {% for radio in searchForm.search_by %}

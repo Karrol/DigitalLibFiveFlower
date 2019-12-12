@@ -1,0 +1,302 @@
+{% extends 'login/base_test.html' %}
+{% load static %}
+{% load staticfiles %}
+{% block content %}
+<!--轮换栏-->
+  <section id="intro">
+    <div class="jumbotron masthead">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <div class="camera_wrap camera_black_skin" id="camera_wrap_2">
+              <!--点击轮换栏应进入对应的新闻界面-->
+              <div data-thumb="{%static 'assets/img/slides/camera/img1.jpg'%}" data-src="{%static 'assets/img/slides/camera/img1.jpg'%}">
+                <div class="camera_caption fadeFromBottom">
+                  <h2>每周一书</h2>
+                  <div class="hidden-phone">
+                    <p>
+                     <!--{{var}}图书推荐语-->
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              <div data-thumb="{%static 'assets/img/slides/camera/img2.jpg'%}" data-src="{%static 'assets/img/slides/camera/img2.jpg'%}">
+                <div class="camera_caption fadeFromBottom">
+                  <h2>Responsive layout</h2>
+                  <div class="hidden-phone">
+                    <p>
+                      <!--{{var}}图书推荐语-->
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div data-thumb="{%static 'assets/img/slides/camera/img3.jpg'%}" data-src="{%static 'assets/img/slides/camera/img3.jpg'%}">
+                <div class="camera_caption fadeFromBottom">
+                  <h2>Metro style</h2>
+                  <div class="hidden-phone">
+                    <p>
+                      <!--{{var}}图书推荐语-->
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div data-thumb="{%static 'assets/img/slides/camera/img4.jpg'%}" data-src="{%static 'assets/img/slides/camera/img4.jpg'%}">
+                <div class="camera_caption fadeFromBottom">
+                  <h2>Lot of features</h2>
+                  <div class="hidden-phone">
+                    <p>
+                       <!--{{var}}图书推荐语-->
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- #camera_wrap_1 -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!--在此处渲染搜索框-->
+
+   <!--<div class="container myContainer">
+        <form action="{%url 'search:searchBook'%}" method="GET">
+            <div class="row col-lg-7 col-lg-offset-3">
+                {% for radio in searchForm.search_by %}
+                    <div class="radio-inline">
+                        {{ radio }}
+                    </div>
+                {% endfor %}
+                <div class="input-group">
+                    {{ searchForm.keyword }}
+                    <span class="input-group-btn">
+                        <button class="btn btn-default btn-lg btn-info" type="submit">图书检索</button>
+                    </span>
+                </div>
+            </div>
+        </form>
+    </div> -->
+
+
+
+
+  <section id="maincontent">
+    <div class="container">
+
+      <div class="row">
+
+        <div class="span3">
+          <h3 class="heading-success"><span class="btn btn-large btn-success"><i class="m-icon-big-swapright m-icon-white"></i></span>&nbsp;&nbsp;读者核心</h3>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本数字图书馆面向广大市民朋友们与图书馆工作人员，提供书籍检索、读者服务。点击尝试！</p>
+        </div>
+
+       <div class="span3">
+           <a href="{%url 'search:searchindex'%}"><div class="well well-primary box">
+            <img src="{%static 'assets/img/icons/box-1-white.png'%}" alt="" />
+            <h3>图书检索</h3>
+            <p>检索馆藏图书&检索电子图书</p>
+          </div> </a>
+        </div>
+
+        <div class="span3">
+          <div class="well well-success box">
+            <img src="{%static 'assets/img/icons/box-2-white.png'%}" alt="" />
+            <h3>借阅服务</h3>
+            <p>借阅与预约图书说明 </p>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="well well-warning box">
+            <img src="{%static 'assets/img/icons/box-3-white.png'%}" alt="" />
+            <h3>在线论坛</h3>
+            <p>
+                提供交流、建议的平台
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <section id="maincontent">
+    <div class="container">
+
+      <div class="row">
+
+        <div class="span3">
+          <h3 class="heading-success"><span class="btn btn-large btn-success"><i class="m-icon-big-swapright m-icon-white"></i></span>&nbsp;&nbsp;新闻公告</h3>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+        </div>
+
+        <div class="span3">
+             <table class="table table-condensed">
+                <caption>近期新闻</caption>
+                <thead>
+                  <tr>
+                    <th>名称</th>
+                    <th>日期</th>
+                    <th><a href="#">更多</a></th></tr>
+                </thead>
+                <tbody>
+                 {% for item in news %}
+			<!--张丽：这里的url怎么跳转的和玉和商量一下呢-->
+                  <tr>
+                    <td><a href="#">{{item.newsTitle}}</a></td>
+                    <td>{{item.newsPubdate}}</td></tr> {%endfor%}
+                </tbody>
+              </table>
+        </div>
+        <div class="span3">
+             <table class="table table-condensed">
+                <caption>公告</caption>
+                <thead>
+                  <tr>
+                    <th>名称</th>
+                    <th>日期</th>
+                    <th><a href="#">更多</a></th></tr>
+                </thead>
+                <tbody>
+                 {% for item in news %}
+			<!--张丽：这里的url怎么跳转的和玉和商量一下呢-->
+                  <tr>
+                    <td><a href="#">{{item.newsTitle}}</a></td>
+                    <td>{{item.newsPubdate}}</td></tr> {%endfor%}
+                </tbody>
+              </table>
+        </div>
+        
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <section id="bottom">
+    <div class="container">
+
+      <!-- divider -->
+      <div class="row">
+        <div class="span12">
+          <div class="divider"></div>
+        </div>
+      </div>
+      <!-- end divider -->
+
+
+      <div class="row">
+        <div class="span12">
+          <h3><a class="btn btn-large btn-success" href="#"><i class="m-icon-big-swapdown m-icon-white"></i></a> Recent works</h3>
+
+          <div id="latest-work" class="carousel btleft">
+            <div class="carousel-wrapper">
+
+              <ul class="portfolio-home da-thumbs">
+                <li>
+                  <div class="thumbnail">
+                    <div class="image-wrapp">
+                      <img src="{%static 'assets/img/dummies/work1.jpg'%}" alt="Portfolio name" title="" />
+                      <article class="da-animate da-slideFromRight" style="display: block;">
+                        <a class="link_post" href="portfolio-detail.html"><img src="{%static 'assets/img/icons/link_post_icon.png'%}" alt="" /></a>
+                        <span><a class="zoom" data-pretty="prettyPhoto" href="{%static 'assets/img/dummies/big1.jpg'%}"><img src="{%static 'assets/img/icons/zoom_icon.png'%}" alt="Portfolio name" title="Portfolio name" /></a></span>
+                      </article>
+                    </div>
+                    <div class="caption">
+                      <h5>Portfolio name</h5>
+                    </div>
+
+                  </div>
+                </li>
+                <li>
+                  <div class="thumbnail">
+                    <div class="image-wrapp">
+                      <img src="{%static 'assets/img/dummies/work2.jpg'%}" alt="Portfolio name" title="" />
+                      <article class="da-animate da-slideFromRight" style="display: block;">
+                        <a class="link_post" href="portfolio-detail.html"><img src="{%static 'assets/img/icons/link_post_icon.png'%}" alt="" /></a>
+                        <span><a class="zoom" data-pretty="prettyPhoto" href="{%static 'assets/img/dummies/big1.jpg'%}"><img src="{%static 'assets/img/icons/zoom_icon.png'%}" alt="Portfolio name" title="Portfolio name" /></a></span>
+                      </article>
+                    </div>
+                    <div class="caption">
+                      <h5>Portfolio name</h5>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="thumbnail">
+                    <div class="image-wrapp">
+                      <img src="{%static 'assets/img/dummies/work3.jpg'%}" alt="Portfolio name" title="" />
+                      <article class="da-animate da-slideFromRight" style="display: block;">
+                        <a class="link_post" href="portfolio-detail.html"><img src="{%static 'assets/img/icons/link_post_icon.png'%}" alt="" /></a>
+                        <span><a class="zoom" data-pretty="prettyPhoto" href="{%static 'assets/img/dummies/big1.jpg'%}"><img src="{%static 'assets/img/icons/zoom_icon.png'%}" alt="Portfolio name" title="Portfolio name" /></a></span>
+                      </article>
+                    </div>
+                    <div class="caption">
+                      <h5>Portfolio name</h5>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="thumbnail">
+                    <div class="image-wrapp">
+                      <img src="{%static 'assets/img/dummies/work4.jpg'%}" alt="Portfolio name" title="" />
+                      <article class="da-animate da-slideFromRight" style="display: block;">
+                        <a class="link_post" href="portfolio-detail.html"><img src="{%static 'assets/img/icons/link_post_icon.png'%}" alt="" /></a>
+                        <span><a class="zoom" data-pretty="prettyPhoto" href="{%static 'assets/img/dummies/big1.jpg'%}"><img src="{%static 'assets/img/icons/zoom_icon.png'%}" alt="Portfolio name" title="Portfolio name" /></a></span>
+                      </article>
+                    </div>
+                    <div class="caption">
+                      <h5>Portfolio name</h5>
+                    </div>
+                  </div>
+                </li>
+
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer
+ ================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+
+      </div>
+    </div>  
+
+    <div class="verybottom">
+      <div class="container">
+        <div class="row">
+          <div class="span6">
+            <p>&copy;五朵金花</p>
+          </div>
+          <div class="span6">
+            <div class="pull-right">
+              <div class="credits">
+                <!--
+                  All the links in the footer should remain intact.
+                  You can delete the links only if you purchased the pro version.
+                  Licensing information: https://bootstrapmade.com/license/
+                  Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Scaffold
+                -->
+                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+{% endblock %}
