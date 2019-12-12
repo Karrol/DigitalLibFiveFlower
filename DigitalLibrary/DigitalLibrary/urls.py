@@ -29,7 +29,6 @@ import infoCenter.views as infoCenter_view
 
 urlpatterns = [
     url('admin/', admin.site.urls),
-    #url(r'^$', search_view.index, name='index'),
     url(r'^$', search_view.test, name='indextest'),
     url(r'^login/', include('login.urls',namespace = 'login')),
     url(r'^readerCenter/', include('readerCenter.urls',namespace = 'readerCenter')),

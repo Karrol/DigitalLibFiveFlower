@@ -60,7 +60,7 @@
               <ul class="nav topnav">
 
                 <li class="dropdown success active">
-                  <a href="/index"><i class="icon-home icon-white"></i>首页</a>
+                  <a href="/"><i class="icon-home icon-white"></i>首页</a>
                   <!--<ul class="dropdown-menu">
                     <li><a href="index_alt1.html">Index alt 1</a></li>
                     <li><a href="index_alt2.html">Index alt 2</a></li>
@@ -135,13 +135,13 @@
                 </li>
               {% if user.is_authenticated %}
                 <li class="dropdown info">
-                  <a href="#"><i class="icon-bullhorn icon-white"></i>个人中心</a>
+                  <a href="{%url 'readerCenter:profile'%}"><i class="icon-bullhorn icon-white"></i>个人中心</a>
                   <ul class="dropdown-menu">
-                    <li class="dropdown"><a href="#">个人资料</a></li>
-                    <li><a href="#">消息列表</a></li>
-                    <li><a href="#">我的借阅</a></li>
-                    <li><a href="#">我的检索历史</a></li>
-                    <li><a href="#">我的图书馆</a></li>
+                    <li><a href="{%url 'readerCenter:profile'%}">个人资料</a></li>
+                    <li><a href="{%url 'readerCenter:notice'%}">消息列表</a></li>
+                    <li><a href="{%url 'readerCenter:borrowingSituation'%}">我的借阅</a></li>
+                    <li><a href="{%url 'readerCenter:showsearchlist'%}">我的检索历史</a></li>
+                    <li><a href="{%url 'readerCenter:mylib'%}">我的图书馆</a></li>
                   </ul>
                 </li>
               {%else%}
@@ -180,6 +180,7 @@
 
   <!-- Template Custom JavaScript File -->
   <script src="{%static 'assets/js/custom.js'%}"></script>
+
 
 
  

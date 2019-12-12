@@ -14,7 +14,7 @@ from .forms import readerLogin,librarianLogin,RegisterForm,ResetPasswordForm
 def reader_login(request):
     #禁止用户重复登录
     if request.session.get('is_login', None):
-        return redirect('/index')
+        return redirect('/')
     #设置Tag用于login.html进行识别
     tag='readerLogin'
     if request.method == "POST":
@@ -31,7 +31,7 @@ def reader_login(request):
                     request.session['user_id'] = user.id
                     request.session['user_email'] = user.username
                     # 张丽：TO DO 用户存在返回首页
-                    return redirect('/index')
+                    return redirect('/')
                 else:
                     return HttpResponse(u'账号不能通行')
             else:
@@ -47,7 +47,7 @@ def reader_login(request):
 def librarian_login(request):
     # 禁止用户重复登录
     if request.session.get('is_login', None):
-        return redirect('/index')
+        return redirect('/')
     tag = 'librarianLogin'
     #判断数据传输模式
     if request.method == "POST":
@@ -66,7 +66,7 @@ def librarian_login(request):
                     request.session['user_id'] = user.id
                     request.session['user_email'] = user.username
                     # 张丽：TO DO 用户存在返回首页
-                    return redirect('/index')
+                    return redirect('/')
                 else:
                     return HttpResponse(u'账号不能通行')
             else:
@@ -81,7 +81,7 @@ def librarian_login(request):
 def user_register(request):
     if request.session.get('is_login', None):
         # 登录状态不允许注册。你可以修改这条原则！
-        return redirect("/index/")
+        return redirect("/")
     if request.method == "POST":
         register_form = RegisterForm(request.POST,request.FILES)
         nowtime=datetime.date.today()
@@ -149,12 +149,12 @@ def set_password(request):
 def user_logout(request):
     if not request.session.get('is_login', None):
         # 如果本来就未登录，也就没有登出一说
-        return redirect("/index/")
+        return redirect("/")
     request.session.flush()
     # 或者使用下面的方法
     # del request.session['is_login']
     # del request.session['user_id']
     # del request.session['user_name']
-    return redirect("/index/")
+    return redirect("/")
 
 
