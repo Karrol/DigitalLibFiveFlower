@@ -12,14 +12,26 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import book_info
 from login.models import Reader
 from readerCenter.models import Borrowing,readerLibrary
+from infoCenter.models import newsArticle_info
+from service.models import Intro
 from .forms import SearchForm
 
 # Create your views here.
 #书籍的检索首页
 def index(request):
+    #获取新闻公告标题（显示前十条）
+    news= newsArticle_info.objects.order_by('-newsPubdate')[:10]
+
+    #获取读者服务条目（显示前十条）
+    service = newsArticle_info.objects.order_by('-newsPubdate')[:10]
+
+    
     context = {
         'searchForm': SearchForm(),
+        'news':news,
+        'service':service,
     }
+    
     return render(request, 'search/index.html', context)
 
 

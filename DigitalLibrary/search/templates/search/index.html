@@ -71,6 +71,7 @@
 				</div>
 
     </div>
+	<!--张丽：我表示这个前端太丑了，强烈要求替换-->
     <div class="container">
         <!-- Main hero unit for a primary marketing message or call to action -->
         <!-- Example row of columns -->
@@ -91,7 +92,12 @@
     -moz-box-sizing: border-box;
 
     box-sizing: border-box;" class="row">
+
             <li><a href="{%url 'infoCenter:newsIntro'%}">新闻公告</a></li>
+			 {% for item in news %}
+			<!--张丽：这里的url怎么跳转的和玉和商量一下呢-->
+			<li><a href="#">{{item.newsTitle}}</a>   </li>
+			{%endfor%}
             </div>
         <div style="
 
@@ -111,6 +117,10 @@
 
     box-sizing: border-box;" class="row">
             <li><a href="{%url 'readerService:bookReservation'%}">读者服务</a></li>
+			{% for item in service %}
+			<!--张丽：这里的url怎么跳转的和玉和商量一下呢-->
+			<li><a href="#">{{item.serviceTitle}}</a>   </li>
+			{%endfor%}
             </div>
         </div>
 

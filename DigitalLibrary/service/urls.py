@@ -1,6 +1,6 @@
 from django.conf.urls import url, include
 from . import views
-
+app_name ='service'
 urlpatterns = [
     url(r'^category/$',views.libBrief, name = 'libBrief'),
     url(r'^category/(?P<categorySlug>[^/]+)/$',views.serviceCategory, name='serviceCategory'),

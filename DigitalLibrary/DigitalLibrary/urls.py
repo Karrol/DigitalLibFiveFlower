@@ -31,14 +31,14 @@ urlpatterns = [
     url('admin/', admin.site.urls),
     url(r'^$', search_view.index, name='index'),
     url(r'^login/', include('login.urls',namespace = 'login')),
-    url(r'^readerCenter/', include('readerCenter.urls')),
-    url(r'^search/', include('search.urls')),
+    url(r'^readerCenter/', include('readerCenter.urls',namespace = 'readerCenter')),
+    url(r'^search/', include('search.urls',namespace = 'search')),
     url(r'^participate/', include('participate.urls')),
     url(r'^readerService/', include('readerService.urls')),
     url(r'^librarian/', include('librarian.urls')),
     url(r'^ueditor/', include('DjangoUeditor.urls')),
-    url(r'infoCenter/', include('infoCenter.urls')),
-    url(r'service/', include('service.urls')),
+    url(r'infoCenter/', include('infoCenter.urls',namespace = 'infoCenter')),
+    url(r'service/', include('service.urls',namespace = 'service')),
     #张丽：登录图形验证码
     url(r'^captcha', include('captcha.urls')),
 ]

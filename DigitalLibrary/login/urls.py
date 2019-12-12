@@ -19,4 +19,4 @@ urlpatterns = [
                   #修改密码
                   path('set_password/', views.set_password, name='set_password'),
     
-              ]
+              ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

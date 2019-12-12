@@ -1,6 +1,6 @@
 from django.conf.urls import url, include
 from . import views
-
+app_name ='infoCenter'
 urlpatterns = [
     url(r'^newsIntro/$', views.newsIntro, name="newsIntro"), #新闻栏目简介
     url(r'^newsColumn/(?P<columnSlug>[^/]+)/$', views.newsColumn, name="newsColumn"), #新闻列表
