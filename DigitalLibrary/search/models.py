@@ -42,12 +42,12 @@ class book_info(models.Model):
     description = models.CharField(max_length=1024, default='', verbose_name='书籍简介')
     price = models.CharField(max_length=20, null=True, verbose_name='价格')
     category = models.CharField(max_length=64, default=u'文学', verbose_name='分类')
-    cover = models.ImageField(blank=True, upload_to=custom_path, verbose_name='封面',default='null')
+    cover = models.ImageField(blank=True, upload_to='bookcover', verbose_name='封面',default='null')
     #这个索引是要作甚的
     index = models.CharField(max_length=16, null=True, verbose_name='索引')
     bookTranslator = models.CharField('译者', max_length=30, blank=True)
-    price = models.DecimalField('书籍价格', max_digits=8, decimal_places=2)
-    page = models.IntegerField('图书页码',blank=True)
+    
+    page = models.CharField('图书页码',blank=True,max_length=255)
 
     def __str__(self):
         return self.title + self.author

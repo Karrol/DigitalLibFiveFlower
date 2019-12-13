@@ -14,6 +14,7 @@ urlpatterns = [
                 path('profile/', views.profile, name='profile'),
                 #更改个人资料
                 path('changeinfo/', views.readerChangeinfo, name='changeinfo'),
+                path('uploadImg/', views.uploadImg, name='uploadImg'),
                 #消息列表
                 path('notice/', views.readerNotice, name='notice'),
                 #消息详情

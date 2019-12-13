@@ -25,6 +25,9 @@ import readerService.views as readerService_view
 import librarian.views as librarian_view
 import service.views as service_view
 import infoCenter.views as infoCenter_view
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 
 urlpatterns = [
@@ -41,4 +44,4 @@ urlpatterns = [
     url(r'service/', include('service.urls',namespace = 'service')),
     #张丽：登录图形验证码
     url(r'^captcha', include('captcha.urls')),
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

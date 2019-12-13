@@ -47,9 +47,9 @@
                     <td><input type="checkbox" class="i-checks" name="input[]" value="{{book.ISBN}}"></td>
                     <td>{{ forloop.counter }}</td>
                     <td>
-                        <a href="/book/detail?ISBN={{ book.ISBN }}">
+                        <a href="/search/searchBook/detail?ISBN={{ book.ISBN }}">
                             <img class="img-responsive"
-                                 src="/media/{{ book.cover }}"
+                                 src="/media/bookcover/{{ book.cover }}"
                                  width="90"
                                  height="128"
                                  alt="{{ book.title }}">

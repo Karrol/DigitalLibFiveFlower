@@ -23,13 +23,13 @@
 
             <div class="card-body">
                 <div class="circular--portrait">
-              <img src="/media/{{reader.photo}}" class="rounded-circle float-left media-object .img-rounded" style="right: 0;" >
-            </div><br>
+              <img src="/{{reader.photo}}" class="rounded-circle float-left media-object .img-rounded" style="right: 0;" >
+            </div><br> 
                     <div class="table-responsive">
                         <table class="table table-bordered"  width="100%" cellspacing="0">
                            <!--<span>读者ID：{{var}}</span><br>  -->
                             <span>姓名：{{reader.name}}</span><br>
-                            <span>联系电话：{{reader.phone}}</span><br>
+                            <span>性别：{{reader.Sex}}</span><br>
                             <span>邮箱：{{reader.email}}</span><br>
                             <br>
 
@@ -41,13 +41,14 @@
 
             
           </div>
-          <div class="card mb-3" id="实名信息">
+          <div class="card mb-3" id="读者证状态">
               <div class="card-header">
                   <i></i>
-                  实名信息</div>
+                  读者证状态</div>
               <div class="card-body">
                       <div class="table-responsive">
                           <table class="table table-bordered"  width="100%" cellspacing="0">
+                              <span>读者证有效状态：{{reader.status}}</span><br>
                               <span>余额情况：{{reader.balance}}</span><br>
                               <span>最大可借数：{{reader.max_borrowing}}</span><br>
                               <span>注册日期：{{reader.inTime}}</span>
@@ -69,6 +70,9 @@
 
 
               <div class="input-group-append">
+                  <button class="btn" type="button">
+                    <i class="fas text-muted"></i><a href="{%url 'readerCenter:uploadImg'%}">上传头像</a>
+                  </button>
                   <button class="btn" type="button">
                     <i class="fas text-muted"></i><a href="{%url 'readerCenter:changeinfo'%}">修改个人信息</a>
                   </button>

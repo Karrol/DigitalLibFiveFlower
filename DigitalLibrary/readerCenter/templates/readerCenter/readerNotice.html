@@ -37,31 +37,27 @@
             <div class="card-footer small text-muted">数据更新于{{nowtime}}</div>
           </div>
         <!--读者的借阅催还提醒-->
-        {% if state_over and state_to_return%}
+
         <div class="card mb-3">
           <div class="card-header">读者借阅还书提醒</div>
           <div class="card-body">
               <div class="table-responsive">
+                  {% if book_over%}
                   <table class="table table-bordered" id="histnotice" width="100%" cellspacing="0">
-                      {%if state_over%}
+                      {%for book in book_over%}
                             <tr>
                                 <!--现在没有提供记录历史超期消息的功能，因为没有数据库存这个历史记录，不好提取-->
-                                <td><i class="fas fa-bell fa-fw"></i><a href="/shownotice/detail?aticleID={{ borrowingBook.pk }}">图书催还与缴纳欠款提醒</a><p class="small text-muted" align="right"></p></td>
+                                <td><i class="fas fa-bell fa-fw"></i><a href="/shownotice/detail?aticleID={{ book.pk }}">{{book.ISBN.title}}催还与缴纳欠款提醒</a><p class="small text-muted" align="right"></p></td>
                             </tr>
-                      {%endif%}
-                      {%if state_to_return%}
-                            <tr>
-                                <!--现在没有提供记录历史催还消息的功能，因为没有数据库存这个历史记录，不好提取-->
-                                <td><i class="fas fa-bell fa-fw"></i><a href="/shownotice/detail?aticleID={{ borrowingBook.pk }}">{{book_to_return}}等书即将超期~</a><p class="small text-muted" align="right"></p></td>
-                            </tr>
-                      {%endif%}
-                  </table>
+                      {%endfor%}
+                      
+                  </table>  {%endif%}
                               
               </div>
           </div>
           
           <div class="card-footer small text-muted">数据更新于{{nowtime}}</div>
-        </div>{%endif%}
+        </div>
 
       </div>
 
