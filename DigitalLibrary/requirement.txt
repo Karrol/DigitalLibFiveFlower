@@ -1,0 +1,2 @@
+用于记录环境中要安装的包，报错自取：
+pip install django-simple-captcha;
