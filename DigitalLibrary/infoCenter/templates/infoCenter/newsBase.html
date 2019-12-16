@@ -30,17 +30,8 @@
     </button>
 
     <!-- Navbar Search -->
-    <form method="get" id="searchform" action="#" class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-     {% csrf_token %}
-      <div class="input-group">
-        <input type="search" name="q" placeholder="Search" class="form-control" aria-label="Search" aria-describedby="basic-addon2" required>
-        <div class="input-group-append">
-          <button class="btn btn-primary" type="submit">
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
-      </div>
-    </form>
+    {% block search %}
+    {% endblock search %}
   </nav>
 
   <div id="wrapper">

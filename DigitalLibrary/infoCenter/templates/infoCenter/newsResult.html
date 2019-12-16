@@ -26,35 +26,35 @@
 
 {% block breadrums %}
    <div class="container-fluid">
-       <h2 align = "center">{{ news_article.newsTitle }}</h2>
-        <p align = "center" class = "one gray">发表时间：<em>{{ news_article.newsPubdate }}</em>&nbsp;&nbsp;&nbsp;&nbsp;作者：<em>{{ news_article.newsAuthor }}</em></p>
-        <!-- Breadcrumbs-->
+       <!-- Breadcrumbs-->
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
             <a href="{% url 'newsIntro' %}">新闻公告</a>
           </li>
-          <li class="breadcrumb-item">
-            <a href="{{ news_article.newsColumn.get_absolute_url }}">{{ news_article.newsColumn }}</a>
-          </li>
-          <li class="breadcrumb-item active">文章详情</li>
+          <li class="breadcrumb-item active">搜索结果</li>
         </ol>
    </div>
 {% endblock breadrums %}
 
 {% block pagecontent %}
-    <hr/>
-    <div id="main">
-        <p>
-            {{ news_article.newsContent|safe }}
-        </p>
+<hr>
+    {% if error_msg %}
+        <p>{{ error_msg }}</p>
+    {% endif %}
+
+    {% for post in post_list %}
+        <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    {{ post.newsPubdate }}
+                </div>
+                <div class="card-body">
+                    <h5 class="news-title"><a href="{{ post.get_absolute_url }}">{{ post.newsTitle }}</a></h5>
+                </div>
+        </div>
+    {% empty %}
+    <div class="no-post">
+        没有搜索到符合条件的服务指南
     </div>
-    <br/><hr/>
-    <div>
-        <nav aria-label="...">
-      <ul class="pager">
-        <li><a href="{{ previous_article.get_absolute_url }}">上一篇：{{ previous_article.newsTitle }}</a></li>
-        <li><a href="{{ next_article.get_absolute_url }}">下一篇：{{ next_article.newsTitle }}</a></li>
-      </ul>
-    </nav>
-    </div>
+    {% endfor %}
 {% endblock pagecontent %}

@@ -16,29 +16,37 @@
 
 {% block breadrums %}
     <div class="container-fluid">
-        <h2>{{ category.categoryName }}</h2>
+        <h2>搜索结果</h2>
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a href="{% url 'libBrief' %}">服务指南</a>
             </li>
-            <li class="breadcrumb-item active">{{ category.categoryName }}</li>
+            <li class="breadcrumb-item active">搜索结果</li>
         </ol>
     </div>
 {% endblock breadrums %}
 
 {% block pagecontent %}
     <hr>
-    {% for intro in service_category_intros %}
+    {% if error_msg %}
+        <p>{{ error_msg }}</p>
+    {% endif %}
+
+    {% for post in post_list %}
         <div class="card mb-3">
             <div class="card-header">
                 <i class="fas fa-table"></i>
-                {{ intro.servicePubdate }}
+                {{ post.servicePubdate }}
             </div>
             <div class="card-body">
-                <h5 class="news-title"><a href="{{ intro.get_absolute_url }}">{{ intro.serviceTitle }}</a></h5>
+                <h5 class="news-title"><a href="{{ post.get_absolute_url }}">{{ post.serviceTitle }}</a></h5>
             </div>
         </div>
+    {% empty %}
+    <div class="no-post">
+        没有搜索到符合条件的服务指南
+    </div>
     {% endfor %}
 {% endblock pagecontent %}
 

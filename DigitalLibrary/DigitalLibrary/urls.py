@@ -40,8 +40,8 @@ urlpatterns = [
     url(r'^readerService/', include('readerService.urls')),
     url(r'^librarian/', include('librarian.urls')),
     url(r'^ueditor/', include('DjangoUeditor.urls')),
-    url(r'infoCenter/', include('infoCenter.urls',namespace = 'infoCenter')),
-    url(r'service/', include('service.urls',namespace = 'service')),
+    url(r'^infoCenter/', include('infoCenter.urls')),
+    url(r'^service/', include('service.urls')),
     #张丽：登录图形验证码
     url(r'^captcha', include('captcha.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

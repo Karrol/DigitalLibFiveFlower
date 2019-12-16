@@ -107,3 +107,22 @@ def rankList(request):
         'news_intro_columns':news_intro_columns,
         'ranklist_books':ranklist_books
     })
+
+#站内搜索
+def newsSearch(request):
+    q = request.GET.get('q')
+    error_msg = ''
+
+    if not q:
+        error_msg = '请输入关键词'
+        return render(request, 'infoCenter/newsResult.html', {'error_msg': error_msg})
+
+    post_list = newsArticle_info.objects.filter(newsTitle__icontains=q)
+
+    news_intro_columns = newsColumn_info.objects.filter(nav_display=True)
+
+    return render(request, 'infoCenter/newsResult.html', {
+        'news_intro_columns':news_intro_columns,
+        'error_msg': error_msg,
+        'post_list': post_list
+    })

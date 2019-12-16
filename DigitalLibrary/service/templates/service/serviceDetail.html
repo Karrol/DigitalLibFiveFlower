@@ -1,6 +1,22 @@
 {% extends "service/serviceBase.html" %}
 
+{% block search %}
+<form method="get" id="searchform" action="{% url 'serviceSearch' %}" class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+     {% csrf_token %}
+      <div class="input-group">
+        <input type="search" name="q" placeholder="搜索服务指南" class="form-control" aria-label="Search" aria-describedby="basic-addon2" required>
+        <div class="input-group-append">
+          <button class="btn btn-primary" type="submit">搜索服务
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+</form>
+{% endblock search %}
+
 {% block breadrums %}
+    <h2 align = "center">{{ intro.serviceTitle  }}</h2>
+    <p align = "center" class = "one gray">发表时间：<em>{{ intro.servicePubdate }}</em>&nbsp;&nbsp;&nbsp;&nbsp;作者：<em>{{ intro.serviceAuthor }}</em></p>
     <div class="container-fluid">
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
@@ -15,8 +31,6 @@
 {% endblock breadrums %}
 
 {% block pagecontent %}
-    <h2 align = "center">{{ intro.serviceTitle  }}</h2>
-    <p align = "center" class = "one gray">发表时间：<em>{{ intro.servicePubdate }}</em>&nbsp;&nbsp;&nbsp;&nbsp;作者：<em>{{ intro.serviceAuthor }}</em></p>
     <hr/>
     <div id="main">
         <p>
