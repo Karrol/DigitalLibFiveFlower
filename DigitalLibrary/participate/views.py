@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # 导入 HttpResponse 模块
 from django.http import HttpResponse
@@ -28,6 +28,22 @@ from .models import ArticleColumn
 
 # 导入评论Model
 from .models import Comment
+
+# 导入推荐图书Model
+from .models import RecbooklistInfo
+
+# 导入推荐图书Model
+from .models import RecbooklistInfo
+
+# 导入刚才定义的RecbooklistInfoForm表单类
+from .forms import RecbooklistInfoForm
+
+# 读者推荐列表
+def recom_list(request):
+    recuserinfos = RecbooklistInfo.objects.all()
+    return render(request, 'participate/reclist.html',{'recuserinfos':recuserinfos})
+
+
 
 # Create your views here.
 # 视图函数
@@ -229,6 +245,39 @@ def post_comment(request, article_id):
         # 处理错误请求
         else:
             return HttpResponse("发表评论仅接受POST请求。")
+
+# 推荐书的视图
+def book_recom(request):
+    # 判断用户是否提交数据
+    if request.method == "POST":
+        # 将提交的数据赋值到表单实例中
+        bookrecom_post_form = RecbooklistInfoForm(data=request.POST)
+        # 判断提交的数据是否满足模型的要求
+        if bookrecom_post_form.is_valid():
+            # 保存数据，但暂时不提交到数据库中
+            new_bookrecom = bookrecom_post_form.save(commit=False)
+
+            # 将新推荐保存到数据库中
+            new_bookrecom.save()
+
+            # 完成后返回到推荐列表
+            return redirect("participate:book_recommendation")
+        # 如果数据不合法，返回错误信息
+        else:
+            return HttpResponse("表单内容有误，请重新填写。")
+    # 如果用户请求获取数据
+    else:
+        # 创建表单类实例
+        bookrecom_post_form = RecbooklistInfoForm()
+        # 赋值上下文
+        context = { 'bookrecom_post_form': bookrecom_post_form}
+        # 返回模板
+        return render(request, 'participate/bookrecom.html', context)
+
+# 读者好书推荐
+def recom_list(request):
+    recuserinfos = RecbooklistInfo.objects.all()
+    return render(request, 'participate/reclist.html',{'recuserinfos':recuserinfos})
 
 def donation_rules(request):
         return render(request, 'participate/rules.html')

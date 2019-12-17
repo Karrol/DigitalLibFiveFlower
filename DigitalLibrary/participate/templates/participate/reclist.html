@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 
 <head>
 
@@ -110,128 +110,54 @@
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="{% url 'participate:article_list' %}">看帖子</a>
+            <a href="#">读者推荐图书列表</a>
           </li>
-          <li class="breadcrumb-item">
-            <a href="{% url 'participate:article_create' %}">写文章</a>
-          </li>
+          <li class="breadcrumb-item active">好书推荐</li>
         </ol>
 
-        <!--文章详情-->
-        <div class="container">
-            <div class="row">
-                <div class="col-9">
-                    <!-- 标题及作者 -->
-                    <h1 class=""mt-4 mb-4"">{{ article.title }}</h1>
-                    <div class="alert alert-success">作者：{{ article.author }}
-                         <!-- · <a href="#" onclick="confirm_delete()">删除文章</a> -->
-                         · <a href="#" onclick="confirm_safe_delete()">删除文章</a>
-                         <!-- 新增一个隐藏的表单 -->
-                         <form
-                              style="display:none;"
-                              id="safe_delete"
-                              action="{% url 'participate:article_safe_delete' article.id %}"
-                              method="POST"
-                              >
-                             {% csrf_token %}
-                             <button type="submit">发送</button>
-                         </form>
-                        · <a href="{% url "participate:article_update" article.id %}">编辑文章</a>
-                        <div>
-                            浏览：{{ article.total_views }}
-                        </div>
-                    </div>
 
-                    <!-- 文章正文 -->
-                    <div class="col-12">
-                        <!--在 article.body 后加上 |safe 过滤器-->
-                        <p>{{ article.body|safe }}</p>
-                    </div>
-
-                    <!-- 发表评论 -->
-                    <hr>
-                    {% if user.is_authenticated %}
-                        <div>
-                            <form
-                                action="{% url 'participate:post_comment' article.id %}"
-                                method="POST"
-                            >
-                            {% csrf_token %}
-                                <div class="form-group">
-                                    <label for="body">
-                                        <strong>
-                                            我也要发言：
-                                        </strong>
-                                    </label>
-                                    <textarea
-                                        type="text"
-                                        class="form-control"
-                                        id="body"
-                                        name="body"
-                                        rows="2"></textarea>
-                                    <div>
-                                        <!--comment_form.media是编辑器自身的渲染代码，comment_form.body则是评论正文字段。-->
-                                        {{ comment_form.media }}
-                                        {{ comment_form.body }}
-                                    </div>
-                                </div>
-                                <!-- 提交按钮 -->
-                                <button type="submit" class="btn btn-primary ">发送</button>
-                            </form>
-                        </div>
-                        <br>
-                    {% else %}
-                        <br>
-                        <h5 class="row justify-content-center">
-                            请<a href="{% url 'userprofile:login' %}">登录</a>后回复
-                        </h5>
-                        <br>
-                    {% endif %}
-
-
-
-                    <!-- 显示评论 -->
-                    <h4>共有{{ comments.count }}条评论</h4>
-                    <div>
-                        {% for comment in comments %}
-                            <hr>
-                            <p>
-                                <strong style="color: pink">
-                                    {{ comment.user }}
-                                </strong> 于
-                                <span style="color: green">
-                                    {{ comment.created|date:"Y-m-d H:i:s" }}
-                                </span> 时说：
-                            </p>
-                            <div>{{ comment.body|safe }}</div>
-                        {% endfor %}
-                    </div>
-                </div>
-
-                <!--新增的目录-->
-                <div class="col-3 mt-4">
-                    <h4><strong>目录</strong></h4>
-                    <hr>
-                    <div>
-                        {{ toc|safe }}
-                    </div>
-                </div>
+        <!-- 读者推荐列表 -->
+        <div class="card mb-3">
+          <div class="card-header">
+            <i class="fas fa-table"></i>
+            读者推荐图书列表</div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>书名</th>
+                    <th>姓名</th>
+                    <th>单位</th>
+                    <th>身份</th>
+                    <th>推荐时间</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th>书名</th>
+                    <th>姓名</th>
+                    <th>单位</th>
+                    <th>身份</th>
+                    <th>推荐时间</th>
+                  </tr>
+                </tfoot>
+                <tbody>
+                   {% for recuserinfo in recuserinfos %}
+                   <tr>
+                      <td>{{ recuserinfo.bookName }}</td>
+                      <td>{{ recuserinfo.RecName }}</td>
+                      <td>{{ recuserinfo.RecIdentity }}</td>
+                      <td>{{ recuserinfo.RecDepartment }}</td>
+                      <td>{{ recuserinfo.RecTime }}</td>
+                   </tr>
+                   {% endfor %}
+                </tbody>
+              </table>
             </div>
+          </div>
+          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
         </div>
-        <script>
-            // 删除文章的函数
-            function confirm_safe_delete() {
-                layer.open({
-                    title: "确认删除",
-                    content: "确认删除这篇文章吗？",
-                    yes: function(index, layero) {
-                        $('form#safe_delete button').click();
-                        layer.close(index);
-                    }
-                })
-            }
-        </script>
-
 
       </div>
       <!-- /.container-fluid -->
@@ -240,7 +166,7 @@
       <footer class="sticky-footer">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright © Your Website 2019</span>
+            <span>Copyright © 五朵金花 2019</span>
           </div>
         </div>
       </footer>
@@ -275,8 +201,6 @@
     </div>
   </div>
 
-
-
   <!-- Bootstrap core JavaScript-->
   <script src="/static/mobankf/vendor/jquery/jquery.min.js"></script>
   <script src="/static/mobankf/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -295,13 +219,6 @@
   <!-- Demo scripts for this page-->
   <script src="/static/mobankf/js/demo/datatables-demo.js"></script>
   <script src="/static/mobankf/js/demo/chart-area-demo.js"></script>
-
-  <!--增加弹窗功能-->
-  <!-- bootstrap.js 依赖 jquery.js 和popper.js，因此在这里引入 -->
-  <script src="/static/jquery/jquery-3.3.1.js"></script>
-  <!-- 引入layer.js -->
-  <script src="/static/layer/layer.js"></script>
-
 
 </body>
 

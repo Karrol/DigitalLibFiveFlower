@@ -20,13 +20,108 @@
   <!-- Custom styles for this template-->
   <link href="/static/mobankf/css/sb-admin.css" rel="stylesheet">
 
+  <!--表单样式-->
+  <style>
+    ::-moz-placeholder {
+		color: #9fa3a7;
+	}
+
+	::-webkit-input-placeholder {
+		color: #9fa3a7;
+	}
+
+	:-ms-input-placeholder {
+		color: #9fa3a7;
+	}
+
+
+	.pc-kk-form{
+		padding:15px 20px;
+	}
+	.pc-kk-form-list{
+		background:#fff;
+		border:1px solid #e5e5e5;
+		border-radius:5px;
+		height:44px;
+		line-height:44px;
+		margin-bottom:10px;
+	}
+	.pc-kk-form-list input{
+		width:100%;
+		border:none;
+		background:none;
+		color:#9fa3a7;
+		font-size:14px;
+		height: 36px;
+		padding: 4px 10px;
+	}
+	.pc-kk-form-list textarea{
+		background:none;
+		border:none;
+		height:60px;
+		padding:10px;
+		resize:none;
+		width:94%;
+		line-height:22px;
+		color:#9fa3a7;
+		font-size:14px;
+	}
+	.nice-select{
+		position: relative;
+		background: #fff url(images/a2.jpg) no-repeat right center;
+		background-size:18px;
+		width:47%;
+		float:left;
+		border:1px solid #e5e5e5;
+		border-radius:5px;
+		height:44px;
+		line-height:44px;
+	}
+
+	.nice-select ul{
+		width: 100%;
+		display: none;
+		position: absolute;
+		left: -1px;
+		top: 44px;
+		overflow: hidden;
+		background-color: #fff;
+		max-height: 150px;
+		overflow-y: auto;
+		border: 1px solid #b9bcbf;
+		z-index: 9999;
+		border-radius:5px;
+
+	}
+	.nice-select ul li{
+		padding-left:10px;
+	}
+	.nice-select ul li:hover{
+		background:#f8f4f4;
+	}
+	.pc-kk-form-list-clear{
+		background:none;
+		border:none;
+	}
+	.pc-kk-form-btn button{
+		background:#ec5224;
+		color:#fff;
+		border:none;
+		width:100%;
+		height:50px;
+		line-height:50px;
+		font-size:16px;
+		border-radius:50px;
+	}
+  </style>
+
 </head>
 
 <body id="page-top">
 
   <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-    <a class="navbar-brand mr-1" href="index.html">数字图书馆</a>
+    <a class="navbar-brand mr-1" href="index.html">读者参与</a>
 
     <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
       <i class="fas fa-bars"></i>
@@ -35,7 +130,7 @@
     <!-- Navbar Search -->
     <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+        <input type="text" class="form-control" placeholder="搜索..." aria-label="Search" aria-describedby="basic-addon2">
         <div class="input-group-append">
           <button class="btn btn-primary" type="button">
             <i class="fas fa-search"></i>
@@ -110,137 +205,134 @@
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="{% url 'participate:article_list' %}">看帖子</a>
+            <a href="{% url 'participate:book_recommendation' %}">好书推荐</a>
           </li>
-          <li class="breadcrumb-item">
-            <a href="{% url 'participate:article_create' %}">写文章</a>
-          </li>
+          <li class="breadcrumb-item active">读者参与</li>
         </ol>
 
-        <!--文章详情-->
-        <div class="container">
-            <div class="row">
-                <div class="col-9">
-                    <!-- 标题及作者 -->
-                    <h1 class=""mt-4 mb-4"">{{ article.title }}</h1>
-                    <div class="alert alert-success">作者：{{ article.author }}
-                         <!-- · <a href="#" onclick="confirm_delete()">删除文章</a> -->
-                         · <a href="#" onclick="confirm_safe_delete()">删除文章</a>
-                         <!-- 新增一个隐藏的表单 -->
-                         <form
-                              style="display:none;"
-                              id="safe_delete"
-                              action="{% url 'participate:article_safe_delete' article.id %}"
-                              method="POST"
-                              >
-                             {% csrf_token %}
-                             <button type="submit">发送</button>
-                         </form>
-                        · <a href="{% url "participate:article_update" article.id %}">编辑文章</a>
-                        <div>
-                            浏览：{{ article.total_views }}
-                        </div>
-                    </div>
-
-                    <!-- 文章正文 -->
-                    <div class="col-12">
-                        <!--在 article.body 后加上 |safe 过滤器-->
-                        <p>{{ article.body|safe }}</p>
-                    </div>
-
-                    <!-- 发表评论 -->
-                    <hr>
-                    {% if user.is_authenticated %}
-                        <div>
-                            <form
-                                action="{% url 'participate:post_comment' article.id %}"
-                                method="POST"
-                            >
-                            {% csrf_token %}
-                                <div class="form-group">
-                                    <label for="body">
-                                        <strong>
-                                            我也要发言：
-                                        </strong>
-                                    </label>
-                                    <textarea
-                                        type="text"
-                                        class="form-control"
-                                        id="body"
-                                        name="body"
-                                        rows="2"></textarea>
-                                    <div>
-                                        <!--comment_form.media是编辑器自身的渲染代码，comment_form.body则是评论正文字段。-->
-                                        {{ comment_form.media }}
-                                        {{ comment_form.body }}
-                                    </div>
-                                </div>
-                                <!-- 提交按钮 -->
-                                <button type="submit" class="btn btn-primary ">发送</button>
-                            </form>
-                        </div>
-                        <br>
-                    {% else %}
-                        <br>
-                        <h5 class="row justify-content-center">
-                            请<a href="{% url 'userprofile:login' %}">登录</a>后回复
-                        </h5>
-                        <br>
-                    {% endif %}
-
-
-
-                    <!-- 显示评论 -->
-                    <h4>共有{{ comments.count }}条评论</h4>
-                    <div>
-                        {% for comment in comments %}
-                            <hr>
-                            <p>
-                                <strong style="color: pink">
-                                    {{ comment.user }}
-                                </strong> 于
-                                <span style="color: green">
-                                    {{ comment.created|date:"Y-m-d H:i:s" }}
-                                </span> 时说：
-                            </p>
-                            <div>{{ comment.body|safe }}</div>
-                        {% endfor %}
-                    </div>
+        <!--推荐表单-->
+        <div class="pc-kk-form" style="width:800px;margin:auto;">
+            <p>
+              <img src="static/mobankf/images/rec_title.jpg" width="700" height="140" />
+            </p>
+            <div class="card-body" >
+              <p>亲爱的读者：</p>
+              <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果您在书店或是别的地方发现了一本好书，是您科研、教学或者学习所需要的，而我馆目前还没有收藏的话，请您将这本书的有关信息告诉我们，我们将根据经费情况进行订购。 外文及港台原版书籍，请通过以下方式推荐：</p>
+              <p>Email: wuduojinhua@scu.edu.cn</p>
+              <p>电话：028-85408797</p>
+              <p>感谢您对图书馆工作的支持！</p>
+          </div>
+            <hr style="border:1 dashed #987cb9" width="100%" color=#987cb9 size=1>
+            <h2 class="text-center cmnt-head ">读者好书推荐信息表</h2>
+            <p class="text-center fade-txt">查看 <a href="{% url 'participate:bookrec_list' %}">推荐列表</a></p>
+            <form method="post" action=".">
+                <!--Django中需要POST数据的地方都必须有csrf_token -->
+                {% csrf_token %}
+              <div class="pc-kk-form-list">
+                <input type="text" placeholder="书名" name="bookName">
+              </div>
+              <div class="pc-kk-form-list">
+                <input type="text" placeholder="作者" name="bookAuthor">
+              </div>
+              <div class="pc-kk-form-list">
+                <input type="text" placeholder="出版社" name="bpublisher">
+              </div>
+              <div class="pc-kk-form-list">
+                <input type="text" placeholder="出版时间" name="bpubTime">
+              </div>
+              <div class="pc-kk-form-list">
+                <input type="text" placeholder="ISBN号" name="bookISBN">
+              </div>
+              <div class="pc-kk-form-list" style="height:auto">
+                <textarea type="text" name="bookIntroduction" rows="12">简要介绍</textarea>
+              </div>
+              <div class="pc-kk-form-list">
+                <input type="text" placeholder="推荐者姓名" name="RecName">
+              </div>
+              <div class="pc-kk-form-list">
+                <input type="text" value="推荐者身份"   name="RecIdentity" >
+              </div>
+               <div class="pc-kk-form-list">
+                <input type="text" value="推荐者单位"  name="RecDepartment" >
+               </div>
+              <!--
+              <div class="pc-kk-form-list pc-kk-form-list-clear">
+                <div class="nice-select" name="nice-select" style="float:right">
+                  <input type="text" value="推荐者身份"   name="RecIdentity" >
+                  <ul>
+                    <li data-value="pub">公共管理学院</li>
+                    <li data-value="art">文学与新闻学院</li>
+                  </ul>
                 </div>
-
-                <!--新增的目录-->
-                <div class="col-3 mt-4">
-                    <h4><strong>目录</strong></h4>
-                    <hr>
-                    <div>
-                        {{ toc|safe }}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <script>
-            // 删除文章的函数
-            function confirm_safe_delete() {
-                layer.open({
-                    title: "确认删除",
-                    content: "确认删除这篇文章吗？",
-                    yes: function(index, layero) {
-                        $('form#safe_delete button').click();
-                        layer.close(index);
-                    }
-                })
-            }
-        </script>
+                <div class="nice-select" name="nice-select">
+                    <input type="text" value="推荐者单位"  name="RecDepartment" >
+                    <ul>
+                      <li data-value="4">四年制本科生</li>
+                      <li data-value="5">五年制本科生</li>
+                      <li data-value="6">硕士生</li>
+                      <li data-value="7">博士生</li>
+                    </ul>
+                  </div>
+              </div>
+              -->
+              <div class="pc-kk-form-btn">
+                <button type="submit">提交</button>
+              </div>
+            </form>
+          </div>
+        <!--推荐表单结束-->
 
 
-      </div>
+          <script type="text/javascript" src="/static/mobankf/js/jquery.js"></script>
+
+          <script>
+
+            $('[name="nice-select"]').click(function(e){
+
+              $('[name="nice-select"]').find('ul').hide();
+
+              $(this).find('ul').show();
+
+              e.stopPropagation();
+
+            });
+
+            $('[name="nice-select"] li').hover(function(e){
+
+              $(this).toggleClass('on');
+
+              e.stopPropagation();
+
+            });
+
+            $('[name="nice-select"] li').click(function(e){
+
+              var val = $(this).text();
+
+              $(this).parents('[name="nice-select"]').find('input').val(val);
+
+              $('[name="nice-select"] ul').hide();
+
+              e.stopPropagation();
+
+            });
+
+            $(document).click(function(){
+
+              $('[name="nice-select"] ul').hide();
+
+            });
+
+          </script>
+
+
       <!-- /.container-fluid -->
 
       <!-- Sticky Footer -->
       <footer class="sticky-footer">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright © Your Website 2019</span>
+            <span>Copyright © 五朵金花</span>
           </div>
         </div>
       </footer>
@@ -275,8 +367,6 @@
     </div>
   </div>
 
-
-
   <!-- Bootstrap core JavaScript-->
   <script src="/static/mobankf/vendor/jquery/jquery.min.js"></script>
   <script src="/static/mobankf/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -295,13 +385,6 @@
   <!-- Demo scripts for this page-->
   <script src="/static/mobankf/js/demo/datatables-demo.js"></script>
   <script src="/static/mobankf/js/demo/chart-area-demo.js"></script>
-
-  <!--增加弹窗功能-->
-  <!-- bootstrap.js 依赖 jquery.js 和popper.js，因此在这里引入 -->
-  <script src="/static/jquery/jquery-3.3.1.js"></script>
-  <!-- 引入layer.js -->
-  <script src="/static/layer/layer.js"></script>
-
 
 </body>
 

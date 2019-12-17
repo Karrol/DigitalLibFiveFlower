@@ -37,4 +37,10 @@ urlpatterns = [
     path('donationTreatments/', views.donation_treatments, name='donation_treatments'),
     # 联系方式
     path('donationContact/', views.donation_contact, name='donation_contact'),
+
+    # 图书推荐
+    path('bookRecom/', views.book_recom, name='book_recommendation'),
+
+    # 读者推荐列表
+    path('bookRecList/', views.recom_list, name='bookrec_list'),
 ]

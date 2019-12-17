@@ -116,3 +116,35 @@ class Comment(models.Model):
     def __str__(self):
         return self.commentbody[:20]
 
+# 好书推荐图书信息（表单）
+class RecbooklistInfo(models.Model):
+    # 图书名称
+    bookName = models.CharField(max_length=50)
+    # 图书作者
+    bookAuthor = models.CharField(max_length=20)
+    # 出版社
+    bpublisher = models.CharField(max_length=30)
+    # 出版时间
+    bpubTime = models.DateField()
+    # ISBN编号
+    bookISBN = models.CharField(max_length=10)
+    # 简要介绍
+    bookIntroduction = models.TextField()
+    # 推荐时间
+    RecTime = models.DateField(default=timezone.now)
+    # 推荐人
+    RecName = models.ForeignKey(User, on_delete=models.CASCADE)
+    # 推荐人身份
+    RecIdentity = models.CharField(max_length=20)
+    # 推荐人单位
+    RecDepartment = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.bookName
+
+    # 内部类class Meta用于给model定义元数据
+    class Meta:
+        # ordering 指定模型返回的数据的排列顺序
+        # '-RecTime' 表明数据应该以倒序排列
+        ordering = ('-RecTime',)
+
