@@ -45,6 +45,10 @@ def test(request):
 
 #书籍检索结果页
 def book_search(request):
+    # 判断用户状态，如果是登录用户，记录其现在浏览的位置，游客则不记录
+    if request.user.is_authenticated:
+        request.session['user_location'] = 'search:searchBook'
+    #书籍检索功能：用户游客都可以实现
     search_by = request.GET.get('search_by', '书名')
     books = []
     current_path = request.get_full_path()
@@ -98,10 +102,11 @@ def book_detail(request,ISBN):
         return HttpResponse('there is no such an ISBN')
     try:
         book = book_info.objects.get(pk=ISBN)
+        
         # 李玉和增加 阅读量自增
-        booktop_info.increase_views(book)
+        book_info.increase_views(book)
     except book_info.DoesNotExist:
-        return HttpResponse('there is no such an ISBN')
+        return HttpResponse('there is no such an ISBN')# end李玉和增加 阅读量自增
 
     action = request.GET.get('action', None)
     state = None

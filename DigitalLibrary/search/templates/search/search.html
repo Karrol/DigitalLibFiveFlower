@@ -20,7 +20,7 @@
                     <div class="input-group">
                         {{ searchForm.keyword }}
                         <span class="input-group-btn">
-                        <button class="btn btn-default btn-lg btn-info" type="submit">图书检索</button>
+                        <button class="btn btn-default btn-lg" type="submit"><img src="{%static 'login/img/search_gray.png'%}"></button>
                     </span>
                     </div>
                 </div>
@@ -66,8 +66,8 @@
                     <td rowspan=$rowspan style='vertical-align: middle;text-align: center;'>{{ book.quantity }}</td>
                     <td rowspan=$rowspan style='vertical-align: middle;text-align: center;'>
                         <a class="btn btn-primary" href="{%url 'search:bookDetail' book.ISBN %}">详情</a>
-                        <a class="btn btn-success" href="">加至查询结果</a>
-                        <a class="btn btn-warning" href="/search/bookDetail/{{ book.ISBN }}">加至我的图书馆</a>
+                        <a class="btn btn-success" href="{%url 'search:bookDetail' book.ISBN %}">加至查询结果</a>
+                        <a class="btn btn-warning" href="{%url 'readerCenter:mylib_add' book.ISBN %}">加至我的图书馆</a>
                     </td>
                 </tr>
             {% empty %}

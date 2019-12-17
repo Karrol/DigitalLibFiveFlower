@@ -4,6 +4,7 @@
     {%block perscontent%}
     <!--个人中心网页的核心内容可替换组件-->
 
+
     <div id="content-wrapper">
 
         <div class="container-fluid">
@@ -13,21 +14,37 @@
                 <li class="breadcrumb-item"></li>
                 <li class="breadcrumb-item active">我的资源</li>
             </ol>
+            <div class="col-md-2 col-md-offset-6">
+                <form action="{%url 'readerCenter:mylib_search'%}" method="GET" class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" >
+                  <div class="input-group">
+                    <input type="text" name="MylibSearchKeyword" class="form-control" placeholder="检索我的图书馆" aria-label="Search" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary" type="button" value="search">
+                          <i class="fa fa-search" ></i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+            </div>
             {% if state %}
             <div class="col-md-2 col-md-offset-6">
                 <div class="alert alert-warning">
                     <a href="#" class="close" data-dismiss="alert">&times;</a>
-                    {% if state == 'add_success' %}
-                        <h2> 添加成功！</h2>
-                    {% endif %}
                     {% if state == 'repeat_add' %}
                         <h2>您已添加过此书籍！</h2>
                     {% endif %}
                     {% if state == 'delete_from_mylib_success' %}
-                        <h2>您已成功删除！</h2>
+                        <h2><a href="{%url 'readerCenter:mylib'%}"> 您已成功删除！点击刷新~</a></h2>
                     {% endif %}
                     {% if state == 'delete_from_mylib_fail' %}
-                        <h2>删除失败！</h2>
+                        <h2>删除失败！您的图书馆中不存在此书籍！</h2>
+                    {% endif %}
+                    {% if state == 'add_to_mylib_success' %}
+                        {%if message == 'back_to_search_searchBook'%}
+                            <h2><a href="{%url 'search:searchBook'%}"> 添加成功！点击返回检索页面</a></h2>
+                        {%else%}
+                        <h2> 添加成功！</h2>
+                        {% endif %}
                     {% endif %}
                 </div>
             </div>
@@ -38,18 +55,16 @@
               {%for book in mylib_list%}
               <div class="col-lg-4 col-md-6 mb-4">
                 <div class="card h-100">
-                  <a href="/book/detail?ISBN={{ book.ISBN.ISBN }}"><img class="card-img-top" src="/media/{{book.ISBN.cover}}" alt="{{book.ISBN.title}}封面"></a>
+                  <a href="{% url 'search:bookDetail' book.ISBN.ISBN %}"><img class="card-img-top" src="/media/bookcover/{{book.ISBN.cover}}" alt="{{book.ISBN.title}}封面"></a>
                   <div class="card-body">
                     <h4 class="card-title">
-                      <a href="/book/detail?ISBN={{ book.ISBN.ISBN }}">{{book.ISBN.title}}</a>
+                      <a href="{% url 'search:bookDetail' book.ISBN.ISBN %}">{{book.ISBN.title}}</a>
                     </h4>
                     <h5>{{book.ISBN.author }}</h5>
                     <!--<p class="card-text">{{book.ISBN.description}}</p> -->
                   </div>
                   <div class="card-footer">
-                      <!--#评星的网页显示，之后要不要有这个字段，进行条件判断给星星；要不就提供评分的动态效果-->
-                    <!--<small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small> -->
-                      <small class="text-muted"><a href="/mylib/delete?ISBN={{ book.ISBN.ISBN }}">删除书籍</a></small>
+                      <small class="text-muted"><a href="{% url 'readerCenter:mylib_del' book.ISBN.ISBN %}">删除书籍</a></small>
                   </div>
                 </div>
               </div>
