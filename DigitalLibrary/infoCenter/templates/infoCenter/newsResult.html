@@ -1,0 +1,60 @@
+{% extends "infoCenter/newsBase.html" %}
+
+{% block title %}信息中心{% endblock title %}
+
+{% block search %}
+<form method="get" id="searchform" action="{% url 'newsSearch' %}" class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+     {% csrf_token %}
+      <div class="input-group">
+        <input type="search" name="q" placeholder="搜索新闻" class="form-control" aria-label="Search" aria-describedby="basic-addon2" required>
+        <div class="input-group-append">
+          <button class="btn btn-primary" type="submit">搜索新闻
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+</form>
+{% endblock search %}
+
+{% block sideNews %}
+<div class="dropdown-menu" aria-labelledby="pagesDropdown">
+    {% for column in news_intro_columns %}
+    <a class="dropdown-item" href="{{ column.get_absolute_url }}">{{ column.columnName }}</a>
+    {% endfor %}
+</div>
+{% endblock sideNews %}
+
+{% block breadrums %}
+   <div class="container-fluid">
+       <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{% url 'newsIntro' %}">新闻公告</a>
+          </li>
+          <li class="breadcrumb-item active">搜索结果</li>
+        </ol>
+   </div>
+{% endblock breadrums %}
+
+{% block pagecontent %}
+<hr>
+    {% if error_msg %}
+        <p>{{ error_msg }}</p>
+    {% endif %}
+
+    {% for post in post_list %}
+        <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    {{ post.newsPubdate }}
+                </div>
+                <div class="card-body">
+                    <h5 class="news-title"><a href="{{ post.get_absolute_url }}">{{ post.newsTitle }}</a></h5>
+                </div>
+        </div>
+    {% empty %}
+    <div class="no-post">
+        没有搜索到符合条件的服务指南
+    </div>
+    {% endfor %}
+{% endblock pagecontent %}

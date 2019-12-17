@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+ {% load static %}
+ {% load staticfiles %}
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>数字图书馆首页</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- styles -->
+  <!--搜索框选项要能显示正常需要-->
+  <!--<link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}"/> -->
+  
+  <!--搜索框样式结束-->
+  <link href="{%static 'assets/css/bootstrap.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/css/bootstrap-responsive.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/css/docs.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/css/prettyPhoto.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/js/google-code-prettify/prettify.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/css/camera.css'%}" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300|Open+Sans:400,300,300italic,400italic" rel="stylesheet">
+  <link href="{%static 'assets/css/style.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/color/success.css'%}" rel="stylesheet">
+
+  <!-- fav and touch icons -->
+  <link rel="shortcut icon" href="{%static 'assets/ico/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{%static 'assets/ico/apple-touch-icon-144-precomposed.png'%}">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{%static 'assets/ico/apple-touch-icon-114-precomposed.png'%}">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{%static 'assets/ico/apple-touch-icon-72-precomposed.png'%}">
+  <link rel="apple-touch-icon-precomposed" href="{%static 'assets/ico/apple-touch-icon-57-precomposed.png'%}">
+  <link rel="stylesheet" href="/baidu/css/bootstrap.min.css"type="text/css"/>
+
+  <!-- =======================================================
+    Theme Name: Scaffold
+    Theme URL: https://bootstrapmade.com/scaffold-bootstrap-metro-style-template/
+    Author: BootstrapMade.com
+    Author URL: https://bootstrapmade.com
+  ======================================================= -->
+</head>
+
+<body>
+
+  <header>
+    <!-- Navbar
+    ================================================== -->
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <!-- logo 数字图书馆 注意：需要制作一个大小一致的徽标 -->
+          <a class="brand logo" href="index.html">
+            <img src="{%static 'assets/img/sculogo1.png'%}" alt="scuIS" />
+          </a>
+          <!-- end logo -->
+
+          <!-- top menu -->
+          <div>
+            <nav>
+              <ul class="nav topnav">
+
+                <li class="dropdown success active">
+                  <a href="/"><i class="icon-home icon-white"></i>首页</a>
+                  <!--<ul class="dropdown-menu">
+                    <li><a href="index_alt1.html">Index alt 1</a></li>
+                    <li><a href="index_alt2.html">Index alt 2</a></li>
+                  </ul>  -->
+                </li>
+
+                <li class="dropdown primary">
+                  <a href="#"><i class="icon-star icon-white"></i>读者服务</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="overview.html">借还图书</a></li>
+                    <li><a href="scaffolding.html">服务时间</a></li>
+                    <li><a href="base-css.html">续借与到期提醒</a></li>
+                    <li><a href="components.html">索取号</a></li>
+                    <li><a href="javascript.html">赔偿损失</a></li>
+                    <li class="dropdown"><a href="#">图书预约</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="#">图书预约说明</a></li>
+                        <li><a href="#">已预约图书</a></li>
+                        <li><a href="#">预约图书</a></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown"><a href="#">随书光盘</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="#">随书光盘检索</a></li>
+                        <li><a href="#">随书光盘说明</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+
+                <li class="dropdown danger">
+                  <a href="#"><i class="icon-leaf icon-white"></i>读者参与</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="about.html">读者论坛</a></li>
+                    <li class="dropdown"><a href="#">读者捐赠</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="#">捐赠须知</a></li>
+                        <li><a href="#">捐赠处理</a></li>
+                      </ul>
+                    </li>
+                    <li><a href="pricingtable.html">联系方式</a></li>
+                    <li class="dropdown"><a href="#">读者推荐</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="#">好书推荐</a></li>
+                        <li><a href="#">推荐列表</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li class="dropdown warning">
+                  <a href="#"><i class="icon-camera icon-white"></i>信息中心</a>
+                  <ul class="dropdown-menu">
+                    <li class="dropdown"><a href="#">服务指南</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="#">图书馆简介</a></li>
+                        <li><a href="#">服务指南列表</a></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown"><a href="#">本馆新闻</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="#">新闻栏目简介</a></li>
+                        <li><a href="#">新闻列表</a></li>
+                      </ul>
+                    </li>
+                    <li><a href="blog_right_sidebar.html">每周一书</a></li>
+                    <li><a href="post_left_sidebar.html">排行榜</a></li>
+                  </ul>
+                </li>
+
+                <li class="inverse">
+                  <a href="#"><i class="icon-envelope icon-white"></i> 馆员管理</a>
+                </li>
+              {% if user.is_authenticated %}
+                <li class="dropdown info">
+                  <a href="{%url 'readerCenter:profile'%}"><i class="icon-bullhorn icon-white"></i>个人中心</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{%url 'readerCenter:profile'%}">个人资料</a></li>
+                    <li><a href="{%url 'readerCenter:notice'%}">消息列表</a></li>
+                    <li><a href="{%url 'readerCenter:borrowingSituation'%}">我的借阅</a></li>
+                    <li><a href="{%url 'readerCenter:showsearchlist'%}">我的检索历史</a></li>
+                    <li><a href="{%url 'readerCenter:mylib'%}">我的图书馆</a></li>
+                  </ul>
+                </li>
+              {%else%}
+                <li class="dropdown info">
+                  <a href="#"><i class="icon-bullhorn icon-white"></i> 登录/注册</a>
+                  <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'login:readerLogin'%}">读者登录</a></li>
+                        <li><a href="{%url 'login:librarianLogin'%}">馆员登录</a></li>
+                        <li><a href="{%url 'login:userRegister'%}">读者注册</a></li>
+                  </ul>
+                </li>
+              {%endif%}
+              </ul>
+            </nav>
+          </div>
+          <!-- end menu -->
+        </div>
+      </div>
+    </div>
+  </header>
+{% block content %}{% endblock %}
+
+  <script src="{%static 'assets/js/jquery-1.8.2.min.js'%}"></script>
+  <script src="{%static 'assets/js/jquery.easing.1.3.js'%}"></script>
+  <script src="{%static 'assets/js/google-code-prettify/prettify.js'%}"></script>
+  <script src="{%static 'assets/js/modernizr.js'%}"></script>
+  <script src="{%static 'assets/js/bootstrap.js'%}"></script>
+  <script src="{%static 'assets/js/jquery.elastislide.js'%}"></script>
+  <script src="{%static 'assets/js/jquery.flexslider.js'%}"></script>
+  <script src="{%static 'assets/js/jquery.prettyPhoto.js'%}"></script>
+  <script src="{%static 'assets/js/application.js'%}"></script>
+  <script src="{%static 'assets/js/hover/jquery-hover-effect.js'%}"></script>
+  <script src="{%static 'assets/js/hover/setting.js'%}"></script>
+  <script src="{%static 'assets/js/camera/camera.min.js'%}"></script>
+  <script src="{%static 'assets/js/camera/setting.js'%}"></script>
+
+  <!-- Template Custom JavaScript File -->
+  <script src="{%static 'assets/js/custom.js'%}"></script>
+
+
+
+ 
+
+</body>
+
+</html>

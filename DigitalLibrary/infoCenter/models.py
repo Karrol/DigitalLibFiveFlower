@@ -28,10 +28,6 @@ class newsColumn_info(models.Model):
 
 @python_2_unicode_compatible
 class newsArticle_info(models.Model):
-    # id 这个是默认有的，也可以自己定义一个其它的主键来覆盖它
-    # id = models.AutoField(primary_key=True)
-    #张丽：你这里的外键是newsColumn_info的ID，并不是columnName，数据模型需要更改
-    #或者你通过views里的news_column变量获取其主键，主键可以用PK代替，我用了第二种方法
     newsColumn = models.ForeignKey("newsColumn_info", verbose_name='归属栏目', on_delete=models.CASCADE)
 
     newsTitle = models.CharField('标题', max_length=256)
@@ -58,7 +54,6 @@ class newsArticle_info(models.Model):
 @python_2_unicode_compatible
 class weekbook_info(models.Model):
     bookName = models.CharField('书名', max_length=50)
-    #TO DO 张丽：请玉和同学把bookID改为ISBN号，和serach.models中的book_info的ISBN号进行外键关联
     bookID = models.CharField('书籍编码', max_length=10)
     promugator =  models.ForeignKey('auth.User', blank=True, null=True, verbose_name='发布者', on_delete=models.CASCADE)
     recTime =  models.DateField('推荐时间', auto_now_add=True, editable=True)

@@ -1,14 +1,28 @@
 {% extends "service/serviceBase.html" %}
 
+{% block search %}
+<form method="get" id="searchform" action="{% url 'serviceSearch' %}" class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+     {% csrf_token %}
+      <div class="input-group">
+        <input type="search" name="q" placeholder="搜索服务指南" class="form-control" aria-label="Search" aria-describedby="basic-addon2" required>
+        <div class="input-group-append">
+          <button class="btn btn-primary" type="submit">搜索服务
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+</form>
+{% endblock search %}
+
 {% block breadrums %}
     <div class="container-fluid">
-        <h2>栏目简介</h2>
+        <h2>图书馆简介</h2>
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a href="{% url 'libBrief' %}">服务指南</a>
             </li>
-            <li class="breadcrumb-item active">栏目简介</li>
+            <li class="breadcrumb-item active">图书馆简介</li>
         </ol>
     </div>
 {% endblock breadrums %}

@@ -13,7 +13,7 @@ import json
 
 from login.models import Reader, User
 from search.models import book_info
-from .forms import Change_reader_infoForm
+from .forms import Change_reader_infoForm,UploadImageForm
 from readerCenter.models import readerLibrary,readerSearchlist,Borrowing
 from infoCenter.models import weekbook_info
 
@@ -24,13 +24,17 @@ from infoCenter.models import weekbook_info
 # 个人中心页面-个人资料
 def profile(request):
     if not request.user.is_authenticated:
-        return redirect("login:user_login")
+        return redirect("login:readerLogin")
 
     id = request.user.id
     try:
         reader = Reader.objects.get(user_id=id)
     except Reader.DoesNotExist:
         return HttpResponse('no this id reader')
+
+    # 判断用户状态，如果是登录用户，记录其现在浏览的位置，游客则不记录
+    if request.user.is_authenticated:
+        request.session['user_location'] = 'readerCenter:profile'
 
     borrowing = Borrowing.objects.filter(reader=reader).exclude(date_returned__isnull=False)
 
@@ -44,77 +48,64 @@ def profile(request):
 # 读者修改个人信息表单
 @login_required
 def readerChangeinfo(request):
-    reader = Reader.objects.get(user=request.user)
-    state = None
-    if request.method == 'POST':
-        reader.name = request.POST.get('name', '')
-        # photo的上传有问题，还有就是要给读者原始信息的提示
-        reader.photo = request.POST.get('photo', '')
-        reader.email = request.POST.get('email', '')
-        reader.save()
-        state = 'success'
-    context = {
-        'Change_reader_infoForm': Change_reader_infoForm(),
-        'state': state,
-    }
+    '''把已有的用户信息读出来，然后判断用户请求是POST还是GET。如果是GET，则显示表单,并将用户已有信息也显示在其中，如果是POST，则接收用户提交的表单信息，然后更新各个数据模型实例属性的值'''
+    user = User.objects.get(username=request.user.username)
+    userprofile = Reader.objects.get(user=request.user)
 
-    return render(request, 'readerCenter/readerChangeinfo.html', context)
+    if request.method == "POST":
+        userprofile_form = Change_reader_infoForm(request.POST)
+        message='请注意检查填写内容'
+        if userprofile_form.is_valid():
+            user_cd = userprofile_form.cleaned_data
+            userprofile.name = user_cd['name']
+            userprofile.sex = user_cd['sex']
+            userprofile.save()
+            message='success'
+        context={
+             'userprofile_form':userprofile_form,
+             'message':message,
+        }
+        return render(request, 'readerCenter/readerChangeinfo.html', context)
+    else:
+        userprofile_form = Change_reader_infoForm(initial={"name": userprofile.name, "sex": userprofile.Sex})
+        return render(request, "readerCenter/readerChangeinfo.html",
+                      locals())
+    
+
+ #上传图片
+@login_required
+def uploadImg(request):
+    if request.method == 'GET':
+        uploadImgForm = UploadImageForm(request.POST, request.FILES)
+        return render(request, 'readerCenter/readerUploadPhoto.html',locals())
+        # 添加头像图片，接收到img的url
+    email=request.session['user_email']
+    reader=Reader.objects.get(email=email)
+    uploadImgForm = UploadImageForm(request.POST, request.FILES)
+    message='fail'
+    if request.method == 'POST':
+        img = request.FILES.get('photo')
+        reader.photo=img
+        reader.save()
+        message='success'
+        return render(request, 'readerCenter/readerUploadPhoto.html',locals())
+    return render(request, 'readerCenter/readerUploadPhoto.html',locals())
 
 
 # 个人中心-读者通知界面
 @login_required
 def readerNotice(request):
+    # 判断用户状态，如果是登录用户，记录其现在浏览的位置
+    if request.user.is_authenticated:
+        request.session['user_location'] = 'readerCenter:readerNotice'
     reader = Reader.objects.get(user=request.user)
     # 每周一书的通知-仅推荐当周推荐，点击更多可以查看历史推荐
-    book_week = weekbook_info.objects.get(now_display=True)
+    book_week = weekbook_info.objects.filter(now_display=True)
 
     #实现系统自动进行借阅催还功能
-    state_to_return = None
-    state_over = None
-    # 设变量用来存储应还书、超期书的书名
-    book_to_return = ''
-    book_over_time = ''
-    #判断用户是否有在借图书
-    lending_book=Borrowing.objects.filter(reader=reader)
-    #遍历用户在借书籍
-    for book in lending_book:
-        #获取该图书应还日期
-        lendBookTime=book.date_due_to_returned
-        #判断是否超出还书时间
-        today=datetime.date.today()
-        #判断此书是否已还
-        if book.date_returned:
-            continue
-        else:
-            if today>lendBookTime:
-                #超时，生成催还提醒标题
-                state_over='book_over_time'
-                #获得超时书籍列表
-                book_over_time=book_over_time+','+book.ISBN.title
-            else:
-                # 没有超时，判断距离还书日期是否小于等于3天
-                if (lendBookTime-today)<=3:
-                    # 小于等于，返回催还通知
-                    state_to_return='its_time_to_return'
-                    book_to_return=book_to_return+','+book.ISBN.title
-                else:
-                    #大于，不显示催还通知,用户在借书籍情况的state=none
-                    state_to_return = None
-                    state_over = None
-                
-    nowtime = timezone.now()
+    book_over=Borrowing.objects.filter(reader=reader)
 
-    context = {
-        "reader": reader,
-        "state_to_return": state_to_return,
-        "state_over": state_over,
-        "book_week": book_week,
-        "nowtime": nowtime,
-        "book_over_time": book_over_time,
-        "book_to_return": book_to_return,
-
-    }
-    return render(request, 'readerCenter/readerNotice.html', context)
+    return render(request, 'readerCenter/readerNotice.html', locals())
 
 
 
@@ -153,10 +144,12 @@ def showNotice(request):
 
 
 # 查询借阅状态页面
+@login_required
 def readerBorrowing(request):
-    if not request.user.is_authenticated:
-        return redirect('login:login')
-
+    # 判断用户状态，如果是登录用户，记录其现在浏览的位置
+    if request.user.is_authenticated:
+        request.session['user_location'] = 'readerCenter:readerBorrowing'
+        
     id = request.user.id
     try:
         reader = Reader.objects.get(user_id=id)
@@ -173,12 +166,9 @@ def readerBorrowing(request):
     return render(request, 'readerCenter/readerBorSituation.html', context)
 
 #读者在我的借阅的的借还操作
+@login_required
 def readerOperateBook(request):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect('/login')
-
     action = request.GET.get('action', None)
-
     if action == 'return_book':
         id = request.GET.get('id', None)
         if not id:
@@ -211,15 +201,18 @@ def readerOperateBook(request):
 
     return HttpResponseRedirect('/bowrrowing')
 
-# 从检索首页的导航栏入口进入查询结果页
+# 从检索首页的导航栏入口/个人中心入口进入查询结果页
 @login_required
 def show_mysearchlist(request):
+    # 判断用户状态，如果是登录用户，记录其现在浏览的位置
+    if request.user.is_authenticated:
+        request.session['user_location'] = 'readerCenter:searchlist'
     searchlists = []
     # 获取当前页面的url
     current_path = request.get_full_path()
     # 验证用户是否已注册,获取用户id
     if not request.user.is_authenticated:
-        return HttpResponseRedirect('library:login')
+        return HttpResponseRedirect('login:readerLogin')
     else:
         # 获取传递过来读者ID
         reader = Reader.objects.get(user_id=request.user.id)
@@ -255,7 +248,7 @@ def show_mysearchlist(request):
 def add_to_searchlist(request):
     # 验证用户是否已注册,获取用户id
     if not request.user.is_authenticated:
-        return HttpResponseRedirect('/login')
+        return HttpResponseRedirect('login:readerLogin')
     else:
         # 获取传递过来的ISBN号以及读者ID
         variables = request.GET['ISBN']
@@ -288,7 +281,7 @@ def add_to_searchlist(request):
 def delete_from_searchlist(request):
     # 验证用户是否已注册,获取用户id
     if not request.user.is_authenticated:
-        return HttpResponseRedirect('/login')
+        return HttpResponseRedirect('login:readerLogin')
     else:
         # 获取传递过来的查询记录的id以及读者ID
         variables = request.GET['id']
@@ -306,56 +299,22 @@ def delete_from_searchlist(request):
     return HttpResponseRedirect(reverse('readerCenter:searchlist'))
 
 
-# 从个人中心导航栏入口进入查询结果页
-@login_required
-def show_mysearchlist(request):
-    searchlists = []
-    # 获取当前页面的url
-    current_path = request.get_full_path()
-    # 验证用户是否已注册,获取用户id
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect('library:login')
-    else:
-        # 获取传递过来读者ID
-        reader = Reader.objects.get(user_id=request.user.id)
-        searchlists = readerSearchlist.objects.filter(reader=reader).order_by('-search_date')[0:50]
 
-        # 翻页功能实现
-        paginator = Paginator(searchlists, 5)
-        page = request.GET.get('page', 1)
-
-        try:
-            searchlists = paginator.page(page)
-        except PageNotAnInteger:
-            searchlists = paginator.page(1)
-        except EmptyPage:
-            searchlists = paginator.page(paginator.num_pages)
-
-        # ugly solution for &page=2&page=3&page=4
-        if '&page' in current_path:
-            current_path = current_path.split('&page')[0]
-
-        context = {
-            'current_path': current_path,
-
-            "searchlists": searchlists,
-
-        }
-        return render(request, 'readerCenter/searchlist.html', context)
 
 
 # 显示“我的图书馆”页面，添加图书到我的图书馆页面的代码见“library:def book_detail”
 # "readerCenter:def mylib"应该完成显示我的图书馆书籍
+@login_required
 def mylib(request):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect('login:login')
+    # 判断用户状态，如果是登录用户，记录其现在浏览的位置
+    if request.user.is_authenticated:
+        request.session['user_location'] = 'readerCenter:mylib'
 
     id = request.user.id
     try:
         reader = Reader.objects.get(user_id=id)
     except Reader.DoesNotExist:
         return HttpResponse('no this id reader')
-
     mylib_list = readerLibrary.objects.filter(reader=reader)
 
     context = {
@@ -365,8 +324,99 @@ def mylib(request):
     }
     return render(request, 'readerCenter/mylib.html', context)
 
+# “我的图书馆”界面内书籍的管理操作：增+删+查
+@login_required
+#我的图书馆删除功能
+def mylib_del(request,ISBN):
+    isbn =ISBN
+    id = request.user.id
+    reader = Reader.objects.get(user_id=id)
+    state = None
+    mylib_list = readerLibrary.objects.filter(reader=reader,ISBN=isbn)
+    book = readerLibrary.objects.get(reader=reader, ISBN=isbn)
+    if book:
+        book.delete()
+        state = 'delete_from_mylib_success'
+    else:
+        state = 'delete_from_mylib_fail'
+    context = {
+        'state': state,
+        'reader': reader,
+        'mylib_list': mylib_list,
+    }
+    return render(request, 'readerCenter/mylib.html', context)
 
-# 提供删除我的图书馆内书籍的功能-未开发完毕，还需学习借书、还书实现的过程
+
+#我的图书馆添加图书功能
+def mylib_add(request,ISBN):
+    # 验证用户是否已注册,获取用户id
+    if not request.user.is_authenticated:
+        return redirect('login:readerLogin')
+    else:
+        # 获取传递过来的查询记录的id以及读者ID
+        id = request.user.id
+        reader = Reader.objects.get(user_id=request.user.id)
+    isbn = ISBN
+    state = None
+    message = None
+    repeat_book = readerLibrary.objects.filter(reader=reader,ISBN=isbn)
+    book=book_info.objects.filter(ISBN=isbn)
+    mylib_list=readerLibrary.objects.filter(reader=reader)
+    if not book:
+        state='book_not_exist'
+    elif repeat_book:
+        state = 'repeat_add'
+    else:
+        nowdate = datetime.date.today()
+        bk = book_info.objects.get(ISBN=isbn)
+        mylib_new_book = readerLibrary.objects.create(reader=reader, ISBN=bk, In_date=nowdate)
+        mylib_new_book.save()
+        state = 'add_to_mylib_success'
+        
+    user_location=request.session.get('user_location')
+
+    if user_location=='search:searchBook':
+        message='back_to_search_searchBook'
+
+    context = {
+        'state': state,
+        'reader': reader,
+        'mylib_list': mylib_list,
+        'message':message,
+    }
+    return render(request, 'readerCenter/mylib.html', context)
+
+
+@login_required
+# 我的图书馆查找图书功能
+def mylib_search(request):
+    id = request.user.id
+    reader = Reader.objects.get(user_id=id)
+    keyword=request.GET.get['MylibSearchKeyword']
+    
+    mylib_books = readerLibrary.objects.filter(reader=reader)
+    searchResultISBN=[]
+    counter=0
+    for book in mylib_books:
+        if book.ISBN.title==keyword:
+            searchResultISBN[counter]=book.ISBN
+            counter=counter+1
+        elif book.ISBN.author==keyword:
+            searchResultISBN[counter] = book.ISBN
+            counter = counter + 1
+        elif book.ISBN.ISBN==keyword:
+            searchResultISBN[counter] = book.ISBN
+            counter = counter + 1
+        elif book.ISBN.category==keyword:
+            searchResultISBN[counter] = book.ISBN
+            counter = counter + 1
+
+    context={'searchResultISBN':searchResultISBN,}
+    return render(request, 'readerCenter/mylib.html',context)
+
+
+
+# 2019-11-提供删除我的图书馆内书籍的功能-未开发完毕，还需学习借书、还书实现的过程
 def delete_from_mylib(request):
     isbn = request.GET.get('ISBN', None)
     print(isbn)
@@ -400,7 +450,7 @@ def delete_from_mylib(request):
 def add_to_searchlist(request):
     # 验证用户是否已注册,获取用户id
     if not request.user.is_authenticated:
-        return HttpResponseRedirect('library:login')
+        return HttpResponseRedirect('login:readerLogin')
     else:
         # 获取传递过来的ISBN号以及读者ID
         variables = request.GET['ISBN']
@@ -433,7 +483,7 @@ def add_to_searchlist(request):
 def delete_from_searchlist(request):
     # 验证用户是否已注册,获取用户id
     if not request.user.is_authenticated:
-        return HttpResponseRedirect('library:login')
+        return HttpResponseRedirect('login:readerLogin')
     else:
         # 获取传递过来的查询记录的id以及读者ID
         variables = request.GET['id']

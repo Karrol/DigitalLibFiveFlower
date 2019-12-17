@@ -10,10 +10,10 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1">
 
-                {% if state %}
+                {% if message %}
                     <div class="alert alert-success text-center">
                         <a href="#" class="close" data-dismiss="alert">&times;</a>
-                        {% if state == 'success' %}
+                        {% if message == 'success' %}
                             <h2><a href="{%url 'readerCenter:profile'%}">修改成功,点击返回个人中心页面</a></h2>
                         {% endif %}
                     </div>
@@ -28,7 +28,7 @@
                             {% csrf_token %}
                             <!--<h1 class="form-signin-heading text-center">修改个人信息</h1> -->
 
-                            {% for field in Change_reader_infoForm %}
+                            {% for field in userprofile_form %}
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">{{ field.label }}</label>
                                     <div class="col-md-9">

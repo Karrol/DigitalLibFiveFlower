@@ -30,3 +30,22 @@ def serviceDetail(request, serviceSlug, pk):
         'side_cotegories':side_cotegories,
         'intro': intro
     })
+
+#站内搜索
+def serviceSearch(request):
+    q = request.GET.get('q')
+    error_msg = ''
+
+    if not q:
+        error_msg = '请输入关键词'
+        return render(request, 'service/serviceResult.html', {'error_msg': error_msg})
+
+    post_list = Intro.objects.filter(serviceTitle__icontains=q)
+
+    side_cotegories = Category.objects.filter(side_display=True)
+
+    return render(request, 'service/serviceResult.html', {
+        'side_cotegories':side_cotegories,
+        'error_msg': error_msg,
+        'post_list': post_list
+    })

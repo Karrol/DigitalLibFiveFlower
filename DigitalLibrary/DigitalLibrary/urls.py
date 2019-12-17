@@ -25,17 +25,23 @@ import readerService.views as readerService_view
 import librarian.views as librarian_view
 import service.views as service_view
 import infoCenter.views as infoCenter_view
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 
 urlpatterns = [
     url('admin/', admin.site.urls),
-    url(r'^$', search_view.index, name='index'),
+    url(r'^$', search_view.test, name='indextest'),
     url(r'^login/', include('login.urls',namespace = 'login')),
-    url(r'^readerCenter/', include('readerCenter.urls')),
-    url(r'^search/', include('search.urls')),
+    url(r'^readerCenter/', include('readerCenter.urls',namespace = 'readerCenter')),
+    url(r'^search/', include('search.urls',namespace = 'search')),
     url(r'^participate/', include('participate.urls')),
     url(r'^readerService/', include('readerService.urls')),
     url(r'^librarian/', include('librarian.urls')),
-    url(r'^service/', include('service.urls')),
+    url(r'^ueditor/', include('DjangoUeditor.urls')),
     url(r'^infoCenter/', include('infoCenter.urls')),
-]
+    url(r'^service/', include('service.urls')),
+    #张丽：登录图形验证码
+    url(r'^captcha', include('captcha.urls')),
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

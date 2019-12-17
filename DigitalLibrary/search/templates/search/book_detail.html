@@ -1,4 +1,4 @@
-{% extends "search/base.html" %}
+{% extends "login/base.html" %}
 {% load staticfiles %}
 {% block title %}查看图书{% endblock %}
 
@@ -37,7 +37,7 @@
             <div class="col-md-10 col-md-offset-1">
                 <div class="col-md-5">
                     <div class="img-rounded">
-                      <img src="/media/{{ book.cover }}" alt="{{ book.title }}">
+                      <img src="/media/bookcover/{{ book.cover }}" alt="{{ book.title }}">
                     </div>
                     <br><br><br>
                     <div class="col-md-5">
@@ -54,7 +54,7 @@
                     </div>
                     <div class="col-md-5">
                     <button class="btn btn-primary btn-lg"
-                                    onclick="location.href='detail'+'?ISBN={{ book.ISBN }}&action=add_to_mylib';">添至我的图书馆
+                                    onclick="location.href='bookDetail/'+'{{ book.ISBN }}&action=add_to_mylib';">添至我的图书馆
                         </button>
                     </div>
                 </div>
