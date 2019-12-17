@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import newsColumn_info, newsArticle_info, weekbook_info, booktop_info
 from django.shortcuts import render, redirect
+from .models import newsColumn_info, newsArticle_info, weekbook_info, booktop_info
+from search.models import book_info
 
 #新闻
 #新闻栏目简介
@@ -101,11 +102,11 @@ def recBookDetail(request, bookID, pk):
 def rankList(request):
     news_intro_columns = newsColumn_info.objects.filter(nav_display=True)
 
-    ranklist_books = booktop_info.objects.filter(pub_display=True)
-
-    return render(request, 'infoCenter/rankList.html',{
-        'news_intro_columns':news_intro_columns,
-        'ranklist_books':ranklist_books
+    # 根据自增的views字段进行排序，并获取最高的10条数据
+    hotBook = book_info.objects.order_by("-bookViews")[0:10]
+    return render(request, "infoCenter/rankList.html", {
+        'news_intro_columns': news_intro_columns,
+        'hotBook': hotBook
     })
 
 #站内搜索

@@ -49,6 +49,13 @@ class book_info(models.Model):
     
     page = models.CharField('图书页码',blank=True,max_length=255)
 
+    #李玉和增加  阅读量字段
+    bookViews = models.PositiveIntegerField(default=0)
+
+    def increase_views(self):
+        self.bookViews += 1
+        self.save(update_fields=['bookViews'])
+
     def __str__(self):
         return self.title + self.author
 

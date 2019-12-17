@@ -41,6 +41,13 @@ class newsArticle_info(models.Model):
 
     newsPublished = models.BooleanField('正式发布', default=True)
 
+    #李玉和增加  阅读量字段
+    bookViews = models.PositiveIntegerField(default=0)
+
+    def increase_views(self):
+        self.bookViews += 1
+        self.save(update_fields=['bookViews'])
+
     def __str__(self):
         return self.newsTitle
 
