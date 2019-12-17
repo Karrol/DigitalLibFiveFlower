@@ -98,6 +98,8 @@ def book_detail(request,ISBN):
         return HttpResponse('there is no such an ISBN')
     try:
         book = book_info.objects.get(pk=ISBN)
+        # 李玉和增加 阅读量自增
+        booktop_info.increase_views(book)
     except book_info.DoesNotExist:
         return HttpResponse('there is no such an ISBN')
 
