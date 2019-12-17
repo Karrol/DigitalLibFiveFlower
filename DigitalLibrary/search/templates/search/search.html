@@ -47,7 +47,7 @@
                     <td><input type="checkbox" class="i-checks" name="input[]" value="{{book.ISBN}}"></td>
                     <td>{{ forloop.counter }}</td>
                     <td>
-                        <a href="/search/searchBook/detail?ISBN={{ book.ISBN }}">
+                        <a href="/search/bookDetail/{{ book.ISBN }}">
                             <img class="img-responsive"
                                  src="/media/bookcover/{{ book.cover }}"
                                  width="90"
@@ -55,13 +55,13 @@
                                  alt="{{ book.title }}">
                         </a>
                     </td>
-                    <td><a href="/book/detail?ISBN={{ book.ISBN }}">{{ book.title }}</a></td>
+                    <td><a href="/search/bookDetail/{{ book.ISBN }}">{{ book.title }}</a></td>
                     <td>{{ book.author }}
                     <td>{{ book.category }}</td>
                     <td>{{ book.location }}</td>
                     <td>{{ book.quantity }}</td>
                     <td>
-                        <a class="btn btn-primary" href="/book/detail?ISBN={{ book.ISBN }}">详情</a>
+                        <a class="btn btn-primary" href="/search/bookDetail/{{ book.ISBN }}">详情</a>
                     </td>
                 </tr>
             {% empty %}
