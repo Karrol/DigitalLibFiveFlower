@@ -3,7 +3,7 @@ import datetime
 from django.utils import timezone
 from django.urls import reverse
 
-from django.shortcuts import render,redirect,get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from django import forms
 from django.contrib import auth
@@ -11,28 +11,29 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import book_info
 from login.models import Reader
-from readerCenter.models import Borrowing,readerLibrary
+from readerCenter.models import Borrowing, readerLibrary
 from infoCenter.models import newsArticle_info
 from service.models import Intro
 from .forms import SearchForm
 
-# Create your views here.
-#书籍的检索首页
-def index(request):
-    #获取新闻公告标题（显示前十条）
-    news= newsArticle_info.objects.order_by('-newsPubdate')[:10]
 
-    #获取读者服务条目（显示前十条）
+# Create your views here.
+# 书籍的检索首页
+def index(request):
+    # 获取新闻公告标题（显示前十条）
+    news = newsArticle_info.objects.order_by('-newsPubdate')[:10]
+
+    # 获取读者服务条目（显示前十条）
     service = newsArticle_info.objects.order_by('-newsPubdate')[:10]
 
-    
     context = {
         'searchForm': SearchForm(),
-        'news':news,
-        'service':service,
+        'news': news,
+        'service': service,
     }
-    
+
     return render(request, 'search/index.html', context)
+
 
 def test(request):
     news = newsArticle_info.objects.order_by('-newsPubdate')[:10]
@@ -40,10 +41,10 @@ def test(request):
         'searchForm': SearchForm(),
         'news': news,
     }
-    return render(request, 'search/index_test.html',context)
+    return render(request, 'search/index_test.html', context)
 
 
-#书籍检索结果页
+# 书籍检索结果页
 def book_search(request):
     # 判断用户状态，如果是登录用户，记录其现在浏览的位置，游客则不记录
     if request.user.is_authenticated:
@@ -94,9 +95,10 @@ def book_search(request):
     }
     return render(request, 'search/search.html', context)
 
-#书籍详情页
-def book_detail(request,ISBN):
-    ISBN = ISBN
+
+# 书籍详情页
+def book_detail(request):
+    ISBN = request.GET.get('ISBN', None)
     print(ISBN)
     if not ISBN:
         return HttpResponse('there is no such an ISBN')
@@ -148,8 +150,8 @@ def book_detail(request,ISBN):
             reader = Reader.objects.get(user_id=request.user.id)
             bk = book_info.objects.get(pk=ISBN)
             bk.save()
-            #不确定数据库中是否有这个记录时要用filter筛选并且进行判断，如果直接使用get方法，数据库中不存在这条记录就会报错
-            myliblist = readerLibrary.objects.filter(ISBN=ISBN,reader=reader)
+            # 不确定数据库中是否有这个记录时要用filter筛选并且进行判断，如果直接使用get方法，数据库中不存在这条记录就会报错
+            myliblist = readerLibrary.objects.filter(ISBN=ISBN, reader=reader)
             if myliblist.exists():
                 state = 'repeat_add'
                 return HttpResponseRedirect('/mylib?state=repeat_add')
