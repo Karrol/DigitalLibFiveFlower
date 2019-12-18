@@ -37,8 +37,15 @@ def cdInfo(request):
 def renewal(request):
     return render (request,'readerService/renewal.html')
 
-def serviceTime(request):
-    return render (request,'readerService/serviceTime.html')
-
 def cd(request):
     return render (request,'readerService/cd.html')
+
+def serviceTime(request, RedserSlug, pk):
+    redservice = RedSer.objects.get(pk=pk)
+
+    if RedserSlug != redservice.RedserSlug:
+        return redirect(redservice, permanent=True)
+
+    return render(request, 'readerService/serviceTime.html', {
+        'redsertime': redsertime
+    })
