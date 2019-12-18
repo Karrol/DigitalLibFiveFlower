@@ -8,7 +8,8 @@ class newsArticleAdmin(admin.ModelAdmin):
     list_display = ('newsTitle', 'newsColumn', 'newsAuthor', 'newsPubdate', 'newsPublished')
 
 class RecbookAdmin(admin.ModelAdmin):
-    list_display = ('bookName', 'recTime', 'promugator', 'now_display', 'past_display')
+    raw_id_fields = ("ISBN",)
+    list_display = ('bookName', 'recTime', 'promugator', 'index_display')
 
 class RankAdmin(admin.ModelAdmin):
     list_display = ('number', 'bookName', 'bookAuthor', 'pub_display')
