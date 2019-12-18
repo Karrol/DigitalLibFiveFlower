@@ -7,7 +7,7 @@ urlpatterns = [
     url(r'^newsDetail/(?P<pk>\d+)/(?P<newsSlug>[^/]+)/$', views.newsDetail, name="newsDetail"), #新闻文章详情
 
     url(r'^recBookList/$', views.recBookList, name="recBookList"), #每周一书列表
-    url(r'^recBookList/(?P<pk>\d+)/(?P<ISBN>[^/]+)/$', views.recBookDetail, name='recBookDetail'),
+    url(r'^recBookList/(?P<pk>\d+)/(?P<bookID>[^/]+)/$', views.recBookDetail, name='recBookDetail'),
 
     url(r'^rankList/$', views.rankList, name="rankList"),  # 排行榜列表
 
