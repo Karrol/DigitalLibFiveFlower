@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import RedSer
+from .models import RedSerTime
 
 
-class RedSerAdmin(admin.ModelAdmin):
+class RedSerTimeAdmin(admin.ModelAdmin):
     list_display = ('get_redSerName', 'get_redSerOperator', 'get_redSerPublished', 'get_redSerPubdate')
 
     def get_redSerName(self, obj):
@@ -19,4 +19,4 @@ class RedSerAdmin(admin.ModelAdmin):
 
     get_redSerName.short_description = '读者服务'
 
-admin.site.register(RedSer, RedSerAdmin)
+admin.site.register(RedSerTime, RedSerTimeAdmin)

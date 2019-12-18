@@ -41,7 +41,7 @@ def cd(request):
     return render (request,'readerService/cd.html')
 
 def serviceTime(request, RedserSlug, pk):
-    redservice = RedSer.objects.get(pk=pk)
+    redservice = RedSerTime.objects.get(pk=pk)
 
     if RedserSlug != redservice.RedserSlug:
         return redirect(redservice, permanent=True)

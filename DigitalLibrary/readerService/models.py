@@ -17,7 +17,7 @@ class bookReser(models.Model):
     place = models.CharField(u'地点', max_length=256)
 
 @python_2_unicode_compatible
-class RedSer(models.Model):
+class RedSerTime(models.Model):
     # id 这个是默认有的，也可以自己定义一个其它的主键来覆盖它
     # id = models.AutoField(primary_key=True)
     redserName = models.CharField('标题', max_length=256)

@@ -1,7 +1,7 @@
 from django.db import models
 from login.models import Reader
 from search.models import book_info
-
+import django.utils.timezone as timezone
 
 
 class readerLibrary(models.Model):
@@ -10,7 +10,7 @@ class readerLibrary(models.Model):
         verbose_name_plural = '我的图书馆'
     reader = models.ForeignKey(Reader, on_delete=models.CASCADE, verbose_name='读者',default='51')
     ISBN = models.ForeignKey(book_info, on_delete=models.CASCADE, verbose_name='ISBN')
-    In_date = models.DateField(verbose_name='加入时间')
+    In_date = models.DateField(verbose_name='加入时间', default = timezone.now)
     #TO DO：可以开启读者的个人图书馆管理-增删查-提供两种界面-书架界面/管理界面
     defBookType=models.CharField(verbose_name='加入时间',max_length=200,default='我的图书分区')
 
