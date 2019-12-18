@@ -4,6 +4,7 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from DjangoUeditor.models import UEditorField
 from django.urls import reverse
+from search.models import book_info
 
 
 @python_2_unicode_compatible
@@ -54,43 +55,22 @@ class newsArticle_info(models.Model):
 @python_2_unicode_compatible
 class weekbook_info(models.Model):
     bookName = models.CharField('书名', max_length=50)
-    bookID = models.CharField('书籍编码', max_length=10)
+    ISBN =  models.ForeignKey(book_info, on_delete=models.CASCADE, verbose_name='ISBN')
     promugator =  models.ForeignKey('auth.User', blank=True, null=True, verbose_name='发布者', on_delete=models.CASCADE)
     recTime =  models.DateField('推荐时间', auto_now_add=True, editable=True)
     Rec_comment = UEditorField('推荐语', height=300, width=1000,
                            default=u'', blank=True, imagePath="uploads/images/",
                            toolbars='besttome', filePath='uploads/files/')
 
-    now_display = models.BooleanField('本周推荐', default=False)
-    past_display = models.BooleanField('历史推荐', default=False)
+    index_display = models.BooleanField('正式推荐', default=False)
 
     def __str__(self):
         return self.bookName
 
     def get_absolute_url(self):
-        return reverse('recBookDetail', kwargs=({'pk':self.pk, 'bookID':self.bookID}))
+        return reverse('recBookDetail', kwargs=({'pk':self.pk, 'ISBN':self.ISBN}))
 
     class Meta:
         verbose_name = '每周一书'
         verbose_name_plural = '每周一书'
-
-@python_2_unicode_compatible
-class booktop_info(models.Model):
-    number = models.AutoField('序号', primary_key=True)
-    bookName = models.CharField('书名', max_length=50)
-    bookAuthor =  models.CharField('作者', max_length=50)
-    bookConcern = models.CharField('出版社', max_length=50)
-    ISBN = models.CharField('ISBN号', max_length=50)
-
-    pub_display = models.BooleanField('正式发布', default=False)
-
-    def __str__(self):
-        return self.bookName
-
-    def get_absolute_url(self):
-        return reverse('ranking', args=(self.pk, self.number))
-
-    class Meta:
-        verbose_name = '排行榜'
-        verbose_name_plural = '排行榜'
-        ordering = ['number']  # 按照哪个栏目排序
+        ordering = ['recTime']
