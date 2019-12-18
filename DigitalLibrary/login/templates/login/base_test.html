@@ -94,20 +94,21 @@
                 <li class="dropdown danger">
                   <a href="#"><i class="icon-leaf icon-white"></i>读者参与</a>
                   <ul class="dropdown-menu">
-                    <li><a href="about.html">读者论坛</a></li>
+                    <li><a href="{% url 'participate:article_list' %}">读者论坛</a></li>
                     <li class="dropdown"><a href="#">读者捐赠</a>
                       <ul class="dropdown-menu sub-menu">
-                        <li><a href="#">捐赠须知</a></li>
-                        <li><a href="#">捐赠处理</a></li>
+                        <li><a href="{% url 'participate:donation_rules' %}">捐赠须知</a></li>
+                        <li><a href="{% url 'participate:donation_treatments' %}">捐赠处理</a></li>
+                        <li><a href="{% url 'participate:donation_contact' %}">联系方式</a></li>
                       </ul>
                     </li>
-                    <li><a href="pricingtable.html">联系方式</a></li>
                     <li class="dropdown"><a href="#">读者推荐</a>
                       <ul class="dropdown-menu sub-menu">
-                        <li><a href="#">好书推荐</a></li>
-                        <li><a href="#">推荐列表</a></li>
+                        <li><a href="{% url 'participate:book_recommendation' %}">好书推荐</a></li>
+                        <li><a href="{% url 'participate:bookrec_list' %}">推荐列表</a></li>
                       </ul>
                     </li>
+                    <li><a href="{% url 'participate:article_list' %}">推荐书目</a></li>
                   </ul>
                 </li>
                 <li class="dropdown info">
@@ -141,6 +142,7 @@
                     <li><a href="{%url 'readerCenter:notice'%}">消息列表</a></li>
                     <li><a href="{%url 'readerCenter:borrowingSituation'%}">我的借阅</a></li>
                     <li><a href="{%url 'readerCenter:showsearchlist'%}">我的检索历史</a></li>
+                    <li><a href="{% url 'participate:article_create' %}">论坛发言</a></li>
                     <li><a href="{%url 'readerCenter:mylib'%}">我的图书馆</a></li>
                   </ul>
                 </li>

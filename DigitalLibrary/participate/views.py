@@ -6,7 +6,8 @@ from django.http import HttpResponse
 # 导入数据模型ArticlePost
 from .models import ArticlePost
 
-
+# 引入markdown模块
+import markdown
 
 # 引入redirect重定向模块
 from django.shortcuts import render, redirect, get_object_or_404
@@ -38,14 +39,21 @@ from .models import RecbooklistInfo
 # 导入刚才定义的RecbooklistInfoForm表单类
 from .forms import RecbooklistInfoForm
 
+# 引入验证登录的装饰器
+from django.contrib.auth.decorators import login_required
+
+
+
+
+
+# Create your views here.
+
 # 读者推荐列表
 def recom_list(request):
     recuserinfos = RecbooklistInfo.objects.all()
     return render(request, 'participate/reclist.html',{'recuserinfos':recuserinfos})
 
 
-
-# Create your views here.
 # 视图函数
 # 文章列表
 def article_list(request):
@@ -107,17 +115,21 @@ def article_detail(request, id):
 
 
     # 将markdown语法渲染成html样式
-    article.body = markdown.markdown(article.body,
+    # 修改markdown样式
+    md = markdown.Markdown(
          extensions=[
              # 包含 缩写、表格等常用扩展
              'markdown.extensions.extra',
              # 语法高亮扩展
              'markdown.extensions.codehilite',
              # 目录扩展
-             'markdown.extensions.TOC',
-         ])
+             'markdown.extensions.toc',
+         ]
+    )
+    article.body = md.convert(article.body)
+
     # 需要传递给模板的对象
-    context = {'article': article, 'comments': comments}
+    context = {'article': article, 'toc': md.toc, 'comments': comments}
     # 载入模板，并返回context对象
     return render(request, 'participate/detail.html', context)
 
@@ -212,7 +224,7 @@ def article_update(request, id):
             article.tags.set(*request.POST.get('tags').split(','), clear=True)
             article.save()
             # 完成后返回到修改后的文章中。需传入文章的 id 值
-            return redirect("article:article_detail", id=id)
+            return redirect("participate:article_detail", id=id)
         # 如果数据不合法，返回错误信息
         else:
             return HttpResponse("表单内容有误，请重新填写。")
@@ -225,9 +237,10 @@ def article_update(request, id):
         # 赋值上下文，将 article 文章对象也传递进去，以便提取旧的内容
         context = {'article': article, 'article_post_form': article_post_form, 'columns': columns, 'tags': ','.join([x for x in article.tags.names()]),}
         # 将响应返回到模板中
-        return render(request, 'article/update.html', context)
+        return render(request, 'participate/update.html', context)
 
-    # 文章评论
+# 文章评论
+@login_required(login_url='/login/readerLogin/')
 def post_comment(request, article_id):
         article = get_object_or_404(ArticlePost, id=article_id)
 
