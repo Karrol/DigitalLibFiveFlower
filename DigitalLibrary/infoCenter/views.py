@@ -74,8 +74,8 @@ def newsDetail(request, newsSlug, pk):
 def recBookList(request):
     news_intro_columns = newsColumn_info.objects.filter(nav_display=True)
 
-    now_recbook = weekbook_info.objects.filter(now_display=True)
-    past_recbooks = weekbook_info.objects.filter(past_display=True)
+    now_recbook = weekbook_info.objects.filter(index_display=True).first()
+    past_recbooks = weekbook_info.objects.filter(index_display=True)
 
     return render(request, 'infoCenter/recBookList.html', {
         'now_recbook': now_recbook,
@@ -84,18 +84,16 @@ def recBookList(request):
     })
 
 #每周一书历史详情
-def recBookDetail(request, bookID, pk):
+def recBookDetail(request, ISBN, pk):
     news_intro_columns = newsColumn_info.objects.filter(nav_display=True)
 
     past_recbook = weekbook_info.objects.get(pk=pk)
-    past_recbook_list = weekbook_info.objects.filter(past_display=True).exclude(bookID=bookID)
-    now_recbook = weekbook_info.objects.filter(now_display=True)
+    past_recbook_list = weekbook_info.objects.filter(index_display=True).exclude(ISBN=ISBN)
 
     return render(request, 'infoCenter/recBookHis.html', {
         'news_intro_columns': news_intro_columns,
         'past_recbook': past_recbook,
         'past_recbook_list': past_recbook_list,
-        'now_recbook': now_recbook
     })
 
 #排行榜
