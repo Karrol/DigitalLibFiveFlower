@@ -75,7 +75,7 @@ def recBookList(request):
     news_intro_columns = newsColumn_info.objects.filter(nav_display=True)
 
     now_recbook = weekbook_info.objects.filter(index_display=True).first()
-    past_recbooks = weekbook_info.objects.filter(index_display=True)
+    past_recbooks = weekbook_info.objects.filter(index_display=True).exclude(ISBN = now_recbook.ISBN)
 
     return render(request, 'infoCenter/recBookList.html', {
         'now_recbook': now_recbook,
