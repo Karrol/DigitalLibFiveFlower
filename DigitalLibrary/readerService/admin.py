@@ -20,4 +20,5 @@ class RedSerTimeAdmin(admin.ModelAdmin):
 
     get_redSerName.short_description = '读者服务'
 '''
+
 admin.site.register(RedSerTime)
