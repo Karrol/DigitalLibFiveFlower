@@ -953,7 +953,7 @@ button.close {
 .btn-success {
   color: #ffffff;
   text-shadow: none;
-  background: #7cbb00;
+  background: #757d63;
   border-color: #7cbb00;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   *background-color: #51a351;
@@ -967,8 +967,8 @@ button.close {
 .btn-success.disabled,
 .btn-success[disabled] {
   color: #ffffff;
-  background: #76b200;
-  *background: #76b200;
+  background: #4EAAB9;
+  *background:#4EAAB9;
 }
 
 .btn-success:active,

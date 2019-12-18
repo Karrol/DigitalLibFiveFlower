@@ -7,6 +7,7 @@
      <div class="container col-md-8 col-md-offset-2">
         <br>
         <h1 align="center">检索历史</h1>
+         <a class="btn btn-warning" href="/book/detail?ISBN={{ book.ISBN.ISBN }}">批量移除</a>
         <table class="table table-hover">
             <thead>
 
@@ -20,12 +21,12 @@
             <th>分类</th>
             <th>在馆位置</th>
             <th>在馆数量</th>
-            <th><input type="button" onclick="MultiDel()" class="btn" value="移除"></th>
+            <th>操作</th>
 
             </thead>
         
             <tbody>
-            {% for book in searchlists %}
+            {% for book in mysearchhis %}
                 <tr>
                      <td><input type="checkbox" class="i-checks" name="input[]" value="{{book.id}}"></td>
                     <td>{{book.search_date}}</td>
@@ -33,7 +34,7 @@
                     <td>
                         <a href="/book/detail?ISBN={{ book.ISBN.ISBN }}">
                             <img class="img-responsive"
-                                 src="/media/{{ book.ISBN.cover }}"
+                                 src="/media/bookcover/{{ book.ISBN.cover }}"
                                  width="90"
                                  height="128"
                                  alt="{{ book.ISBN.title }}">
@@ -46,6 +47,7 @@
                     <td>{{ book.ISBN.quantity }}</td>
                     <td>
                         <a class="btn btn-primary" href="/book/detail?ISBN={{ book.ISBN.ISBN }}">详情</a>
+                        <a class="btn btn-danger" href="/book/detail?ISBN={{ book.ISBN.ISBN }}">移除</a>
                     </td>
 
                 </tr>
@@ -60,17 +62,17 @@
        <!--查询历史的翻页功能有待开发！-->
         <nav class="myContainer">
             <ul class="pager">
-                {% if searchlists.has_previous %}
+                {% if mysearchhis.has_previous %}
                     <li class="previous"><a
-                            href="{{ current_path }}&page={{ searchlists.previous_page_number }}#hint">上一页</a>
+                            href="{{ current_path }}&page={{ mysearchhis.previous_page_number }}#hint">上一页</a>
                     </li>
                 {% else %}
                     <li class="previous disabled"><a href="#">上一页</a></li>
                 {% endif %}
-                第 {{ searchlists.number }} / {{ searchlists.paginator.num_pages }}页
-                {% if searchlists.has_next %}
+                第 {{ mysearchhis.number }} / {{ mysearchhis.paginator.num_pages }}页
+                {% if mysearchhis.has_next %}
                     <li class="next"><a
-                            href="{{ current_path }}&page={{ searchlists.next_page_number }}#hint">下一页</a>
+                            href="{{ current_path }}&page={{ mysearchhis.next_page_number }}#hint">下一页</a>
                     </li>
                 {% else %}
                     <li class="next disabled"><a href="#">下一页</a></li>

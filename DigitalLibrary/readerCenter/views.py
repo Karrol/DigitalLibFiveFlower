@@ -165,7 +165,7 @@ def readerBorrowing(request):
     }
     return render(request, 'readerCenter/readerBorSituation.html', context)
 
-#读者在我的借阅的的借还操作
+#读者在我的借阅的借还操作
 @login_required
 def readerOperateBook(request):
     action = request.GET.get('action', None)
@@ -203,7 +203,7 @@ def readerOperateBook(request):
 
 # 从检索首页的导航栏入口/个人中心入口进入查询结果页
 @login_required
-def show_mysearchlist(request):
+def mysearchhis_show(request):
     # 判断用户状态，如果是登录用户，记录其现在浏览的位置
     if request.user.is_authenticated:
         request.session['user_location'] = 'readerCenter:searchlist'
@@ -216,18 +216,18 @@ def show_mysearchlist(request):
     else:
         # 获取传递过来读者ID
         reader = Reader.objects.get(user_id=request.user.id)
-        searchlists = readerSearchlist.objects.filter(reader=reader).order_by('-search_date')[0:50]
+        mysearchhis = readerSearchlist.objects.filter(reader=reader).order_by('-search_date')[0:50]
 
         # 翻页功能实现
-        paginator = Paginator(searchlists, 5)
+        paginator = Paginator(mysearchhis, 5)
         page = request.GET.get('page', 1)
 
         try:
-            searchlists = paginator.page(page)
+            mysearchhis = paginator.page(page)
         except PageNotAnInteger:
-            searchlists = paginator.page(1)
+            mysearchhis = paginator.page(1)
         except EmptyPage:
-            searchlists = paginator.page(paginator.num_pages)
+            mysearchhis = paginator.page(paginator.num_pages)
 
         # ugly solution for &page=2&page=3&page=4
         if '&page' in current_path:
@@ -236,16 +236,27 @@ def show_mysearchlist(request):
         context = {
             'current_path': current_path,
 
-            "searchlists": searchlists,
+            "mysearchhis": mysearchhis,
 
         }
         return render(request, 'readerCenter/searchlist.html', context)
 
-
-# 将搜索结果添加至“查询结果”页面
 @login_required
-# @permission_required('Information.delete_information', raise_exception=True)
-def add_to_searchlist(request):
+# 将搜索结果添加至“查询结果”页面
+def mysearchhis_add(request,ISBN):
+    isbn =ISBN
+    id = request.user.id
+    reader = Reader.objects.get(user_id=id)
+    state = None
+    today=datetime.date.today()
+    bk=book_info.objects.get(ISBN=isbn)
+    newbkhis= readerSearchlist.objects.create(ISBN=bk,reader=reader,search_date=today)
+    newbkhis.save()
+    return redirect("readerCenter:showsearchlist")
+
+
+@login_required
+def mysearchhis_multiadd(request):
     # 验证用户是否已注册,获取用户id
     if not request.user.is_authenticated:
         return HttpResponseRedirect('login:readerLogin')

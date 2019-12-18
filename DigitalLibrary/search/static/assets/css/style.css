@@ -291,42 +291,42 @@ ul.topnav .dropdown-menu li > a {
 .navbar .nav .primary > a,
 .navbar .nav .primary > a:hover,
 .navbar .nav .primary > a:focus {
-	background-color: #009cea;
+	background-color:#2E7CBE;
 	color:#fff;
 }
 
 .navbar .nav .warning > a,
 .navbar .nav .warning > a:hover,
 .navbar .nav .warning > a:focus {
-	background-color: #ffbb00;
+	background-color: #4EAAB9;
 	color:#fff;
 }
 
 .navbar .nav .danger > a,
 .navbar .nav .danger > a:hover,
 .navbar .nav .danger > a:focus {
-	background-color: #ec4f13;
+	background-color: #90DCE9;
 	color:#fff;
 }
 
 .navbar .nav .info > a,
 .navbar .nav .info > a:hover,
 .navbar .nav .info > a:focus {
-	background-color: #a903b3;
+	background-color:  #B7E9F4;
 	color:#fff;
 }
 
 .navbar .nav .success > a,
 .navbar .nav .success > a:hover,
 .navbar .nav .success > a:focus {
-	background-color: #7cbb00;
+	background-color: #8C7E73;
 	color:#fff;
 }
 
 .navbar .nav .inverse > a,
 .navbar .nav .inverse > a:hover,
 .navbar .nav .inverse > a:focus {
-	background-color: #333;
+	background-color: #443636;
 	color:#fff;
 }
 

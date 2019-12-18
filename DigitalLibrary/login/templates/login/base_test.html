@@ -59,7 +59,7 @@
             <nav>
               <ul class="nav topnav">
 
-                <li class="dropdown success active">
+                <li class="dropdown  active primary">
                   <a href="/"><i class="icon-home icon-white"></i>首页</a>
                   <!--<ul class="dropdown-menu">
                     <li><a href="index_alt1.html">Index alt 1</a></li>
@@ -67,7 +67,7 @@
                   </ul>  -->
                 </li>
 
-                <li class="dropdown primary">
+                <li class="dropdown warning">
                   <a href="#"><i class="icon-star icon-white"></i>读者服务</a>
                   <ul class="dropdown-menu">
                     <li><a href="overview.html">借还图书</a></li>
@@ -82,7 +82,7 @@
                         <li><a href="#">预约图书</a></li>
                       </ul>
                     </li>
-                    <li class="dropdown"><a href="#">随书光盘</a>
+                    <li class="dropdown "><a href="#">随书光盘</a>
                       <ul class="dropdown-menu sub-menu">
                         <li><a href="#">随书光盘检索</a></li>
                         <li><a href="#">随书光盘说明</a></li>
@@ -110,7 +110,7 @@
                     </li>
                   </ul>
                 </li>
-                <li class="dropdown warning">
+                <li class="dropdown info">
                   <a href="#"><i class="icon-camera icon-white"></i>信息中心</a>
                   <ul class="dropdown-menu">
                     <li class="dropdown"><a href="#">服务指南</a>
@@ -119,7 +119,7 @@
                         <li><a href="#">服务指南列表</a></li>
                       </ul>
                     </li>
-                    <li class="dropdown"><a href="#">本馆新闻</a>
+                    <li class="dropdown "><a href="#">本馆新闻</a>
                       <ul class="dropdown-menu sub-menu">
                         <li><a href="#">新闻栏目简介</a></li>
                         <li><a href="#">新闻列表</a></li>
@@ -130,11 +130,11 @@
                   </ul>
                 </li>
 
-                <li class="inverse">
+                <li class="success">
                   <a href="#"><i class="icon-envelope icon-white"></i> 馆员管理</a>
                 </li>
               {% if user.is_authenticated %}
-                <li class="dropdown info">
+                <li class="dropdown inverse">
                   <a href="{%url 'readerCenter:profile'%}"><i class="icon-bullhorn icon-white"></i>个人中心</a>
                   <ul class="dropdown-menu">
                     <li><a href="{%url 'readerCenter:profile'%}">个人资料</a></li>
@@ -145,7 +145,7 @@
                   </ul>
                 </li>
               {%else%}
-                <li class="dropdown info">
+                <li class="dropdown inverse">
                   <a href="#"><i class="icon-bullhorn icon-white"></i> 登录/注册</a>
                   <ul class="dropdown-menu sub-menu">
                         <li><a href="{%url 'login:readerLogin'%}">读者登录</a></li>

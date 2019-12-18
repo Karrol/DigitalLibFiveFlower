@@ -24,8 +24,8 @@ urlpatterns = [
                 #我的借阅页面读者的借还操作
                 url(r'^book/action$', views.readerOperateBook, name='reader_operation'),
                 #我的检索历史
-                path('showsearchlist', views.show_mysearchlist, name='showsearchlist'),
-                path('searchlist', views.add_to_searchlist, name='searchlist'),
+                path('searchlist/', views.mysearchhis_show, name='showsearchlist'),
+                path('searchlist/<str:ISBN>/', views.mysearchhis_add, name='mysearchhis_add'),
                 #我的图书馆
                 path('mylib/', views.mylib, name='mylib'),
                 path('mylib_del/<str:ISBN>/', views.mylib_del, name='mylib_del'),

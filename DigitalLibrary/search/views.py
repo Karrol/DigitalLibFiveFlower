@@ -97,8 +97,8 @@ def book_search(request):
 
 
 # 书籍详情页
-def book_detail(request):
-    ISBN = request.GET.get('ISBN', None)
+def book_detail(request,ISBN):
+    ISBN = ISBN
     print(ISBN)
     if not ISBN:
         return HttpResponse('there is no such an ISBN')
