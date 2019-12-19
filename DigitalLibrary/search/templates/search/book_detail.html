@@ -53,9 +53,7 @@
 
                     </div>
                     <div class="col-md-5">
-                    <button class="btn btn-primary btn-lg"
-                                    onclick="location.href='bookDetail/'+'{{ book.ISBN }}&action=add_to_mylib';">添至我的图书馆
-                        </button>
+                        <a href="{%url 'readerCenter:mylib_add' book.ISBN%}"> <button class="btn btn-primary btn-lg">添至我的图书馆</button> </a>
                     </div>
                 </div>
                 <div class="col-md-6 col-md-offset-1">

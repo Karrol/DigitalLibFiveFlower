@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import os
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'DigitalLibrary.settings')
@@ -11,7 +8,7 @@ django.setup()
 
 import json
 import argparse
-import random
+import random,string
 import datetime
 import codecs
 import os.path as op
@@ -24,7 +21,49 @@ from faker import Factory
 
 fake = Factory.create('zh_CN')
 
+def init_reader_data(amount=50):
+    for i in range(amount):
+        u = User.objects.get_or_create(username=fake.free_email())[0]
+        u.set_password('password')
+        u.save()
+        r = Reader.objects.get_or_create(user=u, name=fake.name(), email=u.username)[0]
+        r.balance = round(random.random() * 100, 2)
+        r.inTime = datetime.date.today()
+        r.save()
 
+def getRandomSet(bits):
+    num_set = [chr(i) for i in range(48,58)]
+    char_set = [chr(i) for i in range(97,123)]
+    total_set = num_set + char_set
+
+    value_set = "".join(random.sample(total_set, bits))
+
+    return value_set
+
+
+def init_bookentity_data(amount=200):
+    for i in range(amount):
+        bookIntime = datetime.date.today() + datetime.timedelta(random.randint(1, 30))
+        quantity = random.randint(0, 7)
+        bookshelfid = random.choice(bookshelf_info.objects.all())
+        searchID = getRandomSet(10)
+        randfloor = random.randint(1, 3)
+        location = "图书馆" + str(randfloor) + "楼"
+        returned_flag = True
+
+        if random.randint(1, 100) % 2 == 0:
+            returned_flag = False
+
+        if returned_flag:
+            b = bookEntity_info.objects.create(
+
+                quantity=quantity,
+                bookIntime=bookIntime,
+                bookshelfid=bookshelfid,
+                booksearchID=searchID,
+                location=location
+            )
+            b.save()
 
 def init_book_data():
     with codecs.open('books.json', 'r', 'utf-8') as f:
@@ -34,39 +73,16 @@ def init_book_data():
         if 'content_description' in b and b['content_description']:
             print(b)
             try:
-                B = book_info.objects.get_or_create(ISBN=b['ISBN'], title=b['name'], author=b['author'], press=b['press'],page = b['page'],price = b['price'])[0]
+                B = \
+                book_info.objects.get_or_create(ISBN=b['ISBN'], title=b['name'], author=b['author'], press=b['press'],
+                                                page=b['page'], price=b['price'])[0]
                 B.description = b['content_description']
-                
+
                 B.cover = b['cover']
-                B.quantity = random.randint(0, 7)
+                B.bookID= random.choice(bookEntity_info.objects.all())
                 B.save()
             except KeyError:
                 continue
-
-
-def init_bookentity_data(amount=50):
-    for i in range(amount):
-        bookID=random.sample(range(0, 11), 10)
-        isbn = random.choice(book_info.objects.all())
-        bookIntime = datetime.date.today() + datetime.timedelta(random.randint(1, 30))
-        quantity = random.randint(0, 7)
-        bookshelfid=random.choice(bookshelf_info.objects.all())
-        returned_flag = True
-
-        if random.randint(1, 100) % 2 == 0:
-            returned_flag = False
-
-        if returned_flag:
-            b = bookEntity_info.objects.create(
-                bookID=bookID,
-
-                quantity=quantity,
-                bookIntime=bookIntime,
-                bookshelfid=bookshelfid
-            )
-            b.save()
-
-
 
 
 def init_borrowing_data(amount=50):
@@ -98,7 +114,7 @@ def init_borrowing_data(amount=50):
             b.save()
         else:
 
-            if reader.max_borrowing > 0 and isbn.quantity > 0:
+            if reader.max_borrowing > 0 and isbn.bookID.quantity > 0:
                 b = Borrowing.objects.create(
                     reader=reader,
                     ISBN=isbn,
@@ -107,19 +123,16 @@ def init_borrowing_data(amount=50):
                 )
 
                 reader.max_borrowing -= 1
-                isbn.quantity -= 1
+                isbn.bookID.quantity -= 1
                 reader.save()
                 isbn.save()
                 b.save()
 
 
+
+
 if __name__ == '__main__':
-    init_book_data()
+    init_reader_data()
     init_bookentity_data()
-    init_borrowing_data()
-
-    '''parser = argparse.ArgumentParser()
-    parser.add_argument("data", help=u"你要生成的数据")
-    args = parser.parse_args()    '''
-
-
+    init_book_data()
+    init_borrowing_data(amount=50)
