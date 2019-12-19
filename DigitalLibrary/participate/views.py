@@ -264,20 +264,25 @@ def book_recom(request):
     # 判断用户是否提交数据
     if request.method == "POST":
         # 将提交的数据赋值到表单实例中
-        bookrecom_post_form = RecbooklistInfoForm(data=request.POST)
+        bookrecom_post_form = RecbooklistInfoForm(request.POST)
+        message = "请检查填写的内容！"
         # 判断提交的数据是否满足模型的要求
-        if bookrecom_post_form.is_valid():
             # 保存数据，但暂时不提交到数据库中
-            new_bookrecom = bookrecom_post_form.save(commit=False)
+        bookName =request.POST.get('bookName', '')
+        bookAuthor =request.POST.get('bookAuthor', '')
+        bpublisher = request.POST.get('bpublisher', '')
 
-            # 将新推荐保存到数据库中
-            new_bookrecom.save()
-
-            # 完成后返回到推荐列表
-            return redirect("participate:book_recommendation")
-        # 如果数据不合法，返回错误信息
-        else:
-            return HttpResponse("表单内容有误，请重新填写。")
+        bookISBN = request.POST.get('bookISBN', '')
+        bookIntroduction = request.POST.get('bookIntroduction', '')
+        RecName =request.POST.get('RecName', '')
+        RecIdentity = request.POST.get('RecIdentity', '')
+        RecDepartment = request.POST.get('RecDepartment', '')
+        new_bookrecom = bookrecom_post_form.save(commit=False)
+        new_bookrecom = RecbooklistInfo.objects.create(bookName=bookName, bookAuthor=bookAuthor, bpublisher=bpublisher,bookISBN=bookISBN, bookIntroduction=bookIntroduction, RecName=RecName, RecIdentity=RecIdentity,RecDepartment=RecDepartment)
+                # 将新推荐保存到数据库中
+        new_bookrecom.save()
+                # 完成后返回到推荐列表
+        return redirect("participate:book_recommendation")
     # 如果用户请求获取数据
     else:
         # 创建表单类实例
