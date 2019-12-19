@@ -12,8 +12,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import book_info
 from login.models import Reader
 from readerCenter.models import Borrowing, readerLibrary
-from infoCenter.models import newsArticle_info
-from service.models import Intro
+from infoCenter.models import newsArticle_info, newsColumn_info
+from service.models import Intro, Category
 from .forms import SearchForm
 
 
@@ -34,12 +34,20 @@ def index(request):
 
     return render(request, 'search/index.html', context)
 
-#目前首页还是测试状态
+
+# 目前首页还是测试状态
 def test(request):
     news = newsArticle_info.objects.order_by('-newsPubdate')[:10]
+
+    # 李玉和 信息中心导航栏
+    news_columns = newsColumn_info.objects.filter(nav_display=True)
+    service_cotegories = Category.objects.filter(side_display=True)
+
     context = {
         'searchForm': SearchForm(),
         'news': news,
+        'news_columns': news_columns,
+        'service_cotegories': service_cotegories,
     }
     return render(request, 'search/index_test.html', context)
 
@@ -49,13 +57,13 @@ def book_search(request):
     # 判断用户状态，如果是登录用户，记录其现在浏览的位置，游客则不记录
     if request.user.is_authenticated:
         request.session['user_location'] = 'search:searchBook'
-    #书籍检索功能：用户游客都可以实现
+    # 书籍检索功能：用户游客都可以实现
     search_by = request.GET.get('search_by', '书名')
-    #设置空列表存放要显示在前端的数据
-    books = [] 
+    # 设置空列表存放要显示在前端的数据
+    books = []
     current_path = request.get_full_path()
     keyword = request.GET.get('keyword', u'_书目列表')
-    #给books赋值
+    # 给books赋值
     if keyword == u'_书目列表':
         books = book_info.objects.all()
     else:
@@ -76,7 +84,7 @@ def book_search(request):
     page = request.GET.get('page', 1)
 
     try:
-        #page是paginator实例对象的方法，返回第page页的实例对象，所以books是第page页的记录集
+        # page是paginator实例对象的方法，返回第page页的实例对象，所以books是第page页的记录集
         books = paginator.page(page)
     except PageNotAnInteger:
         books = paginator.page(1)
@@ -84,7 +92,7 @@ def book_search(request):
         books = paginator.page(paginator.num_pages)
 
     # ugly solution for &page=2&page=3&page=4
-    #当你已经是某一页时，current_path的最后有&page(previous),所以这里是在做清洗
+    # 当你已经是某一页时，current_path的最后有&page(previous),所以这里是在做清洗
     if '&page' in current_path:
         current_path = current_path.split('&page')[0]
 
@@ -99,18 +107,18 @@ def book_search(request):
 
 
 # 书籍详情页
-def book_detail(request,ISBN):
+def book_detail(request, ISBN):
     ISBN = ISBN
     print(ISBN)
     if not ISBN:
         return HttpResponse('there is no such an ISBN')
     try:
         book = book_info.objects.get(pk=ISBN)
-        
+
         # 李玉和增加 阅读量自增
         book_info.increase_views(book)
     except book_info.DoesNotExist:
-        return HttpResponse('there is no such an ISBN')# end李玉和增加 阅读量自增
+        return HttpResponse('there is no such an ISBN')  # end李玉和增加 阅读量自增
 
     action = request.GET.get('action', None)
     state = None

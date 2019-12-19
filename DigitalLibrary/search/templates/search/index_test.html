@@ -142,15 +142,15 @@
                 <caption>近期新闻</caption>
                 <thead>
                   <tr>
-                    <th>名称</th>
+                    <th>标题</th>
                     <th>日期</th>
-                    <th><a href="#">更多</a></th></tr>
+                    <th><a href="{% url 'newsIntro' %}">更多</a></th></tr>
                 </thead>
                 <tbody>
                  {% for item in news %}
 			<!--张丽：这里的url怎么跳转的和玉和商量一下呢-->
                   <tr>
-                    <td><a href="#">{{item.newsTitle}}</a></td>
+                    <td><a href="{{ item.get_absolute_url }}">{{item.newsTitle}}</a></td>
                     <td>{{item.newsPubdate}}</td></tr> {%endfor%}
                 </tbody>
               </table>
@@ -162,13 +162,13 @@
                   <tr>
                     <th>名称</th>
                     <th>日期</th>
-                    <th><a href="#">更多</a></th></tr>
+                    <th><a href="{% url 'newsIntro' %}">更多</a></th></tr>
                 </thead>
                 <tbody>
                  {% for item in news %}
 			<!--张丽：这里的url怎么跳转的和玉和商量一下呢-->
                   <tr>
-                    <td><a href="#">{{item.newsTitle}}</a></td>
+                    <td><a href="{{ item.get_absolute_url }}">{{item.newsTitle}}</a></td>
                     <td>{{item.newsPubdate}}</td></tr> {%endfor%}
                 </tbody>
               </table>
