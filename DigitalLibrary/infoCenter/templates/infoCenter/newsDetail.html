@@ -1,60 +1,103 @@
-{% extends "infoCenter/newsBase.html" %}
+{% extends "infoCenter/infoCenter_Base.html" %}
 
-{% block title %}信息中心{% endblock title %}
+{% block title %}新闻公告{% endblock title %}
+
+{% block module %}新闻公告{% endblock module %}
 
 {% block search %}
-<form method="get" id="searchform" action="{% url 'newsSearch' %}" class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-     {% csrf_token %}
-      <div class="input-group">
-        <input type="search" name="q" placeholder="搜索新闻" class="form-control" aria-label="Search" aria-describedby="basic-addon2" required>
-        <div class="input-group-append">
-          <button class="btn btn-primary" type="submit">搜索新闻
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
-      </div>
-</form>
+<div class="span4">
+    <div class="input-append">
+        <form method="get" id="searchform" action="{% url 'newsSearch' %}" class="form-search">
+            {% csrf_token %}
+            <input type="search" name="q" placeholder="搜索新闻" class="input-medium search-query">
+            <button type="submit" class="btn btn-inverse">搜索新闻</button>
+        </form>
+    </div>
+</div>
 {% endblock search %}
 
-{% block sideNews %}
-<div class="dropdown-menu" aria-labelledby="pagesDropdown">
-    {% for column in news_intro_columns %}
-    <a class="dropdown-item" href="{{ column.get_absolute_url }}">{{ column.columnName }}</a>
-    {% endfor %}
-</div>
-{% endblock sideNews %}
-
-{% block breadrums %}
-   <div class="container-fluid">
-       <h2 align = "center">{{ news_article.newsTitle }}</h2>
-        <p align = "center" class = "one gray">发表时间：<em>{{ news_article.newsPubdate }}</em>&nbsp;&nbsp;&nbsp;&nbsp;作者：<em>{{ news_article.newsAuthor }}</em></p>
-        <!-- Breadcrumbs-->
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="{% url 'newsIntro' %}">新闻公告</a>
-          </li>
-          <li class="breadcrumb-item">
-            <a href="{{ news_article.newsColumn.get_absolute_url }}">{{ news_article.newsColumn }}</a>
-          </li>
-          <li class="breadcrumb-item active">文章详情</li>
-        </ol>
-   </div>
-{% endblock breadrums %}
+{% block location %}信息中心>>新闻公告>>{{ news_article.newsColumn }}>>新闻详情{% endblock location %}
 
 {% block pagecontent %}
-    <hr/>
-    <div id="main">
-        <p>
-            {{ news_article.newsContent|safe }}
-        </p>
+<!--栏目简介-->
+<section id="maincontent">
+    <div class="container">
+      <h3>当前栏目</h3>
+      <div class="row">
+        <div class="span4">
+          <aside>
+            <div class="widget">
+              <h4 class="heading-success"><span class="btn btn-large btn-success"><i class="m-icon-big-swapdown m-icon-white"></i></span>&nbsp;&nbsp;{{ news_article.newsColumn }}</h4>
+              <img src="assets/img/avatar.png" class="alignleft" alt="" />
+              <h5>{{ news_article.newsColumn.abstract }}</h5>
+              <p>这里放前10条新闻</p>
+            </div>
+          </aside>
+        </div>
+
+        <div class="span8">
+            <article class="blog-post">
+                <div class="tooltip-demo headline">
+                    <h4>{{ news_article.newsTitle }}</h4>
+                    <span class="comment"><a href="#" data-rel="tooltip" data-placement="top" title="4 Comments">4 comments</a></span>
+                </div>
+                <div class="clearfix"></div>
+                <img src="assets/img/dummies/blog1.jpg" alt="" />
+                <ul class="post-meta">
+                    <li class="first"><i class="icon-user"></i> <span><a href="#">{{ news_article.newsAuthor }}</a></span></li>
+                    <li><i class="icon-list-alt"></i> <span><a href="#">{{ news_article.newsPubdate }}</a></span></li>
+                    <li class="last"><i class="icon-tags"></i> <span><a href="#">{{ news_article.newsColumn }}</a></span></li>
+                </ul>
+                <div class="clearfix"></div>
+                <p>{{ news_article.newsContent|safe }}</p>
+          </article>
+
+          <div>
+            <nav aria-label="...">
+                <ul class="pager">
+                 <li><a href="{{ previous_article.get_absolute_url }}">上一篇：{{ previous_article.newsTitle }}</a></li>
+                 <li><a href="{{ next_article.get_absolute_url }}">下一篇：{{ next_article.newsTitle }}</a></li>
+                </ul>
+            </nav>
+          </div>
+
+        </div>
+      </div>
     </div>
-    <br/><hr/>
-    <div>
-        <nav aria-label="...">
-      <ul class="pager">
-        <li><a href="{{ previous_article.get_absolute_url }}">上一篇：{{ previous_article.newsTitle }}</a></li>
-        <li><a href="{{ next_article.get_absolute_url }}">下一篇：{{ next_article.newsTitle }}</a></li>
-      </ul>
-    </nav>
+</section>
+
+  <!-- Footer
+ ================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+
+      </div>
     </div>
+
+    <div class="verybottom">
+      <div class="container">
+        <div class="row">
+          <div class="span6">
+            <p>&copy;五朵金花</p>
+          </div>
+          <div class="span6">
+            <div class="pull-right">
+              <div class="credits">
+                <!--
+                  All the links in the footer should remain intact.
+                  You can delete the links only if you purchased the pro version.
+                  Licensing information: https://bootstrapmade.com/license/
+                  Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Scaffold
+                -->
+                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
 {% endblock pagecontent %}

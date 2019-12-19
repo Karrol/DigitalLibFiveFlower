@@ -11,10 +11,11 @@ from search.models import book_info
 def newsIntro(request):
     news_intro_columns = newsColumn_info.objects.filter(nav_display = True)
     news_articles = newsArticle_info.objects.all()
-    return render(request, 'infoCenter/newsIntro.html',{
-        'news_intro_columns':news_intro_columns,
-        'news_articles':news_articles,
-    })
+    context = {
+        'news_intro_columns': news_intro_columns,
+        'news_articles': news_articles,
+    }
+    return render(request, 'infoCenter/newsIntro.html',context)
 
 # 新闻列表
 def newsColumn(request, columnSlug):
@@ -78,12 +79,12 @@ def newsDetail(request, newsSlug, pk):
 def recBookList(request):
     news_intro_columns = newsColumn_info.objects.filter(nav_display=True)
 
-    now_recbook = weekbook_info.objects.filter(index_display=True).first()
-    past_recbooks = weekbook_info.objects.filter(index_display=True).exclude(ISBN = now_recbook.ISBN)
+    #now_recbook = weekbook_info.objects.filter(index_display=True).first()
+    #past_recbooks = weekbook_info.objects.filter(index_display=True).exclude(ISBN = now_recbook.ISBN)
 
     return render(request, 'infoCenter/recBookList.html', {
-        'now_recbook': now_recbook,
-        'past_recbooks': past_recbooks,
+        #'now_recbook': now_recbook,
+        #'past_recbooks': past_recbooks,
         'news_intro_columns': news_intro_columns,
     })
 
@@ -92,12 +93,12 @@ def recBookDetail(request, ISBN, pk):
     news_intro_columns = newsColumn_info.objects.filter(nav_display=True)
 
     past_recbook = weekbook_info.objects.get(pk=pk)
-    past_recbook_list = weekbook_info.objects.filter(index_display=True).exclude(ISBN=ISBN)
+    #past_recbook_list = weekbook_info.objects.filter(index_display=True).exclude(ISBN=ISBN)
 
     return render(request, 'infoCenter/recBookHis.html', {
         'news_intro_columns': news_intro_columns,
         'past_recbook': past_recbook,
-        'past_recbook_list': past_recbook_list,
+        #'past_recbook_list': past_recbook_list,
     })
 
 #排行榜
