@@ -111,22 +111,24 @@
                   </ul>
                 </li>
                 <li class="dropdown info">
-                  <a href="#"><i class="icon-camera icon-white"></i>信息中心</a>
+                  <a href=#"><i class="icon-camera icon-white"></i>信息中心</a>
                   <ul class="dropdown-menu">
-                    <li class="dropdown"><a href="#">服务指南</a>
+                    <li class="dropdown "><a href="{% url 'newsIntro' %}">新闻公告</a>
                       <ul class="dropdown-menu sub-menu">
-                        <li><a href="#">图书馆简介</a></li>
-                        <li><a href="#">服务指南列表</a></li>
+                        {% for column in news_columns %}
+                        <li><a href="{{ column.get_absolute_url }}">{{ column.columnName }}</a></li>
+                        {% endfor %}
                       </ul>
                     </li>
-                    <li class="dropdown "><a href="#">本馆新闻</a>
+                    <li class="dropdown"><a href="{% url 'libBrief' %}">服务指南</a>
                       <ul class="dropdown-menu sub-menu">
-                        <li><a href="#">新闻栏目简介</a></li>
-                        <li><a href="#">新闻列表</a></li>
+                        {% for cotegory in service_cotegories %}
+                        <li><a href="{{ cotegory.get_absolute_url }}">{{ cotegory.categoryName }}</a></li>
+                        {% endfor %}
                       </ul>
                     </li>
-                    <li><a href="blog_right_sidebar.html">每周一书</a></li>
-                    <li><a href="post_left_sidebar.html">排行榜</a></li>
+                    <li><a href="{% url 'recBookList' %}">每周一书</a></li>
+                    <li><a href="{% url 'rankList' %}">排行榜</a></li>
                   </ul>
                 </li>
 

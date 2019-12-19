@@ -43,4 +43,7 @@ urlpatterns = [
 
     # 读者推荐列表
     path('bookRecList/', views.recom_list, name='bookrec_list'),
+
+    # 推荐书目
+    path('groupBook/', views.group_book, name='groupbook_recom'),
 ]
