@@ -1,7 +1,8 @@
 from django.shortcuts import render
 
 
-from readerService.models import bookReser
+from .models import bookReser
+from .models import RedSerTime
 
 def bookReservation(request):
     if request.method=='GET':
@@ -20,7 +21,8 @@ def bookReservationTips(request):
     return render (request,'readerService/bookReservationTips.html')
 
 def bookReservationBooked(request):
-    return render (request,'readerService/bookReservationBooked.html')
+    bookResers = bookReser.objects.all()
+    return render (request,'readerService/bookReservationBooked.html',{'bookResers':bookResers})
 
 def borrowTips(request):
     return render (request,'readerService/borrowTips.html')
@@ -28,24 +30,18 @@ def borrowTips(request):
 def compensation(request):
     return render (request,'readerService/compensation.html')
 
-def cableNumber(request):
-    return render (request,'readerService/cableNumber.html')
-
 def cdInfo(request):
     return render (request,'readerService/cdInfo.html')
 
 def renewal(request):
     return render (request,'readerService/renewal.html')
 
+def cableNumber(request):
+    redsertimes = RedSerTime.objects.all()
+    return render(request, 'readerService/cableNumber.html', { 'redsertimes': redsertimes  })
+
 def cd(request):
     return render (request,'readerService/cd.html')
 
-def serviceTime(request, RedserSlug, pk):
-    redservice = RedSerTime.objects.get(pk=pk)
-
-    if RedserSlug != redservice.RedserSlug:
-        return redirect(redservice, permanent=True)
-
-    return render(request, 'readerService/serviceTime.html', {
-        'redsertime': redsertime
-    })
+def serviceTime(request):
+    return render (request,'readerService/serviceTime.html')
