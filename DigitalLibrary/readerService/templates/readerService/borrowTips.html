@@ -131,115 +131,19 @@
             借还图书</div>
         </div>
 
-        <!-- Icon Cards-->
-        <div class="row" id="blocktabs-jiehaitushu-1">
-          <div class="col-xl-3 col-sm-6 mb-3">
-            <div class="card text-white bg-primary o-hidden h-100">
-              <div class="card-body">
-                <div class="card-body-icon">
-                  <i class="fas fa-fw fa-comments"></i>
-                </div>
-                <div class="mr-5">一、查询图书</div>
-              </div>
-              <a class="card-footer text-white clearfix small z-1" href="#">
-                <span class="float-left">利用电脑/自助终端登录图书馆主页查询书目数据系统中是否有该文献，然后获得文献的藏书地和索书号</span>
-                <span class="float-right">
-                  <i class="fas fa-angle-right"></i>
-                </span>
-              </a>
-            </div>
-          </div>
-          <div class="col-xl-3 col-sm-6 mb-3">
-            <div class="card text-white bg-warning o-hidden h-100">
-              <div class="card-body">
-                <div class="card-body-icon">
-                  <i class="fas fa-fw fa-list"></i>
-                </div>
-                <div class="mr-5">二、获取文献</div>
-              </div>
-              <a class="card-footer text-white clearfix small z-1" href="#">
-                <span class="float-left">依索书号从书架上找到文献&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <span class="float-right">
-                  <i class="fas fa-angle-right"></i>
-                </span>
-              </a>
-            </div>
-          </div>
-          <div class="col-xl-3 col-sm-6 mb-3">
-            <div class="card text-white bg-success o-hidden h-100">
-              <div class="card-body">
-                <div class="card-body-icon">
-                  <i class="fas fa-fw fa-shopping-cart"></i>
-                </div>
-                <div class="mr-5">三、在馆阅览或办理外借</div>
-              </div>
-              <a class="card-footer text-white clearfix small z-1" href="#">
-                <span class="float-left">在阅览区阅读文献或办理文献外借手续</span>
-                <span class="float-right">
-                  <i class="fas fa-angle-right"></i>
-                </span>
-              </a>
-            </div>
-          </div>
-          <div class="col-xl-3 col-sm-6 mb-3">
-            <div class="card text-white bg-danger o-hidden h-100">
-              <div class="card-body">
-                <div class="card-body-icon">
-                  <i class="fas fa-fw fa-life-ring"></i>
-                </div>
-                <div class="mr-5">四、归架或归还</div>
-              </div>
-              <a class="card-footer text-white clearfix small z-1" href="#">
-                <span class="float-left">将在馆阅览的文献放到工作台以便工作人员归架，或者办理归还已外借图书手续</span>
-                <span class="float-right">
-                  <i class="fas fa-angle-right"></i>
-                </span>
-              </a>
-            </div>
-          </div>
-        </div>
-
         <!-- Area Chart Example-->
         <div class="card mb-3">
           <div class="card-header">
-            <i class="fas fa-chart-area"></i>
-            查询图书时请注意</div>
+            借还图书提示</div>
           <div class="card-body">
-            <i class="fas fa-chart-area"></i>
-              1、看清该书的所属分馆及收藏楼层或书库<br/>
-              2、看清该书的状态：是否在馆可借<br/>
-              3、抄记该书的索书号</div>
-          </div>
-        </div>
-
-       <!-- DataTables Example -->
-        <div class="card mb-3">
-          <div class="card-header">
-            <i class="fas fa-table"></i>
-            特别提示</div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                  <tr>
-                    <th>关于借书密码</th>
-                    <th>关于结束册数</th>
-                    <th>有三种情况不能借书</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>借书时需输入密码，初始密码是身份证后6位（如最后一位为X,往前推一位），建议自行到图书馆主页或到查询机上登陆个人账号修改密码</td>
-                    <td>最多借 30 册</td>
-                    <td>有超期欠费未结清</br>
-                    有到期未还图书</br>
-                      达到最大借书册数</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+              {% for borrowtip in borrowtips %}
+                {% if borrowtip.redserSlug == 'borrowTips' %}
+                  <li> {{borrowtip.redserContent|safe}} </li>
+                {% endif %}
+              {% endfor %}
           </div>
           <div class="card-footer small text-muted">最近更新于昨天17:00</div>
+          </div>
         </div>
 
       </div>

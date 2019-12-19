@@ -139,43 +139,11 @@
           <div class="card-body">
             <div class="table-responsive">
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th>地点</th>
-                    <th>周一至周五</th>
-                    <th>周六至周天</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td rowspan="2">一号图书馆</td>
-                    <td>二楼图书借还处</td>
-			        <td>8:00-18:00</td>
-	        		<td>8:30-18:00</td>
-            		</tr><tr><td>自助服务</td>
-	        		<td>8:00-18:00</td>
-	        		<td>8:30-18:00</td>
-                  </tr>
-<tr><td rowspan="2">工学图书馆</td>
-			<td>一楼服务台</td>
-			<td>8:00-18:00</td>
-			<td>8:30-18:00</td>
-		</tr><tr><td>自助服务</td>
-			<td>8:00-22:00</td>
-			<td>8:30-22:00</td>
-		</tr><tr><td rowspan="2">医学图书馆</td>
-			<td>一楼服务台</td>
-			<td>8:00-18:00</td>
-			<td>8:30-18:00</td>
-		</tr><tr><td>自助服务</td>
-			<td>8:00-22:00</td>
-			<td>8:30-22:00</td>
-		</tr><tr><td rowspan="1">江安图书馆</td>
-			<td>一楼人工服务台、自助服务区</td>
-			<td colspan="2">8:00-21:30</td>
-		</tr>
-                </tbody>
+                {% for servicetime in servicetimes %}
+                  {% if servicetime.redserSlug == 'serviceTime' %}
+                    <li> {{servicetime.redserContent|safe}} </li>
+                  {% endif %}
+                {% endfor %}
               </table>
             </div>
           </div>

@@ -128,20 +128,13 @@
             <i class="fas fa-chart-area"></i>
             随书光盘</div>
           <div class="card-body">
-            <i class="fas fa-chart-area"></i>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;随书光盘，指随图书附赠光盘。目前提供三种服务方式：</br>
-            <p> </p>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;方式一：打开书刊目录系统，查找图书—馆藏目录—文献—查看完整记录文献。</br>
-          </div>
-        <div align="center"><img alt="1" data-entity-type="file" data-entity-uuid="6a8be47f-6e86-4791-85c1-45baec8504d6" src="../../static/img/cd.png" class="align-center" /><p> </p>
-        </div>
-        <div class="card-body">
-        <i class="fas fa-chart-area"></i>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;方式二：在光盘资源中用书名或ISBN进行查找。</p>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;方式三：以上方式无法获取时，可到实体图书馆办公室查找并拷贝。</p>
+            {% for cdinfo in cdinfos %}
+              {% if cdinfo.redserSlug == 'cdInfo' %}
+                <li> {{cdinfo.redserContent|safe}} </li>
+              {% endif %}
+            {% endfor %}
           </div>
         </div>
-
 
 
       </div>

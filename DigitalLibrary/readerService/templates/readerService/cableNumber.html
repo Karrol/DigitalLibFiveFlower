@@ -134,54 +134,18 @@
         <!-- Area Chart Example-->
         <div class="card mb-3">
           <div class="card-header">
-            <i class="fas fa-chart-area"></i>
             索书号的定义与构成</div>
           <div class="card-body">
-            <i class="fas fa-chart-area"></i>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;索取号是某种图书或期刊在图书馆中位置的代号，是图书馆进行藏书组织、排架、流通和清点的主要依据之一，同时也是读者查找文献资源的依据。绝大多数的图书馆使用分类排架号作为索取号。</br>
-            <p> </p>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一般根据文献类型的不同，称图书的索取号为索书号、期刊的索取号为索刊号。</br>
-            <p> </p>
-              &nbsp;&nbsp;&nbsp;&nbsp;●&nbsp;本馆索书号标签粘贴在书脊距底部约一寸的位置。</br>
-              &nbsp;&nbsp;&nbsp;&nbsp;●&nbsp;本馆索书号由以下两个部分构成：中图法分类号；同类区分号。</br>
-              &nbsp;&nbsp;&nbsp;&nbsp;●&nbsp;图书馆藏书按索书号进行排序：先按分类号排列；分类号相同，按同类区分号排。</br>
-              &nbsp;&nbsp;&nbsp;&nbsp;●&nbsp;排序方式：从左到右逐位排序。
-          </div>
-        <div align="center"><img alt="1" data-entity-type="file" data-entity-uuid="6a8be47f-6e86-4791-85c1-45baec8504d6" src="../../static/img/cableNumber1.jpg" class="align-center" /><p> </p>
-        </div>
-        <p align="center">例如上图中，C912.1为中图法分类号，4503X为同类区分号。</p>
-        </div>
-
-        <div class="card mb-3">
-          <div class="card-header">
-            <i class="fas fa-chart-area"></i>
-            索刊号</div>
-          <div align="center"><img alt="索刊号" data-entity-type="file" data-entity-uuid="45c6c0b3-d525-40e2-9dff-c0b39c0524dc" src="../../static/img/cableNumber2.png" class="align-center" />
-          </div>
-            <div class="card-body">
-            <i class="fas fa-chart-area"></i>
-              &nbsp;&nbsp;&nbsp;&nbsp;●&nbsp;过刊索刊号粘贴或烫印在书脊距底部约5cm的位置，现刊索刊号粘贴或手写在期刊封面下部。</br>
-              &nbsp;&nbsp;&nbsp;&nbsp;●&nbsp;索刊号由以下两个部分构成：中图法分类号；同类区分号（刊名首字母+顺序号 ）。</br>
-              &nbsp;&nbsp;&nbsp;&nbsp;●&nbsp;图书馆馆藏期刊（过刊和现刊）按索刊号进行排序：先按分类号排列；分类号相同，按同类区分号排列；同种期刊按卷期/年期标识排列。
+            {% for cablenumber in cablenumbers %}
+              {% if cablenumber.redserSlug == 'cableNumber' %}
+                 <li> {{cablenumber.redserContent|safe}} </li>
+               {% endif %}
+            {% endfor %}
           </div>
         </div>
-
-
-<ul>
-    {% for redsertime in redsertimes %}
-      {% if redsertime.redserSlug == 'cableNumber' %}
-          <li> {{redsertime.redserName}} </li>
-          <li> {{redsertime.redserOperator}} </li>
-          <li> {{redsertime.redserContent|safe}} </li>
-      {% endif %}
-    {% endfor %}
-</ul>
 
       </div>
       <!-- /.container-flu'id -->
-
-
-
 
       <!-- Sticky Footer -->
       <footer class="sticky-footer">

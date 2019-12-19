@@ -48,8 +48,8 @@ class RedSerTime(models.Model):
     def __str__(self):
         return self.redserName
 
-    def get_absolute_url(self):
-        return reverse('serviceTime', args=(self.pk, self.redserSlug))
+#    def get_absolute_url(self):
+#        return reverse('serviceTime', args=(self.pk, self.redserSlug))
 
     class Meta:
         verbose_name = '读者服务'
