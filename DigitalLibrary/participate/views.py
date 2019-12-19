@@ -298,7 +298,10 @@ def recom_list(request):
     return render(request, 'participate/reclist.html',{'recuserinfos':recuserinfos})
 
 def donation_rules(request):
-        return render(request, 'participate/rules.html')
+    return render(request, 'participate/rules.html')
+
+def group_book(request):
+        return render(request, 'participate/groupbook.html')
 
 def donation_treatments(request):
         return render(request, 'participate/treatments.html')
