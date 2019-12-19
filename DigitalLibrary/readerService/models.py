@@ -1,3 +1,16 @@
+
+
+# Create your models here.
+
+# coding:utf-8
+#from django.db import models
+
+#class bookInfo(models.Model):
+#    title = models.CharField(u'图书', max_length=256)
+#    hero = models.CharField(u'英雄', max_length=256)
+
+#    def __unicode__(self):  # 在Pyth''on3中用 __str__ 代替 __unicode__
+#        return self.title
 from __future__ import unicode_literals
 from django.db import models
 
@@ -15,6 +28,7 @@ class bookReser(models.Model):
     bookId = models.CharField(u'图书编号', max_length=256)
     returnTime = models.CharField(u'还书时间', max_length=256)
     place = models.CharField(u'地点', max_length=256)
+
 
 @python_2_unicode_compatible
 class RedSerTime(models.Model):
@@ -34,10 +48,9 @@ class RedSerTime(models.Model):
     def __str__(self):
         return self.redserName
 
-    def get_absolute_url(self):
-        return reverse('serviceTime', args=(self.pk, self.redserSlug))
+#    def get_absolute_url(self):
+#        return reverse('serviceTime', args=(self.pk, self.redserSlug))
 
     class Meta:
         verbose_name = '读者服务'
         verbose_name_plural = '读者服务'
-

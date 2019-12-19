@@ -1,7 +1,8 @@
 from django.shortcuts import render
 
 
-from readerService.models import bookReser
+from .models import bookReser
+from .models import RedSerTime
 
 def bookReservation(request):
     if request.method=='GET':
@@ -17,35 +18,37 @@ def bookReservation(request):
         return render (request,'readerService/success.html')
 
 def bookReservationTips(request):
-    return render (request,'readerService/bookReservationTips.html')
+    bookreservationtips = RedSerTime.objects.all()
+    return render(request, 'readerService/bookReservationTips.html', { 'bookreservationtips': bookreservationtips  })
 
 def bookReservationBooked(request):
-    return render (request,'readerService/bookReservationBooked.html')
+    bookResers = bookReser.objects.all()
+    return render (request,'readerService/bookReservationBooked.html',{'bookResers':bookResers})
 
 def borrowTips(request):
-    return render (request,'readerService/borrowTips.html')
+    borrowtips = RedSerTime.objects.all()
+    return render(request, 'readerService/borrowTips.html', { 'borrowtips': borrowtips  })
 
 def compensation(request):
-    return render (request,'readerService/compensation.html')
-
-def cableNumber(request):
-    return render (request,'readerService/cableNumber.html')
+    compensations = RedSerTime.objects.all()
+    return render(request, 'readerService/compensation.html', { 'compensations': compensations  })
 
 def cdInfo(request):
-    return render (request,'readerService/cdInfo.html')
+    cdinfos = RedSerTime.objects.all()
+    return render(request, 'readerService/cdInfo.html', { 'cdinfos': cdinfos  })
 
 def renewal(request):
-    return render (request,'readerService/renewal.html')
+    renewals = RedSerTime.objects.all()
+    return render(request, 'readerService/renewal.html', { 'renewals': renewals  })
+
+def cableNumber(request):
+    cablenumbers = RedSerTime.objects.all()
+    return render(request, 'readerService/cableNumber.html', { 'cablenumbers': cablenumbers  })
 
 def cd(request):
-    return render (request,'readerService/cd.html')
+    cds = RedSerTime.objects.all()
+    return render(request, 'readerService/cd.html', { 'cds': cds  })
 
-def serviceTime(request, RedserSlug, pk):
-    redservice = RedSerTime.objects.get(pk=pk)
-
-    if RedserSlug != redservice.RedserSlug:
-        return redirect(redservice, permanent=True)
-
-    return render(request, 'readerService/serviceTime.html', {
-        'redsertime': redsertime
-    })
+def serviceTime(request):
+    servicetimes = RedSerTime.objects.all()
+    return render(request, 'readerService/serviceTime.html', { 'servicetimes': servicetimes  })

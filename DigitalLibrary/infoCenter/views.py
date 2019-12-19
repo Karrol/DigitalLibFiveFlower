@@ -10,7 +10,11 @@ from search.models import book_info
 #新闻栏目简介
 def newsIntro(request):
     news_intro_columns = newsColumn_info.objects.filter(nav_display = True)
-    return render(request, 'infoCenter/newsIntro.html',{'news_intro_columns':news_intro_columns})
+    news_articles = newsArticle_info.objects.all()
+    return render(request, 'infoCenter/newsIntro.html',{
+        'news_intro_columns':news_intro_columns,
+        'news_articles':news_articles,
+    })
 
 # 新闻列表
 def newsColumn(request, columnSlug):

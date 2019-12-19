@@ -128,53 +128,14 @@
         <!-- Area Chart Example-->
         <div class="card mb-3">
           <div class="card-header">
-            <i class="fas fa-chart-area"></i>
-            续借说明</div>
+            续借与到期提醒说明</div>
           <div class="card-body">
-            <i class="fas fa-chart-area"></i>
-              温馨提示：图书即将到期前，图书馆会提前四天向读者发邮件、短信或者微信消息提醒续借。但有以下五种情况不能完成续借：</br>
-            （1）超期图书</br>
-            （2）有欠费未结清</br>
-            （3）超过2次续借</br>
-            （4）已被预约的图书</br>
-            （5）教材专区的书籍不能续借</div>
-        </div>
-
-        <!-- DataTables Example -->
-        <div class="card mb-3">
-          <div class="card-header">
-            <i class="fas fa-table"></i>
-            超期提醒方式</div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                  <tr>
-                    <th>邮件提醒</th>
-                    <th>短信提醒</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>在个人账户“我的信息”下填写常用E-mail地址（建议使用学校邮箱，其他邮箱可能将提醒超期邮件做垃圾邮件处理），当所借图书被其他读者预约时、所借图书即将超期时，系统将自动发邮件提醒。超期提醒邮件还提供续借链接，可轻松续借。</td>
-                    <td>在个人账户“我的信息”下填写手机号，或使用移动图书馆图书馆绑定个人信息；当所借图书即将超期时，系统将自动发短信提醒。使用手机图书馆还可实现续借。册</td>
-                  </tr>
-                </tbody>
-              </table>
+            {% for renewal in renewals %}
+              {% if renewal.redserSlug == 'renewal' %}
+               <li> {{renewal.redserContent|safe}} </li>
+              {% endif %}
+            {% endfor %}
           </div>
-        </div>
-
-        <div class="card mb-3">
-          <div class="card-header">
-            <i class="fas fa-chart-area"></i>
-            到期提醒说明</div>
-          <div class="card-body">
-            <i class="fas fa-chart-area"></i>
-            图书如到期仍未归还，逾期2天后将再次收到“超期提醒”，产生费用：</br>
-            每册图书每超一天收取超期服务费0.10元；</br>
-            有4天免罚期，第5天开始收取0.5元。</br>
-            未归还超期图书或者未交超期服务费者，将停止借阅权限。</div>
-          <div class="card-footer small text-muted">最近更新于昨天17:00</div>
         </div>
 
        </div>
