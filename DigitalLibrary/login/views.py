@@ -107,7 +107,6 @@ def user_register(request):
                 new_user.save()
                 new_reader = Reader.objects.create(user=new_user, name=name, email=username,inTime = nowtime)
                 new_reader.Sex = sex
-                auth.login(request, new_user)
                 new_reader.save()
                 message="注册成功"
 

@@ -11,9 +11,10 @@
      <div class="container">
         <div class="col-md-4 col-md-offset-4">
           <form class='form-register' action="{%url 'login:userRegister'%}" method="post">
-
-              {% if message %}
-                  <div class="alert alert-warning">{{ message }}</div>
+              {% if message == "注册成功" %}
+                <div class="alert alert-warning">{{ message }}<a href="{%url 'login:readerLogin'%}">点击登录~</a></div>
+              {% elif message %}
+                <div class="alert alert-warning">{{ message }}</div>
               {% endif %}
 
               {% csrf_token %}

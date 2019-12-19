@@ -21,10 +21,10 @@ class bookshelf_info(models.Model):
 
 # 图书实体的基本信息
 class bookEntity_info(models.Model):
-    bookID = models.IntegerField('图书财产ID', primary_key=True)
+    
     location = models.CharField(max_length=64, default=u'图书馆1楼', verbose_name='位置')
     quantity = models.IntegerField(default=1, verbose_name='数量')
-    booksearchID = models.CharField('索书号', unique=True, max_length=10)
+    booksearchID = models.CharField('索书号',  max_length=10)
     bookshelfid = models.ForeignKey('bookshelf_info', on_delete=models.CASCADE)
     bookIntime = models.DateTimeField('图书入库时间')
 
@@ -38,7 +38,7 @@ class book_info(models.Model):
     # 用ISBN号代表一抽象的书，这本书可能有多个实体（财产ID），放置于多个书架上，
     ISBN = models.CharField(max_length=13, primary_key=True, verbose_name='ISBN')
     # 书籍实体与ISBN号对应的书的关联,因为还没有实体书的信息，所以先不管它
-    # bookID = models.ForeignKey(bookEntity_info, on_delete=models.CASCADE)
+    bookID = models.ForeignKey(bookEntity_info, on_delete=models.CASCADE)
     title = models.CharField(max_length=128, verbose_name='书名')
     author = models.CharField(max_length=32, verbose_name='作者')
     press = models.CharField(max_length=64, verbose_name='出版社')
@@ -51,6 +51,7 @@ class book_info(models.Model):
     bookTranslator = models.CharField('译者', max_length=30, blank=True)
 
     page = models.CharField('图书页码', blank=True, max_length=255)
+    
 
     # 李玉和增加  阅读量字段
     bookViews = models.PositiveIntegerField(default=0)

@@ -15,7 +15,7 @@ import random
 import datetime
 import codecs
 import os.path as op
-from search.models import book_info
+from search.models import book_info ,bookshelf_info ,bookEntity_info
 from readerCenter.models import Borrowing
 from login.models import Reader
 from django.contrib.auth.models import User
@@ -24,17 +24,6 @@ from faker import Factory
 
 fake = Factory.create('zh_CN')
 
-
-def init_reader_data(amount=50):
-    for i in range(amount):
-        u = User.objects.get_or_create(username=fake.free_email())[0]
-        u.set_password('password')
-        u.save()
-
-        r = Reader.objects.get_or_create(user=u, name=fake.name(), email=u.username)[0]
-        r.balance = round(random.random() * 100, 2)
-        #r.photo = str(r.user_id) + '.jpg'
-        r.save()  
 
 
 def init_book_data():
@@ -49,10 +38,35 @@ def init_book_data():
                 B.description = b['content_description']
                 
                 B.cover = b['cover']
-                #B.quantity = random.randint(0, 7)
+                B.quantity = random.randint(0, 7)
                 B.save()
             except KeyError:
                 continue
+
+
+def init_bookentity_data(amount=50):
+    for i in range(amount):
+        bookID=random.sample(range(0, 11), 10)
+        isbn = random.choice(book_info.objects.all())
+        bookIntime = datetime.date.today() + datetime.timedelta(random.randint(1, 30))
+        quantity = random.randint(0, 7)
+        bookshelfid=random.choice(bookshelf_info.objects.all())
+        returned_flag = True
+
+        if random.randint(1, 100) % 2 == 0:
+            returned_flag = False
+
+        if returned_flag:
+            b = bookEntity_info.objects.create(
+                bookID=bookID,
+
+                quantity=quantity,
+                bookIntime=bookIntime,
+                bookshelfid=bookshelfid
+            )
+            b.save()
+
+
 
 
 def init_borrowing_data(amount=50):
@@ -101,18 +115,11 @@ def init_borrowing_data(amount=50):
 
 if __name__ == '__main__':
     init_book_data()
+    init_bookentity_data()
+    init_borrowing_data()
 
-    parser = argparse.ArgumentParser()
+    '''parser = argparse.ArgumentParser()
     parser.add_argument("data", help=u"你要生成的数据")
-    args = parser.parse_args()
+    args = parser.parse_args()    '''
 
-    if args.data == 'all':
-        init_reader_data()
-        init_book_data()
-        init_borrowing_data()
-    elif args.data == 'book':
-        init_book_data()
-    elif args.data == 'reader':
-        init_reader_data()
-    elif args.data == 'borrowing':
-        init_borrowing_data()
+

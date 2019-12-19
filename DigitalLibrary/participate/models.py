@@ -26,6 +26,10 @@ class ArticleColumn(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        verbose_name = '文章栏目'
+        verbose_name_plural = '文章栏目'  # 保证取消admin的model的s
+
 
 # 博客文章数据模型
 class ArticlePost(models.Model):
@@ -85,6 +89,9 @@ class ArticlePost(models.Model):
         # ordering 指定模型返回的数据的排列顺序
         # '-created' 表明数据应该以倒序排列
         ordering = ('-created',)
+        verbose_name = '发表文章'
+        verbose_name_plural = '发表文章'  # 保证取消admin的model的s
+
 
     # 函数 __str__ 定义当调用对象的 str() 方法时的返回值内容
     def __str__(self):
