@@ -99,49 +99,33 @@ def readerNotice(request):
     if request.user.is_authenticated:
         request.session['user_location'] = 'readerCenter:readerNotice'
     reader = Reader.objects.get(user=request.user)
+    
     # 每周一书的通知-仅推荐当周推荐，点击更多可以查看历史推荐
-    book_week = weekbook_info.objects.filter(now_display=True)
+    #book_week = weekbook_info.objects.filter(index_display=True)
 
     #实现系统自动进行借阅催还功能
-    book_over=Borrowing.objects.filter(reader=reader)
+    bookborrowing=Borrowing.objects.filter(reader=reader)
+    book_over=[]
+    for book in bookborrowing:
+        if (book.date_due_to_returned-datetime.timedelta(5))< datetime.date.today():
+            book_over.append(book)
+    context={
+             'book_over':book_over,}
 
-    return render(request, 'readerCenter/readerNotice.html', locals())
+    return render(request, 'readerCenter/readerNotice.html', context)
 
 
 
 # 个人中心-读者通知阅读界面  
 @login_required
 def showNotice(request):
-    articleID = request.GET.get('aticleID', None)
-    print(articleID)
-    if not articleID:
-        return HttpResponse('there is no such an aticleID')
-    try:
-        notice = article_info.objects.get(pk=articleID)
-    except notice.DoesNotExist:
-        return HttpResponse('there is no such an articleID')
-    state = None
-    # 如果是每周一书，则要显示书籍的信息
-    # 为什么永远都不是每周一书
-    if notice.articleID.startswith('week'):
-        # 获取书籍的信息
-        wbook = weekbook.objects.get(articleID=articleID)
-        wbook_info = book_info.objects.get(pk=wbook.ISBN.ISBN)
-        state = 'weekbook_notice'
-        # wbook.ISBN=wbook_info
-        # wbook.save()
-        context = {
-            'wbook_info': wbook_info,
-            'notice': notice,
-            'state': state,
-        }
-        return render(request, 'readerCenter/noticeDetail.html', context)
+    noticeType=request.GET.get('notiType')
+    if noticeType=='borrowing' :
+        borrowingID = request.GET.get('noticeID')
+        borrowing=Borrowing.objects.get(pk=borrowingID)
     else:
-        state = 'normal_notice'
-        context = {'notice': notice,
-                   'state': state, }
-        return render(request, 'readerCenter/noticeDetail.html', context)
-
+        noticeID=request.GET.get('noticeID')
+    return render(request, 'readerCenter/noticeDetail.html',locals())
 
 # 查询借阅状态页面
 @login_required
@@ -157,7 +141,6 @@ def readerBorrowing(request):
         return HttpResponse('no this id reader')
 
     borrowing = Borrowing.objects.filter(reader=reader).exclude(date_returned__isnull=False)
-
     context = {
         'state': request.GET.get('state', None),
         'reader': reader,
@@ -184,22 +167,40 @@ def readerOperateBook(request):
         r.save()
 
         bk = book_info.objects.get(ISBN=b.ISBN_id)
-        bk.quantity += 1
+        bk.bookID.quantity += 1
+        bk.bookID.save()
         bk.save()
-
-        return HttpResponseRedirect('/bowrrowing?state=return_success')
+        return HttpResponseRedirect('/readerCenter/bowrrowing?state=return_success')
     elif action == 'renew_book':
         id = request.GET.get('id', None)
         if not id:
             return HttpResponse('no id')
         b = Borrowing.objects.get(pk=id)
         if (b.date_due_to_returned - b.date_issued) < datetime.timedelta(60):
-            b.date_due_to_returned += datetime.timedelta(30)
+            b.date_issued = datetime.date.today()
+            b.date_due_to_returned=b.date_issued+ datetime.timedelta(30)
             b.save()
 
-        return HttpResponseRedirect('/bowrrowing?state=renew_success')
+        return HttpResponseRedirect('/readerCenter/bowrrowing?state=renew_success')
+    elif action == 'pay_fine':
+        id = request.GET.get('id', None)
+        if not id:
+            return HttpResponse('no id')
+        b = Borrowing.objects.get(pk=id)
+        reader=b.reader
+        if b.amount_of_fine<=0:
+            return redirect("readerCenter:borrowingSituation")
+        else:
+            if reader.balance>=b.amount_of_fine:
+                reader.balance=reader.balance-b.amount_of_fine
+                b.amount_of_fine = 0
+                reader.save()
+                b.save()
+                return HttpResponseRedirect('/readerCenter/bowrrowing?state=fine_success')
+            else:
+                return HttpResponse("余额不够请充值！")
 
-    return HttpResponseRedirect('/bowrrowing')
+    return HttpResponseRedirect('/readerCenter/bowrrowing/')
 
 # 从检索首页的导航栏入口/个人中心入口进入查询结果页
 @login_required

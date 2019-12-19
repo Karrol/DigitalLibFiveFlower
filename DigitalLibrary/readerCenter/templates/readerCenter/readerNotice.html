@@ -14,7 +14,7 @@
         </ol>
 
         <!-- DataTables Example --><!--每周一书的读者定向推荐-->
-        <div class="card mb-3">
+        <!--<div class="card mb-3">
             <div class="card-header">
                 <i></i>
                 本周书籍推荐</div>
@@ -22,8 +22,8 @@
                     <div class="table-responsive">
                         <table class="table table-bordered" id="newnotice" width="100%" cellspacing="0">
                             {% for wbook in book_week %}
-                            <tr class="{% cycle notice.tittle notice.pubDate %}">
-                                 <td><i class="fas fa-bell fa-fw"></i><a href="/shownotice/detail?recBookID={{wbook.pk}}">叮咚~亲爱的{{reader.name}},本周新荐图书《{{wbook.bookName}}》已新鲜出炉，快来看看叭~ </a><p class="small text-muted" align="right">{{wbook.recTime}}</p></td>
+                            <tr >
+                                 <td><i class="fas fa-bell fa-fw"></i><a href="/shownotice/detail?recBookID={{wbook.ISBN.ISBN}}">叮咚~亲爱的{{reader.name}},本周新荐图书《{{wbook.bookName}}》已新鲜出炉，快来看看叭~ </a><p class="small text-muted" align="right">{{wbook.recTime}}</p></td>
                             </tr>
                             {% endfor %}
 
@@ -35,7 +35,7 @@
                     </div>
             </div>
             <div class="card-footer small text-muted">数据更新于{{nowtime}}</div>
-          </div>
+          </div>  -->
         <!--读者的借阅催还提醒-->
 
         <div class="card mb-3">
@@ -46,8 +46,7 @@
                   <table class="table table-bordered" id="histnotice" width="100%" cellspacing="0">
                       {%for book in book_over%}
                             <tr>
-                                <!--现在没有提供记录历史超期消息的功能，因为没有数据库存这个历史记录，不好提取-->
-                                <td><i class="fas fa-bell fa-fw"></i><a href="/shownotice/detail?aticleID={{ book.pk }}">{{book.ISBN.title}}催还与缴纳欠款提醒</a><p class="small text-muted" align="right"></p></td>
+                                <td><i class="fas fa-bell fa-fw"></i><a href="/readerCenter/shownotice/?notiType=borrowing&noticeID={{ book.pk }}#hint">{{book.ISBN.title}}借阅催还提醒</a><p class="small text-muted" align="right"></p></td>
                             </tr>
                       {%endfor%}
                       

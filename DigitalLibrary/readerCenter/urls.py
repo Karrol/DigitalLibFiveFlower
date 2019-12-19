@@ -18,11 +18,11 @@ urlpatterns = [
                 #消息列表
                 path('notice/', views.readerNotice, name='notice'),
                 #消息详情
-                path('shownotice/detail$', views.showNotice, name='noticeDetail'),
+                path('shownotice/', views.showNotice, name='noticeDetail'),
                 #我的借阅
                 path('bowrrowing', views.readerBorrowing, name='borrowingSituation'),
                 #我的借阅页面读者的借还操作
-                url(r'^book/action$', views.readerOperateBook, name='reader_operation'),
+                url(r'^operatebook/', views.readerOperateBook, name='reader_operation'),
                 #我的检索历史
                 path('searchlist/', views.mysearchhis_show, name='showsearchlist'),
                 path('searchlist_add/<str:ISBN>/', views.mysearchhis_add, name='mysearchhis_add'),

@@ -30,7 +30,7 @@ class Reader(person_info):
         ordering = ['inTime']
 
     email = models.EmailField('邮箱', unique=True, blank=False)
-    max_borrowing = models.IntegerField(default=5, verbose_name='可借数量')
+    max_borrowing = models.IntegerField(default=15, verbose_name='可借数量')
     balance = models.FloatField(default=0.0, verbose_name='余额')
     photo = models.ImageField(blank=True, upload_to='readerimg', verbose_name='头像')
     inTime = models.DateField('登记日期',default='2019-12-19')
