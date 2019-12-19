@@ -207,8 +207,8 @@ def mysearchhis_show(request):
     # 判断用户状态，如果是登录用户，记录其现在浏览的位置
     if request.user.is_authenticated:
         request.session['user_location'] = 'readerCenter:searchlist'
-    searchlists = []
-    # 获取当前页面的url
+    #设置空列表存放要显示在前端的数据
+    mysearchhis = []
     current_path = request.get_full_path()
     # 验证用户是否已注册,获取用户id
     if not request.user.is_authenticated:
@@ -216,28 +216,29 @@ def mysearchhis_show(request):
     else:
         # 获取传递过来读者ID
         reader = Reader.objects.get(user_id=request.user.id)
+        #给mysearchhis赋值
         mysearchhis = readerSearchlist.objects.filter(reader=reader).order_by('-search_date')[0:50]
 
         # 翻页功能实现
         paginator = Paginator(mysearchhis, 5)
-        page = request.GET.get('page', 1)
+        pindex = request.GET.get('page', 1)
 
         try:
-            mysearchhis = paginator.page(page)
+            # page是paginator实例对象的方法，返回第page页的实例对象，所以books是第page页的记录集
+            pbooks = paginator.page(pindex)
         except PageNotAnInteger:
-            mysearchhis = paginator.page(1)
+            pbooks = paginator.page(1)
         except EmptyPage:
-            mysearchhis = paginator.page(paginator.num_pages)
+            pbooks = paginator.page(paginator.num_pages)
 
         # ugly solution for &page=2&page=3&page=4
-        if '&page' in current_path:
-            current_path = current_path.split('&page')[0]
+        # 当你已经是某一页时，current_path的最后有&page(previous),所以这里是在做清洗
+        if '?page' in current_path:
+            current_path = current_path.split('?page')[0]
 
         context = {
+            'pbooks': pbooks,
             'current_path': current_path,
-
-            "mysearchhis": mysearchhis,
-
         }
         return render(request, 'readerCenter/searchlist.html', context)
 
@@ -247,68 +248,27 @@ def mysearchhis_add(request,ISBN):
     isbn =ISBN
     id = request.user.id
     reader = Reader.objects.get(user_id=id)
-    state = None
     today=datetime.date.today()
+    #容错性低，当程序运行错误时，比如已经删掉了这本书，但是后面报错了，以致于没有正确跳转，刷新同一个页面则会因为没有这本bk而报错
+    #建议改成事务，或者先filter判断不为空再get
     bk=book_info.objects.get(ISBN=isbn)
     newbkhis= readerSearchlist.objects.create(ISBN=bk,reader=reader,search_date=today)
     newbkhis.save()
     return redirect("readerCenter:showsearchlist")
 
-
-@login_required
-def mysearchhis_multiadd(request):
-    # 验证用户是否已注册,获取用户id
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect('login:readerLogin')
-    else:
-        # 获取传递过来的ISBN号以及读者ID
-        variables = request.GET['ISBN']
-        reader = Reader.objects.get(user_id=request.user.id)
-        # 实现数据库添加操作，实现“查询界面”的数据传递到“查询结果”页面
-        for item in variables.split(','):  # 拆分多个ISBN号连结而成的字符串，形成ISBN号列表
-            # 定义一个临时的书籍对象来存储数据信息
-            bk = book_info.objects.get(ISBN=item)
-            # bk.quantity -= 1   #电子书不需要库存减一
-            bk.save()
-            date = timezone.now()
-            # 在表“mysearchlist”中创建记录存bk对象的数据
-            searchlist = readerSearchlist.objects.create(
-                reader=reader,
-                ISBN=bk,  # 注意：这样赋值后，书的ISBN是个BOOK实例！？以致于在template代码中有book_info.ISBN.ISBN的变量出现
-                search_date=date)
-            searchlist.save()
-        state = 'success'  # 数据库存取操作完成
-        if (state == 'success'):
-            searchlists = readerSearchlist.objects.filter(reader=reader)
-            context = {"searchlists": searchlists}
-            return render(request, 'readerCenter/searchlist.html', context)
-
-    return redirect(reverse('readerCenter:searchlist'))
-
-
 # 删除“查询结果”页面中的书籍
 @login_required
 # @permission_required('Information.delete_information', raise_exception=True)
-def delete_from_searchlist(request):
-    # 验证用户是否已注册,获取用户id
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect('login:readerLogin')
-    else:
-        # 获取传递过来的查询记录的id以及读者ID
-        variables = request.GET['id']
-        reader = Reader.objects.get(user_id=request.user.id)
-        # 实现数据库添加操作，实现“查询界面”的数据传递到“查询结果”页面
-        for item in variables.split(','):  # 拆分多个查询记录id连结而成的字符串，形成id列表
-            bk = get_object_or_404(readerSearchlist, pk=int(item))
-            bk.delete()
-        state = 'success'  # 数据库删除操作完成
-        if (state == 'success'):
-            searchlists = readerSearchlist.objects.filter(reader=reader)
-            context = {"searchlists": searchlists}
-            return render(request, 'readerCenter/searchlist.html', context)
-
-    return HttpResponseRedirect(reverse('readerCenter:searchlist'))
-
+def mysearchhis_del(request,ISBN):
+    isbn = ISBN
+    message =None
+    bk=book_info.objects.get(ISBN=isbn)
+    id = request.user.id
+    reader = Reader.objects.get(user_id=id)
+    # 容错性低
+    bk_to_del= readerSearchlist.objects.get(reader=reader,ISBN=bk)
+    bk_to_del.delete()
+    return redirect("readerCenter:showsearchlist")
 
 
 
@@ -426,51 +386,23 @@ def mylib_search(request):
     return render(request, 'readerCenter/mylib.html',context)
 
 
-
-# 2019-11-提供删除我的图书馆内书籍的功能-未开发完毕，还需学习借书、还书实现的过程
-def delete_from_mylib(request):
-    isbn = request.GET.get('ISBN', None)
-    print(isbn)
-    '''if not ISBN:
-        return HttpResponse('there is no such an ISBN')
-    try:
-        book = book_info.objects.get(pk=ISBN)
-    except book_info.DoesNotExist:
-        return HttpResponse('there is no such an ISBN')'''
-
-    action = request.GET.get('action', None)
-    state = None
-
-    # 获取用户信息
-    id = request.user.id
-    reader = Reader.objects.get(user_id=id)
-    if action == 'delete_from_mylib':
-        book = readerLibrary.objects.get(reader=reader, ISBN=isbn)
-        book.delete()
-        book.save()
-        state = 'delete_from_mylib_success'
-        return HttpResponseRedirect('/mylib?state=delete_from_mylib_success')
-    else:
-        state = 'delete_from_mylib_fail'
-        return HttpResponseRedirect('/mylib?state=delete_from_mylib_fail')
-
-
-# 将搜索结果添加至“查询结果”页面
+#批量操作
+#检索界面批量添加到 我的检索历史
 @login_required
-# @permission_required('Information.delete_information', raise_exception=True)
-def add_to_searchlist(request):
+def mysearchhis_multiadd(request):
     # 验证用户是否已注册,获取用户id
     if not request.user.is_authenticated:
         return HttpResponseRedirect('login:readerLogin')
     else:
         # 获取传递过来的ISBN号以及读者ID
-        variables = request.GET['ISBN']
+        variables = request.GET['multiISBN']
         reader = Reader.objects.get(user_id=request.user.id)
+        
         # 实现数据库添加操作，实现“查询界面”的数据传递到“查询结果”页面
-        for item in variables.split(','):  # 拆分多个ISBN号连结而成的字符串，形成ISBN号列表
+        # 拆分多个ISBN号连结而成的字符串，形成ISBN号列表
+        for item in variables.split(','):
             # 定义一个临时的书籍对象来存储数据信息
             bk = book_info.objects.get(ISBN=item)
-            # bk.quantity -= 1   #电子书不需要库存减一
             bk.save()
             date = timezone.now()
             # 在表“mysearchlist”中创建记录存bk对象的数据
@@ -481,32 +413,57 @@ def add_to_searchlist(request):
             searchlist.save()
         state = 'success'  # 数据库存取操作完成
         if (state == 'success'):
-            searchlists = readerSearchlist.objects.filter(reader=reader)
-            context = {"searchlists": searchlists}
-            return render(request, 'readerCenter/searchlist.html', context)
-
-    return HttpResponseRedirect(reverse('readerCenter:searchlist'))
+            return redirect("readerCenter:showsearchlist")
+    return redirect(reverse('readerCenter:showsearchlist'))
 
 
-# 删除“查询结果”页面中的书籍
+# 我的检索历史 批量删除
+#注意批量删除时跨页面传递的应该是 mysearchhis表中的pk而不是ISBN，ISBN不能唯一识别检索记录
 @login_required
-# @permission_required('Information.delete_information', raise_exception=True)
-def delete_from_searchlist(request):
+def mysearchhis_multidel(request):
+    state=None
+    variables = request.GET['multiID']
+    # 实现数据库添加操作，实现“查询界面”的数据传递到“查询结果”页面
+    # 拆分多个ISBN号连结而成的字符串，形成ISBN号列表
+    for item in variables.split(','):
+        # 在表“mysearchlist”中创建记录存bk对象的数据
+        searchlist = readerSearchlist.objects.get(pk=item)
+        searchlist.delete()
+    state = 'success'  # 数据库存取操作完成
+    if (state == 'success'):
+        return redirect("readerCenter:showsearchlist")
+    else:
+        return HttpResponse("哦哟，删除过程中除了点问题，请返回上一页叭！")
+
+
+# 检索界面批量添加到 我的图书馆
+#注意，mylib中图书不能重复添加
+@login_required
+def mylib_multiadd(request):
     # 验证用户是否已注册,获取用户id
     if not request.user.is_authenticated:
         return HttpResponseRedirect('login:readerLogin')
     else:
-        # 获取传递过来的查询记录的id以及读者ID
-        variables = request.GET['id']
+        # 获取传递过来的ISBN号以及读者ID
+        variables = request.GET['multiISBN']
         reader = Reader.objects.get(user_id=request.user.id)
-        # 实现数据库添加操作，实现“查询界面”的数据传递到“查询结果”页面
-        for item in variables.split(','):  # 拆分多个查询记录id连结而成的字符串，形成id列表
-            bk = get_object_or_404(readerSearchlist, pk=int(item))
-            bk.delete()
-        state = 'success'  # 数据库删除操作完成
-        if (state == 'success'):
-            searchlists = readerSearchlist.objects.filter(reader=reader)
-            context = {"searchlists": searchlists}
-            return render(request, 'readerCenter/searchlist.html', context)
 
-    return HttpResponseRedirect(reverse('readerCenter:searchlist'))
+        # 实现数据库添加操作，实现“查询界面”的数据传递到“查询结果”页面
+        # 拆分多个ISBN号连结而成的字符串，形成ISBN号列表
+        for item in variables.split(','):
+            # 定义一个临时的书籍对象来存储数据信息
+            bk = book_info.objects.get(ISBN=item)
+            bk.save()
+            date = timezone.now()
+            # 在表“readerLibrary”中创建记录存bk对象的数据
+            #判别此图书是否已添加过
+            if not readerLibrary.objects.filter(ISBN=bk):
+                newmylib = readerLibrary.objects.create(
+                    reader=reader,
+                    ISBN=bk,  # 注意：这样赋值后，书的ISBN是个BOOK实例！？以致于在template代码中有book_info.ISBN.ISBN的变量出现
+                    In_date=date)
+                newmylib.save()
+        state = 'success'  # 数据库存取操作完成
+        if (state == 'success'):
+            return redirect("readerCenter:mylib")
+    return redirect(reverse('readerCenter:mylib'))

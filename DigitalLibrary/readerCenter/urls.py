@@ -25,11 +25,15 @@ urlpatterns = [
                 url(r'^book/action$', views.readerOperateBook, name='reader_operation'),
                 #我的检索历史
                 path('searchlist/', views.mysearchhis_show, name='showsearchlist'),
-                path('searchlist/<str:ISBN>/', views.mysearchhis_add, name='mysearchhis_add'),
+                path('searchlist_add/<str:ISBN>/', views.mysearchhis_add, name='mysearchhis_add'),
+                path('searchlist_multi_add/', views.mysearchhis_multiadd, name='mysearchhis_multi_add'),
+                path('searchlist_del/<str:ISBN>/', views.mysearchhis_del, name='mysearchhis_del'),
+                path('searchlist_multi_del/', views.mysearchhis_multidel, name='mysearchhis_multi_del'),
                 #我的图书馆
                 path('mylib/', views.mylib, name='mylib'),
                 path('mylib_del/<str:ISBN>/', views.mylib_del, name='mylib_del'),
                 path('mylib_add/<str:ISBN>/', views.mylib_add, name='mylib_add'),
+                path('mylib_multi_add/', views.mylib_multiadd, name='mylib_multi_add'),
                 path('mylib_search/', views.mylib_search, name='mylib_search'),
 
     

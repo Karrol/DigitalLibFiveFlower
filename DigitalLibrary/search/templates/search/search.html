@@ -41,9 +41,9 @@
             <th rowspan=$rowspan style='vertical-align: middle;text-align: center;'>在馆位置</th>
             <th rowspan=$rowspan style='vertical-align: middle;text-align: center;'>在馆数量</th>
             <th rowspan=$rowspan style='vertical-align: middle;text-align: center;'>操作</th>
-            <input type="button" onclick="MultiAdd()" class="btn btn-success" value="批量加至查询结果">
+            <input type="button" onclick="searchhis_multi_Add()" class="btn btn-success" value="批量加至查询结果">
             &nbsp;&nbsp;
-            <input type="button" onclick="MultiAdd()" class="btn btn-warning" value="批量加至我的图书馆">
+            <input type="button" onclick="mylib_multi_Add()" class="btn btn-warning" value="批量加至我的图书馆">
             </thead>
             <tbody>
             {% for book in books %}

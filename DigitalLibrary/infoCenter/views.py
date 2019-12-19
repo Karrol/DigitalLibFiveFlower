@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from .models import newsColumn_info, newsArticle_info, weekbook_info, booktop_info
+from .models import newsColumn_info, newsArticle_info, weekbook_info
 from search.models import book_info
 
 

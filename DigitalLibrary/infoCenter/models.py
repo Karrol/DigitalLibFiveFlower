@@ -74,24 +74,3 @@ class weekbook_info(models.Model):
         verbose_name = '每周一书'
         verbose_name_plural = '每周一书'
         ordering = ['recTime']
-
-@python_2_unicode_compatible
-class booktop_info(models.Model):
-    number = models.AutoField('序号', primary_key=True)
-    bookName = models.CharField('书名', max_length=50)
-    bookAuthor =  models.CharField('作者', max_length=50)
-    bookConcern = models.CharField('出版社', max_length=50)
-    ISBN = models.CharField('ISBN号', max_length=50)
-
-    pub_display = models.BooleanField('正式发布', default=False)
-
-    def __str__(self):
-        return self.bookName
-
-    def get_absolute_url(self):
-        return reverse('ranking', args=(self.pk, self.number))
-
-    class Meta:
-        verbose_name = '排行榜'
-        verbose_name_plural = '排行榜'
-        ordering = ['number']  # 按照哪个栏目排序

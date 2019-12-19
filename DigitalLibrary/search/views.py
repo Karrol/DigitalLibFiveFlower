@@ -34,7 +34,7 @@ def index(request):
 
     return render(request, 'search/index.html', context)
 
-
+#目前首页还是测试状态
 def test(request):
     news = newsArticle_info.objects.order_by('-newsPubdate')[:10]
     context = {
@@ -51,11 +51,11 @@ def book_search(request):
         request.session['user_location'] = 'search:searchBook'
     #书籍检索功能：用户游客都可以实现
     search_by = request.GET.get('search_by', '书名')
-    books = []
+    #设置空列表存放要显示在前端的数据
+    books = [] 
     current_path = request.get_full_path()
-
     keyword = request.GET.get('keyword', u'_书目列表')
-
+    #给books赋值
     if keyword == u'_书目列表':
         books = book_info.objects.all()
     else:
@@ -71,11 +71,12 @@ def book_search(request):
         elif search_by == u'图书目录':
             keyword = request.GET.get('keyword', None)
             books = book_info.objects.filter(category__contains=keyword).order_by('-title')[0:50]
-
+    # 翻页功能实现
     paginator = Paginator(books, 5)
     page = request.GET.get('page', 1)
 
     try:
+        #page是paginator实例对象的方法，返回第page页的实例对象，所以books是第page页的记录集
         books = paginator.page(page)
     except PageNotAnInteger:
         books = paginator.page(1)
@@ -83,6 +84,7 @@ def book_search(request):
         books = paginator.page(paginator.num_pages)
 
     # ugly solution for &page=2&page=3&page=4
+    #当你已经是某一页时，current_path的最后有&page(previous),所以这里是在做清洗
     if '&page' in current_path:
         current_path = current_path.split('&page')[0]
 
