@@ -63,8 +63,8 @@
   </section>
 
   <!--在此处渲染搜索框-->
-
-   <!--<div class="container myContainer">
+    <!--
+   <div class="container myContainer">
         <form action="{%url 'search:searchBook'%}" method="GET">
             <div class="row col-lg-7 col-lg-offset-3" name="radio-father">
                 {% for radio in searchForm.search_by %}
@@ -82,7 +82,7 @@
                 </div>
             </div>
         </form>
-    </div> -->
+    </div>  -->
 
 
 
@@ -112,7 +112,10 @@
             <h3>借阅服务</h3>
             <p>借阅与预约图书说明 </p>
           </div>
+           </a>
+          </div>
         </div>
+          
         <div class="span3">
           <a href="{% url 'participate:article_list' %}"><div class="well well-warning box">
             <img src="{%static 'assets/img/icons/box-3-white.png'%}" alt="" />
