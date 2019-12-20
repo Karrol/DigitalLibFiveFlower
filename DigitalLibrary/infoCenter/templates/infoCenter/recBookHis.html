@@ -1,104 +1,120 @@
-{% extends "infoCenter/newsBase.html" %}
+{% extends "infoCenter/infoCenter_Base.html" %}
 
-{% block title %}信息中心{% endblock title %}
+{% block title %}每周一书{% endblock title %}
 
-{% block sideNews %}
-<div class="dropdown-menu" aria-labelledby="pagesDropdown">
-    {% for column in news_intro_columns %}
-    <a class="dropdown-item" href="{{ column.get_absolute_url }}">{{ column.columnName }}</a>
-    {% endfor %}
+{% block module %}每周一书{% endblock module %}
+
+{% block search %}
+<div class="span4">
+    <div class="input-append">
+        <form method="get" id="searchform" action="{% url 'newsSearch' %}" class="form-search">
+            {% csrf_token %}
+            <input type="search" name="q" placeholder="搜索新闻" class="input-medium search-query">
+            <button type="submit" class="btn btn-inverse">搜索新闻</button>
+        </form>
+    </div>
 </div>
-{% endblock sideNews %}
-<!--
-{% block breadrums %}
-<div class="container-fluid">
-    <h3 class="my-4">每周推荐：《{{ past_recbook.bookName }}》</h3>
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-            <a href="{% url 'recBookList'%}">每周一书</a>
-        </li>
-        <li class="breadcrumb-item active">往期推荐</li>
-    </ol>
-</div>
-{% endblock breadrums %}
+{% endblock search %}
+
+{% block location %}信息中心>>每周一书>>全部推荐{% endblock location %}
 
 {% block pagecontent %}
-<hr>
-    <div class="container-fluid">
-            <div class="card mb-3">
-                <div class="card-header">
-                    <i class="fas fa-table"></i>
-                    {{ past_recbook.recTime }}
-                </div>
-                <div class="card-body">
-                    <table>
-                        <tr>
-                            <td>
-                                <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
-                                  <div class="carousel-inner" role="listbox">
-                                    <div class="carousel-item active">
-                                      <img class="d-block img-fluid" src="/media/bookcover/{{ past_recbook.ISBN.cover }}" alt="{{ past_recbook.ISBN.title }}">
-                                    </div>
-                                  </div>
-                                </div>
-                            </td>
+<section id="maincontent">
+    <div class="container">
+      <div class="row">
+        <h3 class="my-4" align = 'center'><b>每周一书：《{{ past_recbook.bookName }}》</b></h3><br/>
+        <div class="span4">
+            <img width="350" height="1600" src="/media/bookcover/{{ past_recbook.ISBN.cover }}" alt="{{ past_recbook.ISBN.title }}" />
+        </div>
 
-                            <td>
-                                <p>
-                                    <h3>{{ past_recbook.ISBN.title }}</h3>
-                                    ISBN：{{ past_recbook.ISBN.ISBN }}<br/>
-                                    作者：{{ past_recbook.ISBN.author }}<br/>
-                                    译者：{{ past_recbook.ISBN.bookTranslator }}<br/>
-                                    出版社：{{ past_recbook.ISBN.press }}<br/>
-                                    类别：{{ past_recbook.ISBN.category }}<br/>
-                                    价格：{{ past_recbook.ISBN.price }}<br/>
-                                </p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <p><b>内容简介：</b>{{ past_recbook.ISBN.description }}</p>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <div class="card mb-3">
-                <div class="card-header">
-                    <i class="fas fa-table"></i>
-                    推荐人：{{ past_recbook.promugator }}
-                </div>
-                <div class="card-body">
-                    <table>
-                        <tr>
-                            <td colspan="3">
-                                <p><b>推荐语：</b></p>
-                                <p>{{ past_recbook.Rec_comment | safe }}</p>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-    </div>
-
-      <div class="col-lg-9">
-        <br/><br/><hr/>
-        <h3 class="my-4" align="center" >全部推荐</h3>
-        <div class="container-fluid">
-            {% for books in past_recbook_list %}
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <i class="fas fa-table"></i>
-                        {{ books.recTime }}
-                    </div>
-                    <div class="card-body">
-                        <p class="card-title">
-                            <a href="{{ books.get_absolute_url }}">《{{ books.bookName }}》</a>
-                        </p>
-                    </div>
-                </div>
-            {% endfor %}
+        <div class="span8">
+          <h4>{{ past_recbook.ISBN.title }}</h4>
+          <p><b>ISBN：</b>{{ past_recbook.ISBN.ISBN }}</p>
+          <p><b>作者：</b>{{ past_recbook.ISBN.author }}</p>
+          <p><b>译者：</b>{{ past_recbook.ISBN.bookTranslator }}</p>
+          <p><b>出版社：</b>{{ past_recbook.ISBN.press }}</p>
+          <p><b>类别：</b>{{ past_recbook.ISBN.category }}</p>
+          <p><b>价格：</b>{{ past_recbook.ISBN.price }}</p>
+          <blockquote>
+              <p><b>内容简介：</b>{{ past_recbook.ISBN.description }}</p>
+          </blockquote>
+        </div>
+        <div class="span12">
+            <h4><b>推荐语：</h4>
+            <p>{{ past_recbook.Rec_comment | safe }}</p><br/>
+            <p align="left">推荐人：{{ past_recbook.promugator }}</p>
         </div>
       </div>
--->
+
+      <div class="row">
+        <div class="span12">
+          <div class="divider"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="span12">
+          <h3 class="heading-success"><span class="btn btn-large btn-success"><i class="m-icon-big-swapdown m-icon-white"></i></span>&nbsp;&nbsp;全部推荐</h3>
+
+          <div id="latest-work" class="carousel btleft">
+            <div class="carousel-wrapper">
+                {% for books in past_recbook_list %}
+                    <article class="blog-post">
+                        <div class="tooltip-demo headline">
+                            <h4><a href="{{ books.get_absolute_url }}">每周一书：《{{ books.bookName }}》</a></h4>
+                        </div>
+                        <div class="row">
+                            <div class="span5">
+                                <ul class="post-meta">
+                                    <li class="first"><i class="icon-user"></i> <span>{{ books.promugator }}</span></li>
+                                    <li><i class="icon-list-alt"></i> <span>{{ books.recTime }}</span></li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer
+ ================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+
+      </div>
+    </div>
+
+    <div class="verybottom">
+      <div class="container">
+        <div class="row">
+          <div class="span6">
+            <p>&copy;五朵金花</p>
+          </div>
+          <div class="span6">
+            <div class="pull-right">
+              <div class="credits">
+                <!--
+                  All the links in the footer should remain intact.
+                  You can delete the links only if you purchased the pro version.
+                  Licensing information: https://bootstrapmade.com/license/
+                  Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Scaffold
+                -->
+                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
 {% endblock pagecontent %}

@@ -79,35 +79,36 @@ def newsDetail(request, newsSlug, pk):
 def recBookList(request):
     news_intro_columns = newsColumn_info.objects.filter(nav_display=True)
 
-    #now_recbook = weekbook_info.objects.filter(index_display=True).first()
-    #past_recbooks = weekbook_info.objects.filter(index_display=True).exclude(ISBN = now_recbook.ISBN)
+    now_recbook = weekbook_info.objects.all().first()
+    past_recbooks = weekbook_info.objects.all().exclude(recID = now_recbook.recID)
 
     return render(request, 'infoCenter/recBookList.html', {
-        #'now_recbook': now_recbook,
-        #'past_recbooks': past_recbooks,
+        'now_recbook': now_recbook,
+        'past_recbooks': past_recbooks,
         'news_intro_columns': news_intro_columns,
     })
 
 #每周一书历史详情
-def recBookDetail(request, ISBN, pk):
+def recBookDetail(request, recID, pk):
     news_intro_columns = newsColumn_info.objects.filter(nav_display=True)
 
     past_recbook = weekbook_info.objects.get(pk=pk)
-    #past_recbook_list = weekbook_info.objects.filter(index_display=True).exclude(ISBN=ISBN)
+    past_recbook_list = weekbook_info.objects.all().exclude(recID=recID)
 
     return render(request, 'infoCenter/recBookHis.html', {
         'news_intro_columns': news_intro_columns,
         'past_recbook': past_recbook,
-        #'past_recbook_list': past_recbook_list,
+        'past_recbook_list': past_recbook_list,
     })
 
 #排行榜
 #排行榜列表
 def rankList(request):
-    news_intro_columns = newsColumn_info.objects.filter(nav_display=True)
+    news_intro_columns = newsColumn_info.objects.all()
 
     # 根据自增的views字段进行排序，并获取最高的10条数据
     hotBook = book_info.objects.order_by("-bookViews")[0:10]
+
     return render(request, "infoCenter/rankList.html", {
         'news_intro_columns': news_intro_columns,
         'hotBook': hotBook
