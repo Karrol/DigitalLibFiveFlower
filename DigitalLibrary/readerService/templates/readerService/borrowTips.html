@@ -201,12 +201,31 @@
       <div class="container-fluid">
 
         <!-- Breadcrumbs-->
-        <ol class="breadcrumb">
-          <li><a class="nav-link" href="../borrowTips">借还图书</a></li>
-          <li><a class="nav-link" href="../serviceTime">服务时间</a></li>
-          <li><a class="nav-link" href="../renewal">续借与到期提醒</a></li>
-          <li><a class="nav-link" href="../cableNumber">索取号</a></li>
-        </ol>
+        <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                          <!-- 所有类似地方加上 tag 参数，如排序、翻页等。实现带参数的交叉查询 -->
+                          <a href="{%url 'readerService:borrowTips'%}">
+                              借还图书
+                          </a>
+                      </li>
+                      <li class="breadcrumb-item">
+                          <a href="{%url 'readerService:serviceTime'%}">
+                              服务时间
+                          </a>
+                      </li>
+                      <li class="breadcrumb-item">
+                          <a href="{%url 'readerService:renewal'%}">
+                          续借与到期提醒
+                          </a>
+                      </li>
+                      <li class="breadcrumb-item">
+                          <a href="{%url 'readerService:cableNumber'%}">
+                              索取号
+                          </a>
+                      </li>
+                  </ol>
+              </nav>
 
         <!-- Area Chart Example-->
         <div class="card mb-3">
@@ -232,15 +251,6 @@
 
       </div>
       <!-- /.container-fluid -->
-
-      <!-- Sticky Footer -->
-      <footer class="sticky-footer">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright © 数字图书馆 2019</span>
-          </div>
-        </div>
-      </footer>
 
     </div>
     <!-- /.content-wrapper -->
