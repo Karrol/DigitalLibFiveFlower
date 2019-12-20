@@ -134,7 +134,7 @@ def book_detail(request, ISBN):
                 reader.save()
 
                 bk = book_info.objects.get(pk=ISBN)
-                bk.quantity -= 1
+                bk.bookID.quantity -= 1
                 bk.save()
 
                 issued = datetime.date.today()
@@ -148,34 +148,9 @@ def book_detail(request, ISBN):
 
                 b.save()
                 state = 'success'
-                return HttpResponseRedirect('/profile?state=borrow_success')
+                return HttpResponseRedirect('/readerCenter/bowrrowing?state=borrow_success')
             else:
                 state = 'upper_limit'
-
-    if action == 'add_to_mylib':
-
-        if not request.user.is_authenticated:
-            state = 'no_user'
-        else:
-            reader = Reader.objects.get(user_id=request.user.id)
-            bk = book_info.objects.get(pk=ISBN)
-            bk.save()
-            # 不确定数据库中是否有这个记录时要用filter筛选并且进行判断，如果直接使用get方法，数据库中不存在这条记录就会报错
-            myliblist = readerLibrary.objects.filter(ISBN=ISBN, reader=reader)
-            if myliblist.exists():
-                state = 'repeat_add'
-                return HttpResponseRedirect('/mylib?state=repeat_add')
-            else:
-                issued = timezone.now()
-
-                b = readerLibrary.objects.create(
-                    reader=reader,
-                    ISBN=bk,
-                    In_date=issued)
-
-                b.save()
-                state = 'add_success'
-                return HttpResponseRedirect('/mylib?state=add_success')
     context = {
         'state': state,
         'book': book,

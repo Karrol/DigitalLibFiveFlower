@@ -55,20 +55,18 @@ class newsArticle_info(models.Model):
 @python_2_unicode_compatible
 class weekbook_info(models.Model):
     bookName = models.CharField('书名', max_length=50)
-    ISBN =  models.ForeignKey(book_info, on_delete=models.CASCADE, verbose_name='ISBN')
+    bookID =  models.CharField(max_length=13, primary_key=True, verbose_name='ISBN')
     promugator =  models.ForeignKey('auth.User', blank=True, null=True, verbose_name='发布者', on_delete=models.CASCADE)
     recTime =  models.DateField('推荐时间', auto_now_add=True, editable=True)
     Rec_comment = UEditorField('推荐语', height=300, width=1000,
                            default=u'', blank=True, imagePath="uploads/images/",
                            toolbars='besttome', filePath='uploads/files/')
 
-    index_display = models.BooleanField('正式推荐', default=False)
-
     def __str__(self):
         return self.bookName
 
     def get_absolute_url(self):
-        return reverse('recBookDetail', kwargs=({'pk':self.pk, 'ISBN':self.ISBN}))
+        return reverse('recBookDetail', kwargs=({'pk':self.pk, 'bookID':self.bookID}))
 
     class Meta:
         verbose_name = '每周一书'

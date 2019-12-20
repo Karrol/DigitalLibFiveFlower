@@ -1,55 +1,108 @@
-{% extends "infoCenter/newsBase.html" %}
+{% extends "infoCenter/infoCenter_Base.html" %}
 
-{% block title %}信息中心{% endblock title %}
+{% block title %}新闻公告{% endblock title %}
+
+{% block module %}新闻公告{% endblock module %}
 
 {% block search %}
-<form method="get" id="searchform" action="{% url 'newsSearch' %}" class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-     {% csrf_token %}
-      <div class="input-group">
-        <input type="search" name="q" placeholder="搜索新闻" class="form-control" aria-label="Search" aria-describedby="basic-addon2" required>
-        <div class="input-group-append">
-          <button class="btn btn-primary" type="submit">搜索新闻
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
-      </div>
-</form>
+<div class="span4">
+    <div class="input-append">
+        <form method="get" id="searchform" action="{% url 'newsSearch' %}" class="form-search">
+            {% csrf_token %}
+            <input type="search" name="q" placeholder="搜索新闻" class="input-medium search-query">
+            <button type="submit" class="btn btn-inverse">搜索新闻</button>
+        </form>
+    </div>
+</div>
 {% endblock search %}
 
-{% block sideNews %}
-<div class="dropdown-menu" aria-labelledby="pagesDropdown">
-    {% for column in news_intro_columns %}
-    <a class="dropdown-item" href="{{ column.get_absolute_url }}">{{ column.columnName }}</a>
-    {% endfor %}
-</div>
-{% endblock sideNews %}
-
-{% block breadrums %}
-<div class="container-fluid">
-    <h3>{{ news_column.columnName }}</h3>
-    <!-- Breadcrumbs-->
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-            <a href="{% url 'newsIntro' %}">新闻公告</a>
-        </li>
-        <li class="breadcrumb-item active">{{ news_column.columnName }}</li>
-    </ol>
-</div>
-{% endblock breadrums %}
+{% block location %}信息中心>>新闻公告>>{{ news_column.columnName }}{% endblock location %}
 
 {% block pagecontent %}
-    <hr>
-    <div class="container-fluid">
-        {% for article in news_column_articles %}
-            <div class="card mb-3">
-                <div class="card-header">
-                    <i class="fas fa-table"></i>
-                    {{ article.newsPubdate }}
-                </div>
-                <div class="card-body">
-                    <h5 class="news-title"><a href="{{ article.get_absolute_url }}">{{ article.newsTitle }}</a></h5>
-                </div>
+<!--栏目简介-->
+<section id="maincontent">
+    <div class="container">
+      <h3>当前栏目</h3>
+      <div class="row">
+        <div class="span4">
+          <aside>
+            <div class="widget">
+              <h4 class="heading-success"><span class="btn btn-large btn-success"><i class="m-icon-big-swapdown m-icon-white"></i></span>&nbsp;&nbsp;{{ news_column.columnName }}</h4>
+              <img src="assets/img/avatar.png" class="alignleft" alt="" />
+              <h5>{{ news_column.abstract }}</h5>
             </div>
+          </aside>
+        </div>
+
+      <div class="span8">
+        <!-- start article 1 -->
+        {% for news in news_column_articles %}
+        <article class="blog-post">
+          <div class="tooltip-demo headline">
+              <h4><a href="{{ news.get_absolute_url }}">{{ news.newsTitle }}</a></h4>
+              <span class="comment"><a href="#" rel="tooltip" data-placement="top" title="3 Comments">3 comments</a></span>
+          </div>
+          <div class="row">
+            <div class="span5">
+                <ul class="post-meta">
+                  <li class="first"><i class="icon-user"></i> <span>{{ news.newsAuthor }}</span></li>
+                  <li><i class="icon-list-alt"></i> <span>{{ news.newsPubdate }}</span></li>
+                  <li class="last"><i class="icon-tags"></i> <span>{{ news.newsColumn }}</span></li>
+                </ul>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </article>
         {% endfor %}
+
+        <!--翻页功能缺
+        <div class="pagination">
+            <ul>
+                <li><a href="#">Prev</a></li>
+                <li><a href="#">1</a></li>
+                <li class="active"><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">Next</a></li>
+            </ul>
+        </div>
+-->
+      </div>
+      </div>
     </div>
+</section>
+
+  <!-- Footer
+ ================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+
+      </div>
+    </div>
+
+    <div class="verybottom">
+      <div class="container">
+        <div class="row">
+          <div class="span6">
+            <p>&copy;五朵金花</p>
+          </div>
+          <div class="span6">
+            <div class="pull-right">
+              <div class="credits">
+                <!--
+                  All the links in the footer should remain intact.
+                  You can delete the links only if you purchased the pro version.
+                  Licensing information: https://bootstrapmade.com/license/
+                  Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Scaffold
+                -->
+                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </footer>
 {% endblock pagecontent %}
