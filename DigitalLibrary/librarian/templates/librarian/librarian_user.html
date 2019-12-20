@@ -3,19 +3,38 @@
 <head>
 	<meta charset="UTF-8">
 	<title>图书馆管理系统</title>
-	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	{% load static %}
-	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-	<link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
-	<link rel="stylesheet" href="static/css/bootstrap-admin-theme.css">
-	<script src="{% static 'js/bootstrap.min.js' %}"></script>
-	<script src="{% static 'jQuery/jquery-3.1.1.min.js' %}"></script>
-	<script src="{% static 'js/bootstrap-dropdown.min.js' %}"></script>
-	<script src="{% static 'ajax-lib/ajaxutils.js' %}"></script>
-	<script src="{% static 'js/adminUpdateInfo.js' %}"></script>
-	<script src="{% static 'js/adminUpdatePwd.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+    <script src="{% static 'js/bootstrap-dropdown.min.js' %}"></script>
+    <script src="{% static 'ajax-lib/ajaxutils.js' %}"></script>
+    <script src="{% static 'js/adminUpdateInfo.js' %}"></script>
+    <script src="{% static 'js/adminUpdatePwd.js' %}"></script>
+
+
+    <link href="{%static 'assets/css/bootstrap.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/css/bootstrap-responsive.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/css/docs.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/css/prettyPhoto.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/js/google-code-prettify/prettify.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/css/camera.css'%}" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300|Open+Sans:400,300,300italic,400italic" rel="stylesheet">
+  <link href="{%static 'assets/css/style.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/color/success.css'%}" rel="stylesheet">
+
+  <!-- fav and touch icons -->
+  <link rel="shortcut icon" href="{%static 'assets/ico/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{%static 'assets/ico/apple-touch-icon-144-precomposed.png'%}">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{%static 'assets/ico/apple-touch-icon-114-precomposed.png'%}">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{%static 'assets/ico/apple-touch-icon-72-precomposed.png'%}">
+  <link rel="apple-touch-icon-precomposed" href="{%static 'assets/ico/apple-touch-icon-57-precomposed.png'%}">
+  <link rel="stylesheet" href="/baidu/css/bootstrap.min.css"type="text/css"/>
 
 </head>
 
@@ -24,36 +43,144 @@
 <script src="{% static 'js/jquery.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
+<script src="{%static 'assets/js/jquery-1.8.2.min.js'%}"></script>
+  <script src="{%static 'assets/js/jquery.easing.1.3.js'%}"></script>
+  <script src="{%static 'assets/js/google-code-prettify/prettify.js'%}"></script>
+  <script src="{%static 'assets/js/modernizr.js'%}"></script>
+  <script src="{%static 'assets/js/bootstrap.js'%}"></script>
+  <script src="{%static 'assets/js/jquery.elastislide.js'%}"></script>
+  <script src="{%static 'assets/js/jquery.flexslider.js'%}"></script>
+  <script src="{%static 'assets/js/jquery.prettyPhoto.js'%}"></script>
+  <script src="{%static 'assets/js/application.js'%}"></script>
+  <script src="{%static 'assets/js/hover/jquery-hover-effect.js'%}"></script>
+  <script src="{%static 'assets/js/hover/setting.js'%}"></script>
+  <script src="{%static 'assets/js/camera/camera.min.js'%}"></script>
+  <script src="{%static 'assets/js/camera/setting.js'%}"></script>
+
+  <!-- Template Custom JavaScript File -->
+  <script src="{%static 'assets/js/custom.js'%}"></script>
+
 
 <body class="bootstrap-admin-with-small-navbar">
 
-    <nav class="navbar navbar-inverse navbar-fixed-top bootstrap-admin-navbar bootstrap-admin-navbar-under-small" role="navigation">
+     <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="collapse navbar-collapse main-navbar-collapse">
-                        <a class="navbar-brand" href="/admin/admin.jsp"><strong>欢迎使用图书馆管理系统</strong></a>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li class="dropdown">
-                                <a href="#" role="button" class="dropdown-toggle" data-hover="dropdown"> <i class="glyphicon glyphicon-user"></i> 欢迎您:
-                                <span><% out.write(admin.getName());%></span>  <i class="caret"></i></a>
-                                 <ul class="dropdown-menu">
-                                     <li><a href="#updateinfo" data-toggle="modal">个人资料</a></li>
-                                      <li role="presentation" class="divider"></li>
-                                       <li><a href="#updatepwd" data-toggle="modal">修改密码</a></li>
-                                        <li role="presentation" class="divider"></li>
-                                     <!-- href="#identifier"  来指定要切换的特定的模态框（带有 id="identifier"）。-->
-                                    <li><a href="/books/login.jsp">退出</a></li>
-                                </ul>
+          <!-- logo 数字图书馆 注意：需要制作一个大小一致的徽标 -->
+            <a class="brand logo" style="float:left">
+            <img src="{%static 'assets/img/sculogo1.png'%}" alt="scuIS" />
+            </a>
+          <!-- end logo -->
 
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+          <!-- top menu -->
+          <div>
+            <nav>
+              <ul class="nav topnav">
+
+                <li class="dropdown  active primary">
+                  <a href="/"><i class="icon-home icon-white"></i>首页</a>
+                  <!--<ul class="dropdown-menu">
+                    <li><a href="index_alt1.html">Index alt 1</a></li>
+                    <li><a href="index_alt2.html">Index alt 2</a></li>
+                  </ul>  -->
+                </li>
+
+                <li class="dropdown warning">
+                  <a href="{%url 'readerService:borrowTips'%}"><i class="icon-star icon-white"></i>读者服务</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{%url 'readerService:borrowTips'%}">借还图书</a></li>
+                    <li><a href="{%url 'readerService:serviceTime'%}">服务时间</a></li>
+                    <li><a href="{%url 'readerService:renewal'%}">续借与到期提醒</a></li>
+                    <li><a href="{%url 'readerService:cableNumber'%}">索取号</a></li>
+                    <li><a href="{%url 'readerService:compensation'%}">赔偿损失</a></li>
+                    <li class="dropdown"><a href="{%url 'readerService:bookReservation'%}">图书预约</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'readerService:bookReservationTips'%}">图书预约说明</a></li>
+                        <li><a href="{%url 'readerService:bookReservationBooked'%}">已预约图书</a></li>
+                        <li><a href="{%url 'readerService:bookReservation'%}">预约图书</a></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown "><a href="{%url 'readerService:cd'%}">随书光盘</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'readerService:cd'%}">随书光盘检索</a></li>
+                        <li><a href="{%url 'readerService:cdInfo'%}">随书光盘说明</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+
+                <li class="dropdown danger">
+                  <a href="{%url 'participate:article_list'%}"><i class="icon-leaf icon-white"></i>读者参与</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{%url 'participate:article_list'%}">读者论坛</a></li>
+                    <li class="{%url 'participate:donation_rules'%}"><a href="#">读者捐赠</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'participate:donation_rules'%}">捐赠须知</a></li>
+                        <li><a href="{%url 'participate:donation_treatments'%}">捐赠处理</a></li>
+                      </ul>
+                    </li>
+                    <li><a href="{%url 'participate:donation_contact'%}">联系方式</a></li>
+                    <li class="dropdown"><a href="{%url 'participate:book_recommendation'%}">读者推荐</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'participate:book_recommendation'%}">好书推荐</a></li>
+                        <li><a href="{%url 'participate:bookrec_list'%}">推荐列表</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li class="dropdown info">
+                  <a href="{% url 'newsIntro' %}"><i class="icon-camera icon-white"></i>信息中心</a>
+                  <ul class="dropdown-menu">
+                    <li class="dropdown "><a href="{% url 'newsIntro' %}">新闻公告</a>
+                      <ul class="dropdown-menu sub-menu">
+                        {% for column in news_columns %}
+                        <li><a href="{{ column.get_absolute_url }}">{{ column.columnName }}</a></li>
+                        {% endfor %}
+                      </ul>
+                    </li>
+                    <li class="dropdown"><a href="{% url 'libBrief' %}">服务指南</a>
+                      <ul class="dropdown-menu sub-menu">
+                        {% for cotegory in service_cotegories %}
+                        <li><a href="{{ cotegory.get_absolute_url }}">{{ cotegory.categoryName }}</a></li>
+                        {% endfor %}
+                      </ul>
+                    </li>
+                    <li><a href="{% url 'recBookList' %}">每周一书</a></li>
+                    <li><a href="{% url 'rankList' %}">排行榜</a></li>
+                  </ul>
+                </li>
+
+                <li class="success">
+                  <a href="{%url 'login:librarianLogin'%}"><i class="icon-envelope icon-white"></i> 馆员管理</a>
+                </li>
+              {% if user.is_authenticated %}
+                <li class="dropdown inverse">
+                  <a href="{%url 'readerCenter:profile'%}"><i class="icon-bullhorn icon-white"></i>个人中心</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{%url 'readerCenter:profile'%}">个人资料</a></li>
+                    <li><a href="{%url 'readerCenter:notice'%}">消息列表</a></li>
+                    <li><a href="{%url 'readerCenter:borrowingSituation'%}">我的借阅</a></li>
+                    <li><a href="{%url 'readerCenter:showsearchlist'%}">我的检索历史</a></li>
+                    <li><a href="{%url 'readerCenter:mylib'%}">我的图书馆</a></li>
+                  </ul>
+                </li>
+              {%else%}
+                <li class="dropdown inverse">
+                  <a href="#"><i class="icon-bullhorn icon-white"></i> 登录/注册</a>
+                  <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'login:readerLogin'%}">读者登录</a></li>
+                        <li><a href="{%url 'login:librarianLogin'%}">馆员登录</a></li>
+                        <li><a href="{%url 'login:userRegister'%}">读者注册</a></li>
+                  </ul>
+                </li>
+              {%endif%}
+              </ul>
+            </nav>
+          </div>
+          <!-- end menu -->
         </div>
-    </nav>
-
+      </div>
+    </div>
     <div class="container">
         <!-- left, vertical navbar & content -->
         <div class="row">
