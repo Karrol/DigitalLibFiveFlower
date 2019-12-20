@@ -3474,7 +3474,13 @@ input[type="button"].btn-block {
   opacity: 1;
 }
 .collapse {
-  display: none;
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  -webkit-transition: height 0.35s ease;
+     -moz-transition: height 0.35s ease;
+       -o-transition: height 0.35s ease;
+          transition: height 0.35s ease;
 }
 .collapse.in {
   display: block;
