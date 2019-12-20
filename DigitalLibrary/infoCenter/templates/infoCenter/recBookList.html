@@ -1,86 +1,68 @@
-{% extends "infoCenter/newsBase.html" %}
+{% extends "infoCenter/infoCenter_Base.html" %}
 
-{% block title %}信息中心{% endblock title %}
+{% block title %}每周一书{% endblock title %}
 
-{% block sideNews %}
-<div class="dropdown-menu" aria-labelledby="pagesDropdown">
-    {% for column in news_intro_columns %}
-    <a class="dropdown-item" href="{{ column.get_absolute_url }}">{{ column.columnName }}</a>
-    {% endfor %}
+{% block module %}每周一书{% endblock module %}
+
+{% block search %}
+<div class="span4">
+    <div class="input-append">
+        <form method="get" id="searchform" action="{% url 'newsSearch' %}" class="form-search">
+            {% csrf_token %}
+            <input type="search" name="q" placeholder="搜索新闻" class="input-medium search-query">
+            <button type="submit" class="btn btn-inverse">搜索新闻</button>
+        </form>
+    </div>
 </div>
-{% endblock sideNews %}
+{% endblock search %}
 
-<!--
-{% block breadrums %}
-<div class="container-fluid">
-    <h3 class="my-4">本周推荐：《{{ now_recbook.bookName }}》</h3>
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-            <a href="{% url 'recBookList'%}">每周一书</a>
-        </li>
-        <li class="breadcrumb-item active">{{ now_recbook.recTime }}推荐</li>
-    </ol>
-</div>
-{% endblock breadrums %}
+{% block location %}信息中心>>每周一书>>本周推荐{% endblock location %}
 
 {% block pagecontent %}
-<hr>
-    <div class="container-fluid">
-            <div class="card mb-3">
-                <div class="card-header">
-                    <i class="fas fa-table"></i>
-                    {{ now_recbook.recTime }}
-                </div>
-                <div class="card-body">
-                    <table>
-                        <tr>
-                            <td>
-                                <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
-                                  <div class="carousel-inner" role="listbox">
-                                    <div class="carousel-item active">
-                                      <img class="d-block img-fluid" src="/media/bookcover/{{ now_recbook.ISBN.cover }}" alt="{{ now_recbook.ISBN.title }}">
-                                    </div>
-                                  </div>
-                                </div>
-                            </td>
+<section id="maincontent">
+    <div class="container">
+      <div class="row">
+        <h3 class="my-4" align = 'center'>本周推荐：《{{ now_recbook.bookName }}》</h3><br/>
+        <div class="span4">
+                <img src="/media/bookcover/{{ now_recbook.ISBN.cover }}" alt="{{ now_recbook.ISBN.title }}" />
+        </div>
 
-                            <td>
-                                <p>
-                                    <h3>{{ now_recbook.ISBN.title }}</h3>
-                                    ISBN：{{ now_recbook.ISBN.ISBN }}<br/>
-                                    作者：{{ now_recbook.ISBN.author }}<br/>
-                                    译者：{{ now_recbook.ISBN.bookTranslator }}<br/>
-                                    出版社：{{ now_recbook.ISBN.press }}<br/>
-                                    类别：{{ now_recbook.ISBN.category }}<br/>
-                                    价格：{{ now_recbook.ISBN.price }}<br/>
-                                </p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <p><b>内容简介：</b>{{ now_recbook.ISBN.description }}</p>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <div class="card mb-3">
-                <div class="card-header">
-                    <i class="fas fa-table"></i>
-                    推荐人：{{ now_recbook.promugator }}
-                </div>
-                <div class="card-body">
-                    <table>
-                        <tr>
-                            <td colspan="3">
-                                <p><b>推荐语：</b></p>
-                                <p>{{ now_recbook.Rec_comment | safe }}</p>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
+        <div class="span8">
+          <h4>{{ now_recbook.ISBN.title }}</h4>
+          <p><b>ISBN：</b>{{ now_recbook.ISBN.ISBN }}</p>
+          <p><b>作者：</b>{{ now_recbook.ISBN.author }}</p>
+          <p><b>译者：</b>{{ now_recbook.ISBN.bookTranslator }}</p>
+          <p><b>出版社：</b>{{ now_recbook.ISBN.press }}</p>
+          <p><b>类别：</b>{{ now_recbook.ISBN.category }}</p>
+          <p><b>价格：</b>{{ now_recbook.ISBN.price }}</p>
+          <blockquote>
+            <p>
+              <p><b>内容简介：</b>{{ now_recbook.ISBN.description }}</p>
+            </p>
+          </blockquote>
+        </div>
+        <div class="row">
+        <div class="span12">
+          <div class="divider">
+              <h4><b>推荐语：</b></h4>
+              <p>{{ now_recbook.Rec_comment | safe }}</p><br/>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <div class="row">
+        <div class="span16">
+          <div class="divider"></div>
+        </div>
+      </div>
+
+
+
     </div>
+  </section>
+
+
 
       <div class="col-lg-9">
         <br/><br/><hr/>
@@ -101,5 +83,4 @@
             {% endfor %}
         </div>
       </div>
-      -->
 {% endblock pagecontent %}
