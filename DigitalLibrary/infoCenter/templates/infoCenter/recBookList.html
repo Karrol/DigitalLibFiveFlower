@@ -22,9 +22,9 @@
 <section id="maincontent">
     <div class="container">
       <div class="row">
-        <h3 class="my-4" align = 'center'>本周推荐：《{{ now_recbook.bookName }}》</h3><br/>
+        <h3 class="my-4" align = 'center'><b>本周推荐：《{{ now_recbook.bookName }}》</b></h3><br/>
         <div class="span4">
-                <img src="/media/bookcover/{{ now_recbook.ISBN.cover }}" alt="{{ now_recbook.ISBN.title }}" />
+            <img width="350" height="1600" src="/media/bookcover/{{ now_recbook.ISBN.cover }}" alt="{{ now_recbook.ISBN.title }}" />
         </div>
 
         <div class="span8">
@@ -36,51 +36,85 @@
           <p><b>类别：</b>{{ now_recbook.ISBN.category }}</p>
           <p><b>价格：</b>{{ now_recbook.ISBN.price }}</p>
           <blockquote>
-            <p>
               <p><b>内容简介：</b>{{ now_recbook.ISBN.description }}</p>
-            </p>
           </blockquote>
         </div>
-        <div class="row">
         <div class="span12">
-          <div class="divider">
-              <h4><b>推荐语：</b></h4>
-              <p>{{ now_recbook.Rec_comment | safe }}</p><br/>
-          </div>
+            <h4><b>推荐语：</h4>
+            <p>{{ now_recbook.Rec_comment | safe }}</p><br/>
+            <p align="left">推荐人：{{ now_recbook.promugator }}</p>
         </div>
-      </div>
       </div>
 
       <div class="row">
-        <div class="span16">
+        <div class="span12">
           <div class="divider"></div>
         </div>
       </div>
 
+      <div class="row">
+        <div class="span12">
+          <h3 class="heading-success"><span class="btn btn-large btn-success"><i class="m-icon-big-swapdown m-icon-white"></i></span>&nbsp;&nbsp;全部推荐</h3>
 
+          <div id="latest-work" class="carousel btleft">
+            <div class="carousel-wrapper">
+                {% for books in past_recbooks %}
+                    <article class="blog-post">
+                        <div class="tooltip-demo headline">
+                            <h4><a href="{{ books.get_absolute_url }}">每周一书：《{{ books.bookName }}》</a></h4>
+                        </div>
+                        <div class="row">
+                            <div class="span5">
+                                <ul class="post-meta">
+                                    <li class="first"><i class="icon-user"></i> <span>{{ books.promugator }}</span></li>
+                                    <li><i class="icon-list-alt"></i> <span>{{ books.recTime }}</span></li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+          </div>
+
+        </div>
+      </div>
 
     </div>
   </section>
 
+  <!-- Footer
+ ================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
 
+      </div>
+    </div>
 
-      <div class="col-lg-9">
-        <br/><br/><hr/>
-        <h3 class="my-4" align="center" >全部推荐</h3>
-        <div class="container-fluid">
-            {% for books in past_recbooks %}
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <i class="fas fa-table"></i>
-                        {{ books.recTime }}
-                    </div>
-                    <div class="card-body">
-                        <p class="card-title">
-                            <a href="{{ books.get_absolute_url }}">《{{ books.bookName }}》</a>
-                        </p>
-                    </div>
-                </div>
-            {% endfor %}
+    <div class="verybottom">
+      <div class="container">
+        <div class="row">
+          <div class="span6">
+            <p>&copy;五朵金花</p>
+          </div>
+          <div class="span6">
+            <div class="pull-right">
+              <div class="credits">
+                <!--
+                  All the links in the footer should remain intact.
+                  You can delete the links only if you purchased the pro version.
+                  Licensing information: https://bootstrapmade.com/license/
+                  Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Scaffold
+                -->
+                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
+    </div>
+  </footer>
+
 {% endblock pagecontent %}
