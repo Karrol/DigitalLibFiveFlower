@@ -184,13 +184,14 @@
                     <li>
                         <a href="{%url 'participate:article_list'%}"><i class="glyphicon glyphicon-chevron-right"></i> 读者论坛</a>
                     </li>
-                    <li>图书捐赠</a>
+                    <li>
+                        <a href="{%url 'participate:donation_rules'%}"><i class="glyphicon glyphicon-chevron-right"></i> 图书捐赠</a>
                     </li>
                     <li>
-                        <a href="{%url 'participate:donation_contact'%}"><i class="glyphicon glyphicon-chevron-right"></i> 读者推荐</a>
+                        <a href="{%url 'participate:book_recommendation'%}"><i class="glyphicon glyphicon-chevron-right"></i> 读者推荐</a>
                     </li>
                     <li>
-                        <a href="{%url 'participate:book_recommendation'%}"><i class="glyphicon glyphicon-chevron-right"></i> 推荐书目</a>
+                        <a href="{%url 'participate:groupbook_recom'%}"><i class="glyphicon glyphicon-chevron-right"></i> 推荐书目</a>
                     </li>
 
                 </ul>
@@ -211,9 +212,14 @@
         <div class="col-12">
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="{% url 'participate:donation_rules' %}">图书捐赠</a>
+            <a href="{% url 'participate:donation_rules' %}">捐赠须知</a>
           </li>
-          <li class="breadcrumb-item active">读者参与</li>
+          <li class="breadcrumb-item active">
+              <a href="{% url 'participate:donation_treatments' %}">捐赠处理</a>
+          </li>
+          <li class="breadcrumb-item active">
+              <a href="{% url 'participate:donation_contact' %}">联系方式</a>
+          </li>
         </ol>
         </div>
 
@@ -224,18 +230,7 @@
         <div class="container">
 
             <div class="row">
-              <!--附加导航-->
-              <div class="col-lg-3">
 
-                <h1 class="my-4">图书捐赠</h1>
-                <div class="list-group">
-                    <a href="{% url 'participate:donation_rules' %}" class="list-group-item">捐赠须知</a>
-                    <a href="{% url 'participate:donation_treatments' %}" class="list-group-item">捐赠处理</a>
-                    <a href="{% url 'participate:donation_contact' %}" class="list-group-item">联系方式</a>
-                </div>
-
-              </div>
-              <!-- /.col-lg-3 -->
 
               <div class="col-lg-6">
                 <div class="card mb-3">
