@@ -1,87 +1,297 @@
-{% extends "service/serviceBase.html" %}
+<!DOCTYPE html>
+<html lang="en">
+ {% load static %}
+ {% load staticfiles %}
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>服务指南-数字图书馆</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-{% block search %}
-<form method="get" id="searchform" action="{% url 'serviceSearch' %}" class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-     {% csrf_token %}
-      <div class="input-group">
-        <input type="search" name="q" placeholder="搜索服务指南" class="form-control" aria-label="Search" aria-describedby="basic-addon2" required>
-        <div class="input-group-append">
-          <button class="btn btn-primary" type="submit">搜索服务
-            <i class="fas fa-search"></i>
-          </button>
+  <!-- styles -->
+  <link href="{%static 'assets/css/bootstrap.css' %}" rel="stylesheet">
+  <link href="{%static 'assets/css/bootstrap-responsive.css' %}" rel="stylesheet">
+  <link href="{%static 'assets/css/docs.css' %}" rel="stylesheet">
+  <link href="{%static 'assets/js/google-code-prettify/prettify.css' %}" rel="stylesheet">
+  <link href="{%static 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300|Open+Sans:400,300,300italic,400italic' %}" rel="stylesheet">
+  <link href="{%static 'assets/css/style.css' %}" rel="stylesheet">
+  <link href="{%static 'assets/color/success.css' %}" rel="stylesheet">
+
+  <!-- fav and touch icons -->
+  <link rel="{%static 'shortcut icon' %}" href="assets/ico/favicon.ico">
+  <link rel="{%static 'apple-touch-icon-precomposed' %}" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+  <link rel="{%static 'apple-touch-icon-precomposed' %}" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+  <link rel="{%static 'apple-touch-icon-precomposed' %}" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+  <link rel="{%static 'apple-touch-icon-precomposed' %}" href="assets/ico/apple-touch-icon-57-precomposed.png">
+
+  <!-- =======================================================
+    Theme Name: Scaffold
+    Theme URL: https://bootstrapmade.com/scaffold-bootstrap-metro-style-template/
+    Author: BootstrapMade.com
+    Author URL: https://bootstrapmade.com
+  ======================================================= -->
+</head>
+
+<body data-spy="scroll" data-target=".bs-docs-sidebar">
+
+  <header>
+    <!-- Navbar
+    ================================================== -->
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <!-- logo 数字图书馆 注意：需要制作一个大小一致的徽标 -->
+          <a class="brand logo" href="index.html">
+            <img src="{%static 'assets/img/sculogo1.png'%}" alt="scuIS" />
+          </a>
+          <!-- end logo -->
+
+          <!-- top menu -->
+          <div>
+            <nav>
+              <ul class="nav topnav">
+
+                <li class="dropdown  active primary">
+                  <a href="/"><i class="icon-home icon-white"></i>首页</a>
+                  <!--<ul class="dropdown-menu">
+                    <li><a href="index_alt1.html">Index alt 1</a></li>
+                    <li><a href="index_alt2.html">Index alt 2</a></li>
+                  </ul>  -->
+                </li>
+
+                <li class="dropdown warning">
+                  <a href="#"><i class="icon-star icon-white"></i>读者服务</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="overview.html">借还图书</a></li>
+                    <li><a href="scaffolding.html">服务时间</a></li>
+                    <li><a href="base-css.html">续借与到期提醒</a></li>
+                    <li><a href="components.html">索取号</a></li>
+                    <li><a href="javascript.html">赔偿损失</a></li>
+                    <li class="dropdown"><a href="#">图书预约</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="#">图书预约说明</a></li>
+                        <li><a href="#">已预约图书</a></li>
+                        <li><a href="#">预约图书</a></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown "><a href="#">随书光盘</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="#">随书光盘检索</a></li>
+                        <li><a href="#">随书光盘说明</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+
+                <li class="dropdown danger">
+                  <a href="#"><i class="icon-leaf icon-white"></i>读者参与</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="about.html">读者论坛</a></li>
+                    <li class="dropdown"><a href="#">读者捐赠</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="#">捐赠须知</a></li>
+                        <li><a href="#">捐赠处理</a></li>
+                      </ul>
+                    </li>
+                    <li><a href="pricingtable.html">联系方式</a></li>
+                    <li class="dropdown"><a href="#">读者推荐</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="#">好书推荐</a></li>
+                        <li><a href="#">推荐列表</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li class="dropdown info">
+                  <a href=#"><i class="icon-camera icon-white"></i>信息中心</a>
+                  <ul class="dropdown-menu">
+                    <li class="dropdown "><a href="{% url 'newsIntro' %}">新闻公告</a>
+                      <ul class="dropdown-menu sub-menu">
+                        {% for column in news_intro_columns %}
+                        <li><a href="{{ column.get_absolute_url }}">{{ column.columnName }}</a></li>
+                        {% endfor %}
+                      </ul>
+                    </li>
+                    <li class="dropdown"><a href="{% url 'libBrief' %}">服务指南</a>
+                      <ul class="dropdown-menu sub-menu">
+                        {% for cotegory in side_cotegories %}
+                        <li><a href="{{ cotegory.get_absolute_url }}">{{ cotegory.categoryName }}</a></li>
+                        {% endfor %}
+                      </ul>
+                    </li>
+                    <li><a href="{% url 'recBookList' %}">每周一书</a></li>
+                    <li><a href="{% url 'rankList' %}">排行榜</a></li>
+                  </ul>
+                </li>
+
+                <li class="success">
+                  <a href="#"><i class="icon-envelope icon-white"></i> 馆员管理</a>
+                </li>
+              {% if user.is_authenticated %}
+                <li class="dropdown inverse">
+                  <a href="{%url 'readerCenter:profile'%}"><i class="icon-bullhorn icon-white"></i>个人中心</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{%url 'readerCenter:profile'%}">个人资料</a></li>
+                    <li><a href="{%url 'readerCenter:notice'%}">消息列表</a></li>
+                    <li><a href="{%url 'readerCenter:borrowingSituation'%}">我的借阅</a></li>
+                    <li><a href="{%url 'readerCenter:showsearchlist'%}">我的检索历史</a></li>
+                    <li><a href="{%url 'readerCenter:mylib'%}">我的图书馆</a></li>
+                  </ul>
+                </li>
+              {%else%}
+                <li class="dropdown inverse">
+                  <a href="#"><i class="icon-bullhorn icon-white"></i> 登录/注册</a>
+                  <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'login:readerLogin'%}">读者登录</a></li>
+                        <li><a href="{%url 'login:librarianLogin'%}">馆员登录</a></li>
+                        <li><a href="{%url 'login:userRegister'%}">读者注册</a></li>
+                  </ul>
+                </li>
+              {%endif%}
+              </ul>
+            </nav>
+          </div>
+          <!-- end menu -->
         </div>
       </div>
-</form>
-{% endblock search %}
-
-{% block breadrums %}
-    <div class="container-fluid">
-        <h2>图书馆简介</h2>
-        <!-- Breadcrumbs-->
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="{% url 'libBrief' %}">服务指南</a>
-            </li>
-            <li class="breadcrumb-item active">图书馆简介</li>
-        </ol>
     </div>
-{% endblock breadrums %}
+  </header>
 
-{% block pagecontent %}
-    <div class="container">
-        <div class="row" align="center">
-            <div class="col-lg-9">
-                <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
-                  <div class="carousel-inner" role="listbox">
-                    <div class="carousel-item active">
-                      <img class="d-block img-fluid" src="http://placehold.it/1200x350" alt="First slide">
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card h-100">
-                      <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                      <div class="card-body">
-                        <h4 class="card-title">
-                          <a href="#">馆情介绍</a>
-                        </h4>
-                        <h5>XX市XX路XX号</h5>
-                        <p class="card-text">XX分馆位于XX地，面积16000平方米，馆藏以社会科学类和自然科学类为主，兼及部分工程技术类文献资料。其中中国古代史、中国古代文学、中国古文字学、汉语史、宗教学、四川地方文献、南亚研究、数学、生物学、经济学等学科领域的文献具有收藏优势；珍藏线装古籍30万册，其中包括宋、元刻本及唐代以来的各种稿本和抄本；收藏有大量的抗日战争时期出版的图书和建国前报刊。</p>
-                      </div>
-                    </div>
-                  </div>
 
-                  <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card h-100">
-                      <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                      <div class="card-body">
-                        <h4 class="card-title">
-                          <a href="#">图书馆历史</a>
-                        </h4>
-                        <h5>1949-至今</h5>
-                        <p class="card-text">前身是创建于1896年的XX藏书楼，藏书历史可溯源到1704年建立的锦江书院和1874年建立的尊经书院。</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card h-100">
-                      <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                      <div class="card-body">
-                        <h4 class="card-title">
-                          <a href="#">馆长寄语</a>
-                        </h4>
-                        <h5>馆长XXX</h5>
-                        <p class="card-text">习近平同志指出：“梦想从学习开始，事业从实践起步”。在图书馆浩瀚无际的知识海洋里，让我们“以学益智，以学修身”，“望近望远，力学力行”，共同“向历史、向人民交出新的更加优异”的“答卷” 来。</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- /.row -->
-              </div>
-              <!-- /.col-lg-9 -->
+  <!-- Subhead
+================================================== -->
+  <section id="subintro">
+    <div class="jumbotron subhead" id="overview">
+      <div class="container">
+        <div class="row">
+          <div class="span8">
+            <h3><i class="m-icon-big-swapright m-icon-white"></i> 服务指南</h3>
+            <p>信息中心>>服务指南>>图书馆概况</p>
+          </div>
+          <div class="span4">
+            <div class="input-append">
+                <form method="get" id="searchform" action="{% url 'newsSearch' %}" class="form-search">
+                  {% csrf_token %}
+                  <input type="search" name="q" placeholder="搜索新闻" class="input-medium search-query">
+                  <button type="submit" class="btn btn-inverse">搜索新闻</button>
+                </form>
             </div>
-            <!-- /.row -->
+          </div>
         </div>
-        {% endblock pagecontent %}
+      </div>
+    </div>
+  </section>
+
+
+  <div class="container">
+
+    <!-- Docs nav
+    ================================================== -->
+    <div class="row">
+      <div class="span3 bs-docs-sidebar">
+        <ul class="nav nav-list bs-docs-sidenav">
+          <li><a href="#general-template"><i class="icon-chevron-right"></i> 馆情介绍</a></li>
+          <li><a href="#file-structure"><i class="icon-chevron-right"></i> 馆长寄语</a></li>
+          <li><a href="#contents"><i class="icon-chevron-right"></i> 历史沿革</a></li>
+        </ul>
+      </div>
+      <div class="span9">
+
+
+
+        <!-- Download
+        ================================================== -->
+        <section id="general-template" class="doc">
+          <div class="page-header first">
+            <h3>1. 馆情介绍</h3>
+          </div>
+          <p>四川大学图书馆始建于1896 年，是我国西南地区藏书规模最大的大学图书馆，馆舍总面积6,3100平方米；馆藏纸质文献690万余册，并拥有丰富的电子文献资源。可提供阅览、外借、参考咨询、科技项目查新、文献传递、馆际互借、用户培训、声像视听、复印复制、打印扫描等多种信息服务，并为本科生、研究生开设“文献检索与利用课”。馆内安装了上千个数字化接口，无线网络全面开通。
+          </p>
+        </section>
+
+
+
+        <!-- File structure
+        ================================================== -->
+        <section id="file-structure" class="doc">
+          <div class="page-header">
+            <h3>2. 馆长寄语</h3>
+          </div>
+          <p>欢迎莅临百年名馆四川大学图书馆。四川大学图书馆的历史可追溯到1704年锦江书院、1875年尊经书院的尊经阁和1896年四川中西学堂的藏书室，中国科学院院士刘应明、著名外科学家吴和光、著名历史学家隗瀛涛、中国第一位图书馆学博士桂质柏、中华图书馆协会主要发起人孙心磐、重庆大学创办人之一吕子方、中国档案学教育第一人毛坤等曾经执掌馆务。这里珍藏有中国西南“新学”重镇尊经书局的刻书雕版，这里保存着毛泽东主席当年亲自调阅的明代刻本《西厢记》，这里开设的中国最早的“图书影片室”得到英国科学史家李约瑟的大力支持，这里收录有《医学文摘》《生物学文摘》《化学文摘》等世界知名检索期刊的创刊号……在这里，一个个川大学子勤学探研，一批批国家栋梁追求新知，一代代社会精英扬帆远行。在这里，共和国元帅、四川省城高等学堂学生朱德第一次看见了彩色的世界地图，四川大学成为他“走向革命之路”的起点；在这里，政治经济学家、国立四川大学学生蒋学模与英文版《基督山伯爵》“一见钟情”，首次将它翻译成中文并正式出版；在这里，抗战时期的华西坝“五大学”学子共用珍贵的图书资料，共建“救亡图书室”；在这里，被誉为“五百年来第一人”的国画大师张大千专程前来，一睹馆藏法国探险家伯希和的敦煌艺术照……今天，四川大学图书馆拥有文理图书馆、工学图书馆、医学图书馆和江安图书馆四个分馆，更是以系统化的信息资源体系、科学化的信息管理体系、现代化的信息服务体系而蜚声圕林。</p>
+          <p>英国诗人艾略特写到：“我们在生活中流失生命，我们在信息中遗失知识，我们在知识中丧失智慧。”来吧，亲爱的老师和同学们，在瞬息万变的当今时代，到“人们的聪明才智为社会所共有”的图书馆来吧。在四川大学图书馆，砥砺“鸿鹄之志”，涵养“浩然之气”，锻造“开山之剑”，新启“寻宝之旅”，将是您发现未知、洞悉未来的重要途径，将是您增长才干、成人成材的关键所在。对于个人，图书馆是“孵化智者的巢穴”；对于社会，图书馆是“照亮道路的明灯”。</p>
+          <p>正如古墨西哥阿兹特克哲人所言：“那些阅读的人，那些告诉我们阅读些什么的人，……就是带领我们的人，引导我们、指点我们途径的人。”亲爱的老师和同学们，你们是四川大学图书馆真正的主人，四川大学图书馆现在为您“导航”，四川大学图书馆永远为您服务。</p>
+          <p>习近平同志指出：“梦想从学习开始，事业从实践起步”。在图书馆浩瀚无际的知识海洋里，让我们“以学益智，以学修身”，“望近望远，力学力行”，共同“向历史、向人民交出新的更加优异”的“川大答卷” 来。</p>
+        </section>
+
+
+
+        <!-- Contents
+        ================================================== -->
+        <section id="contents" class="doc">
+          <div class="page-header">
+            <h3>3. 历史沿革</h3>
+          </div>
+          <p>前身是1952年建立的四川化学工业学院图书馆。 1954年8月四川大学工学院独立组建为成都工学院。成都工学院建校时接受原四川工学院、西南工专、云南大学等校部分图书建立图书馆。当时仅有藏书4万余册，7名工作人员，借用工会俱乐部一间房子作书库。 </p>
+          <p>1955年，原四川化工学院与成都工学院合并，沿用成都工学院校名。合并建立的新成都工学院图书馆藏书12万册，12名工作人员，以第一教学大楼后面300平米的教室为书库与借书处。</p>
+          <p>1958年，建成了6000平米的成都工学院图书馆大楼，成都工学院图书馆始有独立之馆舍，藏书、工作人员也初具规模。 1978年，成都工学院正式更名为成都科技大学，为全国重点大学。1979年初，图书馆正式更名为成都科技大学图书馆。</p>
+          <p>1987年，13000平米的新图书馆建成。 1988年，图书馆研制的《微机网络信息管理系统》获国家教委科技进步二等奖。1992成为国家教委设立的高等学校科技项目咨询及查新工作站。1993年获国家教委“全国高校图书馆先进单位”称号。</p>
+
+        </section>
+
+
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- Footer
+ ================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+
+      </div>
+    </div>
+
+    <div class="verybottom">
+      <div class="container">
+        <div class="row">
+          <div class="span6">
+            <p>&copy;五朵金花</p>
+          </div>
+          <div class="span6">
+            <div class="pull-right">
+              <div class="credits">
+                <!--
+                  All the links in the footer should remain intact.
+                  You can delete the links only if you purchased the pro version.
+                  Licensing information: https://bootstrapmade.com/license/
+                  Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Scaffold
+                -->
+                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="{%static 'assets/js/jquery-1.8.2.min.js' %}"></script>
+  <script src="{%static 'assets/js/jquery.easing.1.3.js' %}"></script>
+  <script src="{%static 'assets/js/google-code-prettify/prettify.js' %}"></script>
+  <script src="{%static 'assets/js/modernizr.js' %}"></script>
+  <script src="{%static 'assets/js/bootstrap.js' %}"></script>
+  <script src="{%static 'assets/js/jquery.elastislide.js' %}"></script>
+  <script src="{%static 'assets/js/jquery.prettyPhoto.js' %}"></script>
+  <script src="{%static 'assets/js/application.js' %}"></script>
+
+  <!-- Template Custom JavaScript File -->
+  <script src="{%static 'assets/js/custom.js' %}"></script>
+
+</body>
+
+</html>
