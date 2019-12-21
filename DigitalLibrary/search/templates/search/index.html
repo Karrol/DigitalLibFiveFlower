@@ -4,26 +4,52 @@
 
 
 {% block content %}
+<style>
+        #searchfather{
+          
+            display:flex;
+            display: -webkit-flex;
+        }
+        
+        #keyword{
+            height: 50%;
+            
+
+        }
+select#id_search_by {
+    text-align: inherit;
+    margin: 1px;
+    font: inherit;
+    color: #337ab7;
+    padding: 12px 10px;
+    border-radius: 5px;
+}
+ input#id_keyword {
+    width: 350px;
+    
+}
+    </style>
+
 
     <div class="container myContainer">
-        <form action="{%url 'search:searchBook'%}" method="GET">
-            <div class="row col-lg-7 col-lg-offset-3">
 
-                {% for radio in searchForm.search_by %}
-                    <div class="radio-inline">
-                        {{ radio }}
-                    </div>
-                {% endfor %}
-                <div class="input-group">
+        <form action="{%url 'search:searchBook'%}" method="GET">
+            <div class="row col-lg-7 col-lg-offset-3" id="searchfather">
+                <div style="text-align:center; line-height:45px;"> <a >更多选项</a> </div>
+                 <div class="input-group" id="searchby" >
+                   {{ searchForm.search_by }}
+                </div>
+                <div class="input-group ">
                     {{ searchForm.keyword }}
-                    <span class="input-group-btn">
+
+                </div>
+                <div class="input-group-btn" id="keyword">
                         <button class="btn btn-default btn-lg " type="submit"><img src="{%static 'login/img/search_gray.png'%}"></button>
-                    </span>
                 </div>
             </div>
         </form>
     </div>
-
+    {% block searchResult %} {% endblock searchResult %}
 
 
 {% endblock %}

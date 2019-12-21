@@ -5,11 +5,10 @@
     <!--个人中心网页的核心内容可替换组件-->
 <style>
 input#keyword {
-    padding: 16px;
+    padding: 15px;
     border-radius: 5px;
     position:center;
 }
-
 .bootstrap-admin-no-table-panel,
 .bootstrap-admin-no-table-panel-content{
     float: left;
@@ -27,10 +26,10 @@ input#keyword {
                 <li class="breadcrumb-item"></li>
                 <li class="breadcrumb-item active">我的资源</li>
             </ol>
-            <div class="col-lg-12">
+           <div class="col-lg-12">
                         <div class="panel panel-default bootstrap-admin-no-table-panel">
                             <div class="panel-heading">
-                              
+
                                 <div class="text-muted bootstrap-admin-box-title">查询</div>
                             </div>
                             <div class="bootstrap-admin-no-table-panel-content bootstrap-admin-panel-content collapse in">
@@ -40,6 +39,11 @@ input#keyword {
                                         <div class="col-lg-8">
                                             <input class="form-control" id="keyword" name="keyword" placeholder="关键词：书名/作者名称/图书分类" type="text">
                                             <label class="control-label" style="display: none;"></label>
+                                             <br><br>
+                                            {% ifequal counter 0 %}
+                                                <p>啊哦，您的图书馆中并未收录此书籍！<a href="{%url 'readerCenter:mylib'%}">点击返回我的图书馆！</a></p>
+                                            {%else%}
+                                                <p>已为您查找到{{counter}}本书籍：</p> {% endifequal %}
                                         </div>
                                     </div>
                                     <div class="col-lg-3 form-group">
@@ -50,45 +54,22 @@ input#keyword {
                             </div>
                         </div>
                     </div>
-            {% if state %}
-            <div class="col-md-2 col-lg-10">
-                <div class="alert alert-warning">
-                    <a href="#" class="close" data-dismiss="alert">&times;</a>
-                    {% if state == 'repeat_add' %}
-                        <h2>您已添加过此书籍！</h2>
-                    {% endif %}
-                    {% if state == 'delete_from_mylib_success' %}
-                        <h2><a href="{%url 'readerCenter:mylib'%}"> 您已成功删除！点击刷新~</a></h2>
-                    {% endif %}
-                    {% if state == 'delete_from_mylib_fail' %}
-                        <h2>删除失败！您的图书馆中不存在此书籍！</h2>
-                    {% endif %}
-                    {% if state == 'add_to_mylib_success' %}
-                        {%if message == 'back_to_search_searchBook'%}
-                            <h2><a href="{%url 'search:searchBook'%}"> 添加成功！点击返回检索页面</a></h2>
-                        {%else%}
-                        <h2> 添加成功！</h2>
-                        {% endif %}
-                    {% endif %}
-                </div>
-            </div>
-    {% endif %}
-        <!--我的书架封面展示页-->
-        <div class="col-lg-12">
+
+            <div class="col-lg-12">
             <div class="row">
-              {%for book in mylib_list%}
+              {%for book in searchResultbook%}
               <div class="col-lg-4 col-md-6 mb-4">
                 <div class="card h-100">
-                  <a href="{% url 'search:bookDetail' book.ISBN.ISBN %}"><img class="card-img-top" src="/media/bookcover/{{book.ISBN.cover}}" alt="{{book.ISBN.title}}封面"></a>
+                  <a href="{% url 'search:bookDetail' book.ISBN%}"><img class="card-img-top" src="/media/bookcover/{{book.cover}}" alt="{{book.title}}封面"></a>
                   <div class="card-body">
                     <h4 class="card-title">
-                      <a href="{% url 'search:bookDetail' book.ISBN.ISBN %}">{{book.ISBN.title}}</a>
+                      <a href="{% url 'search:bookDetail' book.ISBN %}">{{book.title}}</a>
                     </h4>
-                    <h5>{{book.ISBN.author }}</h5>
+                    <h5>{{book.author }}</h5>
                     <!--<p class="card-text">{{book.ISBN.description}}</p> -->
                   </div>
                   <div class="card-footer">
-                      <small class="text-muted"><a href="{% url 'readerCenter:mylib_del' book.ISBN.ISBN %}">删除书籍</a></small>
+                      <small class="text-muted"><a href="{% url 'readerCenter:mylib_del' book.ISBN %}">删除书籍</a></small>
                   </div>
                 </div>
               </div>
@@ -96,26 +77,9 @@ input#keyword {
 
             </div>
           <!--我的书架封面展示页结束-->
-            
+
 
         </div>
 
-
-    </div>
-      <!-- /.container-fluid -->
-     
-      <!-- Sticky Footer -->
-      <!--<footer class="sticky-footer">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright © 五朵金花 2019</span>
-          </div>
         </div>
-      </footer>-->
-
-    </div>
-    <!-- /.content-wrapper -->
-     {%endblock perscontent%}
-
- 
-
+    </div>        {%endblock perscontent%}

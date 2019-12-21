@@ -1,4 +1,4 @@
-{% extends 'login/base-1-testforlogin.html' %}
+{% extends 'login/base.html' %}
 
 {% block title %} 请登陆 {% endblock %}
 
@@ -6,59 +6,6 @@
 <link href="{% static 'login/signin.css' %}" rel="stylesheet">
 
 {% block content %}
-<!--表单内联样式，以避免外部样式的覆盖-处理登录界面-->
-
-<style>
-
-.form-login {
-  max-width: 400px;
-  padding: 20px 15px;
-  margin: 0 auto;
-}
-
-
-.form-login .form-control {
-  position: relative;
-  height:15px;
-  padding: 15px;
-  font-size: 16px;
-}
-.form-login .form-control:focus {
-  z-index: 2;
-}
-.form-login input[type="email"] {
-  margin-bottom: 10px;
-  border-radius:5px;
-}
-.form-login input[type="password"] {
-  margin-bottom: 10px;
-  border-radius:5px;
-}
-.form-login input[type="text"] {
-  margin-bottom: 0px;
-  border-radius:5px;
-  height:15px;
-  padding: 15px;
-  font-size: 16px;
-
-}
-.form-captcha {
-    margin-left:4px;
-    margin-bottom: 10px;
-    border-radius:5px;
-}
-
-
-.btn {
-  border-radius:5px;
-}
-
-h1, h2, h3, h4, h5, h6 {
-	font-family: 'Source Sans Pro', sans-serif;
-	font-weight: bold;
-}
-
-</style>
      <div class="container myContainer">
         <div class="row">
             <div class="col-md-4 col-md-offset-4 ">
@@ -79,10 +26,10 @@ h1, h2, h3, h4, h5, h6 {
                       {{ login_form.password }}
                   </div>
 
-                  <div class="form-group ">
+                  <div class="form-group">
                       {{ login_form.captcha.errors }}
                       {{ login_form.captcha.label_tag }}
-                      <div class="row form-captcha">{{ login_form.captcha }} </div>
+                      {{ login_form.captcha }}
                   </div>
 
                   <button type="reset" class="btn btn-default pull-left">重置</button>
@@ -127,10 +74,6 @@ h1, h2, h3, h4, h5, h6 {
 
 
 {% endblock content %}
-
-
-
-
 
 
 

@@ -10,19 +10,18 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>数字图书馆</title>
+  <title>读者服务</title>
 
   <!-- Custom fonts for this template-->
-  <link href="/static/mobankf/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="../../static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
   <!-- Page level plugin CSS-->
-  <link href="/static/mobankf/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+  <link href="../../static/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
 
   <!-- Custom styles for this template-->
-  <link href="/static/mobankf/css/sb-admin.css" rel="stylesheet">
+  <link href="../../static/css/sb-admin.css" rel="stylesheet">
 
-
-    <link href="{%static 'assets/css/bootstrap.css'%}" rel="stylesheet">
+   <link href="{%static 'assets/css/bootstrap.css'%}" rel="stylesheet">
   <link href="{%static 'assets/css/bootstrap-responsive.css'%}" rel="stylesheet">
   <link href="{%static 'assets/css/docs.css'%}" rel="stylesheet">
   <link href="{%static 'assets/css/prettyPhoto.css'%}" rel="stylesheet">
@@ -44,10 +43,11 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
-
 </head>
 
-<body class="bootstrap-admin-with-small-navbar">
+<body id="page-top">
+
+  <body class="bootstrap-admin-with-small-navbar">
 
   <div class="navbar navbar-fixed-top", style="margin:auto">
       <div class="navbar-inner">
@@ -98,26 +98,20 @@
                 <li class="dropdown danger">
                   <a href="{%url 'participate:article_list'%}"><i class="icon-leaf icon-white"></i>读者参与</a>
                   <ul class="dropdown-menu">
-                    <li><a href="{%url 'participate:article_list'%}">读者论坛</a>
-                        <ul class="dropdown-menu sub-menu">
-                        <li><a href="{%url 'participate:article_list'%}">看帖</a></li>
-                        <li><a href="{%url 'participate:article_create'%}">发帖</a></li>
-                        </ul>
-                    </li>
-                    <li class="{%url 'participate:donation_rules'%}"><a href="#">图书捐赠</a>
+                    <li><a href="{%url 'participate:article_list'%}">读者论坛</a></li>
+                    <li class="{%url 'participate:donation_rules'%}"><a href="#">读者捐赠</a>
                       <ul class="dropdown-menu sub-menu">
                         <li><a href="{%url 'participate:donation_rules'%}">捐赠须知</a></li>
                         <li><a href="{%url 'participate:donation_treatments'%}">捐赠处理</a></li>
-                          <li><a href="{%url 'participate:donation_contact'%}">联系方式</a></li>
                       </ul>
                     </li>
+                    <li><a href="{%url 'participate:donation_contact'%}">联系方式</a></li>
                     <li class="dropdown"><a href="{%url 'participate:book_recommendation'%}">读者推荐</a>
                       <ul class="dropdown-menu sub-menu">
                         <li><a href="{%url 'participate:book_recommendation'%}">好书推荐</a></li>
                         <li><a href="{%url 'participate:bookrec_list'%}">推荐列表</a></li>
                       </ul>
                     </li>
-                    <li><a href="{%url 'participate:groupbook_recom'%}">推荐书目</a></li>
                   </ul>
                 </li>
                 <li class="dropdown info">
@@ -174,7 +168,6 @@
       </div>
     </div>
 
-
   <div class="container", style="margin:0 auto">
         <!-- left, vertical navbar & content -->
         <div class="row">
@@ -182,121 +175,116 @@
              <div class="col-md-2 bootstrap-admin-col-left">
                 <ul class="nav navbar-collapse collapse bootstrap-admin-navbar-side">
                     <li>
-                        <a href="{%url 'participate:article_list'%}"><i class="glyphicon glyphicon-chevron-right"></i> 读者论坛</a>
+                        <a href="../borrowTips"><i class="glyphicon glyphicon-chevron-right"></i> 借还图书</a>
                     </li>
                     <li>
-                        <a href="{%url 'participate:donation_rules'%}"><i class="glyphicon glyphicon-chevron-right"></i> 图书捐赠</a>
+                        <a href="../bookReservation"><i class="glyphicon glyphicon-chevron-right"></i>图书预约</a>
                     </li>
                     <li>
-                        <a href="{%url 'participate:book_recommendation'%}"><i class="glyphicon glyphicon-chevron-right"></i> 读者推荐</a>
+                        <a href="../compensation"><i class="glyphicon glyphicon-chevron-right"></i>赔偿损失</a>
                     </li>
                     <li>
-                        <a href="{%url 'participate:groupbook_recom'%}"><i class="glyphicon glyphicon-chevron-right"></i> 推荐书目</a>
+                        <a href="../cd"><i class="glyphicon glyphicon-chevron-right"></i>随书光盘与检索</a>
                     </li>
 
                 </ul>
 
             </div>
-
             <div class="col-md-10">
 
 
 
                   <div id="wrapper">
 
-    <div id="content-wrapper">
+                    <div id="content-wrapper">
 
-      <div class="container-fluid">
+                      <div class="container-fluid">
 
-        <!-- Breadcrumbs-->
-        <div class="col-12">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="{% url 'participate:donation_rules' %}">捐赠须知</a>
-          </li>
-          <li class="breadcrumb-item active">
-              <a href="{% url 'participate:donation_treatments' %}">捐赠处理</a>
-          </li>
-          <li class="breadcrumb-item active">
-              <a href="{% url 'participate:donation_contact' %}">联系方式</a>
-          </li>
-        </ol>
-        </div>
+                        <!-- Breadcrumbs-->
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                              <li class="breadcrumb-item">
+                                  <!-- 所有类似地方加上 tag 参数，如排序、翻页等。实现带参数的交叉查询 -->
+                                  <a href="{%url 'readerService:bookReservation'%}">
+                                    预约图书
+                                  </a>
+                              </li>
+                            </ol>
+                        </nav>
+                                <!-- DataTables Example -->
+                          <div class="card mb-3" id="个人资料">
+                              <div class="card-header">
+                                  <i></i>
+                                  基本信息</div>
+                              <div class="card-body">
+                                  <div class="circular--portrait">
+                                      <img src="/media/{{reader.photo}}" class="rounded-circle float-left media-object .img-rounded" style="right: 0;" >
+                                  </div><br>
+                                  <div class="table-responsive">
+                                      <table class="table table-bordered"  width="100%" cellspacing="0">
+                                          <!--<span>读者ID：{{var}}</span><br>  -->
+                                          <span>姓名：{{reader.name}}</span><br>
+                                          <span>性别：{{reader.Sex}}</span><br>
+                                          <span>邮箱：{{reader.email}}</span><br>
+                                          <br>
+                                      </table>
+                                  </div>
+                              </div>
 
-        <!-- Icon Cards-->
+
+                          </div>
+                          <div class="card mb-3" id="读者证状态">
+                              <div class="card-header">
+                                  <i></i>
+                                  读者证状态</div>
+                              <div class="card-body">
+                                  <div class="table-responsive">
+                                      <table class="table table-bordered"  width="100%" cellspacing="0">
+                                          <span>读者证有效状态：{{reader.status}}</span><br>
+                                          <span>余额情况：{{reader.balance}}</span><br>
+                                          <span>最大可借数：{{reader.max_borrowing}}</span><br>
+                                          <span>注册日期：{{reader.inTime}}</span>
+                                          <br>
+                                      </table>
+                                  </div>
+                              </div>
+                          </div>
 
 
-        <!--正文-->
-        <div class="container">
+                          <div class="card mb-3">
+                              <div class="card-header">
+                                  <i></i>
+                                  设置</div>
+                              <div class="card-body">
+                                  <div class="input-group-append">
+                                      <button class="btn" type="button">
+                                          <i class="fas text-muted"></i><a href="{%url 'readerCenter:uploadImg'%}">上传头像</a>
+                                      </button>
+                                      <button class="btn" type="button">
+                                          <i class="fas text-muted"></i><a href="{%url 'readerCenter:changeinfo'%}">修改个人信息</a>
+                                      </button>
+                                      <button class="btn" type="button">
+                                          <i class="fas text-muted"></i><a href="{%url 'login:set_password' %}">修改密码</a>
+                                      </button>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <!-- /.container-fluid -->
 
-            <div class="row">
-
-
-              <div class="col-lg-6">
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <i class="fas fa-chart-area"></i>
-                        捐赠须知
                     </div>
-                    <div class="card-body" >
-                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;四川大学图书馆欢迎本校师生、校友及社会各界人士向图书馆捐赠图书。四川大学图书馆将向所有捐赠者出具感谢函，但因馆藏空间有限，图书馆需根据馆藏特色和受赠图书质量进行筛选处理，敬请捐赠者知晓以下条例。</p>
-                        <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一、凡符合以下条件的图书将被纳入馆藏：</b><br/>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1、内容符合本校科学研究范围；<br/>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2、为正式出版物；但酌情接受具有较高学术价值和收藏价值的非正式出版物；<br/>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. 内容适合大学及以上程度读者利用； <br/>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. 为本馆缺藏，或本馆需增加复本的图书，复本量以1－3册为宜。 <br/>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5. 川大师生的著作将入藏“明远文库”1册，其余复本将存放相关藏书区域，供读者使用。 <br/><br/>
-                        <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;二、凡有下列情况之一的图书一般不纳入馆藏： </b><br/>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. 违反中华人民共和国著作权法之规定的图书； <br/>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 非正式出版物（具有学术价值的手稿等除外）； <br/>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. 破损图书；  <br/>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. 內有划线、注记、眉批的图书；(若为海內外孤本或为名人批注，则不在此限)  <br/>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5. 內容陈旧的图书；  <br/>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6. 不成套的图书；  <br/>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7. 基本上不具学术参考价值的图书； <br/>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8. 不符合本馆馆藏发展政策的图书；<br/><br/>
-                    </div>
-                    </div>
-                </div>
-              </div>
-              <!-- /.col-lg-9 -->
-            </div>
-            <!-- /.row -->
-
-        </div>
-
-        <!-- DataTables Example -->
-
-
-      </div>
-      <!-- /.container-fluid -->
-
-    </div>
     <!-- /.content-wrapper -->
+  <!-- /#wrapper -->
 
-  </div>
+            </div><!--col-10-->
+        </div><!--row-->
+
   <!-- /#wrapper -->
 
 
-
-  </div>
-                </div>
-
-
-            </div>
-
-
-
-        </div>
-
-            <!-- content -->
-   <!-- Sticky Footer -->
-        </div>
-
-  <!-- /#wrapper -->
 
   <!-- Scroll to Top Button-->
- <a class="scroll-to-top rounded" href="#page-top">
+  <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
   </a>
 
@@ -318,26 +306,26 @@
       </div>
     </div>
   </div>
+             </div></div>
 
   <!-- Bootstrap core JavaScript-->
-  <script src="/static/mobankf/vendor/jquery/jquery.min.js"></script>
-  <script src="/static/mobankf/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../../static/vendor/jquery/jquery.min.js"></script>
+  <script src="../../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Core plugin JavaScript-->
-  <script src="/static/mobankf/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="../../static/vendor/jquery-easing/jquery.easing.min.js"></script>
 
   <!-- Page level plugin JavaScript-->
-  <script src="/static/mobankf/vendor/chart.js/Chart.min.js"></script>
-  <script src="/static/mobankf/vendor/datatables/jquery.dataTables.js"></script>
-  <script src="/static/mobankf/vendor/datatables/dataTables.bootstrap4.js"></script>
+  <script src="../../static/vendor/chart.js/Chart.min.js"></script>
+  <script src="../../static/vendor/datatables/jquery.dataTables.js"></script>
+  <script src="../../static/vendor/datatables/dataTables.bootstrap4.js"></script>
 
   <!-- Custom scripts for all pages-->
-  <script src="/static/mobankf/js/sb-admin.min.js"></script>
+  <script src="../../static/js/sb-admin.min.js"></script>
 
   <!-- Demo scripts for this page-->
-  <script src="/static/mobankf/js/demo/datatables-demo.js"></script>
-  <script src="/static/mobankf/js/demo/chart-area-demo.js"></script>
-
+  <script src="../../static/js/demo/datatables-demo.js"></script>
+  <script src="../../static/js/demo/chart-area-demo.js"></script>
 
   <script src="{%static 'assets/js/jquery-1.8.2.min.js'%}"></script>
   <script src="{%static 'assets/js/jquery.easing.1.3.js'%}"></script>
@@ -356,8 +344,8 @@
   <!-- Template Custom JavaScript File -->
   <script src="{%static 'assets/js/custom.js'%}"></script>
 
-
-
-</body>
+       </body> </body>
 
 </html>
+
+

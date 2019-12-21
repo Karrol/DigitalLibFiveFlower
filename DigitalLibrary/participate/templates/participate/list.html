@@ -98,20 +98,26 @@
                 <li class="dropdown danger">
                   <a href="{%url 'participate:article_list'%}"><i class="icon-leaf icon-white"></i>读者参与</a>
                   <ul class="dropdown-menu">
-                    <li><a href="{%url 'participate:article_list'%}">读者论坛</a></li>
-                    <li class="{%url 'participate:donation_rules'%}"><a href="#">读者捐赠</a>
+                    <li><a href="{%url 'participate:article_list'%}">读者论坛</a>
+                        <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'participate:article_list'%}">看帖</a></li>
+                        <li><a href="{%url 'participate:article_create'%}">发帖</a></li>
+                        </ul>
+                    </li>
+                    <li class="{%url 'participate:donation_rules'%}"><a href="#">图书捐赠</a>
                       <ul class="dropdown-menu sub-menu">
                         <li><a href="{%url 'participate:donation_rules'%}">捐赠须知</a></li>
                         <li><a href="{%url 'participate:donation_treatments'%}">捐赠处理</a></li>
+                          <li><a href="{%url 'participate:donation_contact'%}">联系方式</a></li>
                       </ul>
                     </li>
-                    <li><a href="{%url 'participate:donation_contact'%}">联系方式</a></li>
                     <li class="dropdown"><a href="{%url 'participate:book_recommendation'%}">读者推荐</a>
                       <ul class="dropdown-menu sub-menu">
                         <li><a href="{%url 'participate:book_recommendation'%}">好书推荐</a></li>
                         <li><a href="{%url 'participate:bookrec_list'%}">推荐列表</a></li>
                       </ul>
                     </li>
+                    <li><a href="{%url 'participate:groupbook_recom'%}">推荐书目</a></li>
                   </ul>
                 </li>
                 <li class="dropdown info">
@@ -179,23 +185,22 @@
                         <a href="{%url 'participate:article_list'%}"><i class="glyphicon glyphicon-chevron-right"></i> 读者论坛</a>
                     </li>
                     <li>
-                        <a href="{%url 'participate:donation_rules'%}"><i class="glyphicon glyphicon-chevron-right"></i> 读者捐赠</a>
-                    </li>
-                    <li>
-                        <a href="{%url 'participate:donation_contact'%}"><i class="glyphicon glyphicon-chevron-right"></i> 联系方式</a>
+                        <a href="{%url 'participate:donation_rules'%}"><i class="glyphicon glyphicon-chevron-right"></i> 图书捐赠</a>
                     </li>
                     <li>
                         <a href="{%url 'participate:book_recommendation'%}"><i class="glyphicon glyphicon-chevron-right"></i> 读者推荐</a>
+                    </li>
+                    <li>
+                        <a href="{%url 'participate:groupbook_recom'%}"><i class="glyphicon glyphicon-chevron-right"></i> 推荐书目</a>
                     </li>
 
                 </ul>
 
             </div>
-            <div class="col-md-10">
 
-
-                <div class="row">
-                    <div id="content-wrapper">
+<div class="col-md-10">
+ <div class="row">
+   <div id="content-wrapper">
 
       <div class="container-fluid">
           <!-- 定义放置文章标题的div容器 -->
@@ -270,6 +275,8 @@
                                           btn-warning
                                       {% elif article.column.title == '寻物启事' %}
                                           btn-info
+                                      {% elif article.column.title == '其他事项' %}
+                                          btn-primary
                                       {% endif %}">
                                   {{ article.column }}
                               </button>
@@ -359,25 +366,27 @@
 
       </div>
       <!-- /.container-fluid -->
-
-
-
     </div>
     <!-- /.content-wrapper -->
 
   </div>
-                </div>
+   <!-- /.row-->
+</div>
+<!-- /.col-md-10-->
 
 
             </div>
-
+<!-- /.row -->
 
 
         </div>
+  <!-- /.container -->
+
 
             <!-- content -->
+
    <!-- Sticky Footer -->
-        </div>>
+        </div>
 
 
 

@@ -112,7 +112,7 @@
                     </li>
                     <li class="dropdown"><a href="{% url 'libBrief' %}">服务指南</a>
                       <ul class="dropdown-menu sub-menu">
-                        {% for cotegory in service_cotegories %}
+                        {% for cotegory in side_cotegories %}
                         <li><a href="{{ cotegory.get_absolute_url }}">{{ cotegory.categoryName }}</a></li>
                         {% endfor %}
                       </ul>

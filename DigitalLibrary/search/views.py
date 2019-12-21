@@ -15,6 +15,7 @@ from readerCenter.models import Borrowing, readerLibrary
 from infoCenter.models import newsArticle_info, newsColumn_info
 from service.models import Intro, Category
 from .forms import SearchForm
+from django.db.models import Q
 
 
 # Create your views here.
@@ -80,6 +81,14 @@ def book_search(request):
             keyword = request.GET.get('keyword', None)
             books = book_info.objects.filter(category__contains=keyword).order_by('-title')[0:50]
     # 翻页功能实现
+        elif search_by==u'模糊检索':
+            keyword = request.GET.get('keyword', None)
+            books = book_info.objects.filter(Q(title__icontains=keyword) |
+                                     Q(author__icontains=keyword) |
+                                     Q(category__icontains=keyword))
+    counter=0
+    for book in books :
+        counter=counter+1
     paginator = Paginator(books, 5)
     page = request.GET.get('page', 1)
 
@@ -98,6 +107,7 @@ def book_search(request):
 
     context = {
         'books': books,
+        'counter': counter,
         'search_by': search_by,
         'keyword': keyword,
         'current_path': current_path,

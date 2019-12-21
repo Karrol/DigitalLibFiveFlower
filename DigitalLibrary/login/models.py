@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import datetime
 
 import uuid, os
 
@@ -34,6 +35,21 @@ class Reader(person_info):
     balance = models.FloatField(default=0.0, verbose_name='余额')
     photo = models.ImageField(blank=True, upload_to='readerimg', verbose_name='头像')
     inTime = models.DateField('登记日期',default='2019-12-19')
+    #用于为读者提供服务的信息
+    birth_date = models.DateField(default=datetime.date.today, blank=True, null=True, verbose_name="创建时间")
+    address=models.CharField('住址',blank=True, max_length=255)
+    phone=models.CharField('联系电话',blank=True, max_length=11)
+    job= (
+        (1, '经理') ,
+        (2, '专业技术')  ,
+        (3, '技师技工')   ,
+        (4, '社区和个人服务')   ,
+        (5, '文秘行政')   ,
+        (6, '销售')   ,
+        (7, '机械操作和驾驶类')   ,
+        (8, '体力劳动类')   ,
+    )
+    occupation=models.CharField('职业',blank=True, max_length=255,choices=job)
     STATUS_CHOICES = (
         (0, 'normal'),
         (-1, 'overdue')
