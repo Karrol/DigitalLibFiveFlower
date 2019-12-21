@@ -4,6 +4,35 @@
 {% load staticfiles %}
 <head>
 
+        <style type="text/css">
+        table
+        {
+            border-collapse: collapse;
+            text-align: center;
+            table-layout: fixed;
+            width: 700px;
+        }
+        table td, table th
+        {
+            border: 1px solid #cad9ea;
+            color: #666;
+            height: 30px;
+        }
+        table thead th
+        {
+            background-color: #CCE8EB;
+            width: 100px;
+        }
+        table tr:nth-child(odd)
+        {
+            background: #fff;
+        }
+        table tr:nth-child(even)
+        {
+            background: #F5FAFA;
+        }
+    </style>
+
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -222,6 +251,7 @@
                   </ol>
               </nav>
 
+
         <!-- DataTables Example -->
         <div class="card mb-3">
           <div class="card-header">
@@ -231,18 +261,30 @@
           <div class="card-body">
             <div class="table-responsive">
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-<ul>
-    <p>预约名单</p>
-    {% for bookReser in bookResers %}
-    <li>{{bookReser.readerId}} : {{bookReser.book}} : {{bookReser.bookId}} : {{bookReser.returnTime}} : {{bookReser.place}}</li>
-    {% endfor %}
-</ul>
 
+    <p>     <table border='1' width='90%' align='center' summary='Script output'>
+    <tr>
+        <th scope="col">         读者号         </th>
+        <th scope="col">        图书名称        </th>
+        <th scope="col">         图书编号       </th>
+        <th scope="col">        取书截止日期    </th>
+        <th scope="col">        取书地点        </th>
+    </tr>
+    {% for bookReser in bookResers %}
+        <tr>
+            <td>   {{bookReser.readerId}}       </td>
+            <td>    {{bookReser.book}}          </td>
+            <td>    {{bookReser.bookId}}        </td>
+            <td>    {{bookReser.returnTime}}    </td>
+            <td>    {{bookReser.place}}         </td>
+        </tr>
+    {% endfor %}
               </table>
             </div>
           </div>
-          <div class="card-footer small text-muted">最近更新于昨天17:00</div>
+            <div class="card-footer small text-muted">最近更新于昨天17:00</div>
         </div>
+
 
 
       <!-- /.container-fluid -->

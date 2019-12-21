@@ -2,6 +2,7 @@
 <html lang="en">
 {% load static %}
 {% load staticfiles %}
+
 <head>
 
   <meta charset="utf-8">
@@ -43,6 +44,102 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
+
+    <!--表单样式-->
+  <style>
+    ::-moz-placeholder {
+		color: #9fa3a7;
+	}
+
+	::-webkit-input-placeholder {
+		color: #9fa3a7;
+	}
+
+	:-ms-input-placeholder {
+		color: #9fa3a7;
+	}
+
+
+	.pc-kk-form{
+		padding:15px 20px;
+	}
+	.pc-kk-form-list{
+		background:#fff;
+		border:1px solid #e5e5e5;
+		border-radius:5px;
+		height:44px;
+		line-height:44px;
+		margin-bottom:10px;
+	}
+	.pc-kk-form-list input{
+		width:100%;
+		border:none;
+		background:none;
+		color:#9fa3a7;
+		font-size:14px;
+		height: 36px;
+		padding: 4px 10px;
+	}
+	.pc-kk-form-list textarea{
+		background:none;
+		border:none;
+		height:60px;
+		padding:10px;
+		resize:none;
+		width:94%;
+		line-height:22px;
+		color:#9fa3a7;
+		font-size:14px;
+	}
+	.nice-select{
+		position: relative;
+		background: #fff url(images/a2.jpg) no-repeat right center;
+		background-size:18px;
+		width:47%;
+		float:left;
+		border:1px solid #e5e5e5;
+		border-radius:5px;
+		height:44px;
+		line-height:44px;
+	}
+
+	.nice-select ul{
+		width: 100%;
+		display: none;
+		position: absolute;
+		left: -1px;
+		top: 44px;
+		overflow: hidden;
+		background-color: #fff;
+		max-height: 150px;
+		overflow-y: auto;
+		border: 1px solid #b9bcbf;
+		z-index: 9999;
+		border-radius:5px;
+
+	}
+	.nice-select ul li{
+		padding-left:10px;
+	}
+	.nice-select ul li:hover{
+		background:#f8f4f4;
+	}
+	.pc-kk-form-list-clear{
+		background:none;
+		border:none;
+	}
+	.pc-kk-form-btn button{
+		background:#ec5224;
+		color:#fff;
+		border:none;
+		width:100%;
+		height:50px;
+		line-height:50px;
+		font-size:16px;
+		border-radius:50px;
+	}
+  </style>
+
 </head>
 
 <body id="page-top">
@@ -222,33 +319,99 @@
                   </ol>
               </nav>
 
-    <form action="/readerService/bookReservation/" method="POST"><!--提交地址-->
-      {% csrf_token %}
-      <input type="text" name="readerId" class="readerId" placeholder="请输入您的读者ID号">
-         <p></p>
-      <input type="text" name="book" class="book" placeholder="请输入想预约的图书名字">
-         <p></p>
-      <input type="text" name="bookId" class="bookId" placeholder="请输入想预约的图书号">
-         <p></p>
-      <input type="text" name="returnTime" class="returnTime" placeholder="请输入预期取书时间">
-         <p></p>
-      <p>请选择取书地点</p>
-      <select type="text" name="place" class="place">
-　　　　<option>工学馆</option>
-　　　　<option></option>
-　　　　<option>江安馆</option>
-       <option></option>
-　　　　<option>医学馆</option>
-       <option></option>
-　　　　<option>文理馆</option>
-　　   </select>
-         <p></p>
-      <input type="submit" value="提交">
-    </form>
+
+        <!--预约图书表单-->
+        <div class="pc-kk-form" style="width:800px;margin:auto;">
+            <div class="card-body" >
+              <p>亲爱的读者：</p>
+              <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果您想预约某本馆藏图书，请填写图书预约表单。我们将为您保留图书到预约节日日期，请及时前往取书地点领取预约图书。</p>
+          </div>
+            <hr style="border:1 dashed #987cb9" width="100%" color=#987cb9 size=1>
+            <h2 class="text-center cmnt-head ">读者预约图书表</h2>
+            <form action="/readerService/bookReservation/" method="POST">
+                <!--Django中需要POST数据的地方都必须有csrf_token -->
+                {% csrf_token %}
+              <div class="pc-kk-form-list">
+                <input type="text" name="readerId" class="readerId" placeholder="请输入您的读者ID号">
+              </div>
+              <div class="pc-kk-form-list">
+                <input type="text" name="book" class="book" placeholder="请输入想预约的图书名字">
+              </div>
+              <div class="pc-kk-form-list">
+                <input type="text" name="bookId" class="bookId" placeholder="请输入想预约的图书号">
+              </div>
+              <div class="pc-kk-form-list">
+                <input type="text" name="returnTime" class="returnTime" placeholder="请输入预期取书时间">
+              </div>
+
+                <p>请选择取书地点</p>
+
+              <div class="pc-kk-form-list pc-kk-form-list-clear">
+                <div class="nice-select" name="nice-select">
+                   <input type="text" value="工学馆"  name="place" class="place">
+                   <ul>
+                      <li data-value="工学馆">工学馆</li>
+                      <li data-value="江安馆">江安馆</li>
+                      <li data-value="医学馆">医学馆</li>
+                      <li data-value="文理馆">文理馆</li>
+                   </ul>
+
+                </div>
+              </div>
+
+              <div class="pc-kk-form-btn">
+                <button type="submit">提交</button>
+              </div>
+            </form>
+          </div>
+        <!--推荐表单结束-->
 
 
       </div>
       <!-- /.container-fluid -->
+
+          <script type="text/javascript" src="/static/mobankf/js/jquery.js"></script>
+
+          <script>
+
+            $('[name="nice-select"]').click(function(e){
+
+              $('[name="nice-select"]').find('ul').hide();
+
+              $(this).find('ul').show();
+
+              e.stopPropagation();
+
+            });
+
+            $('[name="nice-select"] li').hover(function(e){
+
+              $(this).toggleClass('on');
+
+              e.stopPropagation();
+
+            });
+
+            $('[name="nice-select"] li').click(function(e){
+
+              var val = $(this).text();
+
+              $(this).parents('[name="nice-select"]').find('input').val(val);
+
+              $('[name="nice-select"] ul').hide();
+
+              e.stopPropagation();
+
+            });
+
+            $(document).click(function(){
+
+              $('[name="nice-select"] ul').hide();
+
+            });
+
+          </script>
+
 
     </div>
     <!-- /.content-wrapper -->
@@ -272,12 +435,7 @@
    <!-- Sticky Footer -->
         </div>>
 
-
-
-
   <!-- /#wrapper -->
-
-
 
   <!-- Scroll to Top Button-->
   <a class="scroll-to-top rounded" href="#page-top">
