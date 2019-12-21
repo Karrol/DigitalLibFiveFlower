@@ -284,10 +284,10 @@
                         <a href="{%url 'participate:donation_rules'%}"><i class="glyphicon glyphicon-chevron-right"></i> 图书捐赠</a>
                     </li>
                     <li>
-                        <a href="{%url 'participate:donation_contact'%}"><i class="glyphicon glyphicon-chevron-right"></i> 读者推荐</a>
+                        <a href="{%url 'participate:book_recommendation'%}"><i class="glyphicon glyphicon-chevron-right"></i> 读者推荐</a>
                     </li>
                     <li>
-                        <a href="{%url 'participate:book_recommendation'%}"><i class="glyphicon glyphicon-chevron-right"></i> 推荐书目</a>
+                        <a href="{%url 'participate:groupbook_recom'%}"><i class="glyphicon glyphicon-chevron-right"></i> 推荐书目</a>
                     </li>
 
                 </ul>
@@ -301,12 +301,16 @@
       <div class="container-fluid">
 
         <!-- Breadcrumbs-->
+        <div class="col-12">
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
             <a href="{% url 'participate:book_recommendation' %}">好书推荐</a>
           </li>
-          <li class="breadcrumb-item active">读者参与</li>
+          <li class="breadcrumb-item">
+            <a href="{% url 'participate:bookrec_list' %}">推荐列表</a>
+          </li>
         </ol>
+        </div>
 
         <!--推荐表单-->
         <div class="pc-kk-form" style="width:800px;margin:auto;">
