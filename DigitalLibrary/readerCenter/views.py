@@ -8,11 +8,13 @@ from django import forms
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views.decorators.csrf import csrf_exempt
 
 import json
 
 from login.models import Reader, User
 from search.models import book_info
+from django.db.models import Q
 from .forms import Change_reader_infoForm,UploadImageForm
 from readerCenter.models import readerLibrary,readerSearchlist,Borrowing
 from infoCenter.models import weekbook_info
@@ -59,6 +61,10 @@ def readerChangeinfo(request):
             user_cd = userprofile_form.cleaned_data
             userprofile.name = user_cd['name']
             userprofile.sex = user_cd['sex']
+            userprofile.birth_date = request.POST.get('birthdate')
+            userprofile.address = user_cd['address']
+            userprofile.phone = user_cd['phone']
+            userprofile.occupation = user_cd['occupation']
             userprofile.save()
             message='success'
         context={
@@ -67,7 +73,14 @@ def readerChangeinfo(request):
         }
         return render(request, 'readerCenter/readerChangeinfo.html', context)
     else:
-        userprofile_form = Change_reader_infoForm(initial={"name": userprofile.name, "sex": userprofile.Sex})
+        initial={"name": userprofile.name,
+                 "sex": userprofile.Sex,
+                 'birth_date':userprofile.birth_date,
+                 'address':userprofile.address,
+                 'phone':userprofile.phone,
+                 'occupation':userprofile.occupation,
+                 }
+        userprofile_form = Change_reader_infoForm(initial)
         return render(request, "readerCenter/readerChangeinfo.html",
                       locals())
     
@@ -362,29 +375,35 @@ def mylib_add(request,ISBN):
 @login_required
 # 我的图书馆查找图书功能
 def mylib_search(request):
-    id = request.user.id
-    reader = Reader.objects.get(user_id=id)
-    keyword=request.GET.get['MylibSearchKeyword']
-    
-    mylib_books = readerLibrary.objects.filter(reader=reader)
-    searchResultISBN=[]
-    counter=0
-    for book in mylib_books:
-        if book.ISBN.title==keyword:
-            searchResultISBN[counter]=book.ISBN
-            counter=counter+1
-        elif book.ISBN.author==keyword:
-            searchResultISBN[counter] = book.ISBN
-            counter = counter + 1
-        elif book.ISBN.ISBN==keyword:
-            searchResultISBN[counter] = book.ISBN
-            counter = counter + 1
-        elif book.ISBN.category==keyword:
-            searchResultISBN[counter] = book.ISBN
-            counter = counter + 1
+    email=request.session['user_email']
+    reader=Reader.objects.get(email=email)
+    if request.method == 'GET':
+        keyword = request.GET.get("keyword")
+        #先从书目数据中检索，这种检索策略不太优秀
+        books= book_info.objects.filter(Q(title__icontains=keyword) |
+            Q(author__icontains=keyword)|
+            Q(category__icontains=keyword))
+        #如果是图书馆有的书，再检查是不是这个读者的书
+        if books:
+            mylib_books = readerLibrary.objects.filter(reader=reader)
+            searchResultbook = []
+            counter = 0
 
-    context={'searchResultISBN':searchResultISBN,}
-    return render(request, 'readerCenter/mylib.html',context)
+            for rbook in mylib_books:
+                for book in books:
+                    if book.ISBN == rbook.ISBN.ISBN:
+                        searchResultbook.append(book)
+                        counter = counter + 1
+            context = {'searchResultbook': searchResultbook,
+                       'counter': counter, }
+        return render(request, 'readerCenter/mylibsearch.html', context)
+
+
+
+
+    
+
+
 
 
 #批量操作
@@ -468,3 +487,6 @@ def mylib_multiadd(request):
         if (state == 'success'):
             return redirect("readerCenter:mylib")
     return redirect(reverse('readerCenter:mylib'))
+
+def quickLink(request):
+    return render(request,'readerCenter/readerQuickLink.html')

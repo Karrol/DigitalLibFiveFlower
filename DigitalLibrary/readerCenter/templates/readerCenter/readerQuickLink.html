@@ -1,0 +1,61 @@
+{% extends "readerCenter/pers_base_ver1.html" %}
+{% load static %}
+{% load staticfiles %}
+
+ {%block perscontent%}
+<div id="content-wrapper">
+
+      <div class="container-fluid">
+
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{%url 'readerCenter:borrowingSituation'%}"></a>
+          </li>
+          <li class="breadcrumb-item active"><a href="{%url 'readerCenter:borrowingSituation'%}">用户常用服务快捷入口</a></li>
+        </ol>
+        <!-- DataTables Example -->
+        <div class="card mb-3">
+          <div class="card-header">
+            <i class="fas fa-table"></i>
+            快捷入口表</div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>服务名称</th>
+                    <th>快捷入口</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                  </tr>
+
+               </tbody>
+              </table>
+            </div>
+
+          </div>
+          <div class="card-footer small text-muted">数据更新于{{nowtime}}</div>
+        </div>
+
+      </div>
+      
+
+    </div>
+{%endblock perscontent%}

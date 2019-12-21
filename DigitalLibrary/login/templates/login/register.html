@@ -6,6 +6,69 @@
 <link href="{% static 'login/signin.css' %}" rel="stylesheet">
 
 {% block content %}
+<!--表单内联样式，以避免外部样式的覆盖-处理登录界面-->
+
+<style>
+
+.form-register {
+  max-width: 400px;
+  padding: 20px 15px;
+  margin: 0 auto;
+}
+
+
+.form-register .form-control {
+  position: relative;
+  height:15px;
+  padding: 15px;
+  font-size: 16px;
+}
+.form-register .form-control:focus {
+  z-index: 2;
+}
+.form-register input[type="email"] {
+  margin-bottom: 10px;
+  border-radius:5px;
+}
+.form-register input[type="password"] {
+  margin-bottom: 10px;
+  border-radius:5px;
+}
+.form-register input[type="text"] {
+  margin-bottom: 10px;
+  border-radius:5px;
+
+}
+input#id_captcha_1 {
+  margin-bottom: 0px;
+  border-radius:5px;
+  padding:15px;
+}
+
+
+select#id_sex {
+  margin-bottom: 10px;
+  border-radius:5px;
+  
+}
+
+.form-captcha {
+    margin-left:2px;
+    margin-bottom: 10px;
+    border-radius:5px;
+}
+
+.btn {
+  border-radius:5px;
+  margin-bottom:10px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: bold;
+}
+
+</style>
 
 
      <div class="container">
@@ -44,7 +107,7 @@
                   {{ register_form.sex.label_tag }}
                   {{ register_form.sex }}
               </div>
-              <div class="form-group">
+              <div class="form-group row form-captcha">
                   {{ register_form.captcha.errors }}
                   {{ register_form.captcha.label_tag }}
                   {{ register_form.captcha }}

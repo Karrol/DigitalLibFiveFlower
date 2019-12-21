@@ -35,6 +35,8 @@ urlpatterns = [
                 path('mylib_add/<str:ISBN>/', views.mylib_add, name='mylib_add'),
                 path('mylib_multi_add/', views.mylib_multiadd, name='mylib_multi_add'),
                 path('mylib_search/', views.mylib_search, name='mylib_search'),
+                #用户常用快速链接入口
+                path('quickLink/', views.quickLink, name='quickLink'),
 
     
               ]
