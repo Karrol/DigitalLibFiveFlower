@@ -40,7 +40,16 @@ def index(request):
 
 # 目前首页还是测试状态
 def test(request):
-    news = newsArticle_info.objects.order_by('-newsPubdate')[:10]
+    news = newsArticle_info.objects.order_by('-newsPubdate')[:5]
+    index_news_column = newsColumn_info.objects.filter(newsIndexDiaplay=True).first()
+    if not index_news_column:#如果首页展示的栏目为空
+        index_news_column = newsColumn_info.objects.all().first()
+        if not index_news_column:
+            index_news = news
+        else:
+            index_news = newsArticle_info.objects.filter(newsColumn=index_news_column.pk)[:5]
+    else:
+        index_news = newsArticle_info.objects.filter(newsColumn=index_news_column.pk)[:5]
 
     # 李玉和 信息中心导航栏
     news_columns = newsColumn_info.objects.filter(nav_display=True)
@@ -51,6 +60,8 @@ def test(request):
         'news': news,
         'news_columns': news_columns,
         'service_cotegories': service_cotegories,
+        'index_news_column': index_news_column,
+        'index_news': index_news,
     }
     return render(request, 'search/index_test.html', context)
 

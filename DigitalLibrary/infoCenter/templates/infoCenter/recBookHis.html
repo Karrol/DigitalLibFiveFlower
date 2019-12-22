@@ -56,8 +56,6 @@
         <div class="span12">
           <h3 class="heading-success"><span class="btn btn-large btn-success"><i class="m-icon-big-swapdown m-icon-white"></i></span>&nbsp;&nbsp;全部推荐</h3>
 
-          <div id="latest-work" class="carousel btleft">
-            <div class="carousel-wrapper">
                 {% for books in past_recbook_list %}
                     <article class="blog-post">
                         <div class="tooltip-demo headline">
@@ -74,8 +72,24 @@
                         </div>
                     </article>
                 {% endfor %}
-            </div>
-          </div>
+
+                <div class="pagination" align="center" >
+                  <nav>
+                    <ul>
+                      <li>
+                        {% if past_recbook_list.has_previous %}
+                            <a href="?page={{ past_recbook_list.previous_page_number }}">上一页</a>
+                        {% endif %}
+
+                        <span>{{ past_recbook_list.number }}/{{ past_recbook_list.paginator.num_pages }}</span>
+
+                        {% if articles.has_next %}
+                           <a class='active' href="?page={{ past_recbook_list.next_page_number }}">下一页</a>
+                        {% endif %}
+                      </li>
+                    </ul>
+                  </nav>
+              </div>
 
         </div>
       </div>

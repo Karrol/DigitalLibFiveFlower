@@ -29,6 +29,13 @@ class bookReser(models.Model):
     returnTime = models.CharField(u'还书时间', max_length=256)
     place = models.CharField(u'地点', max_length=256)
 
+class lectureReser(models.Model):
+    readerId = models.CharField(u'读者号', max_length=256)
+    email = models.CharField(u'邮箱地址', max_length=256)
+    lectureName = models.CharField(u'讲座名称', max_length=256)
+    speaker = models.CharField(u'主讲人', max_length=256)
+    lectureTime = models.CharField(u'讲座时间', max_length=256)
+
 
 @python_2_unicode_compatible
 class RedSerTime(models.Model):
