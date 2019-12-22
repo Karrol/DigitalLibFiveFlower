@@ -1,0 +1,39 @@
+{% extends 'login/base.html' %}
+
+{% block title %} 欢迎来到图书馆！ {% endblock %}
+
+
+{% block content %}
+     <div class="container myContainer">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 ">
+                <form class='form-login' action="{%url 'readerCenter:searchAdvice'%}" method="POST">
+
+                  {% ifequal message "请注意检查填写内容"%}
+                      <div class="alert alert-warning">{{ message }}</div>
+                  {% endifequal %}
+                    {% ifequal message "success" %}
+                      <div class="alert alert-warning">您的建议已提交，如被采纳将会邮件通知您！感谢您的宝贵建议！</div>
+                  {% endifequal %}
+                  {% csrf_token %}
+                  <h2 class="text-center">读者对检索系统的建议</h2>
+                  <div class="form-group">
+                      {{adviceSearch_form.title.label_tag}}
+                      {{ adviceSearch_form.title }}
+                  </div>
+                  <div class="form-group">
+                      {{adviceSearch_form.advice.label_tag}}
+                      {{ adviceSearch_form.advice }}
+                  </div>
+                  <button type="reset" class="btn btn-default pull-left">重置</button>
+                  <button type="submit" class="btn btn-primary pull-right">提交</button>
+                   <br><br>
+                   <br><br>
+              </form>
+
+
+            </div>
+        </div>
+    </div> <!-- /container -->
+
+{% endblock %}

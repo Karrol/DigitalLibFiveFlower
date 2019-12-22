@@ -14,8 +14,10 @@ from login.models import Reader
 from readerCenter.models import Borrowing, readerLibrary
 from infoCenter.models import newsArticle_info, newsColumn_info
 from service.models import Intro, Category
-from .forms import SearchForm
+from .forms import SearchForm ,searchParameterForm
 from django.db.models import Q
+from django.template import loader ,Context
+from django.http import HttpResponse
 
 
 # Create your views here.
@@ -166,3 +168,33 @@ def book_detail(request, ISBN):
         'book': book,
     }
     return render(request, 'search/book_detail.html', context)
+
+
+#检索参数设置
+def searchparameter(request):
+    '''把已有的用户信息读出来，然后判断用户请求是POST还是GET。如果是GET，则显示表单,并将用户已有信息也显示在其中，如果是POST，则接收用户提交的表单信息，然后更新各个数据模型实例属性的值'''
+    response = HttpResponse('')
+    searchparameter_form = searchParameterForm(request.POST)
+    if request.method == "POST":
+        message = '请注意检查填写内容'
+        if searchparameter_form.is_valid():
+           parameter = searchparameter_form.cleaned_data
+           recordNum = parameter['recordNum']#每页记录数
+           crecordNum = parameter['crecordNum']#自动完整显示记录数
+           defaultLib = parameter['defaultLibrary']
+           resultFormat = parameter['resultFormat']
+           formatData = parameter['formatData']  # 自动完整显示记录数
+           response.set_cookie('recordNum', recordNum)
+           response.set_cookie('crecordNum', crecordNum)
+           response.set_cookie('defaultLib', defaultLib)
+           response.set_cookie('resultFormat', resultFormat)
+           response.set_cookie('formatData', formatData)
+        message = '参数设置成功！请继续检索叭！'
+        context = {
+            'searchparameter_form': searchparameter_form,
+            'message': message,
+        }
+        return render(request, 'search/searchParameter.html', context)
+    return render(request, 'search/searchParameter.html', locals())
+
+

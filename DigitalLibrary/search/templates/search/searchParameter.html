@@ -1,0 +1,49 @@
+{% extends 'login/base.html' %}
+
+{% block title %} 欢迎来到图书馆！ {% endblock %}
+
+
+{% block content %}
+     <div class="container myContainer">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 ">
+                <form class='form-login' action="{%url 'search:searchParameter'%}" method="POST">
+
+                  {% if message %}
+                      <div class="alert alert-warning">{{ message }}</div>
+                  {% endif %}
+                  {% csrf_token %}
+                  <h2 class="text-center">个人检索参数设置</h2>
+                  <div class="form-group">
+                      {{searchparameter_form.recordNum.label_tag}}
+                      {{ searchparameter_form.recordNum }}
+                  </div>
+                  <div class="form-group">
+                      {{searchparameter_form.crecordNum.label_tag}}
+                      {{ searchparameter_form.crecordNum }}
+                  </div>
+                  <div class="form-group">
+                      {{searchparameter_form.defaultLibrary.label_tag}}
+                      {{searchparameter_form.defaultLibrary }}
+                  </div>
+                  <div class="form-group">
+                      {{ searchparameter_form.resultFormat.label_tag }}
+                      {{ searchparameter_form.resultFormat }}
+
+                  </div>
+                  <div class="form-group">
+                      {{ searchparameter_form.formatData.label_tag }}
+                      {{ searchparameter_form.formatData }}
+                  </div>
+                  <button type="reset" class="btn btn-default pull-left">重置</button>
+                  <button type="submit" class="btn btn-primary pull-right">提交</button>
+                   <br><br>
+                   <br><br>
+              </form>
+               
+
+            </div>
+        </div>
+    </div> <!-- /container -->
+
+{% endblock %}

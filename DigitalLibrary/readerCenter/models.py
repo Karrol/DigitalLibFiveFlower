@@ -39,3 +39,9 @@ class Borrowing(models.Model):
 
     def __str__(self):
         return '{} 借了 {}'.format(self.reader, self.ISBN)
+
+class adviceforSearch(models.Model):
+    reader = models.ForeignKey(Reader, on_delete=models.CASCADE, verbose_name='读者')
+    title=models.CharField('建议主题',max_length=256,blank='False')
+    advice=models.CharField('读者对系统的建议',max_length=1000,blank='False')
+    inTime=models.DateField(verbose_name='建议日期')

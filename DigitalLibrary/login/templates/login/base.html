@@ -44,11 +44,14 @@
         <ul class="nav navbar-nav">
             <li><a href="{%url 'search:searchindex'%}">检索首页</a></li>
             <li><a href="{%url 'readerCenter:mylib'%}">我的图书馆</a></li>
-            <li><a href="{%url 'readerCenter:mylib'%}">参数设置</a></li>
-            <li><a href="{%url 'readerCenter:mylib'%}">反馈意见</a></li>
+            <li><a href="{%url 'search:searchParameter'%}">参数设置</a></li>
+           {% if user.is_authenticated %}
+            <li><a href="{%url 'readerCenter:searchAdvice'%}">反馈意见</a></li>
+           {% endif %}
             <li><a href="{%url 'readerCenter:showsearchlist'%}">结果列表</a></li>
             <li><a href="{%url 'readerCenter:showsearchlist'%}">最近检索</a></li>
             <li><a href="{%url 'readerCenter:showsearchlist'%}">检索历史</a></li>
+            <li><a href="{%url 'readerCenter:showsearchlist'%}">检索帮助</a></li>
 
 
 

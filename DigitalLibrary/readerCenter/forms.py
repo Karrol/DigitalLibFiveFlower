@@ -71,3 +71,25 @@ class UploadImageForm(forms.ModelForm):
     labels = {
               'photo': '头像',
               }
+
+
+class adviceSearchForm(forms.Form) :
+    title = forms.CharField(
+        max_length=255,
+        label="主题*",
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'name': 'title',
+            'id': 'id_title',
+        })
+    )
+    advice = forms.CharField(
+        max_length=1000,
+        label="正文*",
+        widget=forms.Textarea(attrs={
+            'class': 'form-control',
+            'name': 'advice',
+            'id': 'id_advice',
+        })
+    )
+   

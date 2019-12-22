@@ -37,6 +37,8 @@ urlpatterns = [
                 path('mylib_search/', views.mylib_search, name='mylib_search'),
                 #用户常用快速链接入口
                 path('quickLink/', views.quickLink, name='quickLink'),
+                #用户对搜索系统提出的建议
+                path('searchAdvice/', views.adviceSearch, name='searchAdvice'),
 
     
               ]

@@ -12,7 +12,7 @@ import random,string
 import datetime
 import codecs
 import os.path as op
-from search.models import book_info ,bookshelf_info ,bookEntity_info
+from search.models import book_info ,bookshelf_info ,bookEntity_info,book_shumu
 from readerCenter.models import Borrowing
 from login.models import Reader
 from django.contrib.auth.models import User
@@ -84,6 +84,36 @@ def init_book_data():
             except KeyError:
                 continue
 
+def init_book_shumu_data():
+    with codecs.open('sichuanUniLib_books.json', 'r', 'utf-8') as f:
+        books = json.load(f)
+
+    for b in books:
+        if 'ISBN' in b and b['ISBN']:
+            print(b)
+            try:
+                B=book_shumu.objects.get_or_create(id=int(b['id']),ISBN=b['ISBN'], title=b['title'], author=b['author'], press=b['press'],
+                                                page=b['page'], price=b['price'])[0]
+                B.catolog = b['catolog']
+                B.cover = b['cover']
+                B.libnname = b['libnname']
+                B.searchID = b['searchID']
+                B.publishTime = b['publishTime']
+                B.Holding = b['Holding']
+                B.contentTable = b['contentTable']
+                B.language = b['language']
+                B.publishInfo = b['publishInfo']
+                B.pubLocation = b['pubLocation']
+                B.contentBrief = b['contentBrief']
+                B.carrierMorphology = b['carrierMorphology']
+                B.banci = b['banci']
+                B.page = b['page']
+                B.zaiti = b['zaiti']
+                B.length = b['length']
+                B.save()
+            except KeyError:
+                continue
+                
 
 def init_borrowing_data(amount=50):
     for i in range(amount):
@@ -132,7 +162,8 @@ def init_borrowing_data(amount=50):
 
 
 if __name__ == '__main__':
-    init_reader_data()
-    init_bookentity_data()
-    init_book_data()
-    init_borrowing_data(amount=50)
+    #init_reader_data()
+    #init_bookentity_data()
+    #init_book_data()
+    #init_borrowing_data(amount=50)
+    init_book_shumu_data()

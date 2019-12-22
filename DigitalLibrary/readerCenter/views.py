@@ -15,8 +15,8 @@ import json
 from login.models import Reader, User
 from search.models import book_info
 from django.db.models import Q
-from .forms import Change_reader_infoForm,UploadImageForm
-from readerCenter.models import readerLibrary,readerSearchlist,Borrowing
+from .forms import Change_reader_infoForm,UploadImageForm,adviceSearchForm
+from readerCenter.models import readerLibrary,readerSearchlist,Borrowing ,adviceforSearch
 from infoCenter.models import weekbook_info
 
 
@@ -490,3 +490,23 @@ def mylib_multiadd(request):
 
 def quickLink(request):
     return render(request,'readerCenter/readerQuickLink.html')
+
+#读者对系统的反馈意见
+def adviceSearch(request):
+    reader = Reader.objects.get(user=request.user)
+    adviceSearch_form = adviceSearchForm(request.POST)
+    if request.method == "POST":
+        message='请注意检查填写内容'
+        if adviceSearch_form.is_valid():
+            advice = adviceSearch_form.cleaned_data
+            today=datetime.date.today()
+            readerAdvice=adviceforSearch.objects.create(reader=reader,title=advice['title'],advice=advice['advice'],inTime=today)
+            readerAdvice.save()
+            message='success'
+        context={
+                 'adviceSearch_form':adviceSearch_form,
+                 'message':message,
+            }
+        return render(request, 'readerCenter/readerAdviceforSearch.html', context)
+
+    return render(request, "readerCenter/readerAdviceforSearch.html",locals())
