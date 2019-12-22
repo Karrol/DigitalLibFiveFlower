@@ -3,6 +3,7 @@ from django.shortcuts import render
 
 from .models import bookReser
 from .models import RedSerTime
+from .models import lectureReser
 
 def bookReservation(request):
     if request.method=='GET':
@@ -52,3 +53,23 @@ def cd(request):
 def serviceTime(request):
     servicetimes = RedSerTime.objects.all()
     return render(request, 'readerService/serviceTime.html', { 'servicetimes': servicetimes  })
+
+def lecture(request):
+    return render(request, 'readerService/lecture.html')
+
+def lectureBook(request):
+    if request.method=='GET':
+        return render (request,'readerService/lectureBook.html')
+    elif request.method=='POST':
+        lecturereser =lectureReser()
+        lecturereser.readerId = request.POST.get('readerId')
+        lecturereser.email=request.POST.get('email')
+        lecturereser.lectureName = request.POST.get('lectureName')
+        lecturereser.speaker = request.POST.get('speaker')
+        lecturereser.lectureTime = request.POST.get('lectureTime')
+        lecturereser.save()
+        return render (request,'readerService/success.html')
+
+def lectureTips(request):
+    return render(request, 'readerService/lectureTips.html')
+
