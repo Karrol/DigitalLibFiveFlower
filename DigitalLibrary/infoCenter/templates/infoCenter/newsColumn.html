@@ -55,18 +55,24 @@
         </article>
         {% endfor %}
 
-        <!--翻页功能缺
-        <div class="pagination">
+        <div class="pagination" align="center" >
+          <nav>
             <ul>
-                <li><a href="#">Prev</a></li>
-                <li><a href="#">1</a></li>
-                <li class="active"><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">Next</a></li>
+              <li>
+                {% if news_column_articles.has_previous %}
+                    <a href="?page={{ news_column_articles.previous_page_number }}">上一页</a>
+                {% endif %}
+
+                <span>{{ news_column_articles.number }}/{{ news_column_articles.paginator.num_pages }}</span>
+
+                {% if news_column_articles.has_next %}
+                   <a class='active' href="?page={{ news_column_articles.next_page_number }}">下一页</a>
+                {% endif %}
+              </li>
             </ul>
+          </nav>
         </div>
--->
+
       </div>
       </div>
     </div>

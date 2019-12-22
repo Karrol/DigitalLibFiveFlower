@@ -41,7 +41,7 @@
 
         <div class="span8">
           <!-- start article 1 -->
-          {% for news in news_articles %}
+          {% for news in articles %}
           <article class="blog-post">
             <div class="tooltip-demo headline">
               <h4><a href="{{ news.get_absolute_url }}">{{ news.newsTitle }}</a></h4>
@@ -59,18 +59,26 @@
             </div>
           </article>
           {% endfor %}
-<!--翻页功能缺
-        <div class="pagination">
+
+        <div class="pagination" align="center" >
+          <nav>
             <ul>
-                <li><a href="#">Prev</a></li>
-                <li><a href="#">1</a></li>
-                <li class="active"><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">Next</a></li>
+              <li>
+                {% if articles.has_previous %}
+                    <a href="?page={{ articles.previous_page_number }}">上一页</a>
+                {% endif %}
+
+                <span>{{ articles.number }}/{{ articles.paginator.num_pages }}</span>
+
+                {% if articles.has_next %}
+                   <a class='active' href="?page={{ articles.next_page_number }}">下一页</a>
+                {% endif %}
+              </li>
             </ul>
+          </nav>
         </div>
--->
+
+        </div>
       </div>
     </div>
 </section>

@@ -55,7 +55,7 @@ class newsArticle_info(models.Model):
 @python_2_unicode_compatible
 class weekbook_info(models.Model):
     bookName = models.CharField('书名', max_length=50)
-    recID =  models.CharField(max_length=12, primary_key=True, verbose_name='推荐ID')
+    recID =  models.CharField(max_length=12, verbose_name='推荐ID')
     ISBN = models.ForeignKey(book_info, on_delete=models.CASCADE, verbose_name='ISBN')
     promugator =  models.ForeignKey('auth.User', blank=True, null=True, verbose_name='发布者', on_delete=models.CASCADE)
     recTime =  models.DateField('推荐时间', auto_now_add=True, editable=True)

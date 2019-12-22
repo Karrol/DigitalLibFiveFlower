@@ -2,6 +2,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage, InvalidPage
+
 from .models import newsColumn_info, newsArticle_info, weekbook_info
 from search.models import book_info
 from service.models import Category
@@ -14,10 +16,30 @@ def newsIntro(request):
     side_cotegories = Category.objects.filter(side_display=True)
 
     news_articles = newsArticle_info.objects.all()
+    news_list = []
+    for i in news_articles:
+        news_list.append(i)
+    paginator = Paginator(news_list, 5)
+
+    if request.method == "GET":
+        page = request.GET.get('page')
+        try:
+            articles = paginator.page(page)
+        # todo: 注意捕获异常
+        except PageNotAnInteger:
+            # 如果请求的页数不是整数, 返回第一页。
+            articles = paginator.page(1)
+        except InvalidPage:
+            # 如果请求的页数不存在, 重定向页面
+            return HttpResponse('找不到页面的内容')
+        except EmptyPage:
+            # 如果请求的页数不在合法的页数范围内，返回结果的最后一页。
+            articles = paginator.page(paginator.num_pages)
+
     context = {
         'news_intro_columns': news_intro_columns,
         'side_cotegories': side_cotegories,
-        'news_articles': news_articles,
+        'articles': articles,
     }
     return render(request, 'infoCenter/newsIntro.html',context)
 
@@ -27,7 +49,26 @@ def newsColumn(request, columnSlug):
     side_cotegories = Category.objects.filter(side_display=True)
 
     news_column = newsColumn_info.objects.get(columnSlug=columnSlug)
-    news_column_articles = newsArticle_info.objects.filter(newsColumn=news_column.pk)
+    column_articles = newsArticle_info.objects.filter(newsColumn=news_column.pk)
+    news_list = []
+    for i in column_articles:
+        news_list.append(i)
+    paginator = Paginator(news_list, 5)
+
+    if request.method == "GET":
+        page = request.GET.get('page')
+        try:
+            news_column_articles = paginator.page(page)
+        # todo: 注意捕获异常
+        except PageNotAnInteger:
+            # 如果请求的页数不是整数, 返回第一页。
+            news_column_articles = paginator.page(1)
+        except InvalidPage:
+            # 如果请求的页数不存在, 重定向页面
+            return HttpResponse('找不到页面的内容')
+        except EmptyPage:
+            # 如果请求的页数不在合法的页数范围内，返回结果的最后一页。
+            news_column_articles = paginator.page(paginator.num_pages)
 
     context = {
         'side_cotegories': side_cotegories,
@@ -95,7 +136,27 @@ def recBookList(request):
     side_cotegories = Category.objects.filter(side_display=True)
 
     now_recbook = weekbook_info.objects.all().first()
-    past_recbooks = weekbook_info.objects.all().exclude(recID = now_recbook.recID)
+    recbooks = weekbook_info.objects.all().exclude(recID = now_recbook.recID)
+
+    recbook_list = []
+    for i in recbooks:
+        recbook_list.append(i)
+    paginator = Paginator(recbook_list, 5)
+
+    if request.method == "GET":
+        page = request.GET.get('page')
+        try:
+            past_recbooks = paginator.page(page)
+        # todo: 注意捕获异常
+        except PageNotAnInteger:
+            # 如果请求的页数不是整数, 返回第一页。
+            past_recbooks = paginator.page(1)
+        except InvalidPage:
+            # 如果请求的页数不存在, 重定向页面
+            return HttpResponse('找不到页面的内容')
+        except EmptyPage:
+            # 如果请求的页数不在合法的页数范围内，返回结果的最后一页。
+            past_recbooks = paginator.page(paginator.num_pages)
 
     context = {
         'news_intro_columns': news_intro_columns,
@@ -112,7 +173,27 @@ def recBookDetail(request, recID, pk):
     side_cotegories = Category.objects.filter(side_display=True)
 
     past_recbook = weekbook_info.objects.get(pk=pk)
-    past_recbook_list = weekbook_info.objects.all().exclude(recID=recID)
+    recbooks = weekbook_info.objects.all().exclude(recID=recID)
+
+    recbook_list = []
+    for i in recbooks:
+        recbook_list.append(i)
+    paginator = Paginator(recbook_list, 5)
+
+    if request.method == "GET":
+        page = request.GET.get('page')
+        try:
+            past_recbook_list = paginator.page(page)
+        # todo: 注意捕获异常
+        except PageNotAnInteger:
+            # 如果请求的页数不是整数, 返回第一页。
+            past_recbook_list = paginator.page(1)
+        except InvalidPage:
+            # 如果请求的页数不存在, 重定向页面
+            return HttpResponse('找不到页面的内容')
+        except EmptyPage:
+            # 如果请求的页数不在合法的页数范围内，返回结果的最后一页。
+            past_recbook_list = paginator.page(paginator.num_pages)
 
     context = {
         'news_intro_columns': news_intro_columns,
