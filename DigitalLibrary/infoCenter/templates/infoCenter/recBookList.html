@@ -22,6 +22,7 @@
 <section id="maincontent">
     <div class="container">
       <div class="row">
+
         <h3 class="my-4" align = 'center'><b>本周推荐：《{{ now_recbook.bookName }}》</b></h3><br/>
         <div class="span4">
             <img width="350" height="1600" src="/media/bookcover/{{ now_recbook.ISBN.cover }}" alt="{{ now_recbook.ISBN.title }}" />
@@ -39,6 +40,7 @@
               <p><b>内容简介：</b>{{ now_recbook.ISBN.description }}</p>
           </blockquote>
         </div>
+
         <div class="span12">
             <h4><b>推荐语：</h4>
             <p>{{ now_recbook.Rec_comment | safe }}</p><br/>
@@ -56,8 +58,6 @@
         <div class="span12">
           <h3 class="heading-success"><span class="btn btn-large btn-success"><i class="m-icon-big-swapdown m-icon-white"></i></span>&nbsp;&nbsp;全部推荐</h3>
 
-          <div id="latest-work" class="carousel btleft">
-            <div class="carousel-wrapper">
                 {% for books in past_recbooks %}
                     <article class="blog-post">
                         <div class="tooltip-demo headline">
@@ -74,14 +74,29 @@
                         </div>
                     </article>
                 {% endfor %}
-            </div>
+
+          <div class="pagination" align="center" >
+              <nav>
+                <ul>
+                  <li>
+                    {% if past_recbooks.has_previous %}
+                        <a href="?page={{ past_recbooks.previous_page_number }}">上一页</a>
+                    {% endif %}
+
+                    <span>{{ past_recbooks.number }}/{{ past_recbooks.paginator.num_pages }}</span>
+
+                    {% if articles.has_next %}
+                       <a class='active' href="?page={{ past_recbooks.next_page_number }}">下一页</a>
+                    {% endif %}
+                  </li>
+                </ul>
+              </nav>
           </div>
 
         </div>
       </div>
-
     </div>
-  </section>
+</section>
 
   <!-- Footer
  ================================================== -->

@@ -13,7 +13,7 @@ def libBrief(request):
         'news_intro_columns': news_intro_columns,
     }
 
-    return render(request, 'service\libBrief.html', context)
+    return render(request, 'service/libBrief.html', context)
 
 def serviceCategory(request, categorySlug):
     side_cotegories = Category.objects.filter(side_display=True)
@@ -29,8 +29,7 @@ def serviceCategory(request, categorySlug):
         'service_category_intros':service_category_intros
     }
 
-    return render(request, 'service\serviceCategory.html', context)
-
+    return render(request, 'service/serviceCategory.html', context)
 
 def serviceDetail(request, serviceSlug, pk):
     side_cotegories = Category.objects.filter(side_display=True)
@@ -67,7 +66,8 @@ def serviceSearch(request):
         'side_cotegories':side_cotegories,
         'news_intro_columns': news_intro_columns,
         'error_msg': error_msg,
-        'post_list': post_list
+        'post_list': post_list,
+        'q':q
     }
 
     return render(request, 'service/serviceResult.html', context)
