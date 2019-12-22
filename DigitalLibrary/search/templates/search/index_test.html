@@ -137,13 +137,13 @@
       <div class="row">
 
         <div class="span3">
-          <h3 class="heading-success"><span class="btn btn-large btn-success"><i class="m-icon-big-swapright m-icon-white"></i></span>&nbsp;&nbsp;新闻公告</h3>
-          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+          <h3 class="heading-success"><a href="{% url 'newsIntro' %}"><span class="btn btn-large btn-success"><i class="m-icon-big-swapright m-icon-white"></i></span>&nbsp;&nbsp;新闻资讯</a></h3>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关注图书馆新闻资讯，了解图书上新、馆内活动等一切你想知道的信息！</p>
         </div>
 
         <div class="span3">
              <table class="table table-condensed">
-                <caption>近期新闻</caption>
+                <caption>近期新闻资讯</caption>
                 <thead>
                   <tr>
                     <th>标题</th>
@@ -161,16 +161,15 @@
         </div>
         <div class="span3">
              <table class="table table-condensed">
-                <caption>公告</caption>
+                <caption>{{ index_news_column.columnName }}</caption>
                 <thead>
                   <tr>
                     <th>名称</th>
                     <th>日期</th>
-                    <th><a href="{% url 'newsIntro' %}">更多</a></th></tr>
+                    <th><a href="{{ index_news_column.get_absolute_url }}">更多</a></th></tr>
                 </thead>
                 <tbody>
-                 {% for item in news %}
-			<!--张丽：这里的url怎么跳转的和玉和商量一下呢-->
+                 {% for item in index_news %}
                   <tr>
                     <td><a href="{{ item.get_absolute_url }}">{{item.newsTitle}}</a></td>
                     <td>{{item.newsPubdate}}</td></tr> {%endfor%}

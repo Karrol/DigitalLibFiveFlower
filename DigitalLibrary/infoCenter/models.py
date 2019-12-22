@@ -13,6 +13,7 @@ class newsColumn_info(models.Model):
     columnSlug = models.CharField('栏目网址', max_length=200, db_index=True)
     abstract = models.TextField('栏目简介', default='')
 
+    newsIndexDiaplay = models.BooleanField('首页展示', default=False)
     nav_display = models.BooleanField('导航显示', default=False)
 
     def __str__(self):

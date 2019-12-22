@@ -28,12 +28,10 @@
           <aside>
             {% for column in news_intro_columns %}
             <div class="widget">
-              <h4 class="heading-success"><span class="btn btn-large btn-success"><i class="m-icon-big-swapdown m-icon-white"></i></span>&nbsp;&nbsp;{{ column.columnName }}</h4>
+              <h4 class="heading-success"><a href="{{ column.get_absolute_url }}"><span class="btn btn-large btn-success"><i class="m-icon-big-swapdown m-icon-white"></i></span></a>&nbsp;&nbsp;{{ column.columnName }}</h4>
               <img src="assets/img/avatar.png" class="alignleft" alt="" />
               <h5>{{ column.abstract }}</h5>
-              <p>
-                这里放近期新闻
-              </p><a href="{{ column.get_absolute_url }}">更多...</a>
+              <p><a href="{{ column.get_absolute_url }}">&nbsp;&nbsp;&nbsp;&nbsp;点击查看更多...</a></p>
             </div>
             {% endfor %}
           </aside>
@@ -77,11 +75,11 @@
             </ul>
           </nav>
         </div>
-
         </div>
       </div>
     </div>
 </section>
+
 
   <!-- Footer
  ================================================== -->

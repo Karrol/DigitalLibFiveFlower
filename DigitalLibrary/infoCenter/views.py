@@ -25,7 +25,6 @@ def newsIntro(request):
         page = request.GET.get('page')
         try:
             articles = paginator.page(page)
-        # todo: 注意捕获异常
         except PageNotAnInteger:
             # 如果请求的页数不是整数, 返回第一页。
             articles = paginator.page(1)
@@ -59,7 +58,6 @@ def newsColumn(request, columnSlug):
         page = request.GET.get('page')
         try:
             news_column_articles = paginator.page(page)
-        # todo: 注意捕获异常
         except PageNotAnInteger:
             # 如果请求的页数不是整数, 返回第一页。
             news_column_articles = paginator.page(1)
@@ -86,6 +84,7 @@ def newsDetail(request, newsSlug, pk):
     side_cotegories = Category.objects.filter(side_display=True)
 
     news_article = newsArticle_info.objects.get(pk=pk)
+    current_column_news = newsArticle_info.objects.filter(newsColumn=news_article.newsColumn)[:5]
 
     all_article = newsArticle_info.objects.all()
     curr_article = None
@@ -123,7 +122,8 @@ def newsDetail(request, newsSlug, pk):
         'curr_article': curr_article,
         'section_list': section_list,
         'previous_article': previous_article,
-        'next_article': next_article
+        'next_article': next_article,
+        'current_column_news': current_column_news
     }
 
     return render(request, 'infoCenter/newsDetail.html', context)
@@ -136,7 +136,16 @@ def recBookList(request):
     side_cotegories = Category.objects.filter(side_display=True)
 
     now_recbook = weekbook_info.objects.all().first()
-    recbooks = weekbook_info.objects.all().exclude(recID = now_recbook.recID)
+    if now_recbook:
+        recbooks = weekbook_info.objects.all().exclude(recID = now_recbook.recID)
+    else:
+        sorry = "暂时还没有发布每周一书，先看看其他内容吧！"
+        context = {
+            'news_intro_columns': news_intro_columns,
+            'side_cotegories': side_cotegories,
+            'sorry': sorry
+        }
+        return render(request, 'infoCenter/infoCenter404.html', context)
 
     recbook_list = []
     for i in recbooks:
@@ -147,7 +156,6 @@ def recBookList(request):
         page = request.GET.get('page')
         try:
             past_recbooks = paginator.page(page)
-        # todo: 注意捕获异常
         except PageNotAnInteger:
             # 如果请求的页数不是整数, 返回第一页。
             past_recbooks = paginator.page(1)
