@@ -23,16 +23,9 @@ from django.http import HttpResponse
 # Create your views here.
 # 书籍的检索首页
 def index(request):
-    # 获取新闻公告标题（显示前十条）
-    news = newsArticle_info.objects.order_by('-newsPubdate')[:10]
-
-    # 获取读者服务条目（显示前十条）
-    service = newsArticle_info.objects.order_by('-newsPubdate')[:10]
 
     context = {
         'searchForm': SearchForm(),
-        'news': news,
-        'service': service,
     }
 
     return render(request, 'search/index.html', context)
@@ -40,28 +33,23 @@ def index(request):
 
 # 目前首页还是测试状态
 def test(request):
-    news = newsArticle_info.objects.order_by('-newsPubdate')[:5]
-    index_news_column = newsColumn_info.objects.filter(newsIndexDiaplay=True).first()
-    if not index_news_column:#如果首页展示的栏目为空
-        index_news_column = newsColumn_info.objects.all().first()
-        if not index_news_column:
-            index_news = news
-        else:
-            index_news = newsArticle_info.objects.filter(newsColumn=index_news_column.pk)[:5]
-    else:
-        index_news = newsArticle_info.objects.filter(newsColumn=index_news_column.pk)[:5]
-
+    #张丽：首页展示的不同种类的新闻列表，首页底部
+    indexnews_queryset=[]
+    index_news_column = newsColumn_info.objects.filter(newsIndexDiaplay=True)
+    for colum in index_news_column:
+        index_news = newsArticle_info.objects.filter(newsColumn=colum.pk)[:5]
+        indexnews_queryset.append(index_news)
+    
     # 李玉和 信息中心导航栏
     news_columns = newsColumn_info.objects.filter(nav_display=True)
     service_cotegories = Category.objects.filter(side_display=True)
 
     context = {
         'searchForm': SearchForm(),
-        'news': news,
+        
+        'indexnews_queryset': indexnews_queryset,
         'news_columns': news_columns,
         'service_cotegories': service_cotegories,
-        'index_news_column': index_news_column,
-        'index_news': index_news,
     }
     return render(request, 'search/index_test.html', context)
 
