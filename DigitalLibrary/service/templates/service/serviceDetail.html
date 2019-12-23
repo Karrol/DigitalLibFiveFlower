@@ -12,7 +12,7 @@
               <h4 class="heading-success"><span class="btn btn-large btn-success"><i class="m-icon-big-swapdown m-icon-white"></i></span>&nbsp;&nbsp;全部指南</h4>
               <img src="assets/img/avatar.png" class="alignleft" alt="" /><br/>
               {% for category in side_cotegories %}
-                <h5 align="center"><a href="{{ category.get_absolute_url }}">{{ category.categoryName }}</a></h5>
+                <h5 align="center"><a href="{% url 'service:serviceCategory' category.categorySlug %}">{{ category.categoryName }}</a></h5>
               {% endfor %}
             </div>
           </aside>
@@ -22,7 +22,7 @@
         <!-- start article 1 -->
         <article class="blog-post">
           <div class="tooltip-demo headline">
-              <h4><a href="{{ intro.get_absolute_url }}">{{ intro.serviceTitle }}</a></h4>
+              <h4><a onclick="location.href='/service/intro/?pk={{intro.pk}}&serviceSlug={{intro.serviceSlug}}';">{{ intro.serviceTitle }}</a></h4>
           </div>
           <div class="row">
             <div class="span5">

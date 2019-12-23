@@ -7,7 +7,7 @@
 {% block search %}
 <div class="span4">
     <div class="input-append">
-        <form method="get" id="searchform" action="{% url 'newsSearch' %}" class="form-search">
+        <form method="get" id="searchform" action="{% url 'infoCenter:newsSearch' %}" class="form-search">
             {% csrf_token %}
             <input type="search" name="q" placeholder="搜索新闻" class="input-medium search-query">
             <button type="submit" class="btn btn-inverse">搜索新闻</button>
@@ -31,9 +31,9 @@
               <img src="assets/img/avatar.png" class="alignleft" alt="" />
               <h5>{{ news_article.newsColumn.abstract }}</h5>
               {% for item in current_column_news %}
-                <p><a href="{{ item.get_absolute_url }}">&nbsp;&nbsp;&nbsp;&nbsp;{{ item.newsTitle }}</a></p>
+                <p><a onclick="location.href='/infoCenter/newsDetail/?pk={{item.pk}}&newsSlug={{item.newsSlug}}';">&nbsp;&nbsp;&nbsp;&nbsp;{{ item.newsTitle }}</a></p>
               {% endfor %}
-               <p><a href="{{ news_article.newsColumn.get_absolute_url }}">&nbsp;&nbsp;&nbsp;&nbsp;查看更多...</a></p>
+               <p><a href="{% url 'infoCenter:newsColumn' news_article.newsColumn.columnSlug %}">&nbsp;&nbsp;&nbsp;&nbsp;查看更多...</a></p>
             </div>
           </aside>
         </div>
@@ -58,8 +58,8 @@
           <div>
             <nav aria-label="...">
                 <ul class="pager">
-                 <li><a href="{{ previous_article.get_absolute_url }}">上一篇：{{ previous_article.newsTitle }}</a></li>
-                 <li><a href="{{ next_article.get_absolute_url }}">下一篇：{{ next_article.newsTitle }}</a></li>
+                 <li><a onclick="location.href='/infoCenter/newsDetail/?pk={{previous_article.pk}}&newsSlug={{previous_article.newsSlug}}';">上一篇：{{ previous_article.newsTitle }}</a></li>
+                 <li><a onclick="location.href='/infoCenter/newsDetail/?pk={{next_article.pk}}&newsSlug={{next_article.newsSlug}}';">下一篇：{{ next_article.newsTitle }}</a></li>
                 </ul>
             </nav>
           </div>

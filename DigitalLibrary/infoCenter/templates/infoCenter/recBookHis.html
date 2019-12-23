@@ -7,7 +7,7 @@
 {% block search %}
 <div class="span4">
     <div class="input-append">
-        <form method="get" id="searchform" action="{% url 'newsSearch' %}" class="form-search">
+        <form method="get" id="searchform" action="{% url 'infoCenter:newsSearch' %}" class="form-search">
             {% csrf_token %}
             <input type="search" name="q" placeholder="搜索新闻" class="input-medium search-query">
             <button type="submit" class="btn btn-inverse">搜索新闻</button>
@@ -59,7 +59,7 @@
                 {% for books in past_recbook_list %}
                     <article class="blog-post">
                         <div class="tooltip-demo headline">
-                            <h4><a href="{{ books.get_absolute_url }}">每周一书：《{{ books.bookName }}》</a></h4>
+                            <h4><a onclick="location.href='/infoCenter/recBookHis/?pk={{books.pk}}&recID={{books.recID}}';">每周一书：《{{ books.bookName }}》</a></h4>
                         </div>
                         <div class="row">
                             <div class="span5">
