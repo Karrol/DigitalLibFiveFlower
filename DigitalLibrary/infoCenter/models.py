@@ -19,9 +19,6 @@ class newsColumn_info(models.Model):
     def __str__(self):
         return self.columnName
 
-    def get_absolute_url(self):
-        return reverse('newsColumn', kwargs={'columnSlug': self.columnSlug})
-
     class Meta:
         verbose_name = '新闻栏目'
         verbose_name_plural = '新闻栏目'
@@ -46,9 +43,6 @@ class newsArticle_info(models.Model):
     def __str__(self):
         return self.newsTitle
 
-    def get_absolute_url(self):
-        return reverse('newsDetail', kwargs={'pk': self.pk, 'newsSlug':self.newsSlug})
-
     class Meta:
         verbose_name = '新闻公告'
         verbose_name_plural = '新闻公告'
@@ -66,9 +60,6 @@ class weekbook_info(models.Model):
 
     def __str__(self):
         return self.bookName
-
-    def get_absolute_url(self):
-        return reverse('recBookDetail', kwargs=({'pk':self.pk, 'recID':self.recID}))
 
     class Meta:
         verbose_name = '每周一书'
