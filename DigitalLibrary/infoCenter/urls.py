@@ -10,7 +10,7 @@ urlpatterns = [
     path('newsDetail/', views.newsDetail, name="newsDetail"), #新闻文章详情
 
     path('recBookList/', views.recBookList, name="recBookList"), #每周一书列表
-    path('recBookList/', views.recBookDetail, name='recBookDetail'),
+    path('recBookHis/', views.recBookDetail, name='recBookDetail'),
 
     path('rankList/', views.rankList, name="rankList"),  # 排行榜列表
 

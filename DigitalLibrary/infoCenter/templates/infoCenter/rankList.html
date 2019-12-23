@@ -56,7 +56,11 @@
                 <p>
                   {{ book.description | slice:'300' }}......
                 </p>
-                <button class="btn btn btn-success" type="button">查看详情</button>
+
+                <a href="{%url 'search:bookDetail' book.ISBN %}">
+                  <button class="btn btn btn-success" type="button" >查看详情</button>
+                </a>
+
               </div>
             </div>
 

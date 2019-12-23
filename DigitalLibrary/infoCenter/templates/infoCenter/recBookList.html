@@ -39,6 +39,11 @@
           <blockquote>
               <p><b>内容简介：</b>{{ now_recbook.ISBN.description }}</p>
           </blockquote>
+
+          <a href="{%url 'search:bookDetail' now_recbook.ISBN.ISBN %}">
+              <button class="btn btn btn-success" type="button" >查看详情</button>
+          </a>
+
         </div>
 
         <div class="span12">

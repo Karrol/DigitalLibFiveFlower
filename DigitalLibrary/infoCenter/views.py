@@ -87,6 +87,8 @@ def newsDetail(request):
     side_cotegories = Category.objects.filter(side_display=True)
 
     news_article = newsArticle_info.objects.get(pk=pk)
+    newsArticle_info.increase_views(news_article)
+
     current_column_news = newsArticle_info.objects.filter(newsColumn=news_article.newsColumn)[:5]
 
     all_article = newsArticle_info.objects.all()
