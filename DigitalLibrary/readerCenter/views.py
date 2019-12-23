@@ -269,6 +269,45 @@ def readerBorrowHis(request):
     else:
         return HttpResponse("误操作，请返回上一页")
 
+
+# 读者查看全部金钱事务
+@login_required
+def readerMoneyTask(request):
+    action = request.GET.get('action', None)
+    if action == 'moneyTask':
+        id = request.user.id
+        current_path = request.get_full_path()
+        reader = Reader.objects.get(user_id=id)
+        tasks = moneyTask.objects.filter(reader=reader)
+        counter = 0
+        for task in tasks:
+            counter = counter + 1
+        paginator = Paginator(tasks, 4)
+        page = request.GET.get('page', 1)
+
+        try:
+            # page是paginator实例对象的方法，返回第page页的实例对象，所以books是第page页的记录集
+            tasks = paginator.page(page)
+        except PageNotAnInteger:
+            tasks = paginator.page(1)
+        except EmptyPage:
+            tasks = paginator.page(paginator.num_pages)
+
+        # ugly solution for &page=2&page=3&page=4
+        # 当你已经是某一页时，current_path的最后有&page(previous),所以这里是在做清洗
+        if '&page' in current_path:
+            current_path = current_path.split('&page')[0]
+        context = {
+            'tasks': tasks,
+            'reader': reader,
+            'current_path': current_path,
+            'counter': counter,
+        }
+        return render(request, 'readerCenter/moneyTask.html', context)
+    else:
+        return HttpResponse("误操作，请返回上一页")
+
+
 # 从检索首页的导航栏入口/个人中心入口进入查询结果页
 @login_required
 def mysearchhis_show(request):
@@ -431,6 +470,7 @@ def mylib_add(request,ISBN):
 def mylib_search(request):
     email=request.session['user_email']
     reader=Reader.objects.get(email=email)
+    searchResultbook = []
     if request.method == 'GET':
         keyword = request.GET.get("keyword")
         #先从书目数据中检索，这种检索策略不太优秀
@@ -438,10 +478,11 @@ def mylib_search(request):
             Q(author__icontains=keyword)|
             Q(category__icontains=keyword))
         #如果是图书馆有的书，再检查是不是这个读者的书
+        searchResultbook = []
+        counter = 0
         if books:
             mylib_books = readerLibrary.objects.filter(reader=reader)
-            searchResultbook = []
-            counter = 0
+
 
             for rbook in mylib_books:
                 for book in books:
@@ -450,7 +491,11 @@ def mylib_search(request):
                         counter = counter + 1
             context = {'searchResultbook': searchResultbook,
                        'counter': counter, }
+        else:
+            context = {'searchResultbook': searchResultbook,
+                       'counter': counter, }
         return render(request, 'readerCenter/mylibsearch.html', context)
+    
 
 
 

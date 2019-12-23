@@ -22,7 +22,7 @@
         <!-- Area Chart Example-->
         <div class="card mb-3">
           <div class="card-header">
-            <i class="fas fa-chart-area">{{reader.name}}的图书外借历史</i>
+            <i class="fas ">{{reader.name}}现金流通历史</i>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -30,45 +30,36 @@
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>封面</th>
-                    <th>书名</th>
-                    <th>作者</th>
-                    <th>借阅时间</th>
+                    <th>事务</th>
+                    <th>付款</th>
+                    <th>日期</th>
                   </tr>
                 </thead>
                 <tbody>
-                <h6>共计{{counter}}条借阅记录</h6>
-                {%for book in books%}
+                 <h6>共计{{counter}}条事务记录</h6>
+                {%for task in tasks%}
                   <tr>
                     <td>{{ forloop.counter }}</td>
-                    <td><a href="/search/bookDetail/{{ book.ISBN.ISBN }}">
-                            <img class="img-responsive"
-                                 src="/media/bookcover/{{ book.ISBN.cover }}"
-                                 width="90"
-                                 height="128"
-                                 alt="{{ book.ISBN.title }}">
-                        </a>
-                    </td>
-                    <td>{{ book.ISBN.title }}</td>
-                    <td>{{ book.ISBN.author }}</td>
-                    <td>{{ book.date_issued }}</td>
+                    <td>{{ task.taskname }}</td>
+                    <td>{{task.price}}元</td>
+                    <td>{{ task.inTime }}</td>
                   </tr>{%endfor%}
-                 
+
                </tbody>
               </table>
                 <nav class="myContainer">
                   <ul class="pager">
-                      {% if books.has_previous %}
+                      {% if tasks.has_previous %}
                           <li class="previous"><a
-                                  href="{{ current_path }}&page={{ books.previous_page_number }}#hint">上一页</a>
+                                  href="{{ current_path }}&page={{ tasks.previous_page_number }}#hint">上一页</a>
                           </li>
                       {% else %}
                           <li class="previous disabled"><a href="#">上一页</a></li>
                       {% endif %}
-                      第 {{ books.number }} / {{ books.paginator.num_pages }}页
-                      {% if books.has_next %}
+                      第 {{ tasks.number }} / {{ tasks.paginator.num_pages }}页
+                      {% if tasks.has_next %}
                           <li class="next"><a
-                                  href="{{ current_path }}&page={{ books.next_page_number }}#hint">下一页</a>
+                                  href="{{ current_path }}&page={{ tasks.next_page_number }}#hint">下一页</a>
                           </li>
                       {% else %}
                           <li class="next disabled"><a href="#">下一页</a></li>

@@ -31,17 +31,20 @@
                   <tr>
                     <th>条目</th>
                     <th>情况</th>
+                    <th>&nbsp;</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td>外借：</td>
                     <td>{{counterBorrowing}}本</td>
+                    <td></td>
                   </tr>
                   <tr>
                     <td>借阅历史列表：</td>
-                    <td>{{counterBorrowHis}}本 &nbsp;&nbsp;&nbsp;   &nbsp;
-                      <button class="btn btn-primary"
+                    <td>{{counterBorrowHis}}本 &nbsp;&nbsp;&nbsp;&nbsp;
+                    </td>
+                      <td><button class="btn btn-primary"
                                 onclick="location.href='/readerCenter/borrowHis/?action=borrowhis';">
                           详情
                         </button>
@@ -50,11 +53,17 @@
                   </tr>
                   <tr>
                     <td>现金事务：</td>
-                    <td><a href="">{{moneyTotal}}元</a></td>
+                    <td>{{moneyTotal|stringformat:".2f"}}元 &nbsp;&nbsp;&nbsp;&nbsp;
+                    </td><td><button class="btn btn-primary"
+                                onclick="location.href='/readerCenter/moneyTask/?action=moneyTask';">
+                          详情
+                        </button>
+                    </td>
                   </tr>
                   <tr>
                     <td>过期外借欠款：</td>
                     <td>{{fineTotal}}元 &nbsp;&nbsp;
+                    </td><td>
                       {%if fineTotal <= 0.0 %}
                         <button class="btn btn-warning disabled" >缴款</button>
                       {%else%}
