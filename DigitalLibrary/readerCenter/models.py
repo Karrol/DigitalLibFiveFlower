@@ -45,3 +45,10 @@ class adviceforSearch(models.Model):
     title=models.CharField('建议主题',max_length=256,blank='False')
     advice=models.CharField('读者对系统的建议',max_length=1000,blank='False')
     inTime=models.DateField(verbose_name='建议日期')
+
+
+class moneyTask(models.Model):
+    reader = models.ForeignKey(Reader, on_delete=models.CASCADE, verbose_name='读者')
+    taskname = models.CharField('事务名称', max_length=256, blank='False')
+    price = models.CharField('事务花费', max_length=1000, blank='False')
+    inTime = models.DateField(verbose_name='事务发生日期')

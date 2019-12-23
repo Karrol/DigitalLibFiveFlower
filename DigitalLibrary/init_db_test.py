@@ -13,7 +13,7 @@ import datetime
 import codecs
 import os.path as op
 from search.models import book_info ,bookshelf_info ,bookEntity_info,book_shumu
-from readerCenter.models import Borrowing
+from readerCenter.models import Borrowing,moneyTask
 from login.models import Reader
 from django.contrib.auth.models import User
 
@@ -158,6 +158,20 @@ def init_borrowing_data(amount=50):
                 isbn.save()
                 b.save()
 
+def init_moneyTask_data(amount=50):
+    for i in range(amount):
+        reader = random.choice(Reader.objects.all())
+        issued = datetime.date.today() - datetime.timedelta(random.randint(1, 30))
+        
+        task = ['馆际互借', '文印', '论文出版']
+        b = moneyTask.objects.create(
+                reader=reader,
+                price=random.uniform(0,100),
+                inTime=issued,
+                taskname=random.choice(task),
+        )
+        b.save()
+
 
 
 
@@ -166,4 +180,5 @@ if __name__ == '__main__':
     #init_bookentity_data()
     #init_book_data()
     #init_borrowing_data(amount=50)
-    init_book_shumu_data()
+    #init_book_shumu_data()
+    init_moneyTask_data()

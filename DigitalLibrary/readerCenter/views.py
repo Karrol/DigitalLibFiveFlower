@@ -16,7 +16,7 @@ from login.models import Reader, User
 from search.models import book_info
 from django.db.models import Q
 from .forms import Change_reader_infoForm,UploadImageForm,adviceSearchForm
-from readerCenter.models import readerLibrary,readerSearchlist,Borrowing ,adviceforSearch
+from readerCenter.models import readerLibrary,readerSearchlist,Borrowing ,adviceforSearch,moneyTask
 from infoCenter.models import weekbook_info
 
 
@@ -152,12 +152,30 @@ def readerBorrowing(request):
         reader = Reader.objects.get(user_id=id)
     except Reader.DoesNotExist:
         return HttpResponse('no this id reader')
-
+    borrowRecord=Borrowing.objects.filter(reader=reader)
+    counterBorrowHis=0
+    counterBorrowing=0
+    fineTotal=0
+    for book in borrowRecord:
+        counterBorrowHis=counterBorrowHis+1
     borrowing = Borrowing.objects.filter(reader=reader).exclude(date_returned__isnull=False)
+    for book in borrowing:
+        counterBorrowing = counterBorrowing + 1
+        fineTotal=fineTotal+book.amount_of_fine
+    #计算现金事务总花费
+    moneytask=moneyTask.objects.filter(reader=reader)
+    moneyTotal=0
+    for task in moneytask:
+        moneyTotal=moneyTotal+float(task.price)
+        
     context = {
         'state': request.GET.get('state', None),
         'reader': reader,
         'borrowing': borrowing,
+        'counterBorrowHis': counterBorrowHis,
+        'counterBorrowing': counterBorrowing,
+        'moneyTotal': moneyTotal,
+        'fineTotal': fineTotal,
     }
     return render(request, 'readerCenter/readerBorSituation.html', context)
 
@@ -214,6 +232,42 @@ def readerOperateBook(request):
                 return HttpResponse("余额不够请充值！")
 
     return HttpResponseRedirect('/readerCenter/bowrrowing/')
+
+#读者查看我的全部历史借阅
+@login_required
+def readerBorrowHis(request):
+    action = request.GET.get('action', None)
+    if action == 'borrowhis':
+        id = request.user.id
+        current_path = request.get_full_path()
+        reader=Reader.objects.get(user_id=id)
+        books = Borrowing.objects.filter(reader=reader)
+        counter = 0
+        for book in books:
+            counter = counter + 1
+        paginator = Paginator(books, 4)
+        page = request.GET.get('page', 1)
+
+        try:
+            # page是paginator实例对象的方法，返回第page页的实例对象，所以books是第page页的记录集
+            books = paginator.page(page)
+        except PageNotAnInteger:
+            books = paginator.page(1)
+        except EmptyPage:
+            books = paginator.page(paginator.num_pages)
+
+        # ugly solution for &page=2&page=3&page=4
+        # 当你已经是某一页时，current_path的最后有&page(previous),所以这里是在做清洗
+        if '&page' in current_path:
+            current_path = current_path.split('&page')[0]
+        context={
+            'books':books,
+            'reader':reader,
+            'current_path': current_path,
+                 }
+        return render(request,'readerCenter/readerBorrowHis.html',context)
+    else:
+        return HttpResponse("误操作，请返回上一页")
 
 # 从检索首页的导航栏入口/个人中心入口进入查询结果页
 @login_required
@@ -496,7 +550,7 @@ def adviceSearch(request):
     reader = Reader.objects.get(user=request.user)
     adviceSearch_form = adviceSearchForm(request.POST)
     if request.method == "POST":
-        message='请注意检查填写内容'
+        message="请注意检查填写内容"
         if adviceSearch_form.is_valid():
             advice = adviceSearch_form.cleaned_data
             today=datetime.date.today()

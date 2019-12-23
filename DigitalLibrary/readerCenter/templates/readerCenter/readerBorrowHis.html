@@ -1,0 +1,84 @@
+{% extends "readerCenter/pers_base_ver1.html" %}
+{% load static %}
+
+    {%block perscontent%}
+<style>
+
+</style>
+    <div id="content-wrapper">
+
+      <div class="container-fluid">
+
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{%url 'readerCenter:borrowingSituation'%}"></a>
+          </li>
+          <li class="breadcrumb-item active"><a href="{%url 'readerCenter:borrowingSituation'%}">历史借阅</a></li>
+        </ol>
+
+        <!-- Icon Cards-->
+
+        <!-- Area Chart Example-->
+        <div class="card mb-3">
+          <div class="card-header">
+            <i class="fas fa-chart-area">{{reader.name}}的图书外借历史</i>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table "  width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>封面</th>
+                    <th>书名</th>
+                    <th>作者</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {%for book in books%}
+                  <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td><a href="/search/bookDetail/{{ book.ISBN.ISBN }}">
+                            <img class="img-responsive"
+                                 src="/media/bookcover/{{ book.ISBN.cover }}"
+                                 width="90"
+                                 height="128"
+                                 alt="{{ book.ISBN.title }}">
+                        </a>
+                    </td>
+                    <td>{{ book.ISBN.title }}</td>
+                    <td>{{ book.ISBN.author }}</td>
+                  </tr>{%endfor%}
+                 
+               </tbody>
+              </table>
+                <nav class="myContainer">
+                  <ul class="pager">
+                      {% if books.has_previous %}
+                          <li class="previous"><a
+                                  href="{{ current_path }}&page={{ books.previous_page_number }}#hint">上一页</a>
+                          </li>
+                      {% else %}
+                          <li class="previous disabled"><a href="#">上一页</a></li>
+                      {% endif %}
+                      第 {{ books.number }} / {{ books.paginator.num_pages }}页
+                      {% if books.has_next %}
+                          <li class="next"><a
+                                  href="{{ current_path }}&page={{ books.next_page_number }}#hint">下一页</a>
+                          </li>
+                      {% else %}
+                          <li class="next disabled"><a href="#">下一页</a></li>
+                      {% endif %}
+                  </ul>
+              </nav>
+            </div>
+          </div>
+          <div class="card-footer small text-muted">数据更新于 {% now "Y-m-d" %}</div>
+        </div>
+
+      </div>
+    </div>
+    {%endblock perscontent%}
+
+

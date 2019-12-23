@@ -20,7 +20,8 @@ urlpatterns = [
                 #消息详情
                 path('shownotice/', views.showNotice, name='noticeDetail'),
                 #我的借阅
-                path('bowrrowing', views.readerBorrowing, name='borrowingSituation'),
+                path('bowrrowing/', views.readerBorrowing, name='borrowingSituation'),
+                path('borrowHis/', views.readerBorrowHis, name='borrowHis'),
                 #我的借阅页面读者的借还操作
                 url(r'^operatebook/', views.readerOperateBook, name='reader_operation'),
                 #我的检索历史
