@@ -79,11 +79,16 @@ def newsColumn(request, columnSlug):
 
 
 # 新闻文章详情
-def newsDetail(request, newsSlug, pk):
+def newsDetail(request):
+    pk=request.GET.get('pk')
+    newsSlug=request.GET.get('newsSlug')
+
     news_intro_columns = newsColumn_info.objects.filter(nav_display=True)
     side_cotegories = Category.objects.filter(side_display=True)
 
     news_article = newsArticle_info.objects.get(pk=pk)
+    newsArticle_info.increase_views(news_article)
+
     current_column_news = newsArticle_info.objects.filter(newsColumn=news_article.newsColumn)[:5]
 
     all_article = newsArticle_info.objects.all()
@@ -176,7 +181,10 @@ def recBookList(request):
     return render(request, 'infoCenter/recBookList.html', context)
 
 #每周一书历史详情
-def recBookDetail(request, recID, pk):
+def recBookDetail(request):
+    pk = request.GET.get('pk')
+    recID = request.GET.get('recID')
+
     news_intro_columns = newsColumn_info.objects.filter(nav_display=True)
     side_cotegories = Category.objects.filter(side_display=True)
 

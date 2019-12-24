@@ -7,7 +7,7 @@
 {% block search %}
 <div class="span4">
     <div class="input-append">
-        <form method="get" id="searchform" action="{% url 'newsSearch' %}" class="form-search">
+        <form method="get" id="searchform" action="{% url 'infoCenter:newsSearch' %}" class="form-search">
             {% csrf_token %}
             <input type="search" name="q" placeholder="搜索新闻" class="input-medium search-query">
             <button type="submit" class="btn btn-inverse">搜索新闻</button>
@@ -39,6 +39,11 @@
           <blockquote>
               <p><b>内容简介：</b>{{ now_recbook.ISBN.description }}</p>
           </blockquote>
+
+          <a href="{%url 'search:bookDetail' now_recbook.ISBN.ISBN %}">
+              <button class="btn btn btn-success" type="button" >查看详情</button>
+          </a>
+
         </div>
 
         <div class="span12">
@@ -61,7 +66,7 @@
                 {% for books in past_recbooks %}
                     <article class="blog-post">
                         <div class="tooltip-demo headline">
-                            <h4><a href="{{ books.get_absolute_url }}">每周一书：《{{ books.bookName }}》</a></h4>
+                            <h4><a onclick="location.href='/infoCenter/recBookHis/?pk={{books.pk}}&recID={{books.recID}}';">每周一书：《{{ books.bookName }}》</a></h4>
                         </div>
                         <div class="row">
                             <div class="span5">

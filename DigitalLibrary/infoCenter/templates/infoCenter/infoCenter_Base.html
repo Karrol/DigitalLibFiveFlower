@@ -58,24 +58,24 @@
                 </li>
 
                 <li class="dropdown warning">
-                  <a href="../readerService/borrowTips"><i class="icon-star icon-white"></i>读者服务</a>
+                  <a href="/readerService/borrowTips"><i class="icon-star icon-white"></i>读者服务</a>
                   <ul class="dropdown-menu">
-                    <li><a href="../readerService/borrowTips">借还图书</a></li>
-                    <li><a href="../readerService/serviceTime">服务时间</a></li>
-                    <li><a href="../readerService/renewal">续借与到期提醒</a></li>
-                    <li><a href="../readerService/cableNumber">索取号</a></li>
-                    <li><a href="../readerService/compensation">赔偿损失</a></li>
-                    <li class="dropdown"><a href="../readerService/bookReservation">图书预约</a>
+                    <li><a href="/readerService/borrowTips">借还图书</a></li>
+                    <li><a href="/readerService/serviceTime">服务时间</a></li>
+                    <li><a href="/readerService/renewal">续借与到期提醒</a></li>
+                    <li><a href="/readerService/cableNumber">索取号</a></li>
+                    <li><a href="/readerService/compensation">赔偿损失</a></li>
+                    <li class="dropdown"><a href="/readerService/bookReservation">图书预约</a>
                       <ul class="dropdown-menu sub-menu">
-                        <li><a href="../readerService/bookReservationTips">图书预约说明</a></li>
-                        <li><a href="../readerService/bookReservationBooked">已预约图书</a></li>
-                        <li><a href="../readerService/bookReservation">预约图书</a></li>
+                        <li><a href="/readerService/bookReservationTips">图书预约说明</a></li>
+                        <li><a href="/readerService/bookReservationBooked">已预约图书</a></li>
+                        <li><a href="/readerService/bookReservation">预约图书</a></li>
                       </ul>
                     </li>
-                    <li class="dropdown "><a href="../readerService/cd">随书光盘</a>
+                    <li class="dropdown "><a href="/readerService/cd">随书光盘</a>
                       <ul class="dropdown-menu sub-menu">
-                        <li><a href="../readerService/cd">随书光盘检索</a></li>
-                        <li><a href="../readerService/cdInfo">随书光盘说明</a></li>
+                        <li><a href="/readerService/cd">随书光盘检索</a></li>
+                        <li><a href="/readerService/cdInfo">随书光盘说明</a></li>
                       </ul>
                     </li>
                   </ul>
@@ -106,14 +106,14 @@
                     <ul class="dropdown-menu">
                      <li class="dropdown "><a href="{% url 'infoCenter:newsIntro' %}">新闻公告</a>
                         <ul class="dropdown-menu sub-menu">
-                          {% for column in news_columns %}
+                          {% for column in news_intro_columns %}
                           <li><a href="{% url 'infoCenter:newsColumn' column.columnSlug %}">{{ column.columnName }}</a></li>
                           {% endfor %}
                         </ul>
                       </li>
                       <li class="dropdown"><a href="{% url 'service:libBrief' %}">服务指南</a>
                         <ul class="dropdown-menu sub-menu">
-                          {% for category in service_cotegories %}
+                          {% for category in side_cotegories %}
                           <li><a href="{% url 'service:serviceCategory' category.categorySlug %}">{{ category.categoryName }}</a></li>
                           {% endfor %}
                         </ul>

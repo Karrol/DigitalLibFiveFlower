@@ -37,8 +37,13 @@ class newsArticle_info(models.Model):
                            default=u'', blank=True, imagePath="uploads/images/",
                            toolbars='besttome', filePath='uploads/files/')
     newsPubdate = models.DateTimeField('发表时间', auto_now_add=True, editable=True)
-
     newsPublished = models.BooleanField('正式发布', default=True)
+
+    newsViews = models.PositiveIntegerField(default=0)
+
+    def increase_views(self):
+        self.newsViews += 1
+        self.save(update_fields=['newsViews'])
 
     def __str__(self):
         return self.newsTitle

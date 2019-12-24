@@ -7,6 +7,6 @@ app_name = 'service'
 urlpatterns = [
     path('category/',views.libBrief, name = 'libBrief'),
     path('category/<str:categorySlug>/',views.serviceCategory, name='serviceCategory'),
-    path('intro/<int:pk>/<str:serviceSlug>/', views.serviceDetail, name='serviceDetail'),
+    path('intro/', views.serviceDetail, name='serviceDetail'),
     path('serviceSearch/', views.serviceSearch, name="serviceSearch"),
 ]

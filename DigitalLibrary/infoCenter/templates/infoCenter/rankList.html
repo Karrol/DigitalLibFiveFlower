@@ -7,7 +7,7 @@
 {% block search %}
 <div class="span4">
     <div class="input-append">
-        <form method="get" id="searchform" action="{% url 'newsSearch' %}" class="form-search">
+        <form method="get" id="searchform" action="{% url 'infoCenter:newsSearch' %}" class="form-search">
             {% csrf_token %}
             <input type="search" name="q" placeholder="搜索新闻" class="input-medium search-query">
             <button type="submit" class="btn btn-inverse">搜索新闻</button>
@@ -56,7 +56,11 @@
                 <p>
                   {{ book.description | slice:'300' }}......
                 </p>
-                <button class="btn btn btn-success" type="button">查看详情</button>
+
+                <a href="{%url 'search:bookDetail' book.ISBN %}">
+                  <button class="btn btn btn-success" type="button" >查看详情</button>
+                </a>
+
               </div>
             </div>
 
