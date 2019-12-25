@@ -104,3 +104,88 @@ class searchParameterForm(forms.Form):
         required=False,
         
     )
+
+
+class multiKeywordsForm(forms.Form):
+    book_lib_name = [ (u'豆瓣图书', u'豆瓣图书'),
+        (u'四川大学图书馆', u'四川大学图书馆'),]
+
+    catogary = forms.CharField(
+        max_length=20,
+        label="主题",
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control input-lg',
+                'name': 'catogary',
+            }
+        ),
+        required=False,
+
+    )
+    author = forms.CharField(
+        max_length=20,
+        label="著者",
+        widget=forms.TextInput(
+            attrs={
+
+                'class': 'form-control input-lg',
+                'name': 'author',
+            }
+        ),
+        required=False,
+
+    )
+    title = forms.CharField(
+        max_length=20,
+        label="题名",
+        widget=forms.TextInput(
+            attrs={
+
+                'class': 'form-control input-lg',
+                'name': 'title',
+            }
+        ),
+        required=False,
+
+    )
+    publishYear = forms.CharField(
+        max_length=20,
+        label="出版年",
+        widget=forms.TextInput(
+            attrs={
+
+                'class': 'form-control input-lg',
+                'name': 'publishYear',
+            }
+        ),
+        required=False,
+
+    )
+    press = forms.CharField(
+        max_length=20,
+        label="出版社",
+        widget=forms.TextInput(
+            attrs={
+
+                'class': 'form-control input-lg',
+                'name': 'press',
+            }
+        ),
+        required=False,
+
+    )
+
+    booklib = forms.CharField(
+        max_length=20,
+        label="书目库",
+        widget=forms.Select(
+            choices=book_lib_name,
+            attrs={
+
+                'class': 'form-control input-lg',
+                'name': 'booklib',
+            }
+        ),
+        required=False,
+
+    )

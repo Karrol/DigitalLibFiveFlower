@@ -1,7 +1,4 @@
-
-
 # Create your models here.
-
 # coding:utf-8
 #from django.db import models
 
@@ -61,3 +58,13 @@ class RedSerTime(models.Model):
     class Meta:
         verbose_name = '读者服务'
         verbose_name_plural = '读者服务'
+
+class CD(models.Model):
+    # 书名
+    title = models.CharField(u'书名',max_length=256)
+    # 作者
+    author = models.CharField(u'作者',max_length=256)
+    # 光盘号
+    cdId = models.CharField(u'光盘号',max_length=256,default='1')
+    def __str__(self):
+        return self.title

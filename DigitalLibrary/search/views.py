@@ -9,12 +9,12 @@ from django import forms
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .models import book_info
+from .models import book_info,book_shumu
 from login.models import Reader
 from readerCenter.models import Borrowing, readerLibrary
 from infoCenter.models import newsArticle_info, newsColumn_info
 from service.models import Intro, Category
-from .forms import SearchForm ,searchParameterForm
+from .forms import SearchForm ,searchParameterForm ,multiKeywordsForm
 from django.db.models import Q
 from django.template import loader ,Context
 from django.http import HttpResponse
@@ -65,31 +65,54 @@ def book_search(request):
     books = []
     current_path = request.get_full_path()
     keyword = request.GET.get('keyword', u'_书目列表')
+    request.session['searchindex_keyword']=keyword
+    request.session['searchindex_search_by']=search_by
     # 给books赋值
     if keyword == u'_书目列表':
         books = book_info.objects.all()
     else:
         if search_by == u'书名':
             keyword = request.GET.get('keyword', None)
-            books = book_info.objects.filter(title__contains=keyword).order_by('-title')[0:50]
+            books_douban = book_info.objects.filter(title__icontains=keyword).order_by('-title')[0:100]
+            books_sculib = book_shumu.objects.filter(title__icontains=keyword).order_by('-title')[0:100]
+            
         elif search_by == u'ISBN':
             keyword = request.GET.get('keyword', None)
-            books = book_info.objects.filter(ISBN__contains=keyword).order_by('-title')[0:50]
+            books_douban = book_info.objects.filter(ISBN=keyword).order_by('-title')[0:100]
+            books_sculib = book_shumu.objects.filter(ISBN=keyword).order_by('-title')[0:100]
+
         elif search_by == u'作者':
             keyword = request.GET.get('keyword', None)
-            books = book_info.objects.filter(author__contains=keyword).order_by('-title')[0:50]
+            books_douban = book_info.objects.filter(author__icontains=keyword).order_by('-title')[0:100]
+
+            books_sculib = book_shumu.objects.filter(author__icontains=keyword).order_by('-title')[0:100]
+
         elif search_by == u'图书目录':
             keyword = request.GET.get('keyword', None)
-            books = book_info.objects.filter(category__contains=keyword).order_by('-title')[0:50]
-    # 翻页功能实现
+            books_douban = book_info.objects.filter(category__icontains=keyword).order_by('-title')[0:100]
+
+            books_sculib = book_shumu.objects.filter(category__icontains=keyword).order_by('-title')[0:100]
+
+        # 翻页功能实现
         elif search_by==u'模糊检索':
             keyword = request.GET.get('keyword', None)
-            books = book_info.objects.filter(Q(title__icontains=keyword) |
+            books_douban = book_info.objects.filter(Q(title__icontains=keyword) |
                                      Q(author__icontains=keyword) |
                                      Q(category__icontains=keyword))
-    counter=0
-    for book in books :
-        counter=counter+1
+
+            books_sculib = book_shumu.objects.filter(Q(title__icontains=keyword) |
+                                                    Q(author__icontains=keyword) |
+                                                    Q(category__icontains=keyword))
+            
+    counter = 0
+    # 将从两个库中检索到的书添加到一个记录集中
+    if not books:
+        for book in books_douban:
+            counter = counter + 1
+            books.append(book)
+        for book in books_sculib:
+            counter = counter + 1
+            books.append(book)
     paginator = Paginator(books, 5)
     page = request.GET.get('page', 1)
 
@@ -106,13 +129,16 @@ def book_search(request):
     if '&page' in current_path:
         current_path = current_path.split('&page')[0]
 
+    initial = {"search_by": request.session['searchindex_search_by'],
+               'keyword': request.session['searchindex_keyword'],
+               }
     context = {
         'books': books,
         'counter': counter,
         'search_by': search_by,
         'keyword': keyword,
         'current_path': current_path,
-        'searchForm': SearchForm(),
+        'searchForm': SearchForm(initial),
     }
     return render(request, 'search/search.html', context)
 
@@ -124,7 +150,11 @@ def book_detail(request, ISBN):
     if not ISBN:
         return HttpResponse('there is no such an ISBN')
     try:
-        book = book_info.objects.get(pk=ISBN)
+        book = book_info.objects.filter(pk=ISBN)
+        if not book:
+            book=book_shumu.objects.get(pk=ISBN)
+        else:
+            book = book_info.objects.get(pk=ISBN)
 
         # 李玉和增加 阅读量自增
         book_info.increase_views(book)
@@ -171,7 +201,6 @@ def book_detail(request, ISBN):
 
 #检索参数设置
 def searchparameter(request):
-    '''把已有的用户信息读出来，然后判断用户请求是POST还是GET。如果是GET，则显示表单,并将用户已有信息也显示在其中，如果是POST，则接收用户提交的表单信息，然后更新各个数据模型实例属性的值'''
     response = HttpResponse('')
     searchparameter_form = searchParameterForm(request.POST)
     if request.method == "POST":
@@ -195,5 +224,87 @@ def searchparameter(request):
         }
         return render(request, 'search/searchParameter.html', context)
     return render(request, 'search/searchParameter.html', locals())
+
+
+def search_multikeyword(request):
+
+
+    if request.method == "POST":
+        multikey_form = multiKeywordsForm(request.POST)
+        if multikey_form.is_valid():
+           keywords = multikey_form.cleaned_data
+           catogary = keywords['catogary']#每页记录数
+           title = keywords['title']#每页记录数
+           author = keywords['author']#自动完整显示记录数
+           publishYear = keywords['publishYear']
+           press = keywords['press']
+           booklib = keywords['booklib']
+
+           request.session['keyword_catogary'] = catogary
+           request.session['keyword_title'] = title
+           request.session['keyword_author'] = author
+           request.session['keyword_publishYear'] = publishYear
+           request.session['keyword_press'] = press
+           request.session['keyword_booklib'] = booklib
+        return redirect("search:searchHighResult")
+    else:
+        initial = {"catogary": request.session['keyword_catogary'],
+                   "title": request.session['keyword_title'],
+                   'author': request.session['keyword_author'],
+                   'publishYear': request.session['keyword_publishYear'],
+                   'press': request.session['keyword_press'],
+                   'booklib': request.session['keyword_booklib'],
+                   }
+        multikey_form = multiKeywordsForm(initial)
+        return render(request, "search/high_level_search.html",
+                      locals())
+    
+    
+
+def multisearchlist(request):
+    catogary =request.session['keyword_catogary']  # 每页记录数
+    title = request.session['keyword_title']  # 每页记录数
+    author =request.session['keyword_author']  # 自动完整显示记录数
+    publishYear = request.session['keyword_publishYear']
+    press = request.session['keyword_press']
+    booklib = request.session['keyword_booklib']
+    # 设置空列表存放要显示在前端的数据
+    books = []
+    current_path = request.get_full_path()
+    # 给books赋值
+    if booklib == '' or booklib == '豆瓣图书':
+        books = book_info.objects.filter(Q(category__icontains=catogary) &
+                                         Q(author__icontains=author) &
+                                         Q(press__icontains=press) &
+                                         Q(title__icontains=title))
+    elif booklib == '四川大学图书馆':
+        books = book_shumu.objects.filter(Q(category__icontains=catogary) &
+                                          Q(author__icontains=author) &
+                                          Q(press__icontains=press) &
+                                          Q(title__icontains=title) &
+                                          Q(publishTime__icontains=publishYear))
+
+    paginator = Paginator(books, 5)
+    page = request.GET.get('page', 1)
+
+    try:
+        # page是paginator实例对象的方法，返回第page页的实例对象，所以books是第page页的记录集
+        books = paginator.page(page)
+    except PageNotAnInteger:
+        books = paginator.page(1)
+    except EmptyPage:
+        books = paginator.page(paginator.num_pages)
+
+    # ugly solution for &page=2&page=3&page=4
+    # 当你已经是某一页时，current_path的最后有&page(previous),所以这里是在做清洗
+    if '&page' in current_path:
+        current_path = current_path.split('&page')[0]
+
+    context = {
+        'books': books,
+        'current_path': current_path,
+    }
+    return render(request, 'search/multiKeywords_result.html', context)
+
 
 

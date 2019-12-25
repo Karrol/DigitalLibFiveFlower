@@ -18,5 +18,9 @@ urlpatterns = [
                 path('bookDetail/<str:ISBN>/', views.book_detail, name='bookDetail'),
                 #参数设置
                 path('searchParameter/', views.searchparameter, name='searchParameter'),
+                #高级检索-多字段检索
+                path('searchHigh/', views.search_multikeyword, name='searchHigh'),
+                #高级检索-多字段检索结果
+                path('searchHighResult/', views.multisearchlist, name='searchHighResult'),
 
               ]
