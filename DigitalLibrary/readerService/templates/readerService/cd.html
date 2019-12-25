@@ -43,6 +43,71 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
+
+<style>
+input#keyword {
+    padding: 16px;
+    border-radius: 5px;
+    position:center;
+}
+
+.bootstrap-admin-no-table-panel,
+.bootstrap-admin-no-table-panel-content{
+    float: left;
+    width: 100%;
+}
+ table
+
+        {
+
+            border-collapse: collapse;
+
+            margin: 0 auto;
+
+            text-align: center;
+
+        }
+
+        table td, table th
+
+        {
+
+            border: 1px solid #cad9ea;
+
+            color: #666;
+
+            height: 30px;
+
+        }
+
+        table thead th
+
+        {
+
+            background-color: #CCE8EB;
+
+            width: 100px;
+
+        }
+
+        table tr:nth-child(odd)
+
+        {
+
+            background: #fff;
+
+        }
+
+        table tr:nth-child(even)
+
+        {
+
+            background: #F5FAFA;
+
+        }
+
+</style>
+
 </head>
 
 <body id="page-top">
@@ -114,7 +179,7 @@
                     </li>
                   </ul>
                 </li>
-                 <li class="dropdown info">
+                <li class="dropdown info">
                     <a href=#"><i class="icon-camera icon-white"></i>信息中心</a>
                     <ul class="dropdown-menu">
                      <li class="dropdown "><a href="{% url 'infoCenter:newsIntro' %}">新闻公告</a>
@@ -220,17 +285,58 @@
                   </ol>
               </nav>
 
-<div class="container">
-    <form action="" class="parent">
-        <input type="text" placeholder="&nbsp;&nbsp;请输入光盘的相关信息进行检索：">
-        <input type="button" value="搜索">
-    </form>
-</div>
+                 <form class="form-horizontal" action="{%url 'readerService:cd'%}" method="get">
+                      <div class="col-lg-7 form-group">
+                           <label class="col-lg-4 control-label" >随书光盘查询</label>
+                           <div class="col-lg-8">
+                               <input class="form-control" id="keyword" name="q" placeholder="关键词：书名" type="text">
+                               <label class="control-label" style="display: none;"></label>
+                           </div>
+                      </div>
+                      <div class="col-lg-3 form-group">
 
+                          <button type="submit" class="btn btn-primary" id="btn_query" onclick="">查询</button>
+                      </div>
+                 </form>
 
-
-      </div>
+    <div style="text-align: center">
+        <table style="float: contour; margin:0 auto;text-align: center; width: 800px;" >
+            <tr style="text-align: center" class="success">
+                <td>书名</td>
+                <td>作者</td>
+                <td>光盘号</td>
+            </tr>
+            {% for cd in contacts %}
+                <tr class="info">
+                    <td>{{ cd.title }}</td>
+                    <td>{{ cd.author }}</td>
+                    <td>{{ cd.cdId }}</td>
+                </tr>
+            {% endfor %}
+        </table>
       <!-- /.container-fluid -->
+
+
+    <div class="navigation">
+        <ul>
+            {% for pg in contacts.paginator.page_range %}
+                {% if contacts.number == pg %}
+                    <a href="?page={{ pg }}">{{ pg }}</a>
+                {% else %}
+                    <a href="?page={{ pg }}">{{ pg }}</a>
+                {% endif %}
+            {% endfor %}
+            {% if contacts.has_next %}
+                <a href="?page={{ contacts.next_page_number }}">下一页</a>
+            {% endif %}
+        </ul>
+
+{% if info %}
+    <script>
+        window.alert('{{ info }}');
+    </script>
+{% endif %}
+
 
     </div>
     <!-- /.content-wrapper -->
