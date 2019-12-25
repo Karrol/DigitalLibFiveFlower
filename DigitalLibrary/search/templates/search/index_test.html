@@ -139,7 +139,7 @@
       <div class="row">
 
         <div class="span3">
-          <h3 class="heading-success"><a href="{% url 'newsIntro' %}"><span class="btn btn-large btn-success"><i class="m-icon-big-swapright m-icon-white"></i></span>&nbsp;&nbsp;新闻资讯</a></h3>
+          <h3 class="heading-success"><a href="{% url 'infoCenter:newsIntro' %}"><span class="btn btn-large btn-success"><i class="m-icon-big-swapright m-icon-white"></i></span>&nbsp;&nbsp;新闻资讯</a></h3>
           <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关注图书馆新闻资讯，了解图书上新、馆内活动等一切你想知道的信息！</p>
         </div>
         {%for newsColum in indexnews_queryset%}
@@ -151,7 +151,7 @@
                       <tr>
                         <th>标题</th>
                         <th>日期</th>
-                        <th><a href="{% url 'newsIntro' %}">更多</a></th></tr>
+                        <th><a href="{% url 'infoCenter:newsColumn' item.newsColumn.columnSlug %}">更多</a></th></tr>
                     </thead>
                     <tbody>
                 <!--张丽：这里的url怎么跳转的和玉和商量一下呢-->

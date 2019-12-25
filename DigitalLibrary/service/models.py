@@ -19,9 +19,6 @@ class Category(models.Model):
     def __str__(self):
         return self.categoryName
 
-    def get_absolute_url(self):
-        return reverse('serviceCategory', args=(self.categorySlug,))
-
     class Meta:
         verbose_name = '类别'
         verbose_name_plural = '类别'
@@ -47,9 +44,6 @@ class Intro(models.Model):
 
     def __str__(self):
         return self.serviceTitle
-
-    def get_absolute_url(self):
-        return reverse('serviceDetail', args=(self.pk, self.serviceSlug))
 
     class Meta:
         verbose_name = '服务指南'

@@ -17,6 +17,7 @@ from django.http import HttpResponse
 from .forms import ArticlePostForm
 # 引入User模型
 from django.contrib.auth.models import User
+from login.models import Reader
 
 # 引入分页模块
 from django.core.paginator import Paginator
@@ -37,11 +38,12 @@ from .models import RecbooklistInfo
 from .models import RecbooklistInfo
 
 # 导入刚才定义的RecbooklistInfoForm表单类
-from .forms import RecbooklistInfoForm
+from .forms import RecbooklistInfoForm, readerrecomForm
 
 # 引入验证登录的装饰器
 from django.contrib.auth.decorators import login_required
 
+import datetime
 
 
 
@@ -263,9 +265,12 @@ def post_comment(request, article_id):
 def book_recom(request):
     # 判断用户是否提交数据
     if request.method == "POST":
+
         # 将提交的数据赋值到表单实例中
         bookrecom_post_form = RecbooklistInfoForm(request.POST)
-        message = "请检查填写的内容！"
+        if RecbooklistInfoForm.is_valid():
+
+            message = "请检查填写的内容！"
         # 判断提交的数据是否满足模型的要求
             # 保存数据，但暂时不提交到数据库中
         bookName =request.POST.get('bookName', '')
@@ -292,7 +297,7 @@ def book_recom(request):
         # 返回模板
         return render(request, 'participate/bookrecom.html', context)
 
-# 读者好书推荐
+# 读者好书推荐列表
 def recom_list(request):
     recuserinfos = RecbooklistInfo.objects.all()
     return render(request, 'participate/reclist.html',{'recuserinfos':recuserinfos})
@@ -308,3 +313,40 @@ def donation_treatments(request):
 
 def donation_contact(request):
         return render(request, 'participate/contact.html')
+
+# 读者好书推荐
+@login_required
+def reader_recom(request):
+    '''把已有的用户信息读出来，然后判断用户请求是POST还是GET。如果是GET，则显示表单,并将用户已有信息也显示在其中，如果是POST，则接收用户提交的表单信息，然后更新各个数据模型实例属性的值'''
+    response = HttpResponse('')
+    id = request.user.id
+    readerrecom_form = readerrecomForm(request.POST)
+    if request.method == "POST":
+        message = '请注意检查填写内容'
+        if readerrecom_form.is_valid():
+           readerrecom = readerrecom_form.cleaned_data
+           #获取前端表单中的数据，并用变量进行保存
+           bookName = readerrecom['bookName']#推荐书名
+           bookAuthor = readerrecom['bookAuthor']#书的作者
+           bpublisher = readerrecom['bpublisher']
+           bpubTime = readerrecom['bpubTime']
+           bookISBN = readerrecom['bookISBN']
+           bookIntroduction = readerrecom['bookIntroduction']  # 自动完整显示记录数
+           RecIdentity = readerrecom['RecIdentity']
+           RecDepartment = readerrecom['RecDepartment']
+           #创建“读者推荐表”实例，用以在数据库中创建记录
+
+           readers=Reader.objects.filter(user_id=id)
+           if readers:
+               reader=Reader.objects.get(user_id=id)
+           today=datetime.date.today()
+           recbook = RecbooklistInfo.objects.create(bookName=bookName, bookAuthor=bookAuthor, bpublisher=bpublisher,bpubTime=bpubTime,bookISBN=bookISBN, bookIntroduction=bookIntroduction, RecName=reader, RecIdentity=RecIdentity,RecDepartment=RecDepartment,RecTime=today)
+           recbook.save()
+        message = '推荐成功！感谢您的参与！'
+        context = {
+            'readerrecom_form': readerrecom_form,
+            'message': message,
+        }
+        return render(request, 'participate/bookrecom.html', context)
+    return render(request, 'participate/bookrecom.html', locals())
+

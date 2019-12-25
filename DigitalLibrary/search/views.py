@@ -198,7 +198,6 @@ def book_detail(request, ISBN):
     }
     return render(request, 'search/book_detail.html', context)
 
-
 #检索参数设置
 def searchparameter(request):
     response = HttpResponse('')

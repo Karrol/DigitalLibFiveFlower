@@ -92,43 +92,49 @@
                 </li>
 
                 <li class="dropdown danger">
-                   <a href="{%url 'participate:article_list'%}"><i class="icon-leaf icon-white"></i>读者参与</a>
-                    <ul class="dropdown-menu">
-                      <li><a href="{%url 'participate:article_list'%}">读者论坛</a></li>
-                      <li class="{%url 'participate:donation_rules'%}"><a href="#">读者捐赠</a>
+                  <a href="{%url 'participate:article_list'%}"><i class="icon-leaf icon-white"></i>读者参与</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{%url 'participate:article_list'%}">读者论坛</a>
                         <ul class="dropdown-menu sub-menu">
-                          <li><a href="{%url 'participate:donation_rules'%}">捐赠须知</a></li>
-                          <li><a href="{%url 'participate:donation_treatments'%}">捐赠处理</a></li>
+                        <li><a href="{%url 'participate:article_list'%}">看帖</a></li>
+                        <li><a href="{%url 'participate:article_create'%}">发帖</a></li>
                         </ul>
-                      </li>
-                      <li><a href="{%url 'participate:donation_contact'%}">联系方式</a></li>
-                      <li class="dropdown"><a href="{%url 'participate:book_recommendation'%}">读者推荐</a>
-                        <ul class="dropdown-menu sub-menu">
-                          <li><a href="{%url 'participate:book_recommendation'%}">好书推荐</a></li>
-                          <li><a href="{%url 'participate:bookrec_list'%}">推荐列表</a></li>
-                        </ul>
-                      </li>
-                    </ul>
+                    </li>
+                    <li class="{%url 'participate:donation_rules'%}"><a href="#">图书捐赠</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'participate:donation_rules'%}">捐赠须知</a></li>
+                        <li><a href="{%url 'participate:donation_treatments'%}">捐赠处理</a></li>
+                          <li><a href="{%url 'participate:donation_contact'%}">联系方式</a></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown"><a href="{%url 'participate:book_recommendation'%}">读者推荐</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'participate:book_recommendation'%}">好书推荐</a></li>
+                        <li><a href="{%url 'participate:bookrec_list'%}">推荐列表</a></li>
+                      </ul>
+                    </li>
+                    <li><a href="{%url 'participate:groupbook_recom'%}">推荐书目</a></li>
+                  </ul>
                 </li>
-                <li class="dropdown info">
-                    <a href=#"><i class="icon-camera icon-white"></i>信息中心</a>
+                 <li class="dropdown info">
+                    <a href="{% url 'infoCenter:newsIntro' %}"><i class="icon-camera icon-white"></i>信息中心</a>
                     <ul class="dropdown-menu">
-                     <li class="dropdown "><a href="{% url 'newsIntro' %}">新闻公告</a>
+                     <li class="dropdown "><a href="{% url 'infoCenter:newsIntro' %}">新闻公告</a>
                         <ul class="dropdown-menu sub-menu">
                           {% for column in news_columns %}
-                          <li><a href="{{ column.get_absolute_url }}">{{ column.columnName }}</a></li>
+                          <li><a href="{% url 'infoCenter:newsColumn' column.columnSlug %}">{{ column.columnName }}</a></li>
                           {% endfor %}
                         </ul>
                       </li>
-                      <li class="dropdown"><a href="{% url 'libBrief' %}">服务指南</a>
+                      <li class="dropdown"><a href="{% url 'service:libBrief' %}">服务指南</a>
                         <ul class="dropdown-menu sub-menu">
-                          {% for cotegory in service_cotegories %}
-                          <li><a href="{{ cotegory.get_absolute_url }}">{{ cotegory.categoryName }}</a></li>
+                          {% for category in service_cotegories %}
+                          <li><a href="{% url 'service:serviceCategory' category.categorySlug %}">{{ category.categoryName }}</a></li>
                           {% endfor %}
                         </ul>
                       </li>
-                      <li><a href="{% url 'recBookList' %}">每周一书</a></li>
-                      <li><a href="{% url 'rankList' %}">排行榜</a></li>
+                      <li><a href="{% url 'infoCenter:recBookList' %}">每周一书</a></li>
+                      <li><a href="{% url 'infoCenter:rankList' %}">排行榜</a></li>
                     </ul>
                 </li>
 

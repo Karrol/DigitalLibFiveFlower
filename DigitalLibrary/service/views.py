@@ -31,9 +31,12 @@ def serviceCategory(request, categorySlug):
 
     return render(request, 'service/serviceCategory.html', context)
 
-def serviceDetail(request, serviceSlug, pk):
+def serviceDetail(request):
     side_cotegories = Category.objects.filter(side_display=True)
     news_intro_columns = newsColumn_info.objects.filter(nav_display=True)
+
+    pk = request.GET.get('pk')
+    serviceSlug = request.GET.get('serviceSlug')
 
     intro = Intro.objects.get(pk=pk)
 

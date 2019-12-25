@@ -19,9 +19,6 @@ class newsColumn_info(models.Model):
     def __str__(self):
         return self.columnName
 
-    def get_absolute_url(self):
-        return reverse('newsColumn', kwargs={'columnSlug': self.columnSlug})
-
     class Meta:
         verbose_name = '新闻栏目'
         verbose_name_plural = '新闻栏目'
@@ -40,14 +37,16 @@ class newsArticle_info(models.Model):
                            default=u'', blank=True, imagePath="uploads/images/",
                            toolbars='besttome', filePath='uploads/files/')
     newsPubdate = models.DateTimeField('发表时间', auto_now_add=True, editable=True)
-
     newsPublished = models.BooleanField('正式发布', default=True)
+
+    newsViews = models.PositiveIntegerField(default=0)
+
+    def increase_views(self):
+        self.newsViews += 1
+        self.save(update_fields=['newsViews'])
 
     def __str__(self):
         return self.newsTitle
-
-    def get_absolute_url(self):
-        return reverse('newsDetail', kwargs={'pk': self.pk, 'newsSlug':self.newsSlug})
 
     class Meta:
         verbose_name = '新闻公告'
@@ -67,10 +66,37 @@ class weekbook_info(models.Model):
     def __str__(self):
         return self.bookName
 
-    def get_absolute_url(self):
-        return reverse('recBookDetail', kwargs=({'pk':self.pk, 'recID':self.recID}))
-
     class Meta:
         verbose_name = '每周一书'
         verbose_name_plural = '每周一书'
         ordering = ['recTime']
+
+
+@python_2_unicode_compatible
+class rank_info(models.Model):
+    rankName = models.CharField('排行榜名称', max_length=50)
+    rankID = models.AutoField(primary_key=True)
+    pubTime = models.DateField('发布时间', auto_now_add=True, editable=True)
+    rankIntro = models.TextField('栏目简介', default='')
+    rankDisplay = models.BooleanField('正式发布', default=True)
+
+    def __str__(self):
+        return self.rankName
+
+    class Meta:
+        verbose_name = '排行榜'
+        verbose_name_plural = '排行榜'
+        ordering = ['pubTime']
+
+class rank_book(models.Model):
+    bookOrder = models.IntegerField('图书序号', default='0')
+    book = models.ForeignKey(book_info, on_delete=models.CASCADE)
+    rank = models.ForeignKey(rank_info, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.book.title
+
+    class Meta:
+        verbose_name = '排行榜内图书'
+        verbose_name_plural = '排行榜内图书'
+        ordering = ['bookOrder']

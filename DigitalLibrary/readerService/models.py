@@ -34,6 +34,20 @@ class lectureReser(models.Model):
     lectureTime = models.CharField(u'讲座时间', max_length=256)
 
 
+class CD(models.Model):
+    # 书名
+    title = models.CharField(u'书名',max_length=256)
+    # 作者
+    author = models.CharField(u'作者',max_length=256)
+    # 光盘号
+    cdId = models.CharField(u'光盘号',max_length=256,default='1')
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = '光盘'
+        verbose_name_plural = '光盘'
+
 @python_2_unicode_compatible
 class RedSerTime(models.Model):
     # id 这个是默认有的，也可以自己定义一个其它的主键来覆盖它

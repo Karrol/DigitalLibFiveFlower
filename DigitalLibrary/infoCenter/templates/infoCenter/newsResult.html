@@ -7,7 +7,7 @@
 {% block search %}
 <div class="span4">
     <div class="input-append">
-        <form method="get" id="searchform" action="{% url 'newsSearch' %}" class="form-search">
+        <form method="get" id="searchform" action="{% url 'infoCenter:newsSearch' %}" class="form-search">
             {% csrf_token %}
             <input type="search" name="q" placeholder="搜索新闻" class="input-medium search-query">
             <button type="submit" class="btn btn-inverse">搜索新闻</button>
@@ -31,7 +31,7 @@
             {% for post in post_list %}
                 <article class="blog-post">
                     <div class="tooltip-demo headline">
-                        <h4><a href="{{ post.get_absolute_url }}">{{ post.newsTitle }}</a></h4>
+                        <h4><a onclick="location.href='/infoCenter/newsDetail/?pk={{post.pk}}&newsSlug={{post.newsSlug}}';">{{ post.newsTitle }}</a></h4>
                     </div>
                     <div class="clearfix"></div>
                     <img src="assets/img/dummies/blog1.jpg" alt="" />
@@ -55,7 +55,7 @@
                               </p>
                             </div>
                             <div class="error-footer">
-                              <a href="{% url 'newsIntro' %}" class="btn btn-inverse marginleft20">返回新闻公告首页</a>
+                              <a href="{% url 'infoCenter:newsIntro' %}" class="btn btn-inverse marginleft20">返回新闻公告首页</a>
                             </div>
                           </div>
                         </div>

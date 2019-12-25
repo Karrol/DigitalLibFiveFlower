@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage, InvalidPage
 
-from .models import newsColumn_info, newsArticle_info, weekbook_info
+from .models import newsColumn_info, newsArticle_info, weekbook_info, rank_info, rank_book
 from search.models import book_info
 from service.models import Category
 
@@ -79,11 +79,16 @@ def newsColumn(request, columnSlug):
 
 
 # 新闻文章详情
-def newsDetail(request, newsSlug, pk):
+def newsDetail(request):
+    pk=request.GET.get('pk')
+    newsSlug=request.GET.get('newsSlug')
+
     news_intro_columns = newsColumn_info.objects.filter(nav_display=True)
     side_cotegories = Category.objects.filter(side_display=True)
 
     news_article = newsArticle_info.objects.get(pk=pk)
+    newsArticle_info.increase_views(news_article)
+
     current_column_news = newsArticle_info.objects.filter(newsColumn=news_article.newsColumn)[:5]
 
     all_article = newsArticle_info.objects.all()
@@ -176,7 +181,10 @@ def recBookList(request):
     return render(request, 'infoCenter/recBookList.html', context)
 
 #每周一书历史详情
-def recBookDetail(request, recID, pk):
+def recBookDetail(request):
+    pk = request.GET.get('pk')
+    recID = request.GET.get('recID')
+
     news_intro_columns = newsColumn_info.objects.filter(nav_display=True)
     side_cotegories = Category.objects.filter(side_display=True)
 
@@ -220,14 +228,38 @@ def rankList(request):
 
     # 根据自增的views字段进行排序，并获取最高的10条数据
     hotBook = book_info.objects.order_by("-bookViews")[0:10]
+    rankList = rank_info.objects.filter(rankDisplay=True)
 
     context = {
         'news_intro_columns': news_intro_columns,
         'side_cotegories': side_cotegories,
-        'hotBook': hotBook
+        'hotBook': hotBook,
+        'rankList':rankList,
     }
 
     return render(request, "infoCenter/rankList.html", context)
+
+#排行榜详情
+def rankDetail(request, rankID):
+    news_intro_columns = newsColumn_info.objects.filter(nav_display=True)
+    side_cotegories = Category.objects.filter(side_display=True)
+
+    rankList = rank_info.objects.filter(rankDisplay=True)
+    #获取排行榜rankID
+    current_rank = rank_info.objects.get(rankID=rankID)
+    #获取排行榜rankID中的书籍排行记录
+    books = rank_book.objects.filter(rank = current_rank)
+
+    context = {
+        'news_intro_columns':news_intro_columns,
+        'side_cotegories': side_cotegories,
+        'rankList': rankList,
+        'current_rank': current_rank,
+        'books':books,
+    }
+
+    return render(request, 'infoCenter/rankDetail.html', context)
+
 
 #站内搜索
 def newsSearch(request):

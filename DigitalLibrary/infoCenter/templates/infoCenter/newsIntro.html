@@ -1,5 +1,8 @@
 {% extends "infoCenter/infoCenter_Base.html" %}
 
+ {% load static %}
+ {% load staticfiles %}
+
 {% block title %}新闻公告{% endblock title %}
 
 {% block module %}新闻公告{% endblock module %}
@@ -7,7 +10,7 @@
 {% block search %}
 <div class="span4">
     <div class="input-append">
-        <form method="get" id="searchform" action="{% url 'newsSearch' %}" class="form-search">
+        <form method="get" id="searchform" action="{% url 'infoCenter:newsSearch' %}" class="form-search">
             {% csrf_token %}
             <input type="search" name="q" placeholder="搜索新闻" class="input-medium search-query">
             <button type="submit" class="btn btn-inverse">搜索新闻</button>
@@ -28,10 +31,9 @@
           <aside>
             {% for column in news_intro_columns %}
             <div class="widget">
-              <h4 class="heading-success"><a href="{{ column.get_absolute_url }}"><span class="btn btn-large btn-success"><i class="m-icon-big-swapdown m-icon-white"></i></span></a>&nbsp;&nbsp;{{ column.columnName }}</h4>
-              <img src="assets/img/avatar.png" class="alignleft" alt="" />
+              <h4 class="heading-success"><a href="{% url 'infoCenter:newsColumn' column.columnSlug %}"><span class="btn btn-large btn-success"><i class="m-icon-big-swapdown m-icon-white"></i></span></a>&nbsp;&nbsp;{{ column.columnName }}</h4>
               <h5>{{ column.abstract }}</h5>
-              <p><a href="{{ column.get_absolute_url }}">&nbsp;&nbsp;&nbsp;&nbsp;点击查看更多...</a></p>
+              <p><a href="{% url 'infoCenter:newsColumn' column.columnSlug %}">&nbsp;&nbsp;&nbsp;&nbsp;点击查看更多...</a></p>
             </div>
             {% endfor %}
           </aside>
@@ -42,8 +44,8 @@
           {% for news in articles %}
           <article class="blog-post">
             <div class="tooltip-demo headline">
-              <h4><a href="{{ news.get_absolute_url }}">{{ news.newsTitle }}</a></h4>
-              <span class="comment"><a href="#" rel="tooltip" data-placement="top" title="3 Comments">3 comments</a></span>
+              <h4><a onclick="location.href='/infoCenter/newsDetail/?pk={{news.pk}}&newsSlug={{news.newsSlug}}';">{{ news.newsTitle }}</a></h4>
+              <span class="comment">浏览量：{{ news.newsViews }}</span>
             </div>
             <div class="row">
               <div class="span5">
