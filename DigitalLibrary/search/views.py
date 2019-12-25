@@ -168,7 +168,6 @@ def book_detail(request, ISBN):
     }
     return render(request, 'search/book_detail.html', context)
 
-
 #检索参数设置
 def searchparameter(request):
     '''把已有的用户信息读出来，然后判断用户请求是POST还是GET。如果是GET，则显示表单,并将用户已有信息也显示在其中，如果是POST，则接收用户提交的表单信息，然后更新各个数据模型实例属性的值'''

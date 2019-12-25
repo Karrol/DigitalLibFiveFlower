@@ -13,6 +13,7 @@ urlpatterns = [
     path('recBookHis/', views.recBookDetail, name='recBookDetail'),
 
     path('rankList/', views.rankList, name="rankList"),  # 排行榜列表
+    path('rankDetail/<int:rankID>/', views.rankDetail, name="rankDetail"), #排行榜详情
 
     path('newsSearch/', views.newsSearch, name="newsSearch"),  # 新闻搜索结果
 ]

@@ -26,7 +26,9 @@
 
           <aside>
             <div class="widget">
-              <h4 class="heading-success"><span class="btn btn-large btn-success"><i class="m-icon-big-swapdown m-icon-white"></i></span>&nbsp;&nbsp;浏览量排行榜</h4>
+              <h4 class="heading-success"><a href="{% url 'infoCenter:rankList' %}">
+                  <span class="btn btn-large btn-success"><i class="m-icon-big-swapdown m-icon-white"></i></span>&nbsp;&nbsp;浏览量排行榜
+              </a></h4>
               <img src="assets/img/avatar.png" class="alignleft" alt="" />
               <h5>根据图书被浏览的次数排序。</h5>
             </div>
@@ -38,7 +40,6 @@
               <h4 class="heading-success"><a href="{% url 'infoCenter:rankDetail' rank.rankID %}">
                 <span class="btn btn-large btn-success"><i class="m-icon-big-swapdown m-icon-white"></i></span>&nbsp;&nbsp;{{ rank.rankName }}
               </a></h4>
-              <img src="assets/img/avatar.png" class="alignleft" alt="" />
               <h5>{{ rank.rankIntro }}</h5>
             </div>
             {% endfor %}
@@ -48,31 +49,31 @@
 
       <div class="span8">
         <!-- start article 1 -->
-        <h3 align="center"><b>浏览量排行榜</b></h3>
-        {% for book in hotBook  %}
+        <h3 align="center"><b>{{ current_rank.rankName }}</b></h3>
+        {% for book in books  %}
         <article class="blog-post">
             <div class="tooltip-demo headline">
-              <h4><a href="#">{{ book.title }}</a></h4>
-              <span class="comment">浏览量：{{ book.bookViews }}</span>
+              <h4>No.{{ book.bookOrder }}<a href="#">《{{ book.book.title }}》</a></h4>
+              <span class="comment">浏览量：{{ book.book.bookViews }}</span>
             </div>
 
             <div class="row">
               <div class="span3">
-                <a href="#"><img src="/media/bookcover/{{ book.cover }}" alt="{{ book.title }}" /></a>
+                <a href="#"><img src="/media/bookcover/{{ book.book.cover }}" alt="{{ book.book.title }}" /></a>
               </div>
               <div class="span5">
                 <ul class="post-meta">
-                  <li class="first"><i class="icon-user"></i> <span><a href="#">{{ book.author }}</a></span></li>
-                  <li><i class="icon-list-alt"></i> <span><a href="#">{{ book.press }}</a></span></li>
-                  <li class="last"><i class="icon-tags"></i> <span><a href="#">{{ book.category }}</a></span></li>
+                  <li class="first"><i class="icon-user"></i> <span><a href="#">{{ book.book.author }}</a></span></li>
+                  <li><i class="icon-list-alt"></i> <span><a href="#">{{ book.book.press }}</a></span></li>
+                  <li class="last"><i class="icon-tags"></i> <span><a href="#">{{ book.book.category }}</a></span></li>
                 </ul>
                 <div class="clearfix"></div>
                 <p><b>内容简介：</b></p>
                 <p>
-                  {{ book.description | slice:'300' }}......
+                  {{ book.book.description | slice:'300' }}......
                 </p>
 
-                <a href="{%url 'search:bookDetail' book.ISBN %}">
+                <a href="{%url 'search:bookDetail' book.book.ISBN %}">
                   <button class="btn btn btn-success" type="button" >查看详情</button>
                 </a>
 
@@ -82,18 +83,6 @@
           </article>
         {% endfor %}
 
-        <!--翻页功能缺
-        <div class="pagination">
-            <ul>
-                <li><a href="#">Prev</a></li>
-                <li><a href="#">1</a></li>
-                <li class="active"><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">Next</a></li>
-            </ul>
-        </div>
--->
       </div>
       </div>
     </div>

@@ -125,19 +125,19 @@
                   </ul>
                 </li>
                  <li class="dropdown info">
-                    <a href=#"><i class="icon-camera icon-white"></i>信息中心</a>
+                    <a href="{% url 'infoCenter:newsIntro' %}"><i class="icon-camera icon-white"></i>信息中心</a>
                     <ul class="dropdown-menu">
                      <li class="dropdown "><a href="{% url 'infoCenter:newsIntro' %}">新闻公告</a>
                         <ul class="dropdown-menu sub-menu">
                           {% for column in news_columns %}
-                          <li><a href="{{ column.get_absolute_url }}">{{ column.columnName }}</a></li>
+                          <li><a href="{% url 'infoCenter:newsColumn' column.columnSlug %}">{{ column.columnName }}</a></li>
                           {% endfor %}
                         </ul>
                       </li>
                       <li class="dropdown"><a href="{% url 'service:libBrief' %}">服务指南</a>
                         <ul class="dropdown-menu sub-menu">
-                          {% for cotegory in service_cotegories %}
-                          <li><a href="{{ cotegory.get_absolute_url }}">{{ cotegory.categoryName }}</a></li>
+                          {% for category in service_cotegories %}
+                          <li><a href="{% url 'service:serviceCategory' category.categorySlug %}">{{ category.categoryName }}</a></li>
                           {% endfor %}
                         </ul>
                       </li>
@@ -203,13 +203,18 @@
             </div>
 
 <div class="col-md-10">
- <div class="row">
+
    <div id="content-wrapper">
 
       <div class="container-fluid">
 
         <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{% url 'participate:groupbook_recom' %}">推荐书目</a>
+          </li>
 
+        </ol>
 
 
         <!-- 推荐书目 -->
@@ -223,23 +228,14 @@
                     <h3>
                         推荐书目
                     </h3>
-                    <ul class="breadcrumb">
-                        <li>
-                            <a href="{%url 'participate:groupbook_recom'%}">推荐书目</a>
-                        </li>
-                    </ul>
+
                 </div>
                 <!-- page heading end-->
                 <div class="card-body" >
-              <p>亲爱的读者：</p>
-              <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果您在书店或是别的地方发现了一本好书，是您科研、教学或者学习所需要的，而我馆目前还没有收藏的话，请您将这本书的有关信息告诉我们，我们将根据经费情况进行订购。 外文及港台原版书籍，请通过以下方式推荐：</p>
-              <p>Email: wuduojinhua@scu.edu.cn</p>
-              <p>电话：028-85408797</p>
-              <p>感谢您对图书馆工作的支持！</p>
+
+              <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本栏目甄选近年国内外核心出版社图书目录，欢迎本校师生点击下载相应的书目信息，结合教学科研需求进行推荐。推荐书目信息请发送至邮箱：merryhlj@scu.edu.cn。感谢您的支持！</p>
+
           </div>
-
-
-
 
                         <div class="col-sm-12">
                             <section class="panel">
@@ -254,10 +250,10 @@
                                     <table class="table  table-hover general-table">
                                         <thead>
                                         <tr>
-                                            <th> Company</th>
+                                            <th> 目录</th>
 
 
-                                            <th>Status</th>
+                                            <th>获取</th>
 
                                         </tr>
                                         </thead>
@@ -409,7 +405,300 @@
                                         </tr>
                                         </tbody>
                                     </table>
+                                </div>
+                            </section>
+                            <section class="panel">
+                                <header class="panel-heading">
+                                    人文社科中文图书目录
+                                <span class="tools pull-right">
+                                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                                    <a href="javascript:;" class="fa fa-times"></a>
+                                 </span>
+                                </header>
+                                <div class="panel-body">
+                                    <table class="table  table-hover general-table">
+                                        <thead>
+                                        <tr>
+                                            <th> 目录</th>
 
+
+                                            <th>获取</th>
+
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        <tr>
+                                            <td>
+                                                <a href="#">
+                                                    广西师范大学出版社 2017-2019年3月
+                                                </a>
+                                            </td>
+                                            <td><span class="label label-warning label-mini">Due</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <a href="#">
+                                                    巴蜀书社2017
+                                                </a>
+                                            </td>
+                                            <td><span class="label label-success label-mini">Paid</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><a href="#">北京大学出版社社科2017</a></td>
+                                            <td><span class="label label-info label-mini">Due</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <a href="#">
+                                                    北京师范大学书目2017
+                                                </a>
+                                            </td>
+                                            <td><span class="label label-danger label-mini">Paid</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><a href="#">川大出版社2017-书目</a></td>
+                                            <td><span class="label label-primary label-mini">Due</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <a href="#">
+                                                    大象出版社2017-
+                                                </a>
+                                            </td>
+                                            <td><span class="label label-warning label-mini">Due</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <a href="#">
+                                                    复旦大学2017-书目
+                                                </a>
+                                            </td>
+                                            <td><span class="label label-warning label-mini">Due</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <a href="#">
+                                                    高教社2017-2019.2
+                                                </a>
+                                            </td>
+                                            <td><span class="label label-warning label-mini">Due</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <a href="#">
+                                                    国图社2017-
+                                                </a>
+                                            </td>
+                                            <td><span class="label label-warning label-mini">Due</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <a href="#">
+                                                    南京大学出版社 2017-书目
+                                                </a>
+                                            </td>
+                                            <td><span class="label label-warning label-mini">Due</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <a href="#">
+                                                    人民出版社2017-书目
+                                                </a>
+                                            </td>
+                                            <td><span class="label label-warning label-mini">Due</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <a href="#">
+                                                    人民大学出版社2017-书目
+                                                </a>
+                                            </td>
+                                            <td><span class="label label-warning label-mini">Due</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <a href="#">
+                                                    三联书店2017-书目 (1)
+                                                </a>
+                                            </td>
+                                            <td><span class="label label-warning label-mini">Due</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <a href="#">
+                                                    商务印书馆2017-书目
+                                                </a>
+                                            </td>
+                                            <td><span class="label label-warning label-mini">Due</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <a href="#">
+                                                    社会科学文献出版社2017-书目
+                                                </a>
+                                            </td>
+                                            <td><span class="label label-warning label-mini">Due</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <a href="#">
+                                                    外研社2017-
+                                                </a>
+                                            </td>
+                                            <td><span class="label label-warning label-mini">Due</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <a href="#">
+                                                    武汉大学出版社目录
+                                                </a>
+                                            </td>
+                                            <td><span class="label label-warning label-mini"><a href="#">Due</a></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a href="#">
+                                                    中国社会科学出版社
+                                                </a>
+                                            </td>
+                                            <td><span class="label label-warning label-mini"><a href="#">Due</a></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a href="#">
+                                                    中央编译出版社2017至今
+                                                </a>
+                                            </td>
+                                            <td><span class="label label-warning label-mini"><a href="#">Due</a></span></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </section>
+                            <section class="panel">
+                                <header class="panel-heading">
+                                    理工医中文图书目录
+                                <span class="tools pull-right">
+                                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                                    <a href="javascript:;" class="fa fa-times"></a>
+                                 </span>
+                                </header>
+                                <div class="panel-body">
+                                    <table class="table  table-hover general-table">
+                                        <thead>
+                                        <tr>
+                                            <th> 目录</th>
+
+
+                                            <th>获取</th>
+
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        <tr>
+                                            <td>
+                                                <a href="#">
+                                                    北京大学出版社
+                                                </a>
+                                            </td>
+                                            <td><span class="label label-warning label-mini">Due</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <a href="#">
+                                                    电子工业出版社2017-19年2月书目数据
+                                                </a>
+                                            </td>
+                                            <td><span class="label label-success label-mini">Paid</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><a href="#">高等教育出版社</a></td>
+                                            <td><span class="label label-info label-mini">Due</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <a href="#">
+                                                    化学工业出版社（2017.12-2019.03）
+                                                </a>
+                                            </td>
+                                            <td><span class="label label-danger label-mini">Paid</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><a href="#">机械工业出版社（2018-2019.02）</a></td>
+                                            <td><span class="label label-primary label-mini">Due</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <a href="#">
+                                                    科学出版社2018-19年初版数据
+                                                </a>
+                                            </td>
+                                            <td><span class="label label-warning label-mini">Due</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <a href="#">
+                                                    清华大学出版社2015年至今出版馆配书目(1)
+                                                </a>
+                                            </td>
+                                            <td><span class="label label-warning label-mini">Due</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <a href="#">
+                                                    人民卫生出版社2018年新书书目
+                                                </a>
+                                            </td>
+                                            <td><span class="label label-warning label-mini">Due</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <a href="#">
+                                                    人民邮电出版社201801-201903出版目录
+                                                </a>
+                                            </td>
+                                            <td><span class="label label-warning label-mini">Due</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <a href="#">
+                                                    四川大学出版社
+                                                </a>
+                                            </td>
+                                            <td><span class="label label-warning label-mini">Due</span></td>
+                                        </tr>
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
                             </section>
                         </div>
 

@@ -70,3 +70,33 @@ class weekbook_info(models.Model):
         verbose_name = '每周一书'
         verbose_name_plural = '每周一书'
         ordering = ['recTime']
+
+
+@python_2_unicode_compatible
+class rank_info(models.Model):
+    rankName = models.CharField('排行榜名称', max_length=50)
+    rankID = models.AutoField(primary_key=True)
+    pubTime = models.DateField('发布时间', auto_now_add=True, editable=True)
+    rankIntro = models.TextField('栏目简介', default='')
+    rankDisplay = models.BooleanField('正式发布', default=True)
+
+    def __str__(self):
+        return self.rankName
+
+    class Meta:
+        verbose_name = '排行榜'
+        verbose_name_plural = '排行榜'
+        ordering = ['pubTime']
+
+class rank_book(models.Model):
+    bookOrder = models.IntegerField('图书序号', default='0')
+    book = models.ForeignKey(book_info, on_delete=models.CASCADE)
+    rank = models.ForeignKey(rank_info, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.book.title
+
+    class Meta:
+        verbose_name = '排行榜内图书'
+        verbose_name_plural = '排行榜内图书'
+        ordering = ['bookOrder']

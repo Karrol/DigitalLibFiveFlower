@@ -217,19 +217,19 @@
                   </ul>
                 </li>
                  <li class="dropdown info">
-                    <a href=#"><i class="icon-camera icon-white"></i>信息中心</a>
+                    <a href="{% url 'infoCenter:newsIntro' %}"><i class="icon-camera icon-white"></i>信息中心</a>
                     <ul class="dropdown-menu">
                      <li class="dropdown "><a href="{% url 'infoCenter:newsIntro' %}">新闻公告</a>
                         <ul class="dropdown-menu sub-menu">
                           {% for column in news_columns %}
-                          <li><a href="{{ column.get_absolute_url }}">{{ column.columnName }}</a></li>
+                          <li><a href="{% url 'infoCenter:newsColumn' column.columnSlug %}">{{ column.columnName }}</a></li>
                           {% endfor %}
                         </ul>
                       </li>
                       <li class="dropdown"><a href="{% url 'service:libBrief' %}">服务指南</a>
                         <ul class="dropdown-menu sub-menu">
-                          {% for cotegory in service_cotegories %}
-                          <li><a href="{{ cotegory.get_absolute_url }}">{{ cotegory.categoryName }}</a></li>
+                          {% for category in service_cotegories %}
+                          <li><a href="{% url 'service:serviceCategory' category.categorySlug %}">{{ category.categoryName }}</a></li>
                           {% endfor %}
                         </ul>
                       </li>
@@ -295,13 +295,13 @@
             </div>
 
 <div class="col-md-10">
- <div class="row">
+
    <div id="content-wrapper">
 
       <div class="container-fluid">
 
         <!-- Breadcrumbs-->
-        <div class="col-12">
+
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
             <a href="{% url 'participate:book_recommendation' %}">好书推荐</a>
@@ -310,12 +310,12 @@
             <a href="{% url 'participate:bookrec_list' %}">推荐列表</a>
           </li>
         </ol>
-        </div>
+
 
         <!--推荐表单-->
-        <div class="pc-kk-form" style="width:800px;margin:auto;">
+
             <p>
-              <img src="../../static/mobankf/images/rec_title.jpg'%}" width="700" height="140" />
+              <img src="/static/mobankf/images/rec_title.jpg'%}" width="700" height="140" />
             </p>
             <div class="card-body" >
               <p>亲爱的读者：</p>
@@ -327,63 +327,64 @@
             <hr style="border:1 dashed #987cb9" width="100%" color=#987cb9 size=1>
             <h2 class="text-center cmnt-head ">读者好书推荐信息表</h2>
             <p class="text-center fade-txt">查看 <a href="{% url 'participate:bookrec_list' %}">推荐列表</a></p>
-            <form method="post" action=".">
-                <!--Django中需要POST数据的地方都必须有csrf_token -->
-                {% csrf_token %}
-              <div class="pc-kk-form-list">
-                <input type="text" placeholder="书名" name="bookName">
-              </div>
-              <div class="pc-kk-form-list">
-                <input type="text" placeholder="作者" name="bookAuthor">
-              </div>
-              <div class="pc-kk-form-list">
-                <input type="text" placeholder="出版社" name="bpublisher">
-              </div>
 
-              <div class="pc-kk-form-list">
-                <input type="text" placeholder="ISBN号" name="bookISBN">
-              </div>
-              <div class="pc-kk-form-list" style="height:auto">
-                <textarea type="text" name="bookIntroduction" rows="12">简要介绍</textarea>
-              </div>
-              <div class="pc-kk-form-list">
-                <input type="text" placeholder="推荐者姓名" name="RecName">
-              </div>
-              <div class="pc-kk-form-list">
-                <input type="text" value="推荐者身份"   name="RecIdentity" >
-              </div>
-               <div class="pc-kk-form-list">
-                <input type="text" value="推荐者单位"  name="RecDepartment" >
-               </div>
-              <!--
-              <div class="pc-kk-form-list pc-kk-form-list-clear">
-                <div class="nice-select" name="nice-select" style="float:right">
-                  <input type="text" value="推荐者身份"   name="RecIdentity" >
-                  <ul>
-                    <li data-value="pub">公共管理学院</li>
-                    <li data-value="art">文学与新闻学院</li>
-                  </ul>
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4 ">
+                        <form class='form-login' action="{%url 'participate:book_recommendation'%}" method="POST">
+
+                          {% if message %}
+                              <div class="alert alert-warning">{{ message }}</div>
+                          {% endif %}
+                          {% csrf_token %}
+
+                          <div class="form-group">
+                              {{readerrecom_form.bookName.label_tag}}
+                              {{readerrecom_form.bookName }}
+                          </div>
+                          <div class="form-group">
+                              {{readerrecom_form.bookAuthor.label_tag}}
+                              {{readerrecom_form.bookAuthor }}
+                          </div>
+                          <div class="form-group">
+                              {{readerrecom_form.bpublisher.label_tag}}
+                              {{readerrecom_form.bpublisher }}
+                          </div>
+                          <div class="form-group">
+                              {{readerrecom_form.bpubTime.label_tag}}
+                              {{readerrecom_form.bpubTime }}
+                          </div>
+                          <div class="form-group">
+                              {{readerrecom_form.bookIntroduction.label_tag}}
+                              {{readerrecom_form.bookIntroduction }}
+                          </div>
+                          <div class="form-group">
+                              {{readerrecom_form.RecName.label_tag}}
+                              {{readerrecom_form.RecName }}
+                          </div>
+                          <div class="form-group">
+                              {{readerrecom_form.RecIdentity.label_tag}}
+                              {{readerrecom_form.RecIdentity }}
+                          </div>
+                          <div class="form-group">
+                              {{ readerrecom_form.RecDepartment.label_tag }}
+                              {{ readerrecom_form.RecDepartment }}
+
+                          </div>
+
+                          <button type="reset" class="btn btn-default pull-left">重置</button>
+                          <button type="submit" class="btn btn-primary pull-right">提交</button>
+                           <br><br>
+                           <br><br>
+                      </form>
+
+
+                    </div>
                 </div>
-                <div class="nice-select" name="nice-select">
-                    <input type="text" value="推荐者单位"  name="RecDepartment" >
-                    <ul>
-                      <li data-value="4">四年制本科生</li>
-                      <li data-value="5">五年制本科生</li>
-                      <li data-value="6">硕士生</li>
-                      <li data-value="7">博士生</li>
-                    </ul>
-                  </div>
-              </div>
-              -->
-              <div class="pc-kk-form-btn">
-                <button type="submit">提交</button>
-              </div>
-            </form>
-          </div>
+
         <!--推荐表单结束-->
 
 
-          <script type="text/javascript" src="/static/mobankf/js/jquery.js"></script>
+          <!--<script type="text/javascript" src="/static/mobankf/js/jquery.js"></script>
 
           <script>
 
@@ -423,7 +424,7 @@
 
             });
 
-          </script>
+          </script>-->
 
 
       <!-- /.container-fluid -->
@@ -431,8 +432,7 @@
       </div>
     <!-- /.content-wrapper -->
 
-  </div>
-   <!-- /.row-->
+
 </div>
 <!-- /.col-md-10-->
 

@@ -121,19 +121,19 @@
                   </ul>
                 </li>
                  <li class="dropdown info">
-                    <a href=#"><i class="icon-camera icon-white"></i>信息中心</a>
+                    <a href="{% url 'infoCenter:newsIntro' %}"><i class="icon-camera icon-white"></i>信息中心</a>
                     <ul class="dropdown-menu">
                      <li class="dropdown "><a href="{% url 'infoCenter:newsIntro' %}">新闻公告</a>
                         <ul class="dropdown-menu sub-menu">
                           {% for column in news_columns %}
-                          <li><a href="{{ column.get_absolute_url }}">{{ column.columnName }}</a></li>
+                          <li><a href="{% url 'infoCenter:newsColumn' column.columnSlug %}">{{ column.columnName }}</a></li>
                           {% endfor %}
                         </ul>
                       </li>
                       <li class="dropdown"><a href="{% url 'service:libBrief' %}">服务指南</a>
                         <ul class="dropdown-menu sub-menu">
-                          {% for cotegory in service_cotegories %}
-                          <li><a href="{{ cotegory.get_absolute_url }}">{{ cotegory.categoryName }}</a></li>
+                          {% for category in service_cotegories %}
+                          <li><a href="{% url 'service:serviceCategory' category.categorySlug %}">{{ category.categoryName }}</a></li>
                           {% endfor %}
                         </ul>
                       </li>
@@ -200,14 +200,14 @@
             </div>
 
 <div class="col-md-10">
- <div class="row">
+
 
     <div id="content-wrapper">
 
       <div class="container-fluid">
 
         <!-- Breadcrumbs-->
-        <div class="col-10">
+
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
             <a href="{% url 'participate:article_list' %}">看帖子</a>
@@ -215,7 +215,7 @@
           <li class="breadcrumb-item active">交流论坛</li>
           <li class="breadcrumb-item active">读者参与</li>
         </ol>
-        </div>
+
 
         <!--写文章-->
         <div class="container">

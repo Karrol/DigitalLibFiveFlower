@@ -121,19 +121,19 @@
                   </ul>
                 </li>
                  <li class="dropdown info">
-                    <a href=#"><i class="icon-camera icon-white"></i>信息中心</a>
+                    <a href="{% url 'infoCenter:newsIntro' %}"><i class="icon-camera icon-white"></i>信息中心</a>
                     <ul class="dropdown-menu">
                      <li class="dropdown "><a href="{% url 'infoCenter:newsIntro' %}">新闻公告</a>
                         <ul class="dropdown-menu sub-menu">
                           {% for column in news_columns %}
-                          <li><a href="{{ column.get_absolute_url }}">{{ column.columnName }}</a></li>
+                          <li><a href="{% url 'infoCenter:newsColumn' column.columnSlug %}">{{ column.columnName }}</a></li>
                           {% endfor %}
                         </ul>
                       </li>
                       <li class="dropdown"><a href="{% url 'service:libBrief' %}">服务指南</a>
                         <ul class="dropdown-menu sub-menu">
-                          {% for cotegory in service_cotegories %}
-                          <li><a href="{{ cotegory.get_absolute_url }}">{{ cotegory.categoryName }}</a></li>
+                          {% for category in service_cotegories %}
+                          <li><a href="{% url 'service:serviceCategory' category.categorySlug %}">{{ category.categoryName }}</a></li>
                           {% endfor %}
                         </ul>
                       </li>
@@ -209,7 +209,7 @@
       <div class="container-fluid">
 
         <!-- Breadcrumbs-->
-        <div class="col-12">
+
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
             <a href="{% url 'participate:book_recommendation' %}">好书推荐</a>
@@ -218,7 +218,7 @@
             <a href="{% url 'participate:bookrec_list' %}">推荐列表</a>
           </li>
         </ol>
-        </div>
+
 
 
         <!-- 读者推荐列表 -->
