@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+{% load staticfiles %}
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>读者服务</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="../../static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+  <!-- Page level plugin CSS-->
+  <link href="../../static/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="../../static/css/sb-admin.css" rel="stylesheet">
+
+   <link href="{%static 'assets/css/bootstrap.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/css/bootstrap-responsive.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/css/docs.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/css/prettyPhoto.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/js/google-code-prettify/prettify.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/css/camera.css'%}" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300|Open+Sans:400,300,300italic,400italic" rel="stylesheet">
+  <link href="{%static 'assets/css/style.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/color/success.css'%}" rel="stylesheet">
+
+  <!-- fav and touch icons -->
+  <link rel="shortcut icon" href="{%static 'assets/ico/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{%static 'assets/ico/apple-touch-icon-144-precomposed.png'%}">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{%static 'assets/ico/apple-touch-icon-114-precomposed.png'%}">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{%static 'assets/ico/apple-touch-icon-72-precomposed.png'%}">
+  <link rel="apple-touch-icon-precomposed" href="{%static 'assets/ico/apple-touch-icon-57-precomposed.png'%}">
+  <link rel="stylesheet" href="/baidu/css/bootstrap.min.css"type="text/css"/>
+
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
+
+    <!--表单样式-->
+  <style>
+    ::-moz-placeholder {
+		color: #9fa3a7;
+	}
+
+	::-webkit-input-placeholder {
+		color: #9fa3a7;
+	}
+
+	:-ms-input-placeholder {
+		color: #9fa3a7;
+	}
+
+
+	.pc-kk-form{
+		padding:15px 20px;
+	}
+	.pc-kk-form-list{
+		background:#fff;
+		border:1px solid #e5e5e5;
+		border-radius:5px;
+		height:44px;
+		line-height:44px;
+		margin-bottom:10px;
+	}
+	.pc-kk-form-list input{
+		width:100%;
+		border:none;
+		background:none;
+		color:#9fa3a7;
+		font-size:14px;
+		height: 36px;
+		padding: 4px 10px;
+	}
+	.pc-kk-form-list textarea{
+		background:none;
+		border:none;
+		height:60px;
+		padding:10px;
+		resize:none;
+		width:94%;
+		line-height:22px;
+		color:#9fa3a7;
+		font-size:14px;
+	}
+	.nice-select{
+		position: relative;
+		background: #fff url(images/a2.jpg) no-repeat right center;
+		background-size:18px;
+		width:47%;
+		float:left;
+		border:1px solid #e5e5e5;
+		border-radius:5px;
+		height:44px;
+		line-height:44px;
+	}
+
+	.nice-select ul{
+		width: 100%;
+		display: none;
+		position: absolute;
+		left: -1px;
+		top: 44px;
+		overflow: hidden;
+		background-color: #fff;
+		max-height: 150px;
+		overflow-y: auto;
+		border: 1px solid #b9bcbf;
+		z-index: 9999;
+		border-radius:5px;
+
+	}
+	.nice-select ul li{
+		padding-left:10px;
+	}
+	.nice-select ul li:hover{
+		background:#f8f4f4;
+	}
+	.pc-kk-form-list-clear{
+		background:none;
+		border:none;
+	}
+	.pc-kk-form-btn button{
+		background:#ec5224;
+		color:#fff;
+		border:none;
+		width:100%;
+		height:50px;
+		line-height:50px;
+		font-size:16px;
+		border-radius:50px;
+	}
+  </style>
+
+</head>
+
+<body id="page-top">
+
+  <body class="bootstrap-admin-with-small-navbar">
+
+  <div class="navbar navbar-fixed-top", style="margin:auto">
+      <div class="navbar-inner">
+        <div class="container">
+          <!-- logo 数字图书馆 注意：需要制作一个大小一致的徽标 -->
+          <a class="brand logo" style="float:left">
+            <img src="{%static 'assets/img/sculogo1.png'%}" alt="scuIS" />
+          </a>
+          <!-- end logo -->
+
+          <!-- top menu -->
+          <div>
+            <nav>
+              <ul class="nav topnav">
+
+                <li class="dropdown  active primary">
+                  <a href="/"><i class="icon-home icon-white"></i>首页</a>
+                  <!--<ul class="dropdown-menu">
+                    <li><a href="index_alt1.html">Index alt 1</a></li>
+                    <li><a href="index_alt2.html">Index alt 2</a></li>
+                  </ul>  -->
+                </li>
+
+                <li class="dropdown warning">
+                  <a href="{%url 'readerService:borrowTips'%}"><i class="icon-star icon-white"></i>读者服务</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{%url 'readerService:borrowTips'%}">借还图书</a></li>
+                    <li><a href="{%url 'readerService:serviceTime'%}">服务时间</a></li>
+                    <li><a href="{%url 'readerService:renewal'%}">续借与到期提醒</a></li>
+                    <li><a href="{%url 'readerService:cableNumber'%}">索取号</a></li>
+                    <li><a href="{%url 'readerService:compensation'%}">赔偿损失</a></li>
+                    <li class="dropdown"><a href="{%url 'readerService:bookReservation'%}">图书预约</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'readerService:bookReservationTips'%}">图书预约说明</a></li>
+                        <li><a href="{%url 'readerService:bookReservationBooked'%}">已预约图书</a></li>
+                        <li><a href="{%url 'readerService:bookReservation'%}">预约图书</a></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown "><a href="{%url 'readerService:cd'%}">随书光盘</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'readerService:cd'%}">随书光盘检索</a></li>
+                        <li><a href="{%url 'readerService:cdInfo'%}">随书光盘说明</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+
+                <li class="dropdown danger">
+                  <a href="{%url 'participate:article_list'%}"><i class="icon-leaf icon-white"></i>读者参与</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{%url 'participate:article_list'%}">读者论坛</a></li>
+                    <li class="{%url 'participate:donation_rules'%}"><a href="#">读者捐赠</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'participate:donation_rules'%}">捐赠须知</a></li>
+                        <li><a href="{%url 'participate:donation_treatments'%}">捐赠处理</a></li>
+                      </ul>
+                    </li>
+                    <li><a href="{%url 'participate:donation_contact'%}">联系方式</a></li>
+                    <li class="dropdown"><a href="{%url 'participate:book_recommendation'%}">读者推荐</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'participate:book_recommendation'%}">好书推荐</a></li>
+                        <li><a href="{%url 'participate:bookrec_list'%}">推荐列表</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                 <li class="dropdown info">
+                    <a href=#"><i class="icon-camera icon-white"></i>信息中心</a>
+                    <ul class="dropdown-menu">
+                     <li class="dropdown "><a href="{% url 'infoCenter:newsIntro' %}">新闻公告</a>
+                        <ul class="dropdown-menu sub-menu">
+                          {% for column in news_columns %}
+                          <li><a href="{{ column.get_absolute_url }}">{{ column.columnName }}</a></li>
+                          {% endfor %}
+                        </ul>
+                      </li>
+                      <li class="dropdown"><a href="{% url 'service:libBrief' %}">服务指南</a>
+                        <ul class="dropdown-menu sub-menu">
+                          {% for cotegory in service_cotegories %}
+                          <li><a href="{{ cotegory.get_absolute_url }}">{{ cotegory.categoryName }}</a></li>
+                          {% endfor %}
+                        </ul>
+                      </li>
+                      <li><a href="{% url 'infoCenter:recBookList' %}">每周一书</a></li>
+                      <li><a href="{% url 'infoCenter:rankList' %}">排行榜</a></li>
+                    </ul>
+                </li>
+
+                <li class="success">
+                  <a href="{%url 'login:librarianLogin'%}"><i class="icon-envelope icon-white"></i> 馆员管理</a>
+                </li>
+              {% if user.is_authenticated %}
+                <li class="dropdown inverse">
+                  <a href="{%url 'readerCenter:profile'%}"><i class="icon-bullhorn icon-white"></i>个人中心</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{%url 'readerCenter:profile'%}">个人资料</a></li>
+                    <li><a href="{%url 'readerCenter:notice'%}">消息列表</a></li>
+                    <li><a href="{%url 'readerCenter:borrowingSituation'%}">我的借阅</a></li>
+                    <li><a href="{%url 'readerCenter:showsearchlist'%}">我的检索历史</a></li>
+                    <li><a href="{%url 'readerCenter:mylib'%}">我的图书馆</a></li>
+                  </ul>
+                </li>
+              {%else%}
+                <li class="dropdown inverse">
+                  <a href="#"><i class="icon-bullhorn icon-white"></i> 登录/注册</a>
+                  <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'login:readerLogin'%}">读者登录</a></li>
+                        <li><a href="{%url 'login:librarianLogin'%}">馆员登录</a></li>
+                        <li><a href="{%url 'login:userRegister'%}">读者注册</a></li>
+                  </ul>
+                </li>
+              {%endif%}
+              </ul>
+            </nav>
+          </div>
+          <!-- end menu -->
+        </div>
+      </div>
+    </div>
+
+  <div class="container", style="margin:0 auto">
+        <!-- left, vertical navbar & content -->
+        <div class="row">
+            <!-- left, vertical navbar -->
+             <div class="col-md-2 bootstrap-admin-col-left">
+                <ul class="nav navbar-collapse collapse bootstrap-admin-navbar-side">
+                    <li>
+                        <a href="../borrowTips"><i class="glyphicon glyphicon-chevron-right"></i> 借还图书</a>
+                    </li>
+                    <li>
+                        <a href="../bookReservation"><i class="glyphicon glyphicon-chevron-right"></i>图书预约</a>
+                    </li>
+                    <li>
+                        <a href="../compensation"><i class="glyphicon glyphicon-chevron-right"></i>赔偿损失</a>
+                    </li>
+                    <li>
+                        <a href="../cd"><i class="glyphicon glyphicon-chevron-right"></i>随书光盘与检索</a>
+                    </li>
+                    <li>
+                        <a href="../lecture"><i class="glyphicon glyphicon-chevron-right"></i>专题讲座</a>
+                    </li>
+                </ul>
+
+            </div>
+            <div class="col-md-10">
+
+
+                <div class="row">
+                  <div id="wrapper">
+
+    <div id="content-wrapper">
+
+      <div class="container-fluid">
+
+        <!-- Breadcrumbs-->
+        <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                          <!-- 所有类似地方加上 tag 参数，如排序、翻页等。实现带参数的交叉查询 -->
+                          <a href="{%url 'readerService:bookReservation'%}">
+                            预约图书
+                          </a>
+                      </li>
+                      <li class="breadcrumb-item">
+                          <a href="{%url 'readerService:bookReservationBooked'%}">
+                            已预约图书
+                          </a>
+                      </li>
+                      <li class="breadcrumb-item">
+                          <a href="{%url 'readerService:bookReservationTips'%}">
+                            图书预约说明
+                          </a>
+                      </li>
+                  </ol>
+              </nav>
+
+
+        <!--预约图书表单-->
+        <div class="pc-kk-form" style="width:800px;margin:auto;">
+            <div class="card-body" >
+              <p>亲爱的读者：</p>
+              <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果您想预约某本馆藏图书，请填写图书预约表单。我们将为您保留图书到预约节日日期，请及时前往取书地点领取预约图书。</p>
+          </div>
+            <hr style="border:1 dashed #987cb9" width="100%" color=#987cb9 size=1>
+            <h2 class="text-center cmnt-head ">读者预约图书表</h2>
+            <form action="/readerService/bookReservation/" method="POST">
+                <!--Django中需要POST数据的地方都必须有csrf_token -->
+                {% csrf_token %}
+              <div class="pc-kk-form-list">
+                <input type="text" name="readerId" class="readerId" placeholder="请输入您的读者ID号">
+              </div>
+              <div class="pc-kk-form-list">
+                <input type="text" name="book" class="book" placeholder="请输入想预约的图书名字">
+              </div>
+              <div class="pc-kk-form-list">
+                <input type="text" name="bookId" class="bookId" placeholder="请输入想预约的图书号">
+              </div>
+              <div class="pc-kk-form-list">
+                <input type="text" name="returnTime" class="returnTime" placeholder="请输入预期取书时间">
+              </div>
+
+                <p>请选择取书地点</p>
+
+              <div class="pc-kk-form-list pc-kk-form-list-clear">
+                <div class="nice-select" name="nice-select">
+                   <input type="text" value="工学馆"  name="place" class="place">
+                   <ul>
+                      <li data-value="工学馆">工学馆</li>
+                      <li data-value="江安馆">江安馆</li>
+                      <li data-value="医学馆">医学馆</li>
+                      <li data-value="文理馆">文理馆</li>
+                   </ul>
+
+                </div>
+              </div>
+
+              <div class="pc-kk-form-btn">
+                <button type="submit">提交</button>
+              </div>
+            </form>
+          </div>
+        <!--推荐表单结束-->
+
+
+      </div>
+      <!-- /.container-fluid -->
+
+          <script type="text/javascript" src="/static/mobankf/js/jquery.js"></script>
+
+          <script>
+
+            $('[name="nice-select"]').click(function(e){
+
+              $('[name="nice-select"]').find('ul').hide();
+
+              $(this).find('ul').show();
+
+              e.stopPropagation();
+
+            });
+
+            $('[name="nice-select"] li').hover(function(e){
+
+              $(this).toggleClass('on');
+
+              e.stopPropagation();
+
+            });
+
+            $('[name="nice-select"] li').click(function(e){
+
+              var val = $(this).text();
+
+              $(this).parents('[name="nice-select"]').find('input').val(val);
+
+              $('[name="nice-select"] ul').hide();
+
+              e.stopPropagation();
+
+            });
+
+            $(document).click(function(){
+
+              $('[name="nice-select"] ul').hide();
+
+            });
+
+          </script>
+
+
+    </div>
+    <!-- /.content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+
+
+  </div>
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+
+            <!-- content -->
+   <!-- Sticky Footer -->
+        </div>>
+
+  <!-- /#wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-primary" href="login.html">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="../../static/vendor/jquery/jquery.min.js"></script>
+  <script src="../../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="../../static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Page level plugin JavaScript-->
+  <script src="../../static/vendor/chart.js/Chart.min.js"></script>
+  <script src="../../static/vendor/datatables/jquery.dataTables.js"></script>
+  <script src="../../static/vendor/datatables/dataTables.bootstrap4.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="../../static/js/sb-admin.min.js"></script>
+
+  <!-- Demo scripts for this page-->
+  <script src="../../static/js/demo/datatables-demo.js"></script>
+  <script src="../../static/js/demo/chart-area-demo.js"></script>
+
+  <script src="{%static 'assets/js/jquery-1.8.2.min.js'%}"></script>
+  <script src="{%static 'assets/js/jquery.easing.1.3.js'%}"></script>
+  <script src="{%static 'assets/js/google-code-prettify/prettify.js'%}"></script>
+  <script src="{%static 'assets/js/modernizr.js'%}"></script>
+  <script src="{%static 'assets/js/bootstrap.js'%}"></script>
+  <script src="{%static 'assets/js/jquery.elastislide.js'%}"></script>
+  <script src="{%static 'assets/js/jquery.flexslider.js'%}"></script>
+  <script src="{%static 'assets/js/jquery.prettyPhoto.js'%}"></script>
+  <script src="{%static 'assets/js/application.js'%}"></script>
+  <script src="{%static 'assets/js/hover/jquery-hover-effect.js'%}"></script>
+  <script src="{%static 'assets/js/hover/setting.js'%}"></script>
+  <script src="{%static 'assets/js/camera/camera.min.js'%}"></script>
+  <script src="{%static 'assets/js/camera/setting.js'%}"></script>
+
+  <!-- Template Custom JavaScript File -->
+  <script src="{%static 'assets/js/custom.js'%}"></script>
+
+</body>
+
+</html>
+
+
