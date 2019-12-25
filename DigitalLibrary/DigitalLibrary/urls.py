@@ -27,7 +27,7 @@ import service.views as service_view
 import infoCenter.views as infoCenter_view
 from django.conf import settings
 from django.conf.urls.static import static
-
+from django.views.static import serve
 
 
 urlpatterns = [
@@ -44,4 +44,6 @@ urlpatterns = [
     url(r'^service/', include('service.urls')),
     #张丽：登录图形验证码
     url(r'^captcha', include('captcha.urls')),
+    url(r'media/(?P<path>.*)', serve, {'document_root': settings.MEDIA_ROOT}),
+    url(r'^upload/', include('upload.urls',namespace = 'upload')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
