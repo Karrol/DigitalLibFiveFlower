@@ -46,4 +46,8 @@ urlpatterns = [
 
     # 推荐书目
     path('groupBook/', views.group_book, name='groupbook_recom'),
+    #馆长信箱
+    path('curatorMail/', views.group_book, name='curatorMail'),
+    #论坛帮助
+    path('listHelp/', views.group_book, name='listHelp'),
 ]

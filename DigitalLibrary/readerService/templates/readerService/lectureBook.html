@@ -10,19 +10,18 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>数字图书馆</title>
+  <title>读者服务</title>
 
   <!-- Custom fonts for this template-->
-  <link href="/static/mobankf/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="../../static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
   <!-- Page level plugin CSS-->
-  <link href="/static/mobankf/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+  <link href="../../static/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
 
   <!-- Custom styles for this template-->
-  <link href="/static/mobankf/css/sb-admin.css" rel="stylesheet">
+  <link href="../../static/css/sb-admin.css" rel="stylesheet">
 
-
-    <link href="{%static 'assets/css/bootstrap.css'%}" rel="stylesheet">
+   <link href="{%static 'assets/css/bootstrap.css'%}" rel="stylesheet">
   <link href="{%static 'assets/css/bootstrap-responsive.css'%}" rel="stylesheet">
   <link href="{%static 'assets/css/docs.css'%}" rel="stylesheet">
   <link href="{%static 'assets/css/prettyPhoto.css'%}" rel="stylesheet">
@@ -44,28 +43,9 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
-    <style>
-         .form-login {
-  max-width: 400px;
-  padding: 20px 15px;
-  margin: 0 auto;
-}
 
 
-
-.form-login .form-control:focus {
-  z-index: 2;
-}
-.form-login input[type="text"] {
-  margin-bottom: 0px;
-  border-radius:5px;
-  height:20px;
-  padding: 15px;
-  font-size: 16px;
-
-}
-    </style>
-  <!--表单样式-->
+    <!--表单样式-->
   <style>
     ::-moz-placeholder {
 		color: #9fa3a7;
@@ -160,10 +140,12 @@
 	}
   </style>
 
+
 </head>
 
+<body id="page-top">
 
-<body class="bootstrap-admin-with-small-navbar">
+  <body class="bootstrap-admin-with-small-navbar">
 
   <div class="navbar navbar-fixed-top", style="margin:auto">
       <div class="navbar-inner">
@@ -303,7 +285,6 @@
       </div>
     </div>
 
-
   <div class="container", style="margin:0 auto">
         <!-- left, vertical navbar & content -->
         <div class="row">
@@ -311,110 +292,99 @@
              <div class="col-md-2 bootstrap-admin-col-left">
                 <ul class="nav navbar-collapse collapse bootstrap-admin-navbar-side">
                     <li>
-                        <a href="{%url 'participate:article_list'%}"><i class="glyphicon glyphicon-chevron-right"></i> 读者论坛</a>
+                        <a href="../borrowTips"><i class="glyphicon glyphicon-chevron-right"></i> 借还图书</a>
                     </li>
                     <li>
-                        <a href="{%url 'participate:donation_rules'%}"><i class="glyphicon glyphicon-chevron-right"></i> 图书捐赠</a>
+                        <a href="../bookReservation"><i class="glyphicon glyphicon-chevron-right"></i>图书预约</a>
                     </li>
                     <li>
-                        <a href="{%url 'participate:book_recommendation'%}"><i class="glyphicon glyphicon-chevron-right"></i> 读者推荐</a>
+                        <a href="../compensation"><i class="glyphicon glyphicon-chevron-right"></i>赔偿损失</a>
                     </li>
                     <li>
-                        <a href="{%url 'participate:groupbook_recom'%}"><i class="glyphicon glyphicon-chevron-right"></i> 推荐书目</a>
+                        <a href="../cd"><i class="glyphicon glyphicon-chevron-right"></i>随书光盘与检索</a>
+                    </li>
+                    <li>
+                        <a href="../lecture"><i class="glyphicon glyphicon-chevron-right"></i>专题讲座</a>
                     </li>
 
                 </ul>
 
             </div>
+            <div class="col-md-10">
 
-<div class="col-md-10">
 
-   <div id="content-wrapper">
+                <div class="row">
+                  <div id="wrapper">
+
+    <div id="content-wrapper">
 
       <div class="container-fluid">
 
         <!-- Breadcrumbs-->
+        <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                          <!-- 所有类似地方加上 tag 参数，如排序、翻页等。实现带参数的交叉查询 -->
+                          <a href="{%url 'readerService:lecture'%}">
+                            专题讲座详情
+                          </a>
+                      </li>
+                      <li class="breadcrumb-item">
+                          <a href="{%url 'readerService:lectureBook'%}">
+                            讲座预约
+                          </a>
+                      </li>
+                      <li class="breadcrumb-item">
+                          <a href="{%url 'readerService:lectureTips'%}">
+                            讲座预约说明
+                          </a>
+                      </li>
+                  </ol>
+              </nav>
 
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="{% url 'participate:book_recommendation' %}">好书推荐</a>
-          </li>
-          <li class="breadcrumb-item">
-            <a href="{% url 'participate:bookrec_list' %}">推荐列表</a>
-          </li>
-        </ol>
 
 
-        <!--推荐表单-->
-
-            <p>
-              <img src="{% static 'mobankf/images/rec_title.jpg'%}" width="700" height="140" />
-            </p>
+        <!--讲座预约表单-->
+        <div class="pc-kk-form" style="width:800px;margin:auto;">
             <div class="card-body" >
               <p>亲爱的读者：</p>
-              <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果您在书店或是别的地方发现了一本好书，是您科研、教学或者学习所需要的，而我馆目前还没有收藏的话，请您将这本书的有关信息告诉我们，我们将根据经费情况进行订购。 外文及港台原版书籍，请通过以下方式推荐：</p>
-              <p>Email: wuduojinhua@scu.edu.cn</p>
-              <p>电话：028-85408797</p>
-              <p>感谢您对图书馆工作的支持！</p>
+              <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;为了使更多的读者了解和掌握图书馆的馆藏资源，确保能够更快更好的查找到所需信息，并且使图书馆的专题讲座更具有针对性，我馆在进行常规系列讲座的同时，还提供预约讲座服务。读者可以根据自身状况，预约某场讲座，收获知识。</p>
+              <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;预约讲座内容，包括思想系列、社会系列、历史系列、文艺系列、人生系列等五大系列。具体的讲座时间、地点以及场次均可以灵活安排。</p>
+              <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;图书馆也欢迎读者的个人预约，当同一资源在一定时间内预约人数达到10人及以上，将会在预约人满的下一周举办培训，届时图书馆会通知各位预约读者具体的培训安排。
+                 预约讲座的读者请如实填写《读者预约培训讲座信息表》，也可来电咨询预约培训事宜；预约讲座的时间和地点根据预约人员具体情况待定。</p>
           </div>
             <hr style="border:1 dashed #987cb9" width="100%" color=#987cb9 size=1>
-            <h2 class="text-center cmnt-head ">读者好书推荐信息表</h2>
-            <p class="text-center fade-txt">查看 <a href="{% url 'participate:bookrec_list' %}">推荐列表</a></p>
-
-                <div class="row">
-                    <div class="col-md-4 col-md-offset-4 ">
-                        <form class='form-login' action="{%url 'participate:book_recommendation'%}" method="POST">
-
-                          {% if message %}
-                              <div class="alert alert-warning">{{ message }}</div>
-                          {% endif %}
-                          {% csrf_token %}
-
-                          <div class="form-group ">
-                              {{readerrecom_form.bookName.label_tag}}
-                              {{readerrecom_form.bookName }}
-                          </div>
-                          <div class="form-group">
-                              {{readerrecom_form.bookAuthor.label_tag}}
-                              {{readerrecom_form.bookAuthor }}
-                          </div>
-                          <div class="form-group">
-                              {{readerrecom_form.bpublisher.label_tag}}
-                              {{readerrecom_form.bpublisher }}
-                          </div>
-                          <div class="form-group">
-                              {{readerrecom_form.bpubTime.label_tag}}
-                              {{readerrecom_form.bpubTime }}
-                          </div>
-                          <div class="form-group">
-                              {{readerrecom_form.bookIntroduction.label_tag}}
-                              {{readerrecom_form.bookIntroduction }}
-                          </div>
-                          
-                          <div class="form-group">
-                              {{readerrecom_form.RecIdentity.label_tag}}
-                              {{readerrecom_form.RecIdentity }}
-                          </div>
-                          <div class="form-group">
-                              {{ readerrecom_form.RecDepartment.label_tag }}
-                              {{ readerrecom_form.RecDepartment }}
-
-                          </div>
-
-                          <button type="reset" class="btn btn-default pull-left">重置</button>
-                          <button type="submit" class="btn btn-primary pull-right">提交</button>
-                           <br><br>
-                           <br><br>
-                      </form>
-
-
-                    </div>
-                </div>
-
+            <h2 class="text-center cmnt-head ">讲座预约表单</h2>
+            <form action="/readerService/lectureBook/" method="POST">
+                <!--Django中需要POST数据的地方都必须有csrf_token -->
+                {% csrf_token %}
+              <div class="pc-kk-form-list">
+                <input type="text" name="readerId" class="readerId" placeholder="请输入您的读者ID号">
+              </div>
+              <div class="pc-kk-form-list">
+                <input type="text" name="email" class="email" placeholder="请输入您的Emai邮箱地址">
+              </div>
+              <div class="pc-kk-form-list">
+                <input type="text" name="lectureName" class="lectureName" placeholder="请输入您想预约的讲座名字">
+              </div>
+              <div class="pc-kk-form-list">
+                <input type="text" name="speaker" class="speaker" placeholder="请输入讲座的主讲人姓名">
+              </div>
+              <div class="pc-kk-form-list">
+                <input type="text" name="lectureTime" class="lectureTime" placeholder="请输入讲座具体日期">
+              </div>
+              <div class="pc-kk-form-btn">
+                <button type="submit">提交</button>
+              </div>
+            </form>
+          </div>
         <!--推荐表单结束-->
 
 
-          <!--<script type="text/javascript" src="/static/mobankf/js/jquery.js"></script>
+      </div>
+      <!-- /.container-fluid -->
+
+          <script type="text/javascript" src="/static/mobankf/js/jquery.js"></script>
 
           <script>
 
@@ -454,36 +424,42 @@
 
             });
 
-          </script>-->
+          </script>
+
+
+
+        </div>
 
 
       <!-- /.container-fluid -->
 
-      </div>
+    </div>
     <!-- /.content-wrapper -->
 
+  </div>
+  <!-- /#wrapper -->
 
-</div>
-<!-- /.col-md-10-->
+
+  </div>
+                </div>
 
 
             </div>
-<!-- /.row -->
+
 
 
         </div>
-  <!-- /.container -->
-
 
             <!-- content -->
-
    <!-- Sticky Footer -->
-        </div>
+        </div>>
 
 
 
 
   <!-- /#wrapper -->
+
+
 
   <!-- Scroll to Top Button-->
   <a class="scroll-to-top rounded" href="#page-top">
@@ -510,24 +486,23 @@
   </div>
 
   <!-- Bootstrap core JavaScript-->
-  <script src="/static/mobankf/vendor/jquery/jquery.min.js"></script>
-  <script src="/static/mobankf/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../../static/vendor/jquery/jquery.min.js"></script>
+  <script src="../../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Core plugin JavaScript-->
-  <script src="/static/mobankf/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="../../static/vendor/jquery-easing/jquery.easing.min.js"></script>
 
   <!-- Page level plugin JavaScript-->
-  <script src="/static/mobankf/vendor/chart.js/Chart.min.js"></script>
-  <script src="/static/mobankf/vendor/datatables/jquery.dataTables.js"></script>
-  <script src="/static/mobankf/vendor/datatables/dataTables.bootstrap4.js"></script>
+  <script src="../../static/vendor/chart.js/Chart.min.js"></script>
+  <script src="../../static/vendor/datatables/jquery.dataTables.js"></script>
+  <script src="../../static/vendor/datatables/dataTables.bootstrap4.js"></script>
 
   <!-- Custom scripts for all pages-->
-  <script src="/static/mobankf/js/sb-admin.min.js"></script>
+  <script src="../../static/js/sb-admin.min.js"></script>
 
   <!-- Demo scripts for this page-->
-  <script src="/static/mobankf/js/demo/datatables-demo.js"></script>
-  <script src="/static/mobankf/js/demo/chart-area-demo.js"></script>
-
+  <script src="../../static/js/demo/datatables-demo.js"></script>
+  <script src="../../static/js/demo/chart-area-demo.js"></script>
 
   <script src="{%static 'assets/js/jquery-1.8.2.min.js'%}"></script>
   <script src="{%static 'assets/js/jquery.easing.1.3.js'%}"></script>
@@ -546,8 +521,7 @@
   <!-- Template Custom JavaScript File -->
   <script src="{%static 'assets/js/custom.js'%}"></script>
 
-
-
 </body>
 
 </html>
+

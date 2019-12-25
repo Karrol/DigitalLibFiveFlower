@@ -133,7 +133,7 @@ class RecbooklistInfo(models.Model):
     # 出版社
     bpublisher = models.CharField(max_length=30)
     # 出版时间
-    bpubTime = models.DateField(blank=True)
+    bpubTime = models.CharField(blank=True,max_length=30)
     # ISBN编号
     bookISBN = models.CharField(max_length=10,blank=True)
     # 简要介绍
@@ -141,7 +141,7 @@ class RecbooklistInfo(models.Model):
     # 推荐时间
     RecTime = models.DateField(default=timezone.now)
     # 推荐人
-    RecName = models.ForeignKey(Reader, on_delete=models.CASCADE)
+    RecName = models.ForeignKey(User, on_delete=models.CASCADE)
     # 推荐人身份
     RecIdentity = models.CharField(max_length=20)
     # 推荐人单位

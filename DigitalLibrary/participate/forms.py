@@ -15,10 +15,16 @@ class ArticlePostForm(forms.ModelForm):
         fields = ('title', 'body', 'tags', 'avatar')
 
 # 写评论的表单
-class CommentForm(forms.ModelForm):
-    class Meta:
-        model = Comment
-        fields = ['commentbody']
+class CommentForm(forms.Form):
+    commentbody = forms.CharField(
+
+        label="我也要发言",
+        widget=forms.Textarea(attrs={
+            'class': 'form-control  ',
+            'name': 'commentbody',
+        }),
+        required=True, )
+   
 
 
 # 推荐书的表单
@@ -83,7 +89,7 @@ class readerrecomForm(forms.Form):
         }),
         required=False, )
 
-    bpubTime = forms.DateField(
+    bpubTime = forms.CharField(
 
         label="出版时间",
         widget=forms.TextInput(attrs={
@@ -110,15 +116,7 @@ class readerrecomForm(forms.Form):
         }),
         required=False, )
 
-    RecName = forms.CharField(
-
-        label="推荐人",
-        widget=forms.TextInput(attrs={
-            'class': 'form-control  ',
-            'name': 'RecName',
-        }),
-        required=False, )
-
+    
 
     RecIdentity = forms.CharField(
         max_length=20,

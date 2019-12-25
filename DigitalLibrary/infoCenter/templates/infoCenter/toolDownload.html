@@ -1,26 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-{% load static %}
-{% load staticfiles %}
+ {% load static %}
+ {% load staticfiles %}
 <head>
-
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>工具下载-数字图书馆</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>读者服务</title>
-
-  <!-- Custom fonts for this template-->
-  <link href="../../static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-
-  <!-- Page level plugin CSS-->
-  <link href="../../static/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-
-  <!-- Custom styles for this template-->
-  <link href="../../static/css/sb-admin.css" rel="stylesheet">
-
+  <!-- styles -->
    <link href="{%static 'assets/css/bootstrap.css'%}" rel="stylesheet">
   <link href="{%static 'assets/css/bootstrap-responsive.css'%}" rel="stylesheet">
   <link href="{%static 'assets/css/docs.css'%}" rel="stylesheet">
@@ -39,86 +28,24 @@
   <link rel="apple-touch-icon-precomposed" href="{%static 'assets/ico/apple-touch-icon-57-precomposed.png'%}">
   <link rel="stylesheet" href="/baidu/css/bootstrap.min.css"type="text/css"/>
 
-  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
-    <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
-
-<style>
-input#keyword {
-    padding: 16px;
-    border-radius: 5px;
-    position:center;
-}
-
-.bootstrap-admin-no-table-panel,
-.bootstrap-admin-no-table-panel-content{
-    float: left;
-    width: 100%;
-}
- table
-
-        {
-
-            border-collapse: collapse;
-
-            margin: 0 auto;
-
-            text-align: center;
-
-        }
-
-        table td, table th
-
-        {
-
-            border: 1px solid #cad9ea;
-
-            color: #666;
-
-            height: 30px;
-
-        }
-
-        table thead th
-
-        {
-
-            background-color: #CCE8EB;
-
-            width: 100px;
-
-        }
-
-        table tr:nth-child(odd)
-
-        {
-
-            background: #fff;
-
-        }
-
-        table tr:nth-child(even)
-
-        {
-
-            background: #F5FAFA;
-
-        }
-
-</style>
-
+  <!-- =======================================================
+    Theme Name: Scaffold
+    Theme URL: https://bootstrapmade.com/scaffold-bootstrap-metro-style-template/
+    Author: BootstrapMade.com
+    Author URL: https://bootstrapmade.com
+  ======================================================= -->
 </head>
 
-<body id="page-top">
+<body data-spy="scroll" data-target=".bs-docs-sidebar">
 
-  <body class="bootstrap-admin-with-small-navbar">
-
-  <div class="navbar navbar-fixed-top", style="margin:auto">
+  <header>
+    <!-- Navbar
+    ================================================== -->
+    <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
           <!-- logo 数字图书馆 注意：需要制作一个大小一致的徽标 -->
-          <a class="brand logo" style="float:left">
+          <a class="brand logo" href="index.html">
             <img src="{%static 'assets/img/sculogo1.png'%}" alt="scuIS" />
           </a>
           <!-- end logo -->
@@ -251,202 +178,148 @@ input#keyword {
         </div>
       </div>
     </div>
+  </header>
 
-  <div class="container", style="margin:0 auto">
-        <!-- left, vertical navbar & content -->
+  <!-- Subhead
+================================================== -->
+  <section id="subintro">
+    <div class="jumbotron subhead" id="overview">
+      <div class="container">
         <div class="row">
-            <!-- left, vertical navbar -->
-             <div class="col-md-2 bootstrap-admin-col-left">
-                <ul class="nav navbar-collapse collapse bootstrap-admin-navbar-side">
-                    <li>
-                        <a href="../borrowTips"><i class="glyphicon glyphicon-chevron-right"></i> 借还图书</a>
-                    </li>
-                    <li>
-                        <a href="../bookReservation"><i class="glyphicon glyphicon-chevron-right"></i>图书预约</a>
-                    </li>
-                    <li>
-                        <a href="../compensation"><i class="glyphicon glyphicon-chevron-right"></i>赔偿损失</a>
-                    </li>
-                    <li>
-                        <a href="../cd"><i class="glyphicon glyphicon-chevron-right"></i>随书光盘与检索</a>
-                    </li>
-                    <li>
-                        <a href="../lecture"><i class="glyphicon glyphicon-chevron-right"></i>专题讲座</a>
-                    </li>
-
-                </ul>
-
+          <div class="span8">
+            <h3><i class="m-icon-big-swapright m-icon-white"></i> 工具下载</h3>
+            <p>信息中心>>工具下载</p>
+          </div>
+          <div class="span4">
+            <div class="input-append">
+                <form method="get" id="searchform" action="{% url 'infoCenter:newsSearch' %}" class="form-search">
+                    {% csrf_token %}
+                    <input type="search" name="q" placeholder="搜索新闻" class="input-medium search-query">
+                    <button type="submit" class="btn btn-inverse">搜索新闻</button>
+                </form>
             </div>
-            <div class="col-md-10">
-
-
-                <div class="row">
-                  <div id="wrapper">
-
-    <div id="content-wrapper">
-
-      <div class="container-fluid">
-
-        <!-- Breadcrumbs-->
-        <nav aria-label="breadcrumb">
-                  <ol class="breadcrumb">
-                      <li class="breadcrumb-item">
-                          <!-- 所有类似地方加上 tag 参数，如排序、翻页等。实现带参数的交叉查询 -->
-                          <a href="{%url 'readerService:cd'%}">
-                            随书光盘
-                          </a>
-                      </li>
-                      <li class="breadcrumb-item">
-                          <a href="{%url 'readerService:cdInfo'%}">
-                            随书光盘说明
-                          </a>
-                      </li>
-                  </ol>
-              </nav>
-
-                 <form class="form-horizontal" action="{%url 'readerService:cd'%}" method="get">
-                      <div class="col-lg-7 form-group">
-                           <label class="col-lg-4 control-label" >随书光盘查询</label>
-                           <div class="col-lg-8">
-                               <input class="form-control" id="keyword" name="q" placeholder="关键词：书名" type="text">
-                               <label class="control-label" style="display: none;"></label>
-                           </div>
-                      </div>
-                      <div class="col-lg-3 form-group">
-
-                          <button type="submit" class="btn btn-primary" id="btn_query" onclick="">查询</button>
-                      </div>
-                 </form>
-
-    <div style="text-align: center">
-        <table style="float: contour; margin:0 auto;text-align: center; width: 800px;" >
-            <tr style="text-align: center" class="success">
-                <td>书名</td>
-                <td>作者</td>
-                <td>光盘号</td>
-            </tr>
-            {% for cd in contacts %}
-                <tr class="info">
-                    <td>{{ cd.title }}</td>
-                    <td>{{ cd.author }}</td>
-                    <td>{{ cd.cdId }}</td>
-                </tr>
-            {% endfor %}
-        </table>
-      <!-- /.container-fluid -->
-
-
-    <div class="navigation">
-        <ul>
-            {% for pg in contacts.paginator.page_range %}
-                {% if contacts.number == pg %}
-                    <a href="?page={{ pg }}">{{ pg }}</a>
-                {% else %}
-                    <a href="?page={{ pg }}">{{ pg }}</a>
-                {% endif %}
-            {% endfor %}
-            {% if contacts.has_next %}
-                <a href="?page={{ contacts.next_page_number }}">下一页</a>
-            {% endif %}
-        </ul>
-
-{% if info %}
-    <script>
-        window.alert('{{ info }}');
-    </script>
-{% endif %}
-
-
-    </div>
-    <!-- /.content-wrapper -->
-
-  </div>
-  <!-- /#wrapper -->
-
-
-
-  </div>
-                </div>
-
-
-            </div>
-
-
-
         </div>
-
-            <!-- content -->
-   <!-- Sticky Footer -->
-        </div>>
-
-
-
-
-  <!-- /#wrapper -->
-
-
-
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
-
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- Bootstrap core JavaScript-->
-  <script src="../../static/vendor/jquery/jquery.min.js"></script>
-  <script src="../../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <section id="maincontent">
+    <div class="container">
+      <div class="row">
+        <div class="span12">
+          <h3>电子资源相关工具</h3>
 
-  <!-- Core plugin JavaScript-->
-  <script src="../../static/vendor/jquery-easing/jquery.easing.min.js"></script>
+          <div class="row">
+            <div class="span3">
+              <div class="well well-primary">
+                <h2>文献管理软件-NoteExpress</h2>
+                <p><span class="label">中文</span></p>
+                <ul class="check-white">
+                  <li><b>数据库公司:</b> 北京爱琴海软件公司</li>
+                  <li><b>学科范围 : </b>综合, 综合与工具类</li>
+                  <li><b>文献类型: 其它</b></li>
+                    <li><b>是否全文: 其他</b></li>
+                </ul>
 
-  <!-- Page level plugin JavaScript-->
-  <script src="../../static/vendor/chart.js/Chart.min.js"></script>
-  <script src="../../static/vendor/datatables/jquery.dataTables.js"></script>
-  <script src="../../static/vendor/datatables/dataTables.bootstrap4.js"></script>
+                <p><a class="btn btn-large" href="{% url 'infoCenter:NoteExpress' %}"><i class="icon-ok icon"></i> 使用</a></p>
+              </div>
+            </div>
 
-  <!-- Custom scripts for all pages-->
-  <script src="../../static/js/sb-admin.min.js"></script>
+            <div class="span3">
+              <div class="well well-warning">
+                <h2>超星电子图书阅读器</h2>
+                <p><span class="label">中文</span></p>
+                <ul class="check-white">
+                  <li><b>学科主题</b>：综合类数据库</li>
+                  <li><b>支持系统</b>：Windows8.1/Windows7/ Windows XP/Vista</li>
+                </ul>
 
-  <!-- Demo scripts for this page-->
-  <script src="../../static/js/demo/datatables-demo.js"></script>
-  <script src="../../static/js/demo/chart-area-demo.js"></script>
+                <p><a class="btn btn-large" href="http://www.sslibrary.com/ssreader/download"><i class="icon-ok icon"></i> 下载</a></p>
+              </div>
+            </div>
 
-  <script src="{%static 'assets/js/jquery-1.8.2.min.js'%}"></script>
-  <script src="{%static 'assets/js/jquery.easing.1.3.js'%}"></script>
-  <script src="{%static 'assets/js/google-code-prettify/prettify.js'%}"></script>
-  <script src="{%static 'assets/js/modernizr.js'%}"></script>
-  <script src="{%static 'assets/js/bootstrap.js'%}"></script>
-  <script src="{%static 'assets/js/jquery.elastislide.js'%}"></script>
-  <script src="{%static 'assets/js/jquery.flexslider.js'%}"></script>
-  <script src="{%static 'assets/js/jquery.prettyPhoto.js'%}"></script>
-  <script src="{%static 'assets/js/application.js'%}"></script>
-  <script src="{%static 'assets/js/hover/jquery-hover-effect.js'%}"></script>
-  <script src="{%static 'assets/js/hover/setting.js'%}"></script>
-  <script src="{%static 'assets/js/camera/camera.min.js'%}"></script>
-  <script src="{%static 'assets/js/camera/setting.js'%}"></script>
+            <div class="span3">
+              <div class="well well-info">
+                <h2>学术期刊(CNKI)-CAJ全文阅读器</h2>
+                <p><span class="label">中文</span></p>
+                <ul class="check-white">
+                  <li><b>是否全文：</b>是</li>
+                  <li><b>支持格式：</b>TEB、CAJ、NH、KDH、PDF</li>
+                  <li><b>专用：</b>中国期刊网</li>
+                </ul>
+
+                <p><a class="btn btn-large" href="https://www.cnki.net/software/xzydq.htm"><i class="icon-ok icon"></i> 下载</a></p>
+              </div>
+            </div>
+
+            <div class="span3">
+              <div class="well well-success">
+                <h2>EndNote单机版文献管理软件</h2>
+                <p><span class="label">英文</span></p>
+                <ul class="check-white">
+                  <li><b>数据库公司/出版商: </b>科睿唯安公司</li>
+                  <li><b>学科范围 :</b>综合, 综合与工具类</li>
+                  <li><b>文献类型:</b>其他</li>
+                  <li><b>是否全文：</b>否</li>
+                </ul>
+
+                <p><a class="btn btn-large" href="{% url 'infoCenter:EndNote' %}"><i class="icon-ok icon"></i> 使用</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer
+ ================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+
+      </div>
+    </div>
+
+    <div class="verybottom">
+      <div class="container">
+        <div class="row">
+          <div class="span6">
+            <p>&copy;五朵金花</p>
+          </div>
+          <div class="span6">
+            <div class="pull-right">
+              <div class="credits">
+                <!--
+                  All the links in the footer should remain intact.
+                  You can delete the links only if you purchased the pro version.
+                  Licensing information: https://bootstrapmade.com/license/
+                  Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Scaffold
+                -->
+                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="{%static 'Scaffold/assets/js/jquery-1.8.2.min.js' %}"></script>
+  <script src="{%static 'Scaffold/assets/js/jquery.easing.1.3.js' %}"></script>
+  <script src="{%static 'Scaffold/assets/js/google-code-prettify/prettify.js' %}"></script>
+  <script src="{%static 'Scaffold/assets/js/modernizr.js' %}"></script>
+  <script src="{%static 'Scaffold/assets/js/bootstrap.js' %}"></script>
+  <script src="{%static 'Scaffold/assets/js/jquery.elastislide.js' %}"></script>
+  <script src="{%static 'Scaffold/assets/js/jquery.prettyPhoto.js' %}"></script>
+  <script src="{%static 'Scaffold/assets/js/application.js' %}"></script>
 
   <!-- Template Custom JavaScript File -->
-  <script src="{%static 'assets/js/custom.js'%}"></script>
+  <script src="{%static 'Scaffold/assets/js/custom.js' %}"></script>
 
 </body>
 
 </html>
-

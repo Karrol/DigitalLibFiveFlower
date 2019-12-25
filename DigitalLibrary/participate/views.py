@@ -14,7 +14,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 # 引入HttpResponse
 from django.http import HttpResponse
 # 引入刚才定义的ArticlePostForm表单类
-from .forms import ArticlePostForm
+from .forms import ArticlePostForm ,CommentForm
 # 引入User模型
 from django.contrib.auth.models import User
 from login.models import Reader
@@ -245,14 +245,12 @@ def article_update(request, id):
 @login_required(login_url='/login/readerLogin/')
 def post_comment(request, article_id):
         article = get_object_or_404(ArticlePost, id=article_id)
-
         # 处理 POST 请求
         if request.method == 'POST':
-            comment_form = ArticlePostForm(request.POST)
+            comment_form = CommentForm(request.POST)
             if comment_form.is_valid():
-                new_comment = comment_form.save(commit=False)
-                new_comment.article = article
-                new_comment.user = request.user
+                commentbody = comment_form.cleaned_data['commentbody']
+                new_comment=Comment.objects.create(article=article,user=request.user,commentbody=commentbody)
                 new_comment.save()
                 return redirect(article)
             else:
@@ -261,41 +259,7 @@ def post_comment(request, article_id):
         else:
             return HttpResponse("发表评论仅接受POST请求。")
 
-# 推荐书的视图
-def book_recom(request):
-    # 判断用户是否提交数据
-    if request.method == "POST":
 
-        # 将提交的数据赋值到表单实例中
-        bookrecom_post_form = RecbooklistInfoForm(request.POST)
-        if RecbooklistInfoForm.is_valid():
-
-            message = "请检查填写的内容！"
-        # 判断提交的数据是否满足模型的要求
-            # 保存数据，但暂时不提交到数据库中
-        bookName =request.POST.get('bookName', '')
-        bookAuthor =request.POST.get('bookAuthor', '')
-        bpublisher = request.POST.get('bpublisher', '')
-
-        bookISBN = request.POST.get('bookISBN', '')
-        bookIntroduction = request.POST.get('bookIntroduction', '')
-        RecName =request.POST.get('RecName', '')
-        RecIdentity = request.POST.get('RecIdentity', '')
-        RecDepartment = request.POST.get('RecDepartment', '')
-        new_bookrecom = bookrecom_post_form.save(commit=False)
-        new_bookrecom = RecbooklistInfo.objects.create(bookName=bookName, bookAuthor=bookAuthor, bpublisher=bpublisher,bookISBN=bookISBN, bookIntroduction=bookIntroduction, RecName=RecName, RecIdentity=RecIdentity,RecDepartment=RecDepartment)
-                # 将新推荐保存到数据库中
-        new_bookrecom.save()
-                # 完成后返回到推荐列表
-        return redirect("participate:book_recommendation")
-    # 如果用户请求获取数据
-    else:
-        # 创建表单类实例
-        bookrecom_post_form = RecbooklistInfoForm()
-        # 赋值上下文
-        context = { 'bookrecom_post_form': bookrecom_post_form}
-        # 返回模板
-        return render(request, 'participate/bookrecom.html', context)
 
 # 读者好书推荐列表
 def recom_list(request):
@@ -320,33 +284,31 @@ def reader_recom(request):
     '''把已有的用户信息读出来，然后判断用户请求是POST还是GET。如果是GET，则显示表单,并将用户已有信息也显示在其中，如果是POST，则接收用户提交的表单信息，然后更新各个数据模型实例属性的值'''
     response = HttpResponse('')
     id = request.user.id
-    readerrecom_form = readerrecomForm(request.POST)
+    readerrecom_form = readerrecomForm()
     if request.method == "POST":
         message = '请注意检查填写内容'
+        readerrecom_form = readerrecomForm(request.POST)
         if readerrecom_form.is_valid():
-           readerrecom = readerrecom_form.cleaned_data
-           #获取前端表单中的数据，并用变量进行保存
-           bookName = readerrecom['bookName']#推荐书名
-           bookAuthor = readerrecom['bookAuthor']#书的作者
-           bpublisher = readerrecom['bpublisher']
-           bpubTime = readerrecom['bpubTime']
-           bookISBN = readerrecom['bookISBN']
-           bookIntroduction = readerrecom['bookIntroduction']  # 自动完整显示记录数
-           RecIdentity = readerrecom['RecIdentity']
-           RecDepartment = readerrecom['RecDepartment']
-           #创建“读者推荐表”实例，用以在数据库中创建记录
-
-           readers=Reader.objects.filter(user_id=id)
-           if readers:
-               reader=Reader.objects.get(user_id=id)
-           today=datetime.date.today()
-           recbook = RecbooklistInfo.objects.create(bookName=bookName, bookAuthor=bookAuthor, bpublisher=bpublisher,bpubTime=bpubTime,bookISBN=bookISBN, bookIntroduction=bookIntroduction, RecName=reader, RecIdentity=RecIdentity,RecDepartment=RecDepartment,RecTime=today)
-           recbook.save()
-        message = '推荐成功！感谢您的参与！'
+            #获取前端表单中的数据，并用变量进行保存
+            #张丽：表单的数据无效错误在于数据库设计不合理，出版年份不能为DateField
+            bookName = readerrecom_form.cleaned_data['bookName']#推荐书名
+            bookAuthor = readerrecom_form.cleaned_data['bookAuthor']#书的作者
+            bpublisher = readerrecom_form.cleaned_data['bpublisher']
+            bpubTime =readerrecom_form.cleaned_data['bpubTime']
+            bookISBN =readerrecom_form.cleaned_data['bookISBN']
+            bookIntroduction = readerrecom_form.cleaned_data['bookIntroduction']  # 自动完整显示记录数
+            RecIdentity =readerrecom_form.cleaned_data['RecIdentity']
+            RecDepartment = readerrecom_form.cleaned_data['RecDepartment']
+            #创建“读者推荐表”实例，用以在数据库中创建记录
+            user=request.user
+            today=datetime.date.today()
+            recbook = RecbooklistInfo.objects.create(bookName=bookName, bookAuthor=bookAuthor, bpublisher=bpublisher,RecIdentity=RecIdentity,RecDepartment=RecDepartment,RecTime=today  ,bookISBN=bookISBN,bookIntroduction=bookIntroduction, RecName=user,bpubTime=bpubTime)
+            recbook.save()
+            message = '推荐成功！感谢您的参与！'
         context = {
-            'readerrecom_form': readerrecom_form,
-            'message': message,
-        }
+                'readerrecom_form': readerrecom_form,
+                'message': message,
+            }
         return render(request, 'participate/bookrecom.html', context)
     return render(request, 'participate/bookrecom.html', locals())
 

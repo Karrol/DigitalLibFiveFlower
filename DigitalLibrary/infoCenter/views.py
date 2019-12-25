@@ -283,3 +283,38 @@ def newsSearch(request):
     }
 
     return render(request, 'infoCenter/newsResult.html', context)
+
+#工具下载
+def toolDownload(request):
+    news_intro_columns = newsColumn_info.objects.filter(nav_display=True)
+    side_cotegories = Category.objects.filter(side_display=True)
+
+    context = {
+        'news_intro_columns': news_intro_columns,
+        'side_cotegories': side_cotegories,
+    }
+
+    return render(request, 'infoCenter/toolDownload.html',context)
+
+#NoteExpress
+def NoteExpress(request):
+    news_intro_columns = newsColumn_info.objects.filter(nav_display=True)
+    side_cotegories = Category.objects.filter(side_display=True)
+
+    context = {
+        'news_intro_columns': news_intro_columns,
+        'side_cotegories': side_cotegories,
+    }
+
+    return render(request, 'infoCenter/NoteExpress.html', context)
+
+def EndNote(request):
+    news_intro_columns = newsColumn_info.objects.filter(nav_display=True)
+    side_cotegories = Category.objects.filter(side_display=True)
+
+    context = {
+        'news_intro_columns': news_intro_columns,
+        'side_cotegories': side_cotegories,
+    }
+
+    return render(request, 'infoCenter/EndNote.html', context)

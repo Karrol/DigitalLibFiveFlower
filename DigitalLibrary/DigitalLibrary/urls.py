@@ -38,9 +38,9 @@ urlpatterns = [
     url(r'^search/', include('search.urls',namespace = 'search')),
     url(r'^participate/', include('participate.urls',namespace = 'participate')),
     url(r'^readerService/', include('readerService.urls',namespace = 'readerService')),
-    url(r'^librarian/', include('librarian.urls')),
+    url(r'^librarian/', include('librarian.urls',namespace='librarian')),
     url(r'^ueditor/', include('DjangoUeditor.urls')),
-    url(r'^infoCenter/', include('infoCenter.urls')),
+    url(r'^infoCenter/', include('infoCenter.urls',namespace='infoCenter')),
     url(r'^service/', include('service.urls')),
     #张丽：登录图形验证码
     url(r'^captcha', include('captcha.urls')),
