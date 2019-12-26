@@ -62,6 +62,9 @@
                     <div class="col-md-5">
                         <a href="{%url 'readerCenter:mylib_add' book.ISBN%}"> <button class="btn btn-primary btn-lg">添至我的图书馆</button> </a>
                     </div>
+                    <div class="col-md-5">
+                        <a href="{%url 'search:bookDetailFormat' book.ISBN%}"> <button class="btn btn-primary btn-lg">图书信息规范数据格式</button> </a>
+                    </div>
                 </div>
                 <div class="col-md-6 col-md-offset-1">
                     <h2 class="text-center">{{ book.title }}</h2>
