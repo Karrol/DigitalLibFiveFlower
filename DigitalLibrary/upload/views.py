@@ -213,7 +213,7 @@ def wother_views(request):
 		#查看文件表中file文件是否为登陆用户上传，
 		list1=Files.objects.filter(uname=uname,wenjian=file,isActive=True)
 		#查看用户表是否存在yonghu的数据
-		user_list=Reader.objects.filter(name=yonghu)
+		user_list=Reader.objects.filter(email=yonghu)
 		if list1 :
 			#如果是登陆用户上传，再判断共享给的用户yonghu是否拥有file文件
 			list2=Files.objects.filter(uname=yonghu,lujing=list1[0].lujing,wenjian=file)
