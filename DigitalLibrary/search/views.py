@@ -264,6 +264,13 @@ def search_multikeyword(request):
             
         return redirect("search:searchHighResult")
     else:
+        request.session['keyword_catogary'] = ''
+        request.session['keyword_title'] = ''
+        request.session['keyword_author'] = ''
+        request.session['keyword_publishYear'] = ''
+        request.session['keyword_press'] = ''
+        request.session['keyword_booklib'] = ''
+        
         initial = {"catogary": request.session['keyword_catogary'],
                    "title": request.session['keyword_title'],
                    'author': request.session['keyword_author'],
@@ -330,5 +337,67 @@ def multisearchlist(request):
     }
     return render(request, 'search/multiKeywords_result.html', context)
 
+
+def search_help(request):
+    return render(request,'search/search_help.html')
+
+def bookDetail_format(request,ISBN):
+    ISBN = ISBN
+    print(ISBN)
+    if not ISBN:
+        return HttpResponse('there is no such an ISBN')
+    try:
+        bookindouban = book_info.objects.filter(pk=ISBN)
+        if bookindouban :
+             return HttpResponse('暂不支持豆瓣图书馆的规范数据展示')
+        else:
+            book=book_shumu.objects.get(pk=ISBN)
+    except book_shumu.DoesNotExist:
+        return HttpResponse('there is no such an ISBN')  # end李玉和增加 阅读量自增
+    context = {
+       
+        'book': book,
+    }
+    return render(request, 'search/bookDetail_format.html', context)
+
+
+def bookDetail_format_card(request, ISBN):
+    ISBN = ISBN
+    print(ISBN)
+    if not ISBN:
+        return HttpResponse('there is no such an ISBN')
+    try:
+        bookindouban = book_info.objects.filter(pk=ISBN)
+        if bookindouban:
+            return HttpResponse('暂不支持豆瓣图书馆的规范数据展示')
+        else:
+            book = book_shumu.objects.get(pk=ISBN)
+    except book_shumu.DoesNotExist:
+        return HttpResponse('there is no such an ISBN')  # end李玉和增加 阅读量自增
+    context = {
+
+        'book': book,
+    }
+    return render(request, 'search/bookDetail_format_card.html', context)
+
+
+def bookDetail_format_yinyong(request, ISBN):
+    ISBN = ISBN
+    print(ISBN)
+    if not ISBN:
+        return HttpResponse('there is no such an ISBN')
+    try:
+        bookindouban = book_info.objects.filter(pk=ISBN)
+        if bookindouban:
+            return HttpResponse('暂不支持豆瓣图书馆的规范数据展示')
+        else:
+            book = book_shumu.objects.get(pk=ISBN)
+    except book_shumu.DoesNotExist:
+        return HttpResponse('there is no such an ISBN')  # end李玉和增加 阅读量自增
+    context = {
+
+        'book': book,
+    }
+    return render(request, 'search/bookDetail_format_yinyong.html', context)
 
 
