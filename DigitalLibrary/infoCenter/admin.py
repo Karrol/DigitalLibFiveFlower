@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import newsColumn_info, newsArticle_info, weekbook_info, rank_info, rank_book
+from .models import newsColumn_info, newsArticle_info, weekbook_info, rank_info, rank_book, rec_source
 
 class newsColumnAdmin(admin.ModelAdmin):
     list_display = ('columnName','columnSlug', 'abstract', 'nav_display', 'newsIndexDiaplay')
@@ -32,8 +32,13 @@ class RankAdmin(admin.ModelAdmin):
     ]
     inlines = [BookInline]
 
+class RecsourceAdmin(admin.ModelAdmin):
+    list_display = ('sourceName', 'recTime', 'sourceDisplay')
+    list_filter = ['recTime', 'sourceDisplay']
+
 
 admin.site.register(weekbook_info, RecbookAdmin)
 admin.site.register(newsColumn_info, newsColumnAdmin)
 admin.site.register(newsArticle_info, newsArticleAdmin)
 admin.site.register(rank_info, RankAdmin)
+admin.site.register(rec_source, RecsourceAdmin)

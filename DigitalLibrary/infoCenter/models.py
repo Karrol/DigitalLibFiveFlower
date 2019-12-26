@@ -102,3 +102,22 @@ class rank_book(models.Model):
         verbose_name = '排行榜内图书'
         verbose_name_plural = '排行榜内图书'
         ordering = ['bookOrder']
+
+@python_2_unicode_compatible
+class rec_source(models.Model):
+    sourceName = models.CharField('资源名', max_length=50)
+    enName =  models.CharField('资源英文名', max_length=100)
+    eResource = models.CharField('电子资源', max_length=100)
+    sourceIntro = UEditorField('资源简介', height=300, width=1000,
+                           default=u'', blank=True, imagePath="uploads/images/",
+                           toolbars='besttome', filePath='uploads/files/')
+    recTime = models.DateField('发布时间', auto_now_add=True, editable=True)
+    sourceDisplay = models.BooleanField('正式发布', default=True)
+
+    def __str__(self):
+        return self.sourceName
+
+    class Meta:
+        verbose_name = '资源推送'
+        verbose_name_plural = '资源推送'
+        ordering = ['recTime']
