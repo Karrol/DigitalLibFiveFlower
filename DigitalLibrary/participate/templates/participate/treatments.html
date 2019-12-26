@@ -10,7 +10,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>数字图书馆</title>
+  <title>捐赠处理|数字图书馆</title>
 
   <!-- Custom fonts for this template-->
   <link href="/static/mobankf/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -44,7 +44,25 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
-
+     <style>
+      .card {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+    width: 162%;
+}
+  </style>
 </head>
 
 <body class="bootstrap-admin-with-small-navbar">
@@ -127,6 +145,7 @@
                     </li>
                     <li><a href="{%url 'participate:groupbook_recom'%}">推荐书目</a></li>
                     <li><a href="{%url 'participate:curatorMail'%}">馆长信箱</a></li>
+                    <li><a href="{%url 'participate:contactus'%}">联系我们</a></li>
                   </ul>
                 </li>
                 <li class="dropdown info">
@@ -205,6 +224,12 @@
                     </li>
                     <li>
                         <a href="{%url 'participate:groupbook_recom'%}"><i class="glyphicon glyphicon-chevron-right"></i> 推荐书目</a>
+                    </li>
+                    <li>
+                        <a href="{%url 'participate:curatorMail'%}"><i class="glyphicon glyphicon-chevron-right"></i> 馆长信箱</a>
+                    </li>
+                    <li>
+                        <a href="{%url 'participate:contactus'%}"><i class="glyphicon glyphicon-chevron-right"></i>联系我们</a>
                     </li>
 
                 </ul>

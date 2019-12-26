@@ -1,0 +1,21 @@
+{% extends 'search/bookDetail_format.html' %}
+
+{% block title %} 欢迎来到图书馆！ {% endblock %}
+{%block FormatContent%}
+     <div class="row">
+            <div class="col-md-9 col-md-offset-2 ">
+
+                  <h2 class="text-center">引用格式</h2>
+
+                  <table border="0" cellspacing="2" width="90%" style="margin:0 5%">
+
+                     <tr>
+                      <td class="td2" id="small">
+                       {{book.author}}.{{book.title}}.{{book.price}},{{book.publishTime}}</td>
+                     </tr>
+                  </table>
+                  <br>
+
+            </div>
+  </div>
+{%endblock FormatContent%}

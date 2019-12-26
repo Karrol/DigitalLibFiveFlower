@@ -106,68 +106,52 @@
                         <li><a href="{%url 'readerService:cdInfo'%}">随书光盘说明</a></li>
                       </ul>
                     </li>
-                    <li class="dropdown "><a href="{%url 'readerService:lecture'%}">专题讲座</a>
-                      <ul class="dropdown-menu sub-menu">
-                        <li><a href="{%url 'readerService:lecture'%}">专题讲座</a></li>
-                        <li><a href="{%url 'readerService:lectureBook'%}">讲座预约</a></li>
-                        <li><a href="{%url 'readerService:lectureTips'%}">讲座预约须知</a></li>
-                      </ul>
-                    </li>
                   </ul>
                 </li>
 
                 <li class="dropdown danger">
                   <a href="{%url 'participate:article_list'%}"><i class="icon-leaf icon-white"></i>读者参与</a>
                   <ul class="dropdown-menu">
-                    <li><a href="{%url 'participate:article_list'%}">读者论坛</a>
-                        <ul class="dropdown-menu sub-menu">
-                        <li><a href="{%url 'participate:article_list'%}">看帖</a></li>
-                        <li><a href="{%url 'participate:article_create'%}">发帖</a></li>
-                        <li><a href="{%url 'participate:listHelp'%}">论坛帮助</a></li>
-                        </ul>
-                    </li>
-                    <li class="{%url 'participate:donation_rules'%}"><a href="#">图书捐赠</a>
+                    <li><a href="{%url 'participate:article_list'%}">读者论坛</a></li>
+                    <li class="{%url 'participate:donation_rules'%}"><a href="#">读者捐赠</a>
                       <ul class="dropdown-menu sub-menu">
                         <li><a href="{%url 'participate:donation_rules'%}">捐赠须知</a></li>
                         <li><a href="{%url 'participate:donation_treatments'%}">捐赠处理</a></li>
-                          <li><a href="{%url 'participate:donation_contact'%}">联系方式</a></li>
                       </ul>
                     </li>
+                    <li><a href="{%url 'participate:donation_contact'%}">联系方式</a></li>
                     <li class="dropdown"><a href="{%url 'participate:book_recommendation'%}">读者推荐</a>
                       <ul class="dropdown-menu sub-menu">
                         <li><a href="{%url 'participate:book_recommendation'%}">好书推荐</a></li>
                         <li><a href="{%url 'participate:bookrec_list'%}">推荐列表</a></li>
                       </ul>
                     </li>
-                    <li><a href="{%url 'participate:groupbook_recom'%}">推荐书目</a></li>
-                    <li><a href="{%url 'participate:curatorMail'%}">馆长信箱</a></li>
                   </ul>
                 </li>
-                <li class="dropdown info">
-                    <a href="{% url 'infoCenter:newsIntro' %}"><i class="icon-camera icon-white"></i>信息中心</a>
+                 <li class="dropdown info">
+                    <a href=#"><i class="icon-camera icon-white"></i>信息中心</a>
                     <ul class="dropdown-menu">
                      <li class="dropdown "><a href="{% url 'infoCenter:newsIntro' %}">新闻公告</a>
                         <ul class="dropdown-menu sub-menu">
-                          {% for column in news_intro_columns %}
-                          <li><a href="{% url 'infoCenter:newsColumn' column.columnSlug %}">{{ column.columnName }}</a></li>
+                          {% for column in news_columns %}
+                          <li><a href="{{ column.get_absolute_url }}">{{ column.columnName }}</a></li>
                           {% endfor %}
                         </ul>
                       </li>
                       <li class="dropdown"><a href="{% url 'service:libBrief' %}">服务指南</a>
                         <ul class="dropdown-menu sub-menu">
-                          {% for category in side_cotegories %}
-                          <li><a href="{% url 'service:serviceCategory' category.categorySlug %}">{{ category.categoryName }}</a></li>
+                          {% for cotegory in service_cotegories %}
+                          <li><a href="{{ cotegory.get_absolute_url }}">{{ cotegory.categoryName }}</a></li>
                           {% endfor %}
                         </ul>
                       </li>
                       <li><a href="{% url 'infoCenter:recBookList' %}">每周一书</a></li>
                       <li><a href="{% url 'infoCenter:rankList' %}">排行榜</a></li>
-                      <li><a href="{% url 'infoCenter:toolDownload' %}">工具下载</a></li>
                     </ul>
                 </li>
 
                 <li class="success">
-                  <a href="{%url 'librarian:librarian_book' %}"><i class="icon-envelope icon-white"></i> 馆员管理</a>
+                  <a href="{%url 'login:librarianLogin'%}"><i class="icon-envelope icon-white"></i> 馆员管理</a>
                 </li>
               {% if user.is_authenticated %}
                 <li class="dropdown inverse">
@@ -178,19 +162,16 @@
                     <li><a href="{%url 'readerCenter:borrowingSituation'%}">我的借阅</a></li>
                     <li><a href="{%url 'readerCenter:showsearchlist'%}">我的检索历史</a></li>
                     <li><a href="{%url 'readerCenter:mylib'%}">我的图书馆</a></li>
-                    <li><a href="{%url 'login:user_logout'%}">登出</a></li>
                   </ul>
                 </li>
               {%else%}
                 <li class="dropdown inverse">
                   <a href="#"><i class="icon-bullhorn icon-white"></i> 登录/注册</a>
                   <ul class="dropdown-menu sub-menu">
-                        <li><a href="{%url 'login:userRegister'%}">读者注册</a></li>
                         <li><a href="{%url 'login:readerLogin'%}">读者登录</a></li>
                         <li><a href="{%url 'login:librarianLogin'%}">馆员登录</a></li>
-                        <li><a href="/admin/login/?next=/admin/">后台登录</a></li>
+                        <li><a href="{%url 'login:userRegister'%}">读者注册</a></li>
                   </ul>
-
                 </li>
               {%endif%}
               </ul>
@@ -214,7 +195,7 @@
                         <a href="{%url 'librarian:librarian_ebook'%}"><i class="glyphicon glyphicon-chevron-right"></i> 电子图书管理</a>
                     </li>
                     <li>
-                        <a href="{%url 'librarian:librarian_bookshelf'%}"><i class="glyphicon glyphicon-chevron-right"></i> 书架管理</a>
+                        <a href="{%url 'librarian:bookshelf'%}"><i class="glyphicon glyphicon-chevron-right"></i> 书架管理</a>
                     </li>
                     <li>
                         <a href="{%url 'librarian:librarian_CD'%}"><i class="glyphicon glyphicon-chevron-right"></i> 光盘管理</a>
@@ -223,16 +204,16 @@
                         <a href="{%url 'librarian:librarian_user'%}"><i class="glyphicon glyphicon-chevron-right"></i> 读者管理</a>
                     </li>
                     <li>
-                        <a href="{%url 'librarian:librarian_usertype'%}"><i class="glyphicon glyphicon-chevron-right"></i> 读者类型管理</a>
+                        <a href="{%url 'librarian:librarian_Usertype'%}"><i class="glyphicon glyphicon-chevron-right"></i> 读者类型管理</a>
                     </li>
                     <li>
-                        <a href="{%url 'librarian:librarian_booktype'%}"><i class="glyphicon glyphicon-chevron-right"></i> 图书分类管理</a>
+                        <a href="{%url 'librarian:librarian_Booktype'%}"><i class="glyphicon glyphicon-chevron-right"></i> 图书分类管理</a>
                     </li>
                     <li>
                         <a href="{%url 'librarian:librarian_borrow'%}"><i class="glyphicon glyphicon-chevron-right"></i> 图书借阅信息</a>
                     </li>
                     <li>
-                        <a href="{%url 'librarian:librarian_history'%}"><i class="glyphicon glyphicon-chevron-right"></i> 图书归还信息</a>
+                        <a href="{%url 'librarian:librarian_history'%}"><i class="glyphicon glyphicon-chevron-right"></i> 图书预约信息</a>
                     </li>
 
                 </ul>
@@ -269,6 +250,7 @@
                             <thead>
                             <tr>
                                 <th>图书分类名称</th>
+                                <th>是否可外借</th>
                                 <th>操作</th>
 
                             </tr>
@@ -276,26 +258,23 @@
 
 
                             <!---在此插入信息-->
-                             <%
-                             ArrayList<TypeBean> bookdata = new ArrayList<TypeBean>();
-                             bookdata = (ArrayList<TypeBean>)request.getAttribute("data");
-                           if(bookdata==null){
-                        	   TypeDao bookdao = new TypeDao();
-                        	   bookdata = (ArrayList<TypeBean>)bookdao.get_ListInfo();
-                           }
 
-  for (TypeBean bean : bookdata){
-  %>
 								<tbody>
 
-	                                <td><%= bean.getName() %></td>
-
-<td><button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#updateModal"
-id="btn_update" onclick="showInfo2('<%= bean.getTid() %>','<%= bean.getName() %>')">修改</button>
-<button type="button" class="btn btn-danger btn-xs" onclick="deletebook(<%= bean.getTid() %>)">删除</button>
+	                                {% for booktype in booktypes %}
+								<tr>
+									<td>{{ booktype.btName }}</td>
+									<td>{{ booktype.booktype }}</td>
+									<td><button    type="button" class="btn btn-warning btn-xs"  onclick="location.href= 'change_booktype_to_database?btID={{booktype.btID}}' ">修改</button>
+<button type="button" class="btn btn-danger btn-xs" onclick="deletebooktype('{{booktype.btID}}')">删除</button>
 	</td>
+								</tr>
+                            {% empty %}
+                                <tr>
+                                <td>暂无分类</td>
+								</tr>
+                            {% endfor %}
                           	  </tbody>
-                       <%} %>
                         </table>
                     </div>
                 </div>
@@ -306,10 +285,10 @@ id="btn_update" onclick="showInfo2('<%= bean.getTid() %>','<%= bean.getName() %>
         document.getElementById("updatetid").value = tid;
         document.getElementById("updatename").value = name;
     }
-    function deletebook(tid) {
+    function deletebooktype(tid) {
     	con=confirm("是否删除?");
     	if(con==true){
-    		location.href = "/books/deleteTypeServlet?tid="+tid;
+    		location.href = "delete_booktype_to_database?btID="+tid;
     	}
     }
     </script>

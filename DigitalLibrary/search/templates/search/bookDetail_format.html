@@ -1,0 +1,126 @@
+{% extends 'login/base.html' %}
+
+{% block title %} 欢迎来到图书馆！ {% endblock %}
+
+
+{% block content %}
+<style>
+
+element.style {
+}
+.input-lg {
+    height: 35px;
+    padding: 0px 15px;
+    font-size: 18px;
+    line-height: 1.3333333;
+    border-radius: 5px;
+}
+
+select.input-lg {
+    height: 35px;
+    line-height: 46px;
+}
+
+
+</style>
+
+    <table width="100%" align="center" border="0" cellpadding="0" cellspacing="0">
+ <tbody><tr>
+  <td class="bar" width="20%" align="center" nowrap="">
+    &nbsp;
+  </td>
+  <td class="bar" align="center" nowrap="">
+      <a href="{%url 'search:bookDetailFormat' book.ISBN%}" title="标准格式" class="blue">
+         标准格式</a>
+  </td>
+  <td class="bar" align="center" nowrap="">
+      &nbsp;|&nbsp;
+  </td>
+  <td class="bar" align="center" nowrap="">
+      <a href="{%url 'search:bookDetailFormat_card' book.ISBN%}" title="卡片格式" class="blue">
+         卡片格式</a>
+  </td>
+  <td class="bar" align="center" nowrap="">
+
+      &nbsp;|&nbsp;
+  </td>
+
+  <td class="bar" align="center" nowrap="">
+      <a href="{%url 'search:bookDetailFormat_yinyong' book.ISBN%}" title="引用格式" class="blue">
+         引用格式</a>
+  </td>
+
+  <td class="bar" width="20%" align="center" nowrap="">
+    &nbsp;
+  </td>
+ </tr>
+</tbody></table>
+<br>
+ {%block FormatContent%}
+
+  <div class="row">
+            <div class="col-md-9 col-md-offset-2 ">
+
+                  <h2 class="text-center">标准格式</h2>
+
+                  <table border="0" cellspacing="2" width="90%" style="margin:0 5%">
+
+                     <tr>
+                      <th class="td2" align="left" width="10%" nowrap="">
+                       系统号- 图书</th>
+                      <td class="td2" id="small">
+                       {{book.bookID.pk}}</td>
+                     </tr>
+                     <tr>
+                      <th class="td2" align="left" width="10%" nowrap="">ISBN</th>
+                      <td class="td2" id="small">{{book.ISBN}}</td>
+                     </tr>
+                     <tr>
+                      <th class="td2" align="left" width="10%" nowrap="">作品语种</th>
+                      <td class="td2" id="small">{{book.language}}</td></tr>
+
+                      <tr>
+                      <th class="td2" align="left" width="10%" nowrap="">题名</th>
+                      <td class="td2" id="small">{{book.title}}</td>
+                      <td class="td2" id="small"><img src="/media/bookcover/{{book.cover}}"></td></tr>
+
+                      <tr>
+                      <th class="td2" align="left" width="10%" nowrap="">分类</th>
+                      <td class="td2" id="small">{{book.category}}</td></tr>
+
+                      <tr>
+                      <th class="td2" align="left" width="10%" nowrap="">著者</th>
+                      <td class="td2" id="small">{{book.author}}</td></tr>
+
+                      <tr>
+                      <th class="td2" align="left" width="10%" nowrap="">出版发行</th>
+                      <td class="td2" id="small">{{book.publishInfo}}</td></tr>
+
+                      <tr>
+                      <th class="td2" align="left" width="10%" nowrap="">内容简介</th>
+                      <td class="td2" id="small">{{book.contentTable}}</td></tr>
+
+                      <tr>
+                      <th class="td2" align="left" width="10%" nowrap="">价格</th>
+                      <td class="td2" id="small">{{book.price}}</td></tr>
+
+                      <tr>
+                      <th class="td2" align="left" width="10%" nowrap="">载体形态</th>
+                      <td class="td2" id="small">{{book.carrierMorphology}}</td></tr>
+
+                      <tr>
+                      <th class="td2" align="left" width="10%" nowrap="">馆藏地点</th>
+                      <td class="td2" id="small">{{book.location}}</td></tr>
+
+                      <tr>
+                      <th class="td2" align="left" width="10%" nowrap="">索书号</th>
+                      <td class="td2" id="small">{{book.searchID}}</td></tr>
+                     </tbody></table>
+                  <br>
+                
+            </div>
+  </div>
+
+
+{%endblock FormatContent%}
+{%endblock%}

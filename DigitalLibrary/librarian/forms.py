@@ -1,7 +1,10 @@
 from django import forms
-from login.models import Reader
+from login.models import Reader, readerType
+from search.models import ebook_info ,bookEntity_info , bookshelf_info, booktype_info
+from readerCenter.models import Borrowing
+from readerService.models import CD,bookReser
 
-class NewUserForm(forms.Form):
+'''class NewUserForm(forms.Form):
     gender = (
         ('male', "男"),
         ('female', "女"),
@@ -25,15 +28,55 @@ class ChangeUserForm(forms.Form):
     readertypeName = forms.CharField(label="读者类型名称", max_length=30, widget=forms.TextInput(attrs={'class': 'form-control'}))
     bookNumber = forms.IntegerField(label="最大可借图书数", widget=forms.TextInput(attrs={'class': 'form-control'}))
     email = forms.EmailField(label="邮箱地址", widget=forms.EmailInput(attrs={'class': 'form-control'}))
-    sex = forms.ChoiceField(label='性别', choices=gender)
+    sex = forms.ChoiceField(label='性别', choices=gender)'''
 
-'''class NewUserForm(forms.ModelForm):
+class ReaderForm(forms.ModelForm):
     class Meta:
         model = Reader
-        fields = '__all__'
+        fields = ['name','Password','balance','max_borrowing','Sex']
 
-
-class ChangeUserForm(forms.ModelForm):
+class AddReaderForm(forms.ModelForm):
     class Meta:
         model = Reader
-        fields = '__all__' '''
+        fields = ['name','Password','email','balance','max_borrowing','Sex']
+
+class BookshelfForm(forms.ModelForm):
+    class Meta:
+        model = bookshelf_info
+        fields = "__all__"
+
+class BookForm(forms.ModelForm):
+    class Meta:
+        model = bookEntity_info
+        fields = "__all__"
+
+class EbookForm(forms.ModelForm):
+    class Meta:
+        model = ebook_info
+        fields = "__all__"
+
+class BookTypeForm(forms.ModelForm):
+    class Meta:
+        model = booktype_info
+        fields = "__all__"
+
+class ReaderTypeForm(forms.ModelForm):
+    class Meta:
+        model = readerType
+        fields = "__all__"
+
+class BorrowingForm(forms.ModelForm):
+    class Meta:
+        model = Borrowing
+        fields = "__all__"
+
+
+class CDForm(forms.ModelForm):
+    class Meta:
+        model = CD
+        fields = "__all__"
+
+class reserForm(forms.ModelForm):
+    class Meta:
+        model = bookReser
+        fields = "__all__"

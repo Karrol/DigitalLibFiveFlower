@@ -55,7 +55,7 @@ def upload_views(request):
 				}
 				Files(**dic).save()
 				a='上传成功!!'
-				return render(request,'upload/fp.html',locals())
+				return render(request,'upload/fp1.html',locals())
 
 @csrf_exempt
 def index(request):

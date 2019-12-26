@@ -22,5 +22,11 @@ urlpatterns = [
                 path('searchHigh/', views.search_multikeyword, name='searchHigh'),
                 #高级检索-多字段检索结果
                 path('searchHighResult/', views.multisearchlist, name='searchHighResult'),
+                #检索帮助
+                path('searchHelp/', views.search_help, name='searchHelp'),
+                # 特殊格式
+                path('bookDetailFormat/<str:ISBN>', views.bookDetail_format, name='bookDetailFormat'),
+                path('bookDetailFormat_card/<str:ISBN>', views.bookDetail_format_card, name='bookDetailFormat_card'),
+                path('bookDetailFormat_yinyong/<str:ISBN>', views.bookDetail_format_yinyong, name='bookDetailFormat_yinyong'),
 
               ]
