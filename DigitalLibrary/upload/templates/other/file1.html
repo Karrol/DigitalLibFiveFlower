@@ -80,7 +80,7 @@
 			.d1b2{
 				width:700px;
 				height:500px;
-				margin-left:300px;
+				margin-left:0px;
 			}
 			h2{
 				float:left;
@@ -103,6 +103,16 @@
 				margin-left:40px;
 				margin-top:10px;
 			}
+			input[type="text"] {
+                height: 25px;
+                margin: auto;
+                border-radius: 5px;
+            }
+            input[type="submit"] {
+                background-color: #336699;
+                BORDER-COLOR: #336699;
+                COLOR: white;
+            }
         </style>
 
 </head>
@@ -257,58 +267,61 @@
             </div>
 
 <div class="col-md-10">
- <div class="row">
-   <div id="content-wrapper">
+ <div id="wrapper">
+  <div id="content-wrapper">
 
       <div class="container-fluid">
-          <!-- 定义放置文章标题的div容器 -->
-          <div class="container">
-			<div class='d1b2'>
-				<table>
-					{% for i in L1 %}
-					<tr>
-						<td><a href="/other/open?i={{i.wenjian}}&uname={{uname}}">{{i.wenjian}}</a></td>
-						<td><form action="/upload/wother" method="post">
-							{% csrf_token %}
-							<input type="hidden" name='wenjian' value='{{i.wenjian}}'>
-							<input type="hidden" name="uname" value={{uname}}>
-							共享给好友:<input type="text" name="yonghu">
-							<input type="submit" value='点击共享'>
-						</form></td>
-						<td><form action='/upload/open' method="post">
-							{% csrf_token %}
-							<input type="hidden" name="uname" value='{{uname}}'>
-							<input type="hidden" name='wenjian' value='{{i.wenjian}}'>
-							<input type="hidden" name="lujing" value='{{i.lujing}}'>
-							<input type="submit" value='点击下载'>
-						</form></td>
-					</tr>
-					{% endfor %}
-				</table>
-			</div>
+
+                        <!-- Breadcrumbs-->
+          <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                  <li class="breadcrumb-item">
+                      <!-- 所有类似地方加上 tag 参数，如排序、翻页等。实现带参数的交叉查询 -->
+                      <a href="">
+                          上传文件
+                      </a>
+                  </li>
+              </ol>
+          </nav>
+          <!-- DataTables Example -->
+          <div class="card mb-3" id="个人资料">
+              <div class="card-header">
+                  <i></i>
+                  上传文件</div>
+              <div class="card-body">
+
+                <div class='d1b2 '>
+                    <table>
+                        {% for i in L1 %}
+                        <tr>
+                            <td><a href="/other/open?i={{i.wenjian}}&uname={{uname}}">{{i.wenjian}}</a></td>
+                            <td><form action="/upload/wother" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name='wenjian' value='{{i.wenjian}}'>
+                                <input type="hidden" name="uname" value={{uname}}>
+                                共享给好友:<input type="text" name="yonghu">
+                                <input type="submit" value='点击共享'>
+                            </form></td>
+                            <td><form action='/upload/open' method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="uname" value='{{uname}}'>
+                                <input type="hidden" name='wenjian' value='{{i.wenjian}}'>
+                                <input type="hidden" name="lujing" value='{{i.lujing}}'>
+                                <input type="submit" value='点击下载'>
+                            </form></td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+              </div>
+          </div>
       </div>
-      <!-- /.container-fluid -->
-    </div>
-    <!-- /.content-wrapper -->
-
   </div>
-   <!-- /.row-->
+ </div>
 </div>
-<!-- /.col-md-10-->
-
-
-            </div>
-<!-- /.row -->
-
-
         </div>
-  <!-- /.container -->
-
-
-            <!-- content -->
-
-   <!-- Sticky Footer -->
-        </div>
+  </div>
+</body>
 
 
 

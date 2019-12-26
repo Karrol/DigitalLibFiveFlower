@@ -66,10 +66,8 @@
 			.d1b1{
 				height:500px;
 				width:300px;
-				float:left;
-				border-left:1px solid #ccc;
-				border-right:1px solid #ccc;
-				border-bottom:1px solid #ccc;
+		
+				margin-left:0px;
 			}
 			.d1b1>p{
 				margin-left:60px;
@@ -80,7 +78,7 @@
 			.d1b2{
 				width:700px;
 				height:500px;
-				margin-left:300px;
+				margin-left:0px;
 			}
 			h2{
 				float:left;
@@ -103,6 +101,15 @@
 				margin-left:40px;
 				margin-top:10px;
 			}
+
+			div#id_father{
+			    display:flex;
+			}
+			label, select, button, input[type="button"], input[type="reset"], input[type="submit"], input[type="radio"], input[type="checkbox"] {
+                cursor: pointer;
+                height: aoto;
+                height: max-content;
+            }
         </style>
 
 </head>
@@ -256,59 +263,68 @@
 
             </div>
 
-            <div id="wrapper">
-
-                    <div id="content-wrapper">
+           <div class="col-md-10">
+                 <div id="wrapper">
+                  <div id="content-wrapper">
 
                       <div class="container-fluid">
 
-                        <!-- Breadcrumbs-->
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                              <li class="breadcrumb-item">
-                                  <!-- 所有类似地方加上 tag 参数，如排序、翻页等。实现带参数的交叉查询 -->
-                                  <a href="{%url 'readerService:bookReservation'%}">
-                                    上传文件
-                                  </a>
-                              </li>
-                            </ol>
-                        </nav>
-                                <!-- DataTables Example -->
-                          
-                          <div class="card mb-3" id="读者证状态">
+                                        <!-- Breadcrumbs-->
+                          <nav aria-label="breadcrumb">
+                              <ol class="breadcrumb">
+                                  <li class="breadcrumb-item">
+                                      <!-- 所有类似地方加上 tag 参数，如排序、翻页等。实现带参数的交叉查询 -->
+                                      <a href="">
+                                          上传文件
+                                      </a>
+                                  </li>
+                              </ol>
+                          </nav>
+                          <!-- DataTables Example -->
+                          <div class="card mb-3" id="个人资料">
                               <div class="card-header">
                                   <i></i>
-                                  读者证状态</div>
+                                  上传文件</div>
                               <div class="card-body">
-                                 <form method="post" action="/upload/upload_views" enctype="multipart/form-data">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="nkname" value={{nkname}}>
-                                    <input type="hidden" name="uname" value={{uname}}>
-                                    直接上传：<input type="file" name="myfile" id='input1'>
-                                    <input type="submit" value="确认上传" id='input2'>
-                                    <p>{{a}}</p>
-                                </form>
-                                <div id="picker">碎片化上传</div>   <!-- 上传按钮，必须指定id选择器的值 -->
+
+                                <div class='d1b1 '>
+                                     <form method="post" action="/upload/upload_views" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="nkname" value={{nkname}}>
+                                        <input type="hidden" name="uname" value={{uname}}>
+                                        直接上传：
+                                         <input type="file" name="myfile" id='input1' >
+                                         <br>
+                                         <div id="id_father">
+                                            <input type="submit" value="确认上传" id='input2' class="btn-success btn ">
+                                             &nbsp;&nbsp;
+                                             <div id="picker" >碎片化上传</div> </div>
+                                         <p>{{a}}</p>
+                                    </form>
+                                  <!-- 上传按钮，必须指定id选择器的值 -->
                                     {#        {% csrf_token %}#}
-                                    <input disabled id="file_input" value="">
-                                    <button class="submit" id="submit">确定上传</button>
-                                    <button class="stop" id="stop">暂停</button>
-                                    <div class="progress">         <!-- 进度条 -->
-                                        <div class="progress-bar progress-bar-striped active" role="progressbar" style="width:0%;"></div>
-                                    </div>
-                              </div>
+                                        <input disabled id="file_input" value="">
+                                        <button class="submit btn btn-primary" id="submit">确定上传</button>
+                                        <button class="stop btn btn-warning" id="stop">暂停</button>
+                                      <br>
+                                      <h6 >上传进度条:</h6>
+                                        <div class="progress">         <!-- 进度条 -->
+
+                                            <div class="progress-bar progress-bar-striped active" role="progressbar" style="width:0%;"></div>
+                                        </div>
+                                   </div></div>
                           </div>
 
 
                           
-                      </div>
+                      </div>   
                       <!-- /.container-fluid -->
 
                     </div>
                   </div> 
 
         </div>  
-  </div>
+        </div> </div>
 </body>
 
 
