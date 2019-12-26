@@ -120,6 +120,8 @@ class Comment(models.Model):
 
     class Meta:
         ordering = ('created',)
+        verbose_name = '读者评论'
+        verbose_name_plural = '读者评论'  # 保证取消admin的model的s
 
     def __str__(self):
         return self.commentbody[:20]
