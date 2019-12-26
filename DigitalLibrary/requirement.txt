@@ -1,2 +1,5 @@
-用于记录环境中要安装的包，报错自取：
-pip install django-simple-captcha;
+#用于记录环境中要安装的包，报错自取：
+django-simple-captcha;
+pillow==5.0.0
+simplejson==3.13.2
+redis==2.10.6
