@@ -6,6 +6,7 @@ from django.utils import timezone
 from login.models import Reader
 # Django-taggit
 from taggit.managers import TaggableManager
+from taggit.models import Tag
 
 # 导入Image处理图片
 from PIL import Image
@@ -63,6 +64,7 @@ class ArticlePost(models.Model):
 
     # 文章标签
     tags = TaggableManager(blank=True)
+
 
     # 文章标题图，%Y%m%d进行日期格式化,比如上传时间是2019年2月26日，则标题图会上传到media/article/20190226这个目录中。
     avatar = models.ImageField(upload_to='article/%Y%m%d/', blank=True)

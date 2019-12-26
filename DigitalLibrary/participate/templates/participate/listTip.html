@@ -10,7 +10,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>论坛|数字图书馆</title>
+  <title>论坛操作指南|数字图书馆</title>
 
   <!-- Custom fonts for this template-->
   <link href="/static/mobankf/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -44,13 +44,43 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
-    <style>
-   input.form-control.mb-2.mr-sm-2 {
-    height: 35px;
-    width: 200px;
-    border-radius: 5px;
-    }
-    </style>
+  <style>
+      .card {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+    width: 162%;
+}
+.kf{
+    width:40%;
+    margin-left: 240px;
+}
+.help_1{
+    text-align: center;
+    color: blue;
+    font-size: larger;
+    font-family: fantasy;
+    font-weight: bold;
+}
+.help_2{
+    text-align: center;
+    color: red;
+    font-size: larger;
+    font-family: fantasy;
+    font-weight: bold;
+}
+  </style>
 </head>
 
 <body class="bootstrap-admin-with-small-navbar">
@@ -116,7 +146,7 @@
                         <li><a href="{%url 'participate:article_list'%}">看帖</a></li>
                         <li><a href="{%url 'participate:article_create'%}">发帖</a></li>
                         <li><a href="{%url 'participate:listHelp'%}">论坛帮助</a></li>
-                        <li><a href="{%url 'participate:columnTag'%}">栏目标签</a></li>
+                            <li><a href="{%url 'participate:columnTag'%}">栏目标签</a></li>
                         </ul>
                     </li>
                     <li class="dropdown"><a href="{%url 'participate:donation_rules'%}">图书捐赠</a>
@@ -225,201 +255,154 @@
 
             </div>
 
-<div class="col-md-10">
+            <div class="col-md-10">
 
-   <div id="content-wrapper">
+
+
+
+
+    <div id="content-wrapper">
 
       <div class="container-fluid">
-          <!-- 定义放置文章标题的div容器 -->
 
-              <!--最新最热栏-->
-                  <ol class="breadcrumb">
-                      <li class="breadcrumb-item">
-                          <!-- 所有类似地方加上 tag 参数，如排序、翻页等。实现带参数的交叉查询 -->
-                          <a href="{% url 'participate:article_list' %}?search={{ search }}&column={{ column }}&tag={{ tag }}">
-                              最新
-                          </a>
-                      </li>
-                      <li class="breadcrumb-item">
-                          <a href="{% url 'participate:article_list' %}?order=total_views&search={{ search }}&column={{ column }}&tag={{ tag }}">
-                              最热
-                          </a>
-                      </li>
-                  </ol>
+        <!-- Breadcrumbs-->
+
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{% url 'participate:listHelp' %}">论坛规约</a>
+          </li>
+            <li class="breadcrumb-item">
+            <a href="{% url 'participate:listTip' %}">论坛操作指南</a>
+          </li>
+
+        </ol>
 
 
-              <!--新增，搜索栏-->
-              <div class="row">
-                  <div class="col-auto mr-auto">
-                      <form class="form-inline" >
-                          <label class="sr-only">content</label>
-                          <input type="text"
-                              class="form-control mb-2 mr-sm-2"
-                              name="search"
-                              placeholder="搜索文章..."
-                              required
-                          >
-                      </form>
-                  </div>
-              </div>
+        <!-- Icon Cards-->
 
-              <!-- 新增，搜索提示语 -->
-              {% if search %}
-                  {% if articles %}
-                      <h4><span style="color: red">"{{ search }}"</span>的搜索结果如下：</h4>
-                      <hr>
-                  {% else %}
-                      <h4>暂无<span style="color: red">"{{ search }}"</span>有关的文章。</h4>
-                      <hr>
-                  {% endif %}
-              {% endif %}
 
-              <!--将卡片式UI设计改为列表式设计，主要是修改了row mt-2中的内容-->
-              <div class="row mt-2">
-                  {% for article in articles %}
-                      <!-- 标题图 -->
-                      {% if article.avatar %}
-                          <div class="col-3">
-                              <img src="{{ article.avatar.url }}"
-                                  alt="avatar"
-                                  style="max-width:100%; border-radius: 20px"
-                              >
+        <!--正文-->
+        <div class="container">
+
+            <div class="row">
+
+
+              <div class="col-lg-6">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fas fa-chart-area"></i>
+                        论坛规约
+                    </div>
+                    <div class="card-body">
+                                    <div class="card-body-icon">
+                                          <i class="fas fa-fw fa-life-ring"></i>
+                                        </div>
+                                        <div class="mr-5" style="text-align:bold;"><b>一、论坛规约</b></div>
+                                        <span class="float-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;为了保证论坛的正常运行以及给各位读者营造良好交流氛围，请各位读者在进入论坛前仔细阅读论坛规约，并自觉遵守！祝大家交流愉快！</span>
+                                        <span class="float-right">
+                                          <i class="fas fa-angle-right"></i>
+                                        </span>
+                                        <span class="float-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;读者阅读完论坛规约后，可以通过底部的<b>“快捷入口”</b>进入到论坛首页。</span>
+                                        <img src="{% static 'mobankf/images/enter.jpg'%}" width="700" height="140">
+                                        <br><br>
+                                        <hr>
+                                        <div class="mr-5"><b>二、论坛交流</b></div>
+                                        <span class="float-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;进入到论坛首页后可以看到已有的论坛帖子。每篇帖子都有所属的栏目和添加的标签（关键词）。读者可以通过直接点击某个标签后看到带有此类标签的所有帖子，实现分类检索的功能。</span>
+                                        <span class="float-right">
+                                          <i class="fas fa-angle-right"></i>
+                                        </span>
+                                        <img src="{% static 'mobankf/images/tiezi.png'%}" width="700" height="140">
+                        <span class="float-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;点击进入某篇帖子后，可以看到帖子详情。本论坛发帖支持markdown格式，右侧可以自动生成markdown格式<b>“目录”</b>。方便读者定位。</span>
+                                        <span class="float-left"></span>
+                                        <img src="{% static 'mobankf/images/mulu.png'%}" width="700" height="140">
+                                        <span class="float-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;点击“发帖”按钮可以发表帖子，但在填写“标签”一栏时，若有多个标签，请尽量用英文格式下的逗号进行分隔。</span>
+                                        <span class="float-left"></span>
+                                        <img src="{% static 'mobankf/images/biaoqian.png'%}" width="700" height="140">
+                                        <span class="float-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若您是该篇文章的作者，您可以通过点击“删除文章”和“编辑文章”来对自己的帖子进行操作。否则该按钮无法点击。</span>
+                                        <span class="float-left"></span>
+                                        <img src="{% static 'mobankf/images/bianji.png'%}" width="700" height="140">
+                                        <span class="float-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;该论坛支持对帖子进行评论，但需要先进行登录，登录后即可正常评论。</span>
+                                        <span class="float-left"></span>
+                                        <img src="{% static 'mobankf/images/denglu.png'%}" width="700" height="140">
+                                        <br><br>
+                                        <hr>
+
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <br>
+
+
+
+                              </div>
+
+
+                </div>
+                <div class="card mb-3">
+                              <div class="card-header">
+                                  <i></i>
+                                  快捷入口</div>
+                              <div class="card-body">
+                                  <div class="input-group-append">
+                                      <button class="btn" type="button">
+                                          <i class="fas text-muted"></i><a href="{%url 'participate:article_list'%}">看帖</a>
+                                      </button>
+                                      <button class="btn" type="button">
+                                          <i class="fas text-muted"></i><a href="{%url 'participate:article_create'%}">发帖</a>
+                                      </button>
+                                      <button class="btn" type="button">
+                                          <i class="fas text-muted"></i><a href="{%url 'participate:listHelp' %}">论坛帮助</a>
+                                      </button>
+                                      <button class="btn" type="button">
+                                          <i class="fas text-muted"></i><a href="{%url 'participate:listTip' %}">论坛操作指南</a>
+                                      </button>
+                                      <button class="btn" type="button">
+                                          <i class="fas text-muted"></i><a href="{%url 'participate:columnTag' %}">栏目标签</a>
+                                      </button>
+                                  </div>
+                              </div>
                           </div>
-                      {% endif %}
-
-                      <!-- 文章内容 -->
-                      <div class="col">
-                          <!-- 栏目 -->
-                          {% if article.column %}
-                              <button type="button"
-                                  class="btn btn-sm mb-2
-                                      {% if article.column.title == '常见问题' %}
-                                          btn-success
-                                      {% elif article.column.title == '图书交流' %}
-                                          btn-danger
-                                      {% elif article.column.title == '随便写写' %}
-                                          btn-warning
-                                      {% elif article.column.title == '寻物启事' %}
-                                          btn-info
-                                      {% elif article.column.title == '其他事项' %}
-                                          btn-primary
-                                      {% endif %}">
-                                  {{ article.column }}
-                              </button>
-                          {% endif %}
-
-                          <!--标签-->
-                          <span>
-                              {% for tag in article.tags.all %}
-                                  <a href="{% url 'participate:article_list' %}?tag={{ tag }}"
-                                    class="badge badge-secondary"
-                                  >
-                                      {{ tag }}
-                                  </a>
-                              {% endfor %}
-                          </span>
-
-                          <!-- 标题 -->
-                          <h4>
-                              <b>
-                                  <a href="{% url 'participate:article_detail' article.id %}"
-                                    style="color: black;"
-                                  >
-                                      {{ article.title }}
-                                  </a>
-                              </b>
-                          </h4>
-
-                          <!-- 摘要 -->
-                          <div>
-                              <!--取出正文的前100个字符，避免摘要太长-->
-                              <p style="color: gray;">
-                                  {{ article.body|slice:'100' }}...
-                              </p>
-                          </div>
-
-                          <!-- 注脚 -->
-                          <p>
-                              <!-- 附加信息 -->
-                              <span style="color: green;">
-                                  {{ article.total_views }} 浏览&nbsp;&nbsp;&nbsp;
-                              </span>
-                              <span style="color: blue;">
-                                  {{ article.created|date:'Y-m-d' }} 发布&nbsp;&nbsp;&nbsp;
-                              </span>
-                              <span style="color: darkred;">
-                                  {{ article.updated|date:'Y-m-d' }} 更新
-                              </span>
-                          </p>
-                          <hr>
-                      </div>
-                      <hr style="width: 100%;"/>
-                  {% endfor %}
               </div>
+            </div>
+              <!-- /.col-lg-9 -->
+        </div>
+            <!-- /.row -->
 
-              <!-- 页码导航 -->
-              <div class="pagination row">
-                  <div class="m-auto">
-                      <span class="step-links">
-                          <!-- 如果不是第一页，则显示上翻按钮 -->
-                          {% if articles.has_previous %}
-                              <a href="?page=1&order={{ order }}&search={{ search }}&column={{ column }}&tag={{ tag }}" class="btn btn-success">&laquo; 1</a>
-                              <span>...</span>
-                              <a href="?page={{ articles.previous_page_number }}&order={{ order }}&search={{ search }}&column={{ column }}&tag={{ tag }}" class="btn btn-secondary">
-                                  {{ articles.previous_page_number }}
-                              </a>
-                          {% endif %}
+        </div>
 
-                          <!-- 当前页面 -->
-                          <span class="current btn btn-danger btn-lg">
-                              {{ articles.number }}
-                          </span>
-
-                          <!-- 如果不是最末页，则显示下翻按钮 -->
-                          {% if articles.has_next %}
-                              <a href="?page={{ articles.next_page_number }}&order={{ order }}&search={{ search }}&column={{ column }}&tag={{ tag }}" class="btn btn-secondary">
-                                  {{ articles.next_page_number }}
-                              </a>
-                              <span>...</span>
-                              <a href="?page={{ articles.paginator.num_pages }}&order={{ order }}&search={{ search }}&column={{ column }}&tag={{ tag }}"class="btn btn-success">
-                                  {{ articles.paginator.num_pages }} &raquo;
-                              </a>
-                          {% endif %}
-                      </span>
-                  </div>
-              </div>
+        <!-- DataTables Example -->
 
 
       </div>
       <!-- /.container-fluid -->
+
     </div>
     <!-- /.content-wrapper -->
 
+  </div>
+  <!-- /#wrapper -->
 
-</div>
-<!-- /.col-md-10-->
+
+
+  </div>
+                </div>
 
 
             </div>
-<!-- /.row -->
+
 
 
         </div>
-  <!-- /.container -->
-
 
             <!-- content -->
-
    <!-- Sticky Footer -->
         </div>
-
-
-
 
   <!-- /#wrapper -->
 
   <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
+ <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
   </a>
 

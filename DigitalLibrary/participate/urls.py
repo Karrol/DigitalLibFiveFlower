@@ -54,4 +54,10 @@ urlpatterns = [
     path('contactus/', views.contactus, name='contactus'),
     #下载文件
     path('download_files/', views.download_files, name='download_files'),
+    #论坛操作指南
+    path('listTip/', views.listTip, name='listTip'),
+    #论坛操作指南
+    path('columnTag/', views.columnTag, name='columnTag'),
+    #论坛操作指南
+    path('map/', views.map, name='map'),
 ]

@@ -33,14 +33,14 @@ def upload_views(request):
 			os.mkdir(os.path.join(LJ,folder_name))
 		if File is None:
 			a='请选择上传文件!'
-			return render(request,'upload/fp.html',locals())
+			return render(request,'upload/fp1.html',locals())
 		else:
 			#判断该用户上传文件目录下是否有本次上传文件
 			lujing = "./media/文件/"+"%s"%str(uname)+"/"+"%s"%File.name
 			#用户已上传本次上传文件
 			if File.name in os.listdir(r"./media/文件/"+"%s"%str(uname)):
 				a='你已上传%s,上传失败!'%File.name
-				return render(request,'upload/fp.html',locals())
+				return render(request,'upload/fp1.html',locals())
 			else:
 				# 打开特定的文件进行二进制的写操作;
 				with open(lujing,'wb+') as f:

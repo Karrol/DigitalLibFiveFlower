@@ -44,11 +44,13 @@ class BookshelfForm(forms.ModelForm):
     class Meta:
         model = bookshelf_info
         fields = "__all__"
+        exclude = ["bookshelfID"]
 
 class BookForm(forms.ModelForm):
     class Meta:
         model = bookEntity_info
         fields = "__all__"
+
 
 class EbookForm(forms.ModelForm):
     class Meta:
@@ -59,6 +61,7 @@ class BookTypeForm(forms.ModelForm):
     class Meta:
         model = booktype_info
         fields = "__all__"
+        exclude = ["btID"]
 
 class ReaderTypeForm(forms.ModelForm):
     class Meta:

@@ -6,6 +6,10 @@ from django.http import HttpResponse,FileResponse
 # 导入数据模型ArticlePost
 from .models import ArticlePost
 
+from taggit.managers import TaggableManager
+from taggit.models import Tag
+
+
 # 引入markdown模块
 import markdown
 
@@ -33,6 +37,10 @@ from .models import Comment
 
 # 导入推荐图书Model,联系我们的model
 from .models import RecbooklistInfo, ContactInfo
+
+#导入新闻公告和服务指南的model
+from infoCenter.models import newsColumn_info
+from service.models import Category
 
 
 
@@ -282,6 +290,24 @@ def curatorMail(request):
 
 def listHelp(request):
     return render(request, 'participate/listHelp.html')
+
+def listTip(request):
+    return render(request, 'participate/listTip.html')
+
+def map(request):
+    news_intro_columns = newsColumn_info.objects.filter(nav_display=True)
+    side_cotegories = Category.objects.filter(side_display=True)
+    context = {
+        'news_intro_columns': news_intro_columns,
+        'side_cotegories': side_cotegories,
+    }
+
+    return render(request, 'participate/map.html', context)
+
+def columnTag(request):
+    articles = Tag.objects.all()
+    return render(request, 'participate/columnTag.html', {'articles': articles})
+
 
 def contactus(request):
     contactinfos = ContactInfo.objects.all()
