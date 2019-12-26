@@ -1,0 +1,74 @@
+{% extends "infoCenter/infoCenter_Base.html" %}
+
+{% block title %}资源推送{% endblock title %}
+
+{% block module %}资源推送{% endblock module %}
+
+{% block search %}
+<div class="span4">
+    <div class="input-append">
+        <form method="get" id="searchform" action="{% url 'infoCenter:newsSearch' %}" class="form-search">
+            {% csrf_token %}
+            <input type="search" name="q" placeholder="搜索新闻" class="input-medium search-query">
+            <button type="submit" class="btn btn-inverse">搜索新闻</button>
+        </form>
+    </div>
+</div>
+{% endblock search %}
+
+{% block pagecontent %}
+<section id="maincontent">
+    <div class="container">
+      <div class="row">
+        <div class="span4">
+          <aside>
+            <div class="widget">
+              <h4 class="heading-success"><span class="btn btn-large btn-success"><i class="m-icon-big-swapdown m-icon-white"></i></span>&nbsp;&nbsp;资源推送</h4>
+              <img src="assets/img/avatar.png" class="alignleft" alt="" />
+              <h5>我们对国内出版的期刊（英文版）进行了比较分析，遴选出几种优秀期刊，涉及生物化学、生物物理、细胞、植物、动物等多个研究方向。推荐期刊创刊历史长，被CA、SCI、JST、CSCD等国内外数据库收录，具有重大影响力。面向广大读者推荐，旨在为大家了解我国高质量期刊提供有力帮助。</h5>
+            </div>
+          </aside>
+        </div>
+
+      <div class="span8">
+        <!-- start article 1 -->
+        {% for item in sourceItem %}
+          <article class="blog-post">
+            <div class="tooltip-demo headline">
+              <h5><b>    {{ item.sourceName }}</b></h5>
+                <p>{{ item.enName }}</p>
+                <p><b>电子资源：</b><a href="{{ item.eResource }}">{{ item.eResource }}</a></p>
+            </div>
+            <div class="row">
+              <div class="span8">
+                <p>{{ item.sourceIntro | safe }}</p>
+                <div class="clearfix">
+                </div>
+              </div>
+            </div>
+          </article>
+        {% endfor %}
+
+        <div class="pagination" align="center" >
+          <nav>
+            <ul>
+              <li>
+                {% if sourceItem.has_previous %}
+                    <a href="?page={{ news_column_articles.previous_page_number }}">上一页</a>
+                {% endif %}
+
+                <span>{{ sourceItem.number }}/{{ sourceItem.paginator.num_pages }}</span>
+
+                {% if news_column_articles.has_next %}
+                   <a class='active' href="?page={{ sourceItem.next_page_number }}">下一页</a>
+                {% endif %}
+              </li>
+            </ul>
+          </nav>
+        </div>
+
+      </div>
+      </div>
+    </div>
+</section>
+{% endblock %}

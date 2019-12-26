@@ -65,7 +65,7 @@ input#keyword {
                     {% endif %}
                     {% if state == 'add_to_mylib_success' %}
                         {%if message == 'back_to_search_searchBook'%}
-                            <h2><a href="{%url 'search:searchBook'%}"> 添加成功！点击返回检索页面</a></h2>
+                            <h2><a href="{% url request.session.user_location%}"> 添加成功！点击返回检索结果</a></h2>
                         {%else%}
                         <h2> 添加成功！</h2>
                         {% endif %}

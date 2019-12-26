@@ -8,23 +8,26 @@
         <h1 align="center">检索结果</h1>
         <table class="table table-hover">
             <thead>
-            <th>序号</th>
-            <th>封面</th>
-            <th>标题</th>
-            <th>作者</th>
-            <th>分类</th>
-            <th>在馆位置</th>
-            <th>在馆数量</th>
-            <th>操作</th>
-
+            <th rowspan=$rowspan style='vertical-align: middle;text-align: center;'><input type="checkbox" class="i-checks" id="allChecks" onclick="ckAll()" />全选</th>
+            <th rowspan=$rowspan style='vertical-align: middle;text-align: center;'>#</th>
+            <th rowspan=$rowspan style='vertical-align: middle;text-align: center;'>封面</th>
+            <th rowspan=$rowspan style='vertical-align: middle;text-align: center;'>标题</th>
+            <th rowspan=$rowspan style='vertical-align: middle;text-align: center;'>作者</th>
+            <th rowspan=$rowspan style='vertical-align: middle;text-align: center;'>分类</th>
+            <th rowspan=$rowspan style='vertical-align: middle;text-align: center;'>在馆位置</th>
+            <th rowspan=$rowspan style='vertical-align: middle;text-align: center;'>在馆数量</th>
+            <th rowspan=$rowspan style='vertical-align: middle;text-align: center;'>操作</th>
+            <input type="button" onclick="searchhis_multi_Add()" class="btn btn-success" value="批量加至查询结果">
+            &nbsp;&nbsp;
+            <input type="button" onclick="mylib_multi_Add()" class="btn btn-warning" value="批量加至我的图书馆">
             </thead>
-
             <tbody>
             {% for book in books %}
-                <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>
-                        <a href="/search/bookDetail/{{  book.ISBN}}">
+                <tr >
+                    <td rowspan=$rowspan style='vertical-align: middle;text-align: center;'><input type="checkbox" class="i-checks" name="input[]" value="{{book.ISBN}}"></td>
+                    <td rowspan=$rowspan style='vertical-align: middle;text-align: center;'>{{ forloop.counter }}</td>
+                    <td rowspan=$rowspan style='vertical-align: middle;text-align: center;'>
+                        <a href="/search/bookDetail/{{ book.ISBN }}">
                             <img class="img-responsive"
                                  src="/media/bookcover/{{ book.cover }}"
                                  width="90"
@@ -32,25 +35,23 @@
                                  alt="{{ book.title }}">
                         </a>
                     </td>
-                    <td><a href="/search/bookDetail/{{  book.ISBN }}">{{ book.title }}</a></td>
-                    <td>{{ book.author }}
-                    <td>{{ book.category }}</td>
-                    <td>{{ book.bookID.location }}</td>
-                    <td>{{ book.bookID.quantity }}</td>
-                    <td>
-                       <a class="btn btn-primary" href="{%url 'search:bookDetail' book.ISBN %}">详情</a>
+                    <td rowspan=$rowspan style='vertical-align: middle;text-align: center;'><a href="/search/bookDetail/{{ book.ISBN }}">{{ book.title }}</a></td>
+                    <td rowspan=$rowspan style='vertical-align: middle;text-align: center;'>{{ book.author }} </td>
+                    <td rowspan=$rowspan style='vertical-align: middle;text-align: center;'>{{ book.category }}</td>
+                    <td rowspan=$rowspan style='vertical-align: middle;text-align: center;'>{{ book.bookID.location }}</td>
+                    <td rowspan=$rowspan style='vertical-align: middle;text-align: center;'>{{ book.bookID.quantity }}</td>
+                    <td rowspan=$rowspan style='vertical-align: middle;text-align: center;'>
+                        <a class="btn btn-primary" href="{%url 'search:bookDetail' book.ISBN %}">详情</a>
                         <a class="btn btn-success" href="{%url 'readerCenter:mysearchhis_add' book.ISBN %}">加至查询结果</a>
                         <a class="btn btn-warning" href="{%url 'readerCenter:mylib_add' book.ISBN %}">加至我的图书馆</a>
                     </td>
-
                 </tr>
             {% empty %}
                 <tr>
-                    <td>暂无图书</td>
+                    <td rowspan=$rowspan style='vertical-align: middle;text-align: center;'>暂无图书</td>
                 </tr>
             {% endfor %}
             </tbody>
-
         </table>
        <!--查询历史的翻页功能有待开发！-->
           <nav class="myContainer">

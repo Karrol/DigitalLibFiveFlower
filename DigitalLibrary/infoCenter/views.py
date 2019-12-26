@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage, InvalidPage
 
-from .models import newsColumn_info, newsArticle_info, weekbook_info, rank_info, rank_book
+from .models import newsColumn_info, newsArticle_info, weekbook_info, rank_info, rank_book, rec_source
 from search.models import book_info
 from service.models import Category
 
@@ -15,8 +15,12 @@ def newsIntro(request):
     news_intro_columns = newsColumn_info.objects.filter(nav_display = True)
     side_cotegories = Category.objects.filter(side_display=True)
 
-    news_articles = newsArticle_info.objects.all()
+    top_news = newsArticle_info.objects.filter(newsPublished = True, topDisplay = True).order_by("-newsPubdate")
+    news_articles = newsArticle_info.objects.filter(newsPublished = True).exclude(topDisplay = True).order_by("-newsPubdate")
+
     news_list = []
+    for j in top_news:
+        news_list.append(j)
     for i in news_articles:
         news_list.append(i)
     paginator = Paginator(news_list, 5)
@@ -48,8 +52,13 @@ def newsColumn(request, columnSlug):
     side_cotegories = Category.objects.filter(side_display=True)
 
     news_column = newsColumn_info.objects.get(columnSlug=columnSlug)
-    column_articles = newsArticle_info.objects.filter(newsColumn=news_column.pk)
+    top_news = newsArticle_info.objects.filter(newsColumn=news_column.pk, newsPublished = True, topDisplay=True).order_by("-newsPubdate")
+    column_articles = newsArticle_info.objects.filter(newsColumn=news_column.pk, newsPublished=True).exclude(topDisplay=True).order_by(
+        "-newsPubdate")
+
     news_list = []
+    for j in top_news:
+        news_list.append(j)
     for i in column_articles:
         news_list.append(i)
     paginator = Paginator(news_list, 5)
@@ -89,9 +98,16 @@ def newsDetail(request):
     news_article = newsArticle_info.objects.get(pk=pk)
     newsArticle_info.increase_views(news_article)
 
-    current_column_news = newsArticle_info.objects.filter(newsColumn=news_article.newsColumn)[:5]
+    column_news = newsArticle_info.objects.filter(newsColumn=news_article.newsColumn, newsPublished = True).exclude(topDisplay = True).order_by('-newsPubdate')
+    top_news = newsArticle_info.objects.filter(newsColumn=news_article.newsColumn, newsPublished = True, topDisplay = True).order_by('-newsPubdate')
+    all_news = []
+    for i in top_news:
+        all_news.append(i)
+    for j in column_news:
+        all_news.append(j)
+    current_column_news = all_news[:5]
 
-    all_article = newsArticle_info.objects.all()
+    all_article = newsArticle_info.objects.filter()
     curr_article = None
     previous_index = 0
     next_index = 0
@@ -318,3 +334,34 @@ def EndNote(request):
     }
 
     return render(request, 'infoCenter/EndNote.html', context)
+
+def recSource(request):
+    news_intro_columns = newsColumn_info.objects.filter(nav_display = True)
+    side_cotegories = Category.objects.filter(side_display=True)
+
+    sources = rec_source.objects.filter(sourceDisplay = True).order_by("-recTime")
+    source_list = []
+    for i in sources:
+        source_list.append(i)
+    paginator = Paginator(source_list, 10)
+
+    if request.method == "GET":
+        page = request.GET.get('page')
+        try:
+            sourceItem = paginator.page(page)
+        except PageNotAnInteger:
+            # 如果请求的页数不是整数, 返回第一页。
+            sourceItem = paginator.page(1)
+        except InvalidPage:
+            # 如果请求的页数不存在, 重定向页面
+            return HttpResponse('找不到页面的内容')
+        except EmptyPage:
+            # 如果请求的页数不在合法的页数范围内，返回结果的最后一页。
+            articles = paginator.page(paginator.num_pages)
+
+    context = {
+        'news_intro_columns': news_intro_columns,
+        'side_cotegories': side_cotegories,
+        'sourceItem': sourceItem,
+    }
+    return render(request, 'infoCenter/recSource.html',context)

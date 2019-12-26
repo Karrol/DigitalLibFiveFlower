@@ -20,4 +20,6 @@ urlpatterns = [
     path('EndNote/', views.EndNote, name="EndNote"),  # NoteExpress下载
 
     path('newsSearch/', views.newsSearch, name="newsSearch"),  # 新闻搜索结果
+
+    path('recSource/', views.recSource, name="recSource"), #资源推送
 ]

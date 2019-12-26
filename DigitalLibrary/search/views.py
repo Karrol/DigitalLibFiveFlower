@@ -33,26 +33,35 @@ def index(request):
 
 # 目前首页还是测试状态
 def test(request):
-    # 张丽：首页展示的不同种类的新闻列表，首页底部
-    indexnews_queryset = []
-    index_news_column = newsColumn_info.objects.filter(newsIndexDiaplay=True)
-    for colum in index_news_column:
-        index_news = newsArticle_info.objects.filter(newsColumn=colum.pk)[:5]
-        indexnews_queryset.append(index_news)
-
-    # 李玉和：首页展示每周推荐，首页底部
-    recbooks = weekbook_info.objects.all()[:4]
-
     # 李玉和 信息中心导航栏
     news_columns = newsColumn_info.objects.filter(nav_display=True)
     service_cotegories = Category.objects.filter(side_display=True)
 
+    # 李玉和：在首页展示的前3个新闻栏目
+    index_news_column = newsColumn_info.objects.filter(newsIndexDiaplay=True)[:3]
+    index_news = []
+    for column in index_news_column:
+        common_news = newsArticle_info.objects.filter(newsColumn=column.pk, newsPublished = True, topDisplay=False).order_by("-newsPubdate")[:5]
+        top_news = newsArticle_info.objects.filter(newsColumn=column.pk, newsPublished = True, topDisplay=True).order_by("-newsPubdate")[:5]
+        news = []
+        for i in top_news:
+            news.append(i)
+        for j in common_news:
+            news.append(j)
+        for x in news[:5]:
+            index_news.append(x)
+
+    # 李玉和：首页展示每周推荐，首页底部
+    recbooks = weekbook_info.objects.all()[:4]
+
+
     context = {
         'searchForm': SearchForm(),
 
-        'indexnews_queryset': indexnews_queryset,
         'news_columns': news_columns,
         'service_cotegories': service_cotegories,
+        'index_news_column': index_news_column,
+        'index_news': index_news,
         'recbooks': recbooks,
     }
     return render(request, 'search/index_test.html', context)
@@ -117,7 +126,13 @@ def book_search(request):
         for book in books_sculib:
             counter = counter + 1
             books.append(book)
-    paginator = Paginator(books, 5)
+
+    # 获取用户设置的页面显示参数
+    if 'recordNum' in request.session:
+        recordNum = request.session['recordNum']
+    else:
+        recordNum = 5
+    paginator = Paginator(books,int(recordNum))
     page = request.GET.get('page', 1)
 
     try:
@@ -204,7 +219,6 @@ def book_detail(request, ISBN):
 
 #检索参数设置
 def searchparameter(request):
-    response = HttpResponse('')
     searchparameter_form = searchParameterForm(request.POST)
     if request.method == "POST":
         message = '请注意检查填写内容'
@@ -214,13 +228,13 @@ def searchparameter(request):
            crecordNum = parameter['crecordNum']#自动完整显示记录数
            defaultLib = parameter['defaultLibrary']
            resultFormat = parameter['resultFormat']
-           formatData = parameter['formatData']  # 自动完整显示记录数
-           response.set_cookie('recordNum', recordNum)
-           response.set_cookie('crecordNum', crecordNum)
-           response.set_cookie('defaultLib', defaultLib)
-           response.set_cookie('resultFormat', resultFormat)
-           response.set_cookie('formatData', formatData)
-        message = '参数设置成功！请继续检索叭！'
+           
+           request.session['recordNum'] = recordNum
+           request.session['crecordNum'] = crecordNum
+           request.session['defaultLib'] = defaultLib
+           request.session['resultFormat'] = resultFormat
+           
+           message = '参数设置成功！请继续检索叭！'
         context = {
             'searchparameter_form': searchparameter_form,
             'message': message,
@@ -230,7 +244,7 @@ def searchparameter(request):
 
 
 def search_multikeyword(request):
-
+    
 
     if request.method == "POST":
         multikey_form = multiKeywordsForm(request.POST)
@@ -242,6 +256,13 @@ def search_multikeyword(request):
            publishYear = keywords['publishYear']
            press = keywords['press']
            booklib = keywords['booklib']
+           #给建立session，并赋空值
+           request.session['keyword_catogary'] = ''
+           request.session['keyword_title'] = ''
+           request.session['keyword_author'] = ''
+           request.session['keyword_publishYear'] = ''
+           request.session['keyword_press'] = ''
+           request.session['keyword_booklib'] = ''
 
            request.session['keyword_catogary'] = catogary
            request.session['keyword_title'] = title
@@ -249,8 +270,16 @@ def search_multikeyword(request):
            request.session['keyword_publishYear'] = publishYear
            request.session['keyword_press'] = press
            request.session['keyword_booklib'] = booklib
+            
         return redirect("search:searchHighResult")
     else:
+        request.session['keyword_catogary'] = ''
+        request.session['keyword_title'] = ''
+        request.session['keyword_author'] = ''
+        request.session['keyword_publishYear'] = ''
+        request.session['keyword_press'] = ''
+        request.session['keyword_booklib'] = ''
+        
         initial = {"catogary": request.session['keyword_catogary'],
                    "title": request.session['keyword_title'],
                    'author': request.session['keyword_author'],
@@ -265,6 +294,9 @@ def search_multikeyword(request):
     
 
 def multisearchlist(request):
+    # 判断用户状态，如果是登录用户，记录其现在浏览的位置，游客则不记录
+    if request.user.is_authenticated:
+        request.session['user_location'] = 'search:searchHighResult'
     catogary =request.session['keyword_catogary']  # 每页记录数
     title = request.session['keyword_title']  # 每页记录数
     author =request.session['keyword_author']  # 自动完整显示记录数
@@ -286,8 +318,13 @@ def multisearchlist(request):
                                           Q(press__icontains=press) &
                                           Q(title__icontains=title) &
                                           Q(publishTime__icontains=publishYear))
-
-    paginator = Paginator(books, 5)
+    #获取用户设置的页面显示参数
+    if 'recordNum' in request.session:
+        recordNum=request.session['recordNum']
+    else:
+        recordNum=5
+        
+    paginator = Paginator(books, int(recordNum))
     page = request.GET.get('page', 1)
 
     try:
@@ -300,8 +337,8 @@ def multisearchlist(request):
 
     # ugly solution for &page=2&page=3&page=4
     # 当你已经是某一页时，current_path的最后有&page(previous),所以这里是在做清洗
-    if '&page' in current_path:
-        current_path = current_path.split('&page')[0]
+    if '?page' in current_path:
+        current_path = current_path.split('?page')[0]
 
     context = {
         'books': books,
@@ -309,5 +346,67 @@ def multisearchlist(request):
     }
     return render(request, 'search/multiKeywords_result.html', context)
 
+
+def search_help(request):
+    return render(request,'search/search_help.html')
+
+def bookDetail_format(request,ISBN):
+    ISBN = ISBN
+    print(ISBN)
+    if not ISBN:
+        return HttpResponse('there is no such an ISBN')
+    try:
+        bookindouban = book_info.objects.filter(pk=ISBN)
+        if bookindouban :
+             return HttpResponse('暂不支持豆瓣图书馆的规范数据展示')
+        else:
+            book=book_shumu.objects.get(pk=ISBN)
+    except book_shumu.DoesNotExist:
+        return HttpResponse('there is no such an ISBN')  # end李玉和增加 阅读量自增
+    context = {
+       
+        'book': book,
+    }
+    return render(request, 'search/bookDetail_format.html', context)
+
+
+def bookDetail_format_card(request, ISBN):
+    ISBN = ISBN
+    print(ISBN)
+    if not ISBN:
+        return HttpResponse('there is no such an ISBN')
+    try:
+        bookindouban = book_info.objects.filter(pk=ISBN)
+        if bookindouban:
+            return HttpResponse('暂不支持豆瓣图书馆的规范数据展示')
+        else:
+            book = book_shumu.objects.get(pk=ISBN)
+    except book_shumu.DoesNotExist:
+        return HttpResponse('there is no such an ISBN')  # end李玉和增加 阅读量自增
+    context = {
+
+        'book': book,
+    }
+    return render(request, 'search/bookDetail_format_card.html', context)
+
+
+def bookDetail_format_yinyong(request, ISBN):
+    ISBN = ISBN
+    print(ISBN)
+    if not ISBN:
+        return HttpResponse('there is no such an ISBN')
+    try:
+        bookindouban = book_info.objects.filter(pk=ISBN)
+        if bookindouban:
+            return HttpResponse('暂不支持豆瓣图书馆的规范数据展示')
+        else:
+            book = book_shumu.objects.get(pk=ISBN)
+    except book_shumu.DoesNotExist:
+        return HttpResponse('there is no such an ISBN')  # end李玉和增加 阅读量自增
+    context = {
+
+        'book': book,
+    }
+    return render(request, 'search/bookDetail_format_yinyong.html', context)
 
 

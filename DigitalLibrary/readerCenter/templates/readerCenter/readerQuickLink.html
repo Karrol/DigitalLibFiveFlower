@@ -24,34 +24,34 @@
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                   <tr>
-                    <th>服务名称</th>
-                    <th>快捷入口</th>
+                    <th>服务名称快捷入口</th>
+                    
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td></td>
-                    <td></td>
+                    <td><a href="{%url 'participate:article_create'%}">读者论坛发帖</a></td>
                   </tr>
                   <tr>
-                    <td></td>
-                    <td></td>
+                    <td><a href="{%url 'search:searchHigh'%}">高级检索</a></td>
                   </tr>
                   <tr>
-                    <td></td>
-                    <td></td>
+                    <td><a href="{%url 'search:searchHelp'%}">检索帮助</a></td>
                   </tr>
                   <tr>
-                    <td></td>
-                    <td></td>
+                    <td><a href="{%url 'readerCenter:showsearchlist'%}">已保存检索结果</a></td>
                   </tr>
+                  <tr>
+                    <td><a href="{%url 'infoCenter:recBookList'%}">每周一书推荐</a></td>
+                  </tr>
+                  
 
                </tbody>
               </table>
             </div>
 
           </div>
-          <div class="card-footer small text-muted">数据更新于{{nowtime}}</div>
+          <div class="card-footer small text-muted">数据更新于{% now "Y-m-d" %}</div>
         </div>
 
       </div>

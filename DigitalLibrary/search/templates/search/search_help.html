@@ -1,0 +1,143 @@
+{% extends "readerCenter/base_index_navtop.html" %}
+{% load static %}
+{% load staticfiles %}
+
+ {%block content%}
+ <link href="{% static 'readerCenter/vendor/datatables/dataTables.bootstrap4.css'%}" rel="stylesheet">
+
+      <!-- Custom styles for this template-->
+      <link href="{%static 'css/sb-admin.css'%}" rel="stylesheet">
+      <link href="readerCenter/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+      <!--custom css for perprofile-->
+      <link href="{%static 'css/circular-images.css'%}" rel="stylesheet">
+
+    <!--custom from base.html-->
+     <link href="{% static 'readerCenter/vendor/fontawesome-free/css/all.css' %}" rel="stylesheet">
+      <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+      <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <!--小梦的静态文件，用于显示侧边导航栏-->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
+
+
+
+  <div class="container" style="margin-top:18px"><!--张丽：页面整文距离顶栏的距离，相当重要，其他地方设置该样式会被覆盖-->
+        <!-- left, vertical navbar & content -->
+        <div class="row" >
+            <!-- left, vertical navbar -->
+             <div class="col-md-2 bootstrap-admin-col-left">
+                <ul class="nav navbar-collapse collapse bootstrap-admin-navbar-side">
+                    <li>
+                        <a href="{%url 'search:searchindex'%}"><i class="glyphicon glyphicon-chevron-right"></i>返回检索首页</a>
+                    </li>
+                    <li>
+                        <a href="{%url 'search:searchHelp'%}"><i class="glyphicon glyphicon-chevron-right"></i>检索帮助</a>
+                    </li>
+                </ul>
+
+            </div>
+            <div class="col-md-10">
+
+
+
+                <div class="col-md-10">
+                  <div id="wrapper">
+
+                    <div id="content-wrapper">
+
+                      <div class="container-fluid">
+
+                        <!-- Breadcrumbs-->
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                              <li class="breadcrumb-item">
+                                  <!-- 所有类似地方加上 tag 参数，如排序、翻页等。实现带参数的交叉查询 -->
+                                  <a href="#">
+                                    检索帮助
+                                  </a>
+                              </li>
+                            </ol>
+                        </nav>
+                                <!-- DataTables Example -->
+                          <div class="card mb-3" id="检索帮助">
+                              <div class="card-header">
+                                  <i></i>
+                                  检索帮助</div>
+                              <div class="card-body">
+                                    <div class="card-body-icon">
+                                          <i class="fas fa-fw fa-life-ring"></i>
+                                        </div>
+                                        <div class="mr-5" style="text-align:bold;">一、参数设置</div>
+                                        <span class="float-left">本馆图书检索系统资源在建当中。可为用户提供参数设置功能，辅助浏览检索结果。</span>
+                                        <span class="float-right">
+                                          <i class="fas fa-angle-right"></i>
+                                        </span>
+                                        <img src="/media/searchHelp/search_index_help-5.png">
+                                        <span class="float-left">读者通过设置每页显示的条数可以决定系统分页器的分页参数，即用户可以决定自己的检索结果每页显示几条信息。</span>
+                                        <br><br>
+                                        <hr>
+                                        <div class="mr-5">二、基本检索</div>
+                                        <span class="float-left">本系统在数字图书馆首页，检索系统首页为用户提供基本检索功能.</span>
+                                        <span class="float-right">
+                                          <i class="fas fa-angle-right"></i>
+                                        </span>
+                                        <img src="/media/searchHelp/search_index_help-1.png">
+                                        <span class="float-left">基本检索提供单一字段检索和模糊检索，用户可以输入有关书籍作者、书名、ISBN号、所属资源库、出版社等信息进行检索。每个字段系统默认为词临近检索</span>
+                                        <span class="float-left"></span>
+                                        <br><br>
+                                        <hr>
+                                        <div class="mr-5">三、检索结果</div>
+                                        <span class="float-left">基本检索检索结果在搜索框下呈现，每页显示条目数目由可有用户在“参数设置页面”中设置，若无用户自定义，则默认每页显示5条记录。</span>
+                                        
+                                          <i class="fas fa-angle-right"></i>
+                                        </span>
+                                        <img src="/media/searchHelp/search_index_help-4.png">
+                                        <span class="float-left">在检索结果页，用户可以点击查看书籍详情，将单个书籍加入“我的图书馆”，将单本书籍保存到"已保存检索结果"中。</span>
+                                        <span class="float-left">用户随时可以查看"已保存检索结果"保存的结果，并可以实现增加、删除、批量移除的管理功能。</span>
+                                        <span class="float-left">在检索结果页，用户可进行批量添加和保存操作。</span>
+                                        <br><br>
+                                        <hr>
+                                        <div class="mr-5">四、高级检索</div>
+                                        <span class="float-left">本系统在高级检索页面下提供多字段检索功能。</span>
+                                        <span class="float-right">
+                                          <i class="fas fa-angle-right"></i>
+                                        </span>
+                                        <img src="/media/searchHelp/search_index_help-2.png">
+                                        <span class="float-left">多字段检索页面，用户依据对书籍已知的信息设置多个检索条件，进行更为精准的检索。</span>
+                                        <span class="float-left">多字段功能的检索结果展现在“检索结果”页面，若不保存对应的检索结果至“已保存检索结果”中，当用户结束本次网页会话则系统将不会保存用户本次检索结果。</span>
+                                        <img src="/media/searchHelp/search_index_help-3.png">
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <br>
+
+
+                                      
+                              </div>
+                          </div>
+                      </div>
+                      <!-- /.container-fluid -->
+
+                    </div>
+                  </div>
+                </div> 
+    <!-- /.content-wrapper -->
+
+            </div>
+        </div>
+
+
+    </div>
+</div>  {%endblock content%}
+    <!-- /.content-wrapper -->
+  <!-- /#wrapper -->
+
+
+
+
+

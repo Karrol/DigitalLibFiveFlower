@@ -451,9 +451,7 @@ def mylib_add(request, ISBN):
         state = 'add_to_mylib_success'
 
     user_location = request.session.get('user_location')
-
-    if user_location == 'search:searchBook':
-        message = 'back_to_search_searchBook'
+    message = 'back_to_search_searchBook'
 
     context = {
         'state': state,
