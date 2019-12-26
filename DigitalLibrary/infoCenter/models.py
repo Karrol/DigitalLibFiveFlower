@@ -37,7 +37,9 @@ class newsArticle_info(models.Model):
                            default=u'', blank=True, imagePath="uploads/images/",
                            toolbars='besttome', filePath='uploads/files/')
     newsPubdate = models.DateTimeField('发表时间', auto_now_add=True, editable=True)
+
     newsPublished = models.BooleanField('正式发布', default=True)
+    topDisplay = models.BooleanField('置顶', default=False)
 
     newsViews = models.PositiveIntegerField(default=0)
 

@@ -15,8 +15,12 @@ def newsIntro(request):
     news_intro_columns = newsColumn_info.objects.filter(nav_display = True)
     side_cotegories = Category.objects.filter(side_display=True)
 
-    news_articles = newsArticle_info.objects.all()
+    top_news = newsArticle_info.objects.filter(newsPublished = True, topDisplay = True).order_by("-newsPubdate")
+    news_articles = newsArticle_info.objects.filter(newsPublished = True).exclude(topDisplay = True).order_by("-newsPubdate")
+
     news_list = []
+    for j in top_news:
+        news_list.append(j)
     for i in news_articles:
         news_list.append(i)
     paginator = Paginator(news_list, 5)
@@ -48,8 +52,13 @@ def newsColumn(request, columnSlug):
     side_cotegories = Category.objects.filter(side_display=True)
 
     news_column = newsColumn_info.objects.get(columnSlug=columnSlug)
-    column_articles = newsArticle_info.objects.filter(newsColumn=news_column.pk)
+    top_news = newsArticle_info.objects.filter(newsColumn=news_column.pk, newsPublished = True, topDisplay=True).order_by("-newsPubdate")
+    column_articles = newsArticle_info.objects.filter(newsColumn=news_column.pk, newsPublished=True).exclude(topDisplay=True).order_by(
+        "-newsPubdate")
+
     news_list = []
+    for j in top_news:
+        news_list.append(j)
     for i in column_articles:
         news_list.append(i)
     paginator = Paginator(news_list, 5)
@@ -89,9 +98,16 @@ def newsDetail(request):
     news_article = newsArticle_info.objects.get(pk=pk)
     newsArticle_info.increase_views(news_article)
 
-    current_column_news = newsArticle_info.objects.filter(newsColumn=news_article.newsColumn)[:5]
+    column_news = newsArticle_info.objects.filter(newsColumn=news_article.newsColumn, newsPublished = True).exclude(topDisplay = True).order_by('-newsPubdate')
+    top_news = newsArticle_info.objects.filter(newsColumn=news_article.newsColumn, newsPublished = True, topDisplay = True).order_by('-newsPubdate')
+    all_news = []
+    for i in top_news:
+        all_news.append(i)
+    for j in column_news:
+        all_news.append(j)
+    current_column_news = all_news[:5]
 
-    all_article = newsArticle_info.objects.all()
+    all_article = newsArticle_info.objects.filter()
     curr_article = None
     previous_index = 0
     next_index = 0

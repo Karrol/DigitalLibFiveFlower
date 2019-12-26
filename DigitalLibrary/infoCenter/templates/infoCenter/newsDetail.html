@@ -31,7 +31,11 @@
               <img src="assets/img/avatar.png" class="alignleft" alt="" />
               <h5>{{ news_article.newsColumn.abstract }}</h5>
               {% for item in current_column_news %}
+                {% if item.topDisplay %}
+                <p><b><a onclick="location.href='/infoCenter/newsDetail/?pk={{item.pk}}&newsSlug={{item.newsSlug}}';">&nbsp;&nbsp;&nbsp;&nbsp;【置顶】{{ item.newsTitle }}</a></b></p>
+                {% else %}
                 <p><a onclick="location.href='/infoCenter/newsDetail/?pk={{item.pk}}&newsSlug={{item.newsSlug}}';">&nbsp;&nbsp;&nbsp;&nbsp;{{ item.newsTitle }}</a></p>
+                {% endif %}
               {% endfor %}
                <p><a href="{% url 'infoCenter:newsColumn' news_article.newsColumn.columnSlug %}">&nbsp;&nbsp;&nbsp;&nbsp;查看更多...</a></p>
             </div>
@@ -41,7 +45,11 @@
         <div class="span8">
             <article class="blog-post">
                 <div class="tooltip-demo headline">
+                    {% if news_article.topDisplay %}
+                    <h4><button class="btn btn btn-success" type="button" >置顶</button>{{ news_article.newsTitle }}</h4>
+                    {% else %}
                     <h4>{{ news_article.newsTitle }}</h4>
+                    {% endif %}
                     <span class="comment">浏览量：{{ news_article.newsViews }}</span>
                 </div>
                 <div class="clearfix"></div>

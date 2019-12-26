@@ -37,22 +37,29 @@
       <div class="span8">
         <!-- start article 1 -->
         {% for news in news_column_articles %}
-        <article class="blog-post">
-          <div class="tooltip-demo headline">
-              <h4><a onclick="location.href='/infoCenter/newsDetail/?pk={{news.pk}}&newsSlug={{news.newsSlug}}';">{{ news.newsTitle }}</a></h4>
+          <article class="blog-post">
+            <div class="tooltip-demo headline">
+              <h4><a onclick="location.href='/infoCenter/newsDetail/?pk={{news.pk}}&newsSlug={{news.newsSlug}}';">
+                {% if news.topDisplay %}
+                  <b><button class="btn btn btn-success" type="button" >置顶</button>    {{ news.newsTitle }}</b>
+                {% else %}
+                  {{ news.newsTitle }}
+                {% endif %}
+              </a></h4>
               <span class="comment">浏览量：{{ news.newsViews }}</span>
-          </div>
-          <div class="row">
-            <div class="span5">
+            </div>
+            <div class="row">
+              <div class="span5">
                 <ul class="post-meta">
                   <li class="first"><i class="icon-user"></i> <span>{{ news.newsAuthor }}</span></li>
                   <li><i class="icon-list-alt"></i> <span>{{ news.newsPubdate }}</span></li>
                   <li class="last"><i class="icon-tags"></i> <span>{{ news.newsColumn }}</span></li>
                 </ul>
-              <div class="clearfix"></div>
+                <div class="clearfix">
+                </div>
+              </div>
             </div>
-          </div>
-        </article>
+          </article>
         {% endfor %}
 
         <div class="pagination" align="center" >

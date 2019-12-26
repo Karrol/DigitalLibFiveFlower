@@ -6,7 +6,7 @@ class newsColumnAdmin(admin.ModelAdmin):
     list_filter = ['nav_display', 'newsIndexDiaplay']
 
 class newsArticleAdmin(admin.ModelAdmin):
-    list_display = ('newsTitle', 'newsColumn', 'newsAuthor', 'newsPubdate', 'newsPublished')
+    list_display = ('newsTitle', 'newsColumn', 'newsAuthor', 'newsPubdate', 'newsPublished', 'topDisplay')
     list_filter = ['newsColumn', 'newsPubdate', 'newsPublished']
 
     raw_id_fields = ("newsAuthor",)
