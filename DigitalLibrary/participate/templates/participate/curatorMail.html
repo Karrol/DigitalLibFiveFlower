@@ -10,7 +10,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>论坛|数字图书馆</title>
+  <title>馆长信箱|数字图书馆</title>
 
   <!-- Custom fonts for this template-->
   <link href="/static/mobankf/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -44,13 +44,29 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
-    <style>
-   input.form-control.mb-2.mr-sm-2 {
-    height: 35px;
-    width: 200px;
-    border-radius: 5px;
-    }
-    </style>
+  <style>
+      .card {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+    width: 162%;
+}
+.kf{
+    width:40%;
+    margin-left: 240px;
+}
+  </style>
 </head>
 
 <body class="bootstrap-admin-with-small-navbar">
@@ -224,201 +240,99 @@
 
             </div>
 
-<div class="col-md-10">
+            <div class="col-md-10">
 
-   <div id="content-wrapper">
+
+
+
+
+    <div id="content-wrapper">
 
       <div class="container-fluid">
-          <!-- 定义放置文章标题的div容器 -->
 
-              <!--最新最热栏-->
-                  <ol class="breadcrumb">
-                      <li class="breadcrumb-item">
-                          <!-- 所有类似地方加上 tag 参数，如排序、翻页等。实现带参数的交叉查询 -->
-                          <a href="{% url 'participate:article_list' %}?search={{ search }}&column={{ column }}&tag={{ tag }}">
-                              最新
-                          </a>
-                      </li>
-                      <li class="breadcrumb-item">
-                          <a href="{% url 'participate:article_list' %}?order=total_views&search={{ search }}&column={{ column }}&tag={{ tag }}">
-                              最热
-                          </a>
-                      </li>
-                  </ol>
+        <!-- Breadcrumbs-->
+
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{% url 'participate:curatorMail' %}">馆长信箱</a>
+          </li>
+
+        </ol>
 
 
-              <!--新增，搜索栏-->
-              <div class="row">
-                  <div class="col-auto mr-auto">
-                      <form class="form-inline" >
-                          <label class="sr-only">content</label>
-                          <input type="text"
-                              class="form-control mb-2 mr-sm-2"
-                              name="search"
-                              placeholder="搜索文章..."
-                              required
-                          >
-                      </form>
-                  </div>
+        <!-- Icon Cards-->
+
+
+        <!--正文-->
+        <div class="container">
+
+            <div class="row">
+
+
+              <div class="col-lg-6">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fas fa-chart-area"></i>
+                        注意事项
+                    </div>
+                    <div class="card-body" >
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;尊敬的读者，您好！</p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;为了更好地解决的读者普遍关心的实际问题，接受读者的监督和反馈，本数字图书馆专门设立了<b>"馆长信箱"</b>广泛接受读者来函。为了使"信箱"更好地发挥作用，请您在使用时注意以下几点：</p>
+                        <br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1、图书馆欢迎广大师生员工就数字图书馆发展建设中存在的问题、工作人员的职务行为等提出意见和建议。<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2、来信内容应遵守中华人民共和国法律、法规，并应客观真实。<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. 建议您尽量详细地描述所反映问题，并填写真实的联系方式，以便及时反馈办理情况。 <br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. 对于已经答复过的事项，"信箱"可不予受理，请勿就答复过的问题重复提交信件。 <br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;感谢您对四川大图书馆学的关心、支持和帮助，我们一直在努力！ <br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                    <div class="kf">
+                        <p>
+                          <img src="{% static 'mobankf/images/letter.png'%}" width="700" height="140" />
+                        </p>
+                    </div>
+
+                </div>
               </div>
+            </div>
+              <!-- /.col-lg-9 -->
+        </div>
+            <!-- /.row -->
 
-              <!-- 新增，搜索提示语 -->
-              {% if search %}
-                  {% if articles %}
-                      <h4><span style="color: red">"{{ search }}"</span>的搜索结果如下：</h4>
-                      <hr>
-                  {% else %}
-                      <h4>暂无<span style="color: red">"{{ search }}"</span>有关的文章。</h4>
-                      <hr>
-                  {% endif %}
-              {% endif %}
+        </div>
 
-              <!--将卡片式UI设计改为列表式设计，主要是修改了row mt-2中的内容-->
-              <div class="row mt-2">
-                  {% for article in articles %}
-                      <!-- 标题图 -->
-                      {% if article.avatar %}
-                          <div class="col-3">
-                              <img src="{{ article.avatar.url }}"
-                                  alt="avatar"
-                                  style="max-width:100%; border-radius: 20px"
-                              >
-                          </div>
-                      {% endif %}
-
-                      <!-- 文章内容 -->
-                      <div class="col">
-                          <!-- 栏目 -->
-                          {% if article.column %}
-                              <button type="button"
-                                  class="btn btn-sm mb-2
-                                      {% if article.column.title == '常见问题' %}
-                                          btn-success
-                                      {% elif article.column.title == '图书交流' %}
-                                          btn-danger
-                                      {% elif article.column.title == '随便写写' %}
-                                          btn-warning
-                                      {% elif article.column.title == '寻物启事' %}
-                                          btn-info
-                                      {% elif article.column.title == '其他事项' %}
-                                          btn-primary
-                                      {% endif %}">
-                                  {{ article.column }}
-                              </button>
-                          {% endif %}
-
-                          <!--标签-->
-                          <span>
-                              {% for tag in article.tags.all %}
-                                  <a href="{% url 'participate:article_list' %}?tag={{ tag }}"
-                                    class="badge badge-secondary"
-                                  >
-                                      {{ tag }}
-                                  </a>
-                              {% endfor %}
-                          </span>
-
-                          <!-- 标题 -->
-                          <h4>
-                              <b>
-                                  <a href="{% url 'participate:article_detail' article.id %}"
-                                    style="color: black;"
-                                  >
-                                      {{ article.title }}
-                                  </a>
-                              </b>
-                          </h4>
-
-                          <!-- 摘要 -->
-                          <div>
-                              <!--取出正文的前100个字符，避免摘要太长-->
-                              <p style="color: gray;">
-                                  {{ article.body|slice:'100' }}...
-                              </p>
-                          </div>
-
-                          <!-- 注脚 -->
-                          <p>
-                              <!-- 附加信息 -->
-                              <span style="color: green;">
-                                  {{ article.total_views }} 浏览&nbsp;&nbsp;&nbsp;
-                              </span>
-                              <span style="color: blue;">
-                                  {{ article.created|date:'Y-m-d' }} 发布&nbsp;&nbsp;&nbsp;
-                              </span>
-                              <span style="color: darkred;">
-                                  {{ article.updated|date:'Y-m-d' }} 更新
-                              </span>
-                          </p>
-                          <hr>
-                      </div>
-                      <hr style="width: 100%;"/>
-                  {% endfor %}
-              </div>
-
-              <!-- 页码导航 -->
-              <div class="pagination row">
-                  <div class="m-auto">
-                      <span class="step-links">
-                          <!-- 如果不是第一页，则显示上翻按钮 -->
-                          {% if articles.has_previous %}
-                              <a href="?page=1&order={{ order }}&search={{ search }}&column={{ column }}&tag={{ tag }}" class="btn btn-success">&laquo; 1</a>
-                              <span>...</span>
-                              <a href="?page={{ articles.previous_page_number }}&order={{ order }}&search={{ search }}&column={{ column }}&tag={{ tag }}" class="btn btn-secondary">
-                                  {{ articles.previous_page_number }}
-                              </a>
-                          {% endif %}
-
-                          <!-- 当前页面 -->
-                          <span class="current btn btn-danger btn-lg">
-                              {{ articles.number }}
-                          </span>
-
-                          <!-- 如果不是最末页，则显示下翻按钮 -->
-                          {% if articles.has_next %}
-                              <a href="?page={{ articles.next_page_number }}&order={{ order }}&search={{ search }}&column={{ column }}&tag={{ tag }}" class="btn btn-secondary">
-                                  {{ articles.next_page_number }}
-                              </a>
-                              <span>...</span>
-                              <a href="?page={{ articles.paginator.num_pages }}&order={{ order }}&search={{ search }}&column={{ column }}&tag={{ tag }}"class="btn btn-success">
-                                  {{ articles.paginator.num_pages }} &raquo;
-                              </a>
-                          {% endif %}
-                      </span>
-                  </div>
-              </div>
+        <!-- DataTables Example -->
 
 
       </div>
       <!-- /.container-fluid -->
+
     </div>
     <!-- /.content-wrapper -->
 
+  </div>
+  <!-- /#wrapper -->
 
-</div>
-<!-- /.col-md-10-->
+
+
+  </div>
+                </div>
 
 
             </div>
-<!-- /.row -->
+
 
 
         </div>
-  <!-- /.container -->
-
 
             <!-- content -->
-
    <!-- Sticky Footer -->
         </div>
-
-
-
 
   <!-- /#wrapper -->
 
   <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
+ <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
   </a>
 

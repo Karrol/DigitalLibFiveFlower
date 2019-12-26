@@ -47,7 +47,11 @@ urlpatterns = [
     # 推荐书目
     path('groupBook/', views.group_book, name='groupbook_recom'),
     #馆长信箱
-    path('curatorMail/', views.group_book, name='curatorMail'),
+    path('curatorMail/', views.curatorMail, name='curatorMail'),
     #论坛帮助
-    path('listHelp/', views.group_book, name='listHelp'),
+    path('listHelp/', views.listHelp, name='listHelp'),
+    #联系我们
+    path('contactus/', views.contactus, name='contactus'),
+    #下载文件
+    path('download_files/', views.download_files, name='download_files'),
 ]

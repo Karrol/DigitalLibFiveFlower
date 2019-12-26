@@ -141,7 +141,7 @@ class RecbooklistInfo(models.Model):
     # 推荐时间
     RecTime = models.DateField(default=timezone.now)
     # 推荐人
-    RecName = models.ForeignKey(User, on_delete=models.CASCADE)
+    RecName = models.ForeignKey(Reader, on_delete=models.CASCADE)
     # 推荐人身份
     RecIdentity = models.CharField(max_length=20)
     # 推荐人单位
@@ -155,4 +155,21 @@ class RecbooklistInfo(models.Model):
         # ordering 指定模型返回的数据的排列顺序
         # '-RecTime' 表明数据应该以倒序排列
         ordering = ('-RecTime',)
+        verbose_name = '读者推荐'
+        verbose_name_plural = '读者推荐'  # 保证取消admin的model的s
 
+class ContactInfo(models.Model):
+    # 部门名称
+    administerName = models.CharField(max_length=50)
+    # 联系电话
+    telnumber = models.CharField(max_length=20)
+    # 联系人
+    contactsb = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.contactsb
+
+    class Meta:
+
+        verbose_name = '联系方式'
+        verbose_name_plural = '联系方式'  # 保证取消admin的model的s
