@@ -2,6 +2,35 @@
 {% load static %}
 {% load staticfiles %}
 {% block content %}
+<style>
+  input#id_keyword {
+    width: 400px;
+    height: 80%;
+    border-radius: 5px;
+   
+    border-weight:bold;
+}
+select#id_search_by {
+    border-radius: 2px;
+    width: 100px;
+    height: 97%;
+    
+    border-weight:100px;
+}
+div#searchfather {
+    display: flex;
+    margin:2% 22%;
+    
+    
+
+}
+button.btn.btn-default.btn-lg {
+    height: 100%;
+    border-radius: 5px;
+    
+}
+
+</style>
 <!--轮换栏-->
   <section id="intro">
     <div class="jumbotron masthead">
@@ -62,27 +91,24 @@
     </div>
   </section>
 
-  <!--在此处渲染搜索框-->
-    <!--
-   <div class="container myContainer">
+
+   <div class="container myContainer ">
         <form action="{%url 'search:searchBook'%}" method="GET">
-            <div class="row col-lg-7 col-lg-offset-3" name="radio-father">
-                {% for radio in searchForm.search_by %}
-                    <div class="radio-inline">
-                        {{ radio }}
-                    </div>
-                {% endfor %}
-            </div>
-            <div class="row col-lg-7 col-lg-offset-3">
-                <div class="input-group">
+            <div class="row col-lg-7 col-lg-offset-3" id="searchfather">
+                <div style="text-align:center; line-height:45px;"> <a href="{%url 'search:searchHigh'%}" >高级检索</a> </div>
+                 <div class="input-group" id="searchby" >
+                   {{ searchForm.search_by }}
+                </div>
+                <div class="input-group ">
                     {{ searchForm.keyword }}
-                    <span class="input-group-btn">
-                        <button class="btn btn-default btn-lg btn-info" type="submit">图书检索</button>
-                    </span>
+
+                </div>
+                <div class="input-group-btn" id="keyword">
+                        <button class="btn btn-default btn-lg " type="submit"><img src="{%static 'login/img/search_gray.png'%}"></button>
                 </div>
             </div>
         </form>
-    </div>  -->
+    </div>  
 
 
 
@@ -156,7 +182,7 @@
                     <tbody>
                 <!--张丽：这里的url怎么跳转的和玉和商量一下呢-->
                       <tr>
-                        <td><a href="{{ item.get_absolute_url }}">{{item.newsTitle}}</a></td>
+                        <td><a onclick="location.href='/infoCenter/newsDetail/?pk={{item.pk}}&newsSlug={{item.newsSlug}}';">{{item.newsTitle}}</a></td>
                         <td>{{item.newsPubdate}}</td></tr>
                     </tbody>
                   </table>

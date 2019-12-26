@@ -256,55 +256,60 @@
 
             </div>
 
-<div class="col-md-10">
- <div class="row">
-   <div id="content-wrapper">
+            <div id="wrapper">
 
-      <div class="container-fluid">
-          <!-- 定义放置文章标题的div容器 -->
-          <div class="container">
-			<div class='d1b2'>
-				<form method="post" action="/upload/upload_views" enctype="multipart/form-data">
-					{% csrf_token %}
-					<input type="hidden" name="nkname" value={{nkname}}>
-					<input type="hidden" name="uname" value={{uname}}>
-					直接上传：<input type="file" name="myfile" id='input1'>
-					<input type="submit" value="确认上传" id='input2'>
-					<p>{{a}}</p>
-				</form>
-				<div id="picker">碎片化上传</div>   <!-- 上传按钮，必须指定id选择器的值 -->
-    				{#        {% csrf_token %}#}
-					<input disabled id="file_input" value="">
-					<button class="submit" id="submit">确定上传</button>
-					<button class="stop" id="stop">暂停</button>
-					<div class="progress">         <!-- 进度条 -->
-						<div class="progress-bar progress-bar-striped active" role="progressbar" style="width:0%;"></div>
-					</div>
-			</div>
-      </div>
-      <!-- /.container-fluid -->
-    </div>
-    <!-- /.content-wrapper -->
+                    <div id="content-wrapper">
 
+                      <div class="container-fluid">
+
+                        <!-- Breadcrumbs-->
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                              <li class="breadcrumb-item">
+                                  <!-- 所有类似地方加上 tag 参数，如排序、翻页等。实现带参数的交叉查询 -->
+                                  <a href="{%url 'readerService:bookReservation'%}">
+                                    上传文件
+                                  </a>
+                              </li>
+                            </ol>
+                        </nav>
+                                <!-- DataTables Example -->
+                          
+                          <div class="card mb-3" id="读者证状态">
+                              <div class="card-header">
+                                  <i></i>
+                                  读者证状态</div>
+                              <div class="card-body">
+                                 <form method="post" action="/upload/upload_views" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="nkname" value={{nkname}}>
+                                    <input type="hidden" name="uname" value={{uname}}>
+                                    直接上传：<input type="file" name="myfile" id='input1'>
+                                    <input type="submit" value="确认上传" id='input2'>
+                                    <p>{{a}}</p>
+                                </form>
+                                <div id="picker">碎片化上传</div>   <!-- 上传按钮，必须指定id选择器的值 -->
+                                    {#        {% csrf_token %}#}
+                                    <input disabled id="file_input" value="">
+                                    <button class="submit" id="submit">确定上传</button>
+                                    <button class="stop" id="stop">暂停</button>
+                                    <div class="progress">         <!-- 进度条 -->
+                                        <div class="progress-bar progress-bar-striped active" role="progressbar" style="width:0%;"></div>
+                                    </div>
+                              </div>
+                          </div>
+
+
+                          
+                      </div>
+                      <!-- /.container-fluid -->
+
+                    </div>
+                  </div> 
+
+        </div>  
   </div>
-   <!-- /.row-->
-</div>
-<!-- /.col-md-10-->
-
-
-            </div>
-<!-- /.row -->
-
-
-        </div>
-  <!-- /.container -->
-
-
-            <!-- content -->
-
-   <!-- Sticky Footer -->
-        </div>
-
+</body>
 
 
 

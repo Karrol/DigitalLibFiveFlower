@@ -117,7 +117,13 @@ def book_search(request):
         for book in books_sculib:
             counter = counter + 1
             books.append(book)
-    paginator = Paginator(books, 5)
+
+    # 获取用户设置的页面显示参数
+    if 'recordNum' in request.session:
+        recordNum = request.session['recordNum']
+    else:
+        recordNum = 5
+    paginator = Paginator(books,int(recordNum))
     page = request.GET.get('page', 1)
 
     try:
@@ -204,7 +210,6 @@ def book_detail(request, ISBN):
 
 #检索参数设置
 def searchparameter(request):
-    response = HttpResponse('')
     searchparameter_form = searchParameterForm(request.POST)
     if request.method == "POST":
         message = '请注意检查填写内容'
@@ -214,13 +219,13 @@ def searchparameter(request):
            crecordNum = parameter['crecordNum']#自动完整显示记录数
            defaultLib = parameter['defaultLibrary']
            resultFormat = parameter['resultFormat']
-           formatData = parameter['formatData']  # 自动完整显示记录数
-           response.set_cookie('recordNum', recordNum)
-           response.set_cookie('crecordNum', crecordNum)
-           response.set_cookie('defaultLib', defaultLib)
-           response.set_cookie('resultFormat', resultFormat)
-           response.set_cookie('formatData', formatData)
-        message = '参数设置成功！请继续检索叭！'
+           
+           request.session['recordNum'] = recordNum
+           request.session['crecordNum'] = crecordNum
+           request.session['defaultLib'] = defaultLib
+           request.session['resultFormat'] = resultFormat
+           
+           message = '参数设置成功！请继续检索叭！'
         context = {
             'searchparameter_form': searchparameter_form,
             'message': message,
@@ -230,7 +235,7 @@ def searchparameter(request):
 
 
 def search_multikeyword(request):
-
+    
 
     if request.method == "POST":
         multikey_form = multiKeywordsForm(request.POST)
@@ -242,6 +247,13 @@ def search_multikeyword(request):
            publishYear = keywords['publishYear']
            press = keywords['press']
            booklib = keywords['booklib']
+           #给建立session，并赋空值
+           request.session['keyword_catogary'] = ''
+           request.session['keyword_title'] = ''
+           request.session['keyword_author'] = ''
+           request.session['keyword_publishYear'] = ''
+           request.session['keyword_press'] = ''
+           request.session['keyword_booklib'] = ''
 
            request.session['keyword_catogary'] = catogary
            request.session['keyword_title'] = title
@@ -249,6 +261,7 @@ def search_multikeyword(request):
            request.session['keyword_publishYear'] = publishYear
            request.session['keyword_press'] = press
            request.session['keyword_booklib'] = booklib
+            
         return redirect("search:searchHighResult")
     else:
         initial = {"catogary": request.session['keyword_catogary'],
@@ -265,6 +278,9 @@ def search_multikeyword(request):
     
 
 def multisearchlist(request):
+    # 判断用户状态，如果是登录用户，记录其现在浏览的位置，游客则不记录
+    if request.user.is_authenticated:
+        request.session['user_location'] = 'search:searchHighResult'
     catogary =request.session['keyword_catogary']  # 每页记录数
     title = request.session['keyword_title']  # 每页记录数
     author =request.session['keyword_author']  # 自动完整显示记录数
@@ -286,8 +302,13 @@ def multisearchlist(request):
                                           Q(press__icontains=press) &
                                           Q(title__icontains=title) &
                                           Q(publishTime__icontains=publishYear))
-
-    paginator = Paginator(books, 5)
+    #获取用户设置的页面显示参数
+    if 'recordNum' in request.session:
+        recordNum=request.session['recordNum']
+    else:
+        recordNum=5
+        
+    paginator = Paginator(books, int(recordNum))
     page = request.GET.get('page', 1)
 
     try:
@@ -300,8 +321,8 @@ def multisearchlist(request):
 
     # ugly solution for &page=2&page=3&page=4
     # 当你已经是某一页时，current_path的最后有&page(previous),所以这里是在做清洗
-    if '&page' in current_path:
-        current_path = current_path.split('&page')[0]
+    if '?page' in current_path:
+        current_path = current_path.split('?page')[0]
 
     context = {
         'books': books,

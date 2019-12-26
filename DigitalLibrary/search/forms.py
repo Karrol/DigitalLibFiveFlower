@@ -28,41 +28,53 @@ class SearchForm(forms.Form):
 
 class searchParameterForm(forms.Form):
     libCHOICES = [
-        (u'成都青羊区分馆', u'成都青羊区分馆'),
-        (u'成都武侯区分馆', u'成都武侯区分馆'),
+        (u'豆瓣图书库', u'豆瓣图书库'),
+        (u'四川大学图书馆书库', u'四川大学图书馆书库'),
     ]
     Format = [
         (u'标准格式', u'标准格式'),
         (u'卡片格式', u'卡片格式'),
         (u'引文格式', u'引文格式'),
     ]
+    recordNumCHOICES = [
+        (u'5', u'5'),
+        (u'8', u'8'),
+        (u'10', u'10'),
+        (u'15', u'15'),
+    ]
+    crecordNumCHOICES = [
+        (u'1', u'1'),
+        (u'2', u'2'),
+        (u'3', u'3'),
+        (u'5', u'5'),
+    ]
 
     recordNum=forms.IntegerField(
-        max_value=30,
-        min_value=1,
+        max_value=20,
+        min_value=5,
         label="每页显示记录数：",
         widget=forms.NumberInput(
-           
-            attrs={
 
+            attrs={
                 'class': 'form-control input-lg',
                 'name': 'recordNum',
             },
-            
-        ) ,
+
+        ),
         required=False,
     )
     crecordNum = forms.IntegerField(
         max_value=10,
-        min_value=1,
+        min_value=0,
         label="自动显示完整记录数：",
         widget=forms.NumberInput(
+            
             attrs={
-                
                 'class': 'form-control input-lg',
                 'name': 'crecordNum',
-            }
-        ) ,
+            },
+
+        ),
         required=False,
     )
 
@@ -91,19 +103,7 @@ class searchParameterForm(forms.Form):
         required=False,)
 
 
-    formatData = forms.CharField(
-        max_length=1,
-        label= "是否出现规范数据：",
-        widget=forms.widgets.CheckboxInput(
-            attrs={
-
-                'class': 'form-control input-lg',
-                'name': 'formatData',
-            } 
-        ),
-        required=False,
-        
-    )
+    
 
 
 class multiKeywordsForm(forms.Form):
