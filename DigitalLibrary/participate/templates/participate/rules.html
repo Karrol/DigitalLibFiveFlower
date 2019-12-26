@@ -10,7 +10,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>数字图书馆</title>
+  <title>捐赠须知|数字图书馆</title>
 
   <!-- Custom fonts for this template-->
   <link href="/static/mobankf/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -44,7 +44,25 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
-
+  <style>
+      .card {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+    width: 162%;
+}
+  </style>
 </head>
 
 <body class="bootstrap-admin-with-small-navbar">
@@ -127,6 +145,7 @@
                     </li>
                     <li><a href="{%url 'participate:groupbook_recom'%}">推荐书目</a></li>
                     <li><a href="{%url 'participate:curatorMail'%}">馆长信箱</a></li>
+                    <li><a href="{%url 'participate:contactus'%}">联系我们</a></li>
                   </ul>
                 </li>
                 <li class="dropdown info">
@@ -206,6 +225,12 @@
                     <li>
                         <a href="{%url 'participate:groupbook_recom'%}"><i class="glyphicon glyphicon-chevron-right"></i> 推荐书目</a>
                     </li>
+                    <li>
+                        <a href="{%url 'participate:curatorMail'%}"><i class="glyphicon glyphicon-chevron-right"></i> 馆长信箱</a>
+                    </li>
+                    <li>
+                        <a href="{%url 'participate:contactus'%}"><i class="glyphicon glyphicon-chevron-right"></i>联系我们</a>
+                    </li>
 
                 </ul>
 
@@ -252,13 +277,13 @@
                         捐赠须知
                     </div>
                     <div class="card-body" >
-                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;四川大学图书馆欢迎本校师生、校友及社会各界人士向图书馆捐赠图书。四川大学图书馆将向所有捐赠者出具感谢函，但因馆藏空间有限，图书馆需根据馆藏特色和受赠图书质量进行筛选处理，敬请捐赠者知晓以下条例。</p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本数字图书馆欢迎本校师生、校友及社会各界人士向图书馆捐赠图书。本数字图书馆将向所有捐赠者出具感谢函，但因馆藏空间有限，图书馆需根据馆藏特色和受赠图书质量进行筛选处理，敬请捐赠者知晓以下条例。</p>
                         <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一、凡符合以下条件的图书将被纳入馆藏：</b><br/>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1、内容符合本校科学研究范围；<br/>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2、为正式出版物；但酌情接受具有较高学术价值和收藏价值的非正式出版物；<br/>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. 内容适合大学及以上程度读者利用； <br/>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. 为本馆缺藏，或本馆需增加复本的图书，复本量以1－3册为宜。 <br/>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5. 川大师生的著作将入藏“明远文库”1册，其余复本将存放相关藏书区域，供读者使用。 <br/><br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5. 广泛师生的著作将入藏“明远文库”1册，其余复本将存放相关藏书区域，供读者使用。 <br/><br/>
                         <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;二、凡有下列情况之一的图书一般不纳入馆藏： </b><br/>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. 违反中华人民共和国著作权法之规定的图书； <br/>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 非正式出版物（具有学术价值的手稿等除外）； <br/>

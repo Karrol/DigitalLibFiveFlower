@@ -10,7 +10,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>数字图书馆</title>
+  <title>发帖|数字图书馆</title>
 
   <!-- Custom fonts for this template-->
   <link href="/static/mobankf/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -44,7 +44,45 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
-
+  <style>
+       input#title {
+    height: 33px;
+    border-radius: 5px;
+    width: 89%;
+}
+input#tags {
+    height: 33px;
+    border-radius: 5px;
+    width: 90%;
+}
+.form-control {
+    display: block;
+    width: 95%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+label, input, button, select, textarea {
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 1.6em;
+}
+input[type=file] {
+    display: block;
+    color: brown;
+}
+    </style>
 </head>
 
 <body class="bootstrap-admin-with-small-navbar">
@@ -127,6 +165,7 @@
                     </li>
                     <li><a href="{%url 'participate:groupbook_recom'%}">推荐书目</a></li>
                     <li><a href="{%url 'participate:curatorMail'%}">馆长信箱</a></li>
+                    <li><a href="{%url 'participate:contactus'%}">联系我们</a></li>
                   </ul>
                 </li>
                 <li class="dropdown info">
@@ -207,6 +246,12 @@
                     <li>
                         <a href="{%url 'participate:groupbook_recom'%}"><i class="glyphicon glyphicon-chevron-right"></i> 推荐书目</a>
                     </li>
+                    <li>
+                        <a href="{%url 'participate:curatorMail'%}"><i class="glyphicon glyphicon-chevron-right"></i> 馆长信箱</a>
+                    </li>
+                    <li>
+                        <a href="{%url 'participate:contactus'%}"><i class="glyphicon glyphicon-chevron-right"></i>联系我们</a>
+                    </li>
 
                 </ul>
 
@@ -223,10 +268,14 @@
 
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="{% url 'participate:article_list' %}">看帖子</a>
+            <a href="{% url 'participate:listHelp' %}">论坛帮助</a>
           </li>
-          <li class="breadcrumb-item active">交流论坛</li>
-          <li class="breadcrumb-item active">读者参与</li>
+          <li class="breadcrumb-item">
+            <a href="{% url 'participate:article_list' %}">看帖</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a href="{% url 'participate:article_create' %}">发帖</a>
+          </li>
         </ol>
 
 
