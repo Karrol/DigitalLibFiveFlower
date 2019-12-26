@@ -10,7 +10,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>数字图书馆</title>
+  <title>联系方式|数字图书馆</title>
 
   <!-- Custom fonts for this template-->
   <link href="/static/mobankf/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -44,7 +44,25 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
-
+    <style>
+      .card {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+    width: 162%;
+}
+  </style>
 </head>
 
 <body class="bootstrap-admin-with-small-navbar">
@@ -127,6 +145,7 @@
                     </li>
                     <li><a href="{%url 'participate:groupbook_recom'%}">推荐书目</a></li>
                     <li><a href="{%url 'participate:curatorMail'%}">馆长信箱</a></li>
+                    <li><a href="{%url 'participate:contactus'%}">联系我们</a></li>
                   </ul>
                 </li>
                 <li class="dropdown info">
@@ -201,10 +220,16 @@
                         <a href="{%url 'participate:donation_rules'%}"><i class="glyphicon glyphicon-chevron-right"></i> 图书捐赠</a>
                     </li>
                     <li>
-                        <a href="{%url 'participate:book_recommendation'%}"><i class="glyphicon glyphicon-chevron-right"></i> 读者推荐</a>
+                        <a href="{%url 'participate:book_recommendation'%}"><i class="glyphicon glyphicon-chevron-right"></i>读者推荐</a>
                     </li>
                     <li>
                         <a href="{%url 'participate:groupbook_recom'%}"><i class="glyphicon glyphicon-chevron-right"></i> 推荐书目</a>
+                    </li>
+                    <li>
+                        <a href="{%url 'participate:curatorMail'%}"><i class="glyphicon glyphicon-chevron-right"></i> 馆长信箱</a>
+                    </li>
+                    <li>
+                        <a href="{%url 'participate:contactus'%}"><i class="glyphicon glyphicon-chevron-right"></i>联系我们</a>
                     </li>
 
                 </ul>
@@ -252,7 +277,7 @@
                         联系方式
                     </div>
                     <div class="card-body" >
-                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. 捐赠者可将赠书就近送到任一分馆的文献服务中心服务台，也可直接送至四川大学图书馆资源建设中心，联系电话： 028-85408393  </p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. 捐赠者可将赠书就近送到任一分馆的文献服务中心服务台，也可直接送至本数字图书馆资源建设中心，联系电话： 028-85408393  </p>
                         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 邮寄可按以下地址：成都市一环路南一段24号四川大学图书馆资源建设中心，邮政编码： 610065</p>
                         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. 若本地捐赠者欲捐赠图书较多，可与图书馆联系，由图书馆派员提取。联系电话：028-85412292  </p>
 

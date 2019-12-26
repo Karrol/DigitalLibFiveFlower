@@ -10,7 +10,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>论坛|数字图书馆</title>
+  <title>联系我们|数字图书馆</title>
 
   <!-- Custom fonts for this template-->
   <link href="/static/mobankf/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -44,13 +44,7 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
-    <style>
-   input.form-control.mb-2.mr-sm-2 {
-    height: 35px;
-    width: 200px;
-    border-radius: 5px;
-    }
-    </style>
+
 </head>
 
 <body class="bootstrap-admin-with-small-navbar">
@@ -224,178 +218,76 @@
 
             </div>
 
-<div class="col-md-10">
+     <div class="col-md-10">
 
-   <div id="content-wrapper">
+
+
+
+
+    <div id="content-wrapper">
 
       <div class="container-fluid">
-          <!-- 定义放置文章标题的div容器 -->
 
-              <!--最新最热栏-->
-                  <ol class="breadcrumb">
-                      <li class="breadcrumb-item">
-                          <!-- 所有类似地方加上 tag 参数，如排序、翻页等。实现带参数的交叉查询 -->
-                          <a href="{% url 'participate:article_list' %}?search={{ search }}&column={{ column }}&tag={{ tag }}">
-                              最新
-                          </a>
-                      </li>
-                      <li class="breadcrumb-item">
-                          <a href="{% url 'participate:article_list' %}?order=total_views&search={{ search }}&column={{ column }}&tag={{ tag }}">
-                              最热
-                          </a>
-                      </li>
-                  </ol>
+        <!-- Breadcrumbs-->
+
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{% url 'participate:contactus' %}">联系我们</a>
+          </li>
+
+        </ol>
 
 
-              <!--新增，搜索栏-->
-              <div class="row">
-                  <div class="col-auto mr-auto">
-                      <form class="form-inline" >
-                          <label class="sr-only">content</label>
-                          <input type="text"
-                              class="form-control mb-2 mr-sm-2"
-                              name="search"
-                              placeholder="搜索文章..."
-                              required
-                          >
-                      </form>
-                  </div>
-              </div>
 
-              <!-- 新增，搜索提示语 -->
-              {% if search %}
-                  {% if articles %}
-                      <h4><span style="color: red">"{{ search }}"</span>的搜索结果如下：</h4>
-                      <hr>
-                  {% else %}
-                      <h4>暂无<span style="color: red">"{{ search }}"</span>有关的文章。</h4>
-                      <hr>
-                  {% endif %}
-              {% endif %}
+        <!-- 读者推荐列表 -->
 
-              <!--将卡片式UI设计改为列表式设计，主要是修改了row mt-2中的内容-->
-              <div class="row mt-2">
-                  {% for article in articles %}
-                      <!-- 标题图 -->
-                      {% if article.avatar %}
-                          <div class="col-3">
-                              <img src="{{ article.avatar.url }}"
-                                  alt="avatar"
-                                  style="max-width:100%; border-radius: 20px"
-                              >
-                          </div>
-                      {% endif %}
-
-                      <!-- 文章内容 -->
-                      <div class="col">
-                          <!-- 栏目 -->
-                          {% if article.column %}
-                              <button type="button"
-                                  class="btn btn-sm mb-2
-                                      {% if article.column.title == '常见问题' %}
-                                          btn-success
-                                      {% elif article.column.title == '图书交流' %}
-                                          btn-danger
-                                      {% elif article.column.title == '随便写写' %}
-                                          btn-warning
-                                      {% elif article.column.title == '寻物启事' %}
-                                          btn-info
-                                      {% elif article.column.title == '其他事项' %}
-                                          btn-primary
-                                      {% endif %}">
-                                  {{ article.column }}
-                              </button>
-                          {% endif %}
-
-                          <!--标签-->
-                          <span>
-                              {% for tag in article.tags.all %}
-                                  <a href="{% url 'participate:article_list' %}?tag={{ tag }}"
-                                    class="badge badge-secondary"
-                                  >
-                                      {{ tag }}
-                                  </a>
-                              {% endfor %}
-                          </span>
-
-                          <!-- 标题 -->
-                          <h4>
-                              <b>
-                                  <a href="{% url 'participate:article_detail' article.id %}"
-                                    style="color: black;"
-                                  >
-                                      {{ article.title }}
-                                  </a>
-                              </b>
-                          </h4>
-
-                          <!-- 摘要 -->
-                          <div>
-                              <!--取出正文的前100个字符，避免摘要太长-->
-                              <p style="color: gray;">
-                                  {{ article.body|slice:'100' }}...
-                              </p>
-                          </div>
-
-                          <!-- 注脚 -->
-                          <p>
-                              <!-- 附加信息 -->
-                              <span style="color: green;">
-                                  {{ article.total_views }} 浏览&nbsp;&nbsp;&nbsp;
-                              </span>
-                              <span style="color: blue;">
-                                  {{ article.created|date:'Y-m-d' }} 发布&nbsp;&nbsp;&nbsp;
-                              </span>
-                              <span style="color: darkred;">
-                                  {{ article.updated|date:'Y-m-d' }} 更新
-                              </span>
-                          </p>
-                          <hr>
-                      </div>
-                      <hr style="width: 100%;"/>
-                  {% endfor %}
-              </div>
-
-              <!-- 页码导航 -->
-              <div class="pagination row">
-                  <div class="m-auto">
-                      <span class="step-links">
-                          <!-- 如果不是第一页，则显示上翻按钮 -->
-                          {% if articles.has_previous %}
-                              <a href="?page=1&order={{ order }}&search={{ search }}&column={{ column }}&tag={{ tag }}" class="btn btn-success">&laquo; 1</a>
-                              <span>...</span>
-                              <a href="?page={{ articles.previous_page_number }}&order={{ order }}&search={{ search }}&column={{ column }}&tag={{ tag }}" class="btn btn-secondary">
-                                  {{ articles.previous_page_number }}
-                              </a>
-                          {% endif %}
-
-                          <!-- 当前页面 -->
-                          <span class="current btn btn-danger btn-lg">
-                              {{ articles.number }}
-                          </span>
-
-                          <!-- 如果不是最末页，则显示下翻按钮 -->
-                          {% if articles.has_next %}
-                              <a href="?page={{ articles.next_page_number }}&order={{ order }}&search={{ search }}&column={{ column }}&tag={{ tag }}" class="btn btn-secondary">
-                                  {{ articles.next_page_number }}
-                              </a>
-                              <span>...</span>
-                              <a href="?page={{ articles.paginator.num_pages }}&order={{ order }}&search={{ search }}&column={{ column }}&tag={{ tag }}"class="btn btn-success">
-                                  {{ articles.paginator.num_pages }} &raquo;
-                              </a>
-                          {% endif %}
-                      </span>
-                  </div>
-              </div>
-
+     <div class="col-12">
+        <div class="card mb-3">
+          <div class="card-header">
+            <i class="fas fa-table"></i>
+            联系电话</div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>部门名称</th>
+                    <th>联系电话</th>
+                    <th>联系人</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th>部门名称</th>
+                    <th>联系电话</th>
+                    <th>联系人</th>
+                  </tr>
+                </tfoot>
+                <tbody>
+                   {% for contactinfo in contactinfos %}
+                   <tr>
+                      <td>{{ contactinfo.administerName }}</td>
+                      <td>{{ contactinfo.telnumber }}</td>
+                      <td>{{ contactinfo.contactsb }}</td>
+                   </tr>
+                   {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+        </div>
 
       </div>
+      </div>
       <!-- /.container-fluid -->
-    </div>
+
+      </div>
     <!-- /.content-wrapper -->
 
 
-</div>
+   <!-- /.row-->
+
 <!-- /.col-md-10-->
 
 
@@ -477,8 +369,6 @@
 
   <!-- Template Custom JavaScript File -->
   <script src="{%static 'assets/js/custom.js'%}"></script>
-
-
 
 </body>
 

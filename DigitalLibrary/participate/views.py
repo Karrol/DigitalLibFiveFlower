@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 
 # 导入 HttpResponse 模块
-from django.http import HttpResponse
+from django.http import HttpResponse,FileResponse
 
 # 导入数据模型ArticlePost
 from .models import ArticlePost
@@ -31,11 +31,10 @@ from .models import ArticleColumn
 # 导入评论Model
 from .models import Comment
 
-# 导入推荐图书Model
-from .models import RecbooklistInfo
+# 导入推荐图书Model,联系我们的model
+from .models import RecbooklistInfo, ContactInfo
 
-# 导入推荐图书Model
-from .models import RecbooklistInfo
+
 
 # 导入刚才定义的RecbooklistInfoForm表单类
 from .forms import RecbooklistInfoForm, readerrecomForm
@@ -278,6 +277,16 @@ def donation_treatments(request):
 def donation_contact(request):
         return render(request, 'participate/contact.html')
 
+def curatorMail(request):
+    return render(request, 'participate/curatorMail.html')
+
+def listHelp(request):
+    return render(request, 'participate/listHelp.html')
+
+def contactus(request):
+    contactinfos = ContactInfo.objects.all()
+    return render(request, 'participate/contactus.html',{'contactinfos':contactinfos})
+
 # 读者好书推荐
 @login_required
 def reader_recom(request):
@@ -290,7 +299,7 @@ def reader_recom(request):
         readerrecom_form = readerrecomForm(request.POST)
         if readerrecom_form.is_valid():
             #获取前端表单中的数据，并用变量进行保存
-            #张丽：表单的数据无效错误在于数据库设计不合理，出版年份不能为DateField
+            #zl:表单的数据无效错误在于数据库设计不合理，出版年份不能为DateField
             bookName = readerrecom_form.cleaned_data['bookName']#推荐书名
             bookAuthor = readerrecom_form.cleaned_data['bookAuthor']#书的作者
             bpublisher = readerrecom_form.cleaned_data['bpublisher']
@@ -301,8 +310,9 @@ def reader_recom(request):
             RecDepartment = readerrecom_form.cleaned_data['RecDepartment']
             #创建“读者推荐表”实例，用以在数据库中创建记录
             user=request.user
+            reader = Reader.objects.get(user=user)
             today=datetime.date.today()
-            recbook = RecbooklistInfo.objects.create(bookName=bookName, bookAuthor=bookAuthor, bpublisher=bpublisher,RecIdentity=RecIdentity,RecDepartment=RecDepartment,RecTime=today  ,bookISBN=bookISBN,bookIntroduction=bookIntroduction, RecName=user,bpubTime=bpubTime)
+            recbook = RecbooklistInfo.objects.create(bookName=bookName, bookAuthor=bookAuthor, bpublisher=bpublisher,RecIdentity=RecIdentity,RecDepartment=RecDepartment,RecTime=today  ,bookISBN=bookISBN,bookIntroduction=bookIntroduction, RecName=reader,bpubTime=bpubTime)
             recbook.save()
             message = '推荐成功！感谢您的参与！'
         context = {
@@ -312,3 +322,9 @@ def reader_recom(request):
         return render(request, 'participate/bookrecom.html', context)
     return render(request, 'participate/bookrecom.html', locals())
 
+def download_files(request):
+    file = open('./participate/static/files/2016-2018OxfordUniversityPress.xlsx' , 'rb')
+    response = FileResponse(file)
+    response['Content-Type'] = 'application/octet-stream'
+    response['Content-Disposition'] = 'attachment;filename="2016-2018OxfordUniversityPress.xlsx"'
+    return response
