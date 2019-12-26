@@ -143,13 +143,14 @@
                         </ul>
                       </li>
                       <li><a href="{% url 'infoCenter:recBookList' %}">每周一书</a></li>
+                      <li><a href="{% url 'infoCenter:recSource' %}">资源推送</a></li>
                       <li><a href="{% url 'infoCenter:rankList' %}">排行榜</a></li>
                       <li><a href="{% url 'infoCenter:toolDownload' %}">工具下载</a></li>
                     </ul>
                 </li>
 
                 <li class="success">
-                  <a href="{%url 'librarian:librarian_book' %}"><i class="icon-envelope icon-white"></i> 馆员管理</a>
+                  <a href="{%url 'librarian:librarian' %}"><i class="icon-envelope icon-white"></i> 馆员管理</a>
                 </li>
               {% if user.is_authenticated %}
                 <li class="dropdown inverse">

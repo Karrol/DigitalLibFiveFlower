@@ -66,7 +66,7 @@ def librarian_login(request):
                     request.session['user_id'] = user.id
                     request.session['user_email'] = user.username
                     # 张丽：TO DO 用户存在返回首页
-                    return redirect('/')
+                    return redirect('/librarian')
                 else:
                     return HttpResponse(u'账号不能通行')
             else:

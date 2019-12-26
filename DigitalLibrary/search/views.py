@@ -33,26 +33,35 @@ def index(request):
 
 # 目前首页还是测试状态
 def test(request):
-    # 张丽：首页展示的不同种类的新闻列表，首页底部
-    indexnews_queryset = []
-    index_news_column = newsColumn_info.objects.filter(newsIndexDiaplay=True)
-    for colum in index_news_column:
-        index_news = newsArticle_info.objects.filter(newsColumn=colum.pk)[:5]
-        indexnews_queryset.append(index_news)
-
-    # 李玉和：首页展示每周推荐，首页底部
-    recbooks = weekbook_info.objects.all()[:4]
-
     # 李玉和 信息中心导航栏
     news_columns = newsColumn_info.objects.filter(nav_display=True)
     service_cotegories = Category.objects.filter(side_display=True)
 
+    # 李玉和：在首页展示的前3个新闻栏目
+    index_news_column = newsColumn_info.objects.filter(newsIndexDiaplay=True)[:3]
+    index_news = []
+    for column in index_news_column:
+        common_news = newsArticle_info.objects.filter(newsColumn=column.pk, newsPublished = True, topDisplay=False).order_by("-newsPubdate")[:5]
+        top_news = newsArticle_info.objects.filter(newsColumn=column.pk, newsPublished = True, topDisplay=True).order_by("-newsPubdate")[:5]
+        news = []
+        for i in top_news:
+            news.append(i)
+        for j in common_news:
+            news.append(j)
+        for x in news[:5]:
+            index_news.append(x)
+
+    # 李玉和：首页展示每周推荐，首页底部
+    recbooks = weekbook_info.objects.all()[:4]
+
+
     context = {
         'searchForm': SearchForm(),
 
-        'indexnews_queryset': indexnews_queryset,
         'news_columns': news_columns,
         'service_cotegories': service_cotegories,
+        'index_news_column': index_news_column,
+        'index_news': index_news,
         'recbooks': recbooks,
     }
     return render(request, 'search/index_test.html', context)
