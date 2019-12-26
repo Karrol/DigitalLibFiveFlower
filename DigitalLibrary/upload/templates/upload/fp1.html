@@ -64,7 +64,7 @@
 				border-left:1px solid #ccc;;
 			}
 			.d1b1{
-				height:500px;
+				height:150px;
 				width:400px;
 		
 				margin-left:0px;
@@ -159,6 +159,13 @@
                         <li><a href="{%url 'readerService:cdInfo'%}">随书光盘说明</a></li>
                       </ul>
                     </li>
+                    <li class="dropdown "><a href="{%url 'readerService:lecture'%}">专题讲座</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'readerService:lecture'%}">专题讲座</a></li>
+                        <li><a href="{%url 'readerService:lectureBook'%}">讲座预约</a></li>
+                        <li><a href="{%url 'readerService:lectureTips'%}">讲座预约须知</a></li>
+                      </ul>
+                    </li>
                   </ul>
                 </li>
 
@@ -169,6 +176,7 @@
                         <ul class="dropdown-menu sub-menu">
                         <li><a href="{%url 'participate:article_list'%}">看帖</a></li>
                         <li><a href="{%url 'participate:article_create'%}">发帖</a></li>
+                        <li><a href="{%url 'participate:listHelp'%}">论坛帮助</a></li>
                         </ul>
                     </li>
                     <li class="{%url 'participate:donation_rules'%}"><a href="#">图书捐赠</a>
@@ -185,33 +193,35 @@
                       </ul>
                     </li>
                     <li><a href="{%url 'participate:groupbook_recom'%}">推荐书目</a></li>
+                    <li><a href="{%url 'participate:curatorMail'%}">馆长信箱</a></li>
                   </ul>
                 </li>
-
-                  <li class="dropdown info">
+                <li class="dropdown info">
                     <a href="{% url 'infoCenter:newsIntro' %}"><i class="icon-camera icon-white"></i>信息中心</a>
                     <ul class="dropdown-menu">
                      <li class="dropdown "><a href="{% url 'infoCenter:newsIntro' %}">新闻公告</a>
                         <ul class="dropdown-menu sub-menu">
-                          {% for column in news_columns %}
+                          {% for column in news_intro_columns %}
                           <li><a href="{% url 'infoCenter:newsColumn' column.columnSlug %}">{{ column.columnName }}</a></li>
                           {% endfor %}
                         </ul>
                       </li>
                       <li class="dropdown"><a href="{% url 'service:libBrief' %}">服务指南</a>
                         <ul class="dropdown-menu sub-menu">
-                          {% for category in service_cotegories %}
+                          {% for category in side_cotegories %}
                           <li><a href="{% url 'service:serviceCategory' category.categorySlug %}">{{ category.categoryName }}</a></li>
                           {% endfor %}
                         </ul>
                       </li>
                       <li><a href="{% url 'infoCenter:recBookList' %}">每周一书</a></li>
+                      <li><a href="{% url 'infoCenter:recSource' %}">资源推送</a></li>
                       <li><a href="{% url 'infoCenter:rankList' %}">排行榜</a></li>
+                      <li><a href="{% url 'infoCenter:toolDownload' %}">工具下载</a></li>
                     </ul>
                 </li>
 
                 <li class="success">
-                  <a href="{%url 'login:librarianLogin'%}"><i class="icon-envelope icon-white"></i> 馆员管理</a>
+                  <a href="{%url 'librarian:index' %}"><i class="icon-envelope icon-white"></i> 馆员管理</a>
                 </li>
               {% if user.is_authenticated %}
                 <li class="dropdown inverse">
@@ -222,16 +232,19 @@
                     <li><a href="{%url 'readerCenter:borrowingSituation'%}">我的借阅</a></li>
                     <li><a href="{%url 'readerCenter:showsearchlist'%}">我的检索历史</a></li>
                     <li><a href="{%url 'readerCenter:mylib'%}">我的图书馆</a></li>
+                    <li><a href="{%url 'login:user_logout'%}">登出</a></li>
                   </ul>
                 </li>
               {%else%}
                 <li class="dropdown inverse">
                   <a href="#"><i class="icon-bullhorn icon-white"></i> 登录/注册</a>
                   <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'login:userRegister'%}">读者注册</a></li>
                         <li><a href="{%url 'login:readerLogin'%}">读者登录</a></li>
                         <li><a href="{%url 'login:librarianLogin'%}">馆员登录</a></li>
-                        <li><a href="{%url 'login:userRegister'%}">读者注册</a></li>
+                        <li><a href="/admin/login/?next=/admin/">后台登录</a></li>
                   </ul>
+
                 </li>
               {%endif%}
               </ul>
@@ -288,6 +301,7 @@
                               <div class="card-body">
 
                                 <div class='d1b1 '>
+                                     {#        {% csrf_token %}#}
                                      <form method="post" action="/upload/upload_views" enctype="multipart/form-data">
                                         {% csrf_token %}
                                         <input type="hidden" name="nkname" value={{nkname}}>
@@ -298,11 +312,23 @@
                                          <div id="id_father">
                                             <input type="submit" value="确认上传" id='input2' class="btn-success btn ">
                                              &nbsp;&nbsp;
-                                             <div id="picker" >碎片化上传</div> </div>
+                                              </div>
                                          <p>{{a}}</p>
                                     </form>
                                   <!-- 上传按钮，必须指定id选择器的值 -->
-                                    {#        {% csrf_token %}#}
+
+                                       
+                                   </div>
+                              </div>
+                          </div>
+                          <div class="card mb-3" id="个人资料">
+                              <div class="card-header">
+                                  <i></i>
+                                  断点上传</div>
+                              <div class="card-body">
+
+                                  <div class='d1b1 '>
+                                       <div id="picker" >碎片化上传</div>
                                         <input disabled id="file_input" value="">
                                         <button class="submit btn btn-primary" id="submit">确定上传</button>
                                         <button class="stop btn btn-warning" id="stop">暂停</button>
@@ -312,7 +338,9 @@
 
                                             <div class="progress-bar progress-bar-striped active" role="progressbar" style="width:0%;"></div>
                                         </div>
-                                   </div></div>
+
+                                  </div>
+                              </div>
                           </div>
 
 

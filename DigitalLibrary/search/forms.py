@@ -30,8 +30,10 @@ class searchParameterForm(forms.Form):
     libCHOICES = [
         (u'豆瓣图书库', u'豆瓣图书库'),
         (u'四川大学图书馆书库', u'四川大学图书馆书库'),
+        (u'全部数据库', u'全部数据库'),
     ]
     Format = [
+        (u'非规范数据格式', u'非规范数据格式'),
         (u'标准格式', u'标准格式'),
         (u'卡片格式', u'卡片格式'),
         (u'引文格式', u'引文格式'),
@@ -52,7 +54,7 @@ class searchParameterForm(forms.Form):
     recordNum=forms.IntegerField(
         max_value=20,
         min_value=5,
-        label="每页显示记录数：",
+        label="每页显示记录数",
         widget=forms.NumberInput(
 
             attrs={
@@ -63,24 +65,11 @@ class searchParameterForm(forms.Form):
         ),
         required=False,
     )
-    crecordNum = forms.IntegerField(
-        max_value=10,
-        min_value=0,
-        label="自动显示完整记录数：",
-        widget=forms.NumberInput(
-            
-            attrs={
-                'class': 'form-control input-lg',
-                'name': 'crecordNum',
-            },
-
-        ),
-        required=False,
-    )
+    
 
     defaultLibrary = forms.CharField(
         max_length=20,
-        label="默认检索分馆：",
+        label="默认检索分馆",
         widget=forms.widgets.Select(
             choices=libCHOICES,
             attrs={
@@ -92,7 +81,7 @@ class searchParameterForm(forms.Form):
         required=False,)
     resultFormat = forms.CharField(
         max_length=20,
-        label="检索结果格式：",
+        label="默认规范数据格式",
         widget=forms.widgets.Select(
             choices=Format,
             attrs={
@@ -107,8 +96,10 @@ class searchParameterForm(forms.Form):
 
 
 class multiKeywordsForm(forms.Form):
-    book_lib_name = [ (u'豆瓣图书', u'豆瓣图书'),
-        (u'四川大学图书馆', u'四川大学图书馆'),]
+    book_lib_name = [ (u'豆瓣图书库', u'豆瓣图书库'),
+        (u'四川大学图书馆书库', u'四川大学图书馆书库'),
+        (u'全部数据库', u'全部数据库'),
+                      ]
 
     catogary = forms.CharField(
         max_length=20,

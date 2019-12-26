@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import  HttpResponse
 #from librarian.models import bookborrow_info,bookback_info, reader_info
-from login.models import Reader, readerType
+from login.models import Reader, readerType ,librarian_info
 from search.models import ebook_info ,bookEntity_info , bookshelf_info, booktype_info
 from readerCenter.models import Borrowing
 from readerService.models import CD,bookReser
@@ -19,7 +19,17 @@ def hash_code(s, salt='mysite'):#
 
 
 def index(request):
-    return render(request, 'librarian/librarian.html')
+    #张丽：加入馆员身份判断
+    if request.session.get('is_login', None):
+        return redirect('/')
+    else:
+        user=request.user
+        librarian=librarian_info.filter(user=user)
+        if librarian:
+            return render(request,'librarian/librarian.html')
+        else:
+            HttpResponse('馆员模块仅供本馆工作人员登录~')
+    
     """url = 'http://127.0.0.1:8000/media/install.md'
     r = requests.get('http://127.0.0.1:8012/onlinePreview?url='+(url))
     text = r.text.replace('<link rel="stylesheet" href="','<link rel="stylesheet" href="http://49.235.21.24:8012/')
@@ -29,46 +39,145 @@ def index(request):
     return HttpResponse(text)"""
 
 def librarian_book(request):
+    # 张丽：加入馆员身份判断
+    if request.session.get('is_login', None):
+        return redirect('/')
+    else:
+        user = request.user
+        librarian = librarian_info.filter(user=user)
+        if librarian:
+            return render(request, 'librarian/librarian.html')
+        else:
+            HttpResponse('馆员模块仅供本馆工作人员登录~')
+
     books = bookEntity_info.objects.all()
     book_form = forms.BookForm()
     return render(request, 'librarian/librarian_book.html',locals())
 
 def librarian_CD(request):
+    # 张丽：加入馆员身份判断
+    if request.session.get('is_login', None):
+        return redirect('/')
+    else:
+        user = request.user
+        librarian = librarian_info.filter(user=user)
+        if librarian:
+            return render(request, 'librarian/librarian.html')
+        else:
+            HttpResponse('馆员模块仅供本馆工作人员登录~')
+
     CDs = CD.objects.all()
     CDForm = forms.CDForm
     return render(request, 'librarian/librarian_CD.html',locals())
 
 def bookshelf(request):
+    # 张丽：加入馆员身份判断
+    if request.session.get('is_login', None):
+        return redirect('/')
+    else:
+        user = request.user
+        librarian = librarian_info.filter(user=user)
+        if librarian:
+            return render(request, 'librarian/librarian.html')
+        else:
+            HttpResponse('馆员模块仅供本馆工作人员登录~')
+            
     bookShelfs = bookshelf_info.objects.all()
     BookShelfForm = forms.BookshelfForm()
     return render(request, 'librarian/bookshelf.html',locals())
 
 def librarian_ebook(request):
+    # 张丽：加入馆员身份判断
+    if request.session.get('is_login', None):
+        return redirect('/')
+    else:
+        user = request.user
+        librarian = librarian_info.filter(user=user)
+        if librarian:
+            return render(request, 'librarian/librarian.html')
+        else:
+            HttpResponse('馆员模块仅供本馆工作人员登录~')
+            
     ebooks = ebook_info.objects.all()
     EbookForm = forms.EbookForm()
     return render(request, 'librarian/librarian_ebook.html', locals())
 
 def librarian_usertype(request):
+    # 张丽：加入馆员身份判断
+    if request.session.get('is_login', None):
+        return redirect('/')
+    else:
+        user = request.user
+        librarian = librarian_info.filter(user=user)
+        if librarian:
+            return render(request, 'librarian/librarian.html')
+        else:
+            HttpResponse('馆员模块仅供本馆工作人员登录~')
+            
     userTypes = readerType.objects.all()
     userTypeForm = forms.ReaderTypeForm
     return render(request, 'librarian/librarian_usertype.html', locals())
 
 def librarian_booktype(request):
+    # 张丽：加入馆员身份判断
+    if request.session.get('is_login', None):
+        return redirect('/')
+    else:
+        user = request.user
+        librarian = librarian_info.filter(user=user)
+        if librarian:
+            return render(request, 'librarian/librarian.html')
+        else:
+            HttpResponse('馆员模块仅供本馆工作人员登录~')
+
     booktypes = booktype_info.objects.all()
     booktypeForm = forms.BookTypeForm
     return render(request, 'librarian/librarian_booktype.html',locals())
 
 def librarian_borrow(request):
+    # 张丽：加入馆员身份判断
+    if request.session.get('is_login', None):
+        return redirect('/')
+    else:
+        user = request.user
+        librarian = librarian_info.filter(user=user)
+        if librarian:
+            return render(request, 'librarian/librarian.html')
+        else:
+            HttpResponse('馆员模块仅供本馆工作人员登录~')
+            
     borrows = Borrowing.objects.all()
     borrowForm = forms.BorrowingForm
     return render(request, 'librarian/librarian_borrow.html',locals())
 
 def librarian_reser(request):
+    # 张丽：加入馆员身份判断
+    if request.session.get('is_login', None):
+        return redirect('/')
+    else:
+        user = request.user
+        librarian = librarian_info.filter(user=user)
+        if librarian:
+            return render(request, 'librarian/librarian.html')
+        else:
+            HttpResponse('馆员模块仅供本馆工作人员登录~')
+            
     resers = bookReser.objects.all()
     reserForm = forms.reserForm
     return render(request, 'librarian/librarian_reser.html',locals())
 
 def librarian_user(request):
+    # 张丽：加入馆员身份判断
+    if request.session.get('is_login', None):
+        return redirect('/')
+    else:
+        user = request.user
+        librarian = librarian_info.filter(user=user)
+        if librarian:
+            return render(request, 'librarian/librarian.html')
+        else:
+            HttpResponse('馆员模块仅供本馆工作人员登录~')
+            
     readers =Reader.objects.all()
     ReaderForm = forms.ReaderForm()
     context = {
@@ -78,6 +187,17 @@ def librarian_user(request):
     return render(request, 'librarian/librarian_user.html',context)
 
 def add_user_to_database(request):
+    # 张丽：加入馆员身份判断
+    if request.session.get('is_login', None):
+        return redirect('/')
+    else:
+        user = request.user
+        librarian = librarian_info.filter(user=user)
+        if librarian:
+            return render(request, 'librarian/librarian.html')
+        else:
+            HttpResponse('馆员模块仅供本馆工作人员登录~')
+            
     if request.method == "GET":
         userprofile_form = forms.AddReaderForm()
         return render(request, "librarian/userAddinfo.html",
@@ -110,6 +230,7 @@ def add_user_to_database(request):
 
 
 def change_user_to_database(request):
+    
     if request.method == "GET":
         id = request.GET["person_info_ptr_id"]
         reader = Reader.objects.get(person_info_ptr_id=id)

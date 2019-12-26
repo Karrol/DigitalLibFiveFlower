@@ -11,7 +11,7 @@
                 <form class='form-login' action="{%url 'search:searchParameter'%}" method="POST">
 
                   {% if message %}
-                      <div class="alert alert-warning">{{ message }}</div>
+                      <div class="alert alert-warning">{{ message }}<a href="{%url 'search:searchHigh'%}">点击进入多字段检索</a></div>
                   {% endif %}
                   {% csrf_token %}
                   <h2 class="text-center">个人检索参数设置</h2>
@@ -19,10 +19,7 @@
                       {{searchparameter_form.recordNum.label_tag}}
                       {{ searchparameter_form.recordNum }}
                   </div>
-                  <div class="form-group">
-                      {{searchparameter_form.crecordNum.label_tag}}
-                      {{ searchparameter_form.crecordNum }}
-                  </div>
+                  
                   <div class="form-group">
                       {{searchparameter_form.defaultLibrary.label_tag}}
                       {{searchparameter_form.defaultLibrary }}

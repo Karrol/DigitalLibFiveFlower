@@ -41,7 +41,18 @@
                     <td rowspan=$rowspan style='vertical-align: middle;text-align: center;'>{{ book.bookID.location }}</td>
                     <td rowspan=$rowspan style='vertical-align: middle;text-align: center;'>{{ book.bookID.quantity }}</td>
                     <td rowspan=$rowspan style='vertical-align: middle;text-align: center;'>
-                        <a class="btn btn-primary" href="{%url 'search:bookDetail' book.ISBN %}">详情</a>
+                        {%ifequal resultFormat "非规范数据格式"%}
+                            <a class="btn btn-primary" href="{%url 'search:bookDetail' book.ISBN %}">详情</a>
+                        {%endifequal%}
+                        {%ifequal resultFormat "标准格式"%}
+                            <a class="btn btn-primary" href="{%url 'search:bookDetailFormat' book.ISBN %}">详情</a>
+                        {%endifequal%}
+                        {%ifequal resultFormat "卡片格式"%}
+                            <a class="btn btn-primary" href="{%url 'search:bookDetailFormat_card' book.ISBN %}">详情</a>
+                        {%endifequal%}
+                        {%ifequal resultFormat "引文格式"%}
+                            <a class="btn btn-primary" href="{%url 'search:bookDetailFormat_yinyong' book.ISBN %}">详情</a>
+                        {%endifequal%}
                         <a class="btn btn-success" href="{%url 'readerCenter:mysearchhis_add' book.ISBN %}">加至查询结果</a>
                         <a class="btn btn-warning" href="{%url 'readerCenter:mylib_add' book.ISBN %}">加至我的图书馆</a>
                     </td>

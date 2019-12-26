@@ -12,6 +12,14 @@
     height: 35px;
 }
 </style>
+    {%ifequal request.session.if_douban "yes"%}
+        <div class="col-md-4 col-md-offset-4">
+            <div class="alert alert-warning">
+                <a href="/login" class="close" data-dismiss="alert">&times;</a>
+                    <h2>豆瓣图书暂不支持规范格式，故展示非规范格式详情~</h2>
+            </div>
+        </div>
+    {%endifequal%}
 
     {% if state %}
         <div class="col-md-4 col-md-offset-4">
@@ -47,7 +55,7 @@
                       <img src="/media/bookcover/{{ book.cover }}" alt="{{ book.title }}">
                     </div>
                     <br><br><br>
-                    <div class="col-md-5">
+                    <div class="col-md-2">
                         {% if book.bookID.quantity > 0 %}
                             <button class="btn btn-primary btn-lg"
                                     onclick="location.href='?action=borrow';">借阅
@@ -59,9 +67,10 @@
                         {% endif %}
 
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-4">
                         <a href="{%url 'readerCenter:mylib_add' book.ISBN%}"> <button class="btn btn-primary btn-lg">添至我的图书馆</button> </a>
                     </div>
+                   
                     <div class="col-md-5">
                         <a href="{%url 'search:bookDetailFormat' book.ISBN%}"> <button class="btn btn-primary btn-lg">图书信息规范数据格式</button> </a>
                     </div>
