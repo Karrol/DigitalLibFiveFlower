@@ -1,4 +1,4 @@
-{% extends "readerCenter/pers_base.html" %}
+{% extends "readerCenter/pers_base_ver1.html" %}
 {% load static %}
     {%block perscontent%}
     <div id="content-wrapper">
@@ -13,30 +13,7 @@
           <li class="breadcrumb-item active">消息通知</li>
         </ol>
 
-        <!-- DataTables Example --><!--每周一书的读者定向推荐-->
-        <!--<div class="card mb-3">
-            <div class="card-header">
-                <i></i>
-                本周书籍推荐</div>
-            <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="newnotice" width="100%" cellspacing="0">
-                            {% for wbook in book_week %}
-                            <tr >
-                                 <td><i class="fas fa-bell fa-fw"></i><a href="/shownotice/detail?recBookID={{wbook.ISBN.ISBN}}">叮咚~亲爱的{{reader.name}},本周新荐图书《{{wbook.bookName}}》已新鲜出炉，快来看看叭~ </a><p class="small text-muted" align="right">{{wbook.recTime}}</p></td>
-                            </tr>
-                            {% endfor %}
-
-                            <tr>
-
-                            </tr>
-                        </table>
-                              
-                    </div>
-            </div>
-            <div class="card-footer small text-muted">数据更新于{{nowtime}}</div>
-          </div>  -->
-        <!--读者的借阅催还提醒-->
+        
 
         <div class="card mb-3">
           <div class="card-header">读者借阅还书提醒</div>
@@ -55,7 +32,7 @@
               </div>
           </div>
           
-          <div class="card-footer small text-muted">数据更新于{{nowtime}}</div>
+          <div class="card-footer small text-muted">数据更新于{% now "Y-m-d" %}</div>
         </div>
 
       </div>

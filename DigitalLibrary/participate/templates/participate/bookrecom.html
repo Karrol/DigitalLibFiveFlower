@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-
+{% load static %}
+{% load staticfiles %}
 <head>
 
   <meta charset="utf-8">
@@ -20,6 +21,50 @@
   <!-- Custom styles for this template-->
   <link href="/static/mobankf/css/sb-admin.css" rel="stylesheet">
 
+
+    <link href="{%static 'assets/css/bootstrap.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/css/bootstrap-responsive.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/css/docs.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/css/prettyPhoto.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/js/google-code-prettify/prettify.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/css/camera.css'%}" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300|Open+Sans:400,300,300italic,400italic" rel="stylesheet">
+  <link href="{%static 'assets/css/style.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/color/success.css'%}" rel="stylesheet">
+
+  <!-- fav and touch icons -->
+  <link rel="shortcut icon" href="{%static 'assets/ico/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{%static 'assets/ico/apple-touch-icon-144-precomposed.png'%}">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{%static 'assets/ico/apple-touch-icon-114-precomposed.png'%}">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{%static 'assets/ico/apple-touch-icon-72-precomposed.png'%}">
+  <link rel="apple-touch-icon-precomposed" href="{%static 'assets/ico/apple-touch-icon-57-precomposed.png'%}">
+  <link rel="stylesheet" href="/baidu/css/bootstrap.min.css"type="text/css"/>
+
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
+    <style>
+         .form-login {
+  max-width: 400px;
+  padding: 20px 15px;
+  margin: 0 auto;
+}
+
+
+
+.form-login .form-control:focus {
+  z-index: 2;
+}
+.form-login input[type="text"] {
+  margin-bottom: 0px;
+  border-radius:5px;
+  height:20px;
+  padding: 15px;
+  font-size: 16px;
+
+}
+    </style>
   <!--表单样式-->
   <style>
     ::-moz-placeholder {
@@ -117,103 +162,193 @@
 
 </head>
 
-<body id="page-top">
 
-  <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
+<body class="bootstrap-admin-with-small-navbar">
 
-    <a class="navbar-brand mr-1" href="index.html">读者参与</a>
+  <div class="navbar navbar-fixed-top", style="margin:auto">
+      <div class="navbar-inner">
+        <div class="container">
+          <!-- logo 数字图书馆 注意：需要制作一个大小一致的徽标 -->
+          <a class="brand logo" style="float:left">
+            <img src="{%static 'assets/img/sculogo1.png'%}" alt="scuIS" />
+          </a>
+          <!-- end logo -->
 
-    <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
-      <i class="fas fa-bars"></i>
-    </button>
+          <!-- top menu -->
+          <div>
+            <nav>
+              <ul class="nav topnav">
 
-    <!-- Navbar Search -->
-    <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="搜索..." aria-label="Search" aria-describedby="basic-addon2">
-        <div class="input-group-append">
-          <button class="btn btn-primary" type="button">
-            <i class="fas fa-search"></i>
-          </button>
+                <li class="dropdown  active primary">
+                  <a href="/"><i class="icon-home icon-white"></i>首页</a>
+                  <!--<ul class="dropdown-menu">
+                    <li><a href="index_alt1.html">Index alt 1</a></li>
+                    <li><a href="index_alt2.html">Index alt 2</a></li>
+                  </ul>  -->
+                </li>
+
+                <li class="dropdown warning">
+                  <a href="{%url 'readerService:borrowTips'%}"><i class="icon-star icon-white"></i>读者服务</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{%url 'readerService:borrowTips'%}">借还图书</a></li>
+                    <li><a href="{%url 'readerService:serviceTime'%}">服务时间</a></li>
+                    <li><a href="{%url 'readerService:renewal'%}">续借与到期提醒</a></li>
+                    <li><a href="{%url 'readerService:cableNumber'%}">索取号</a></li>
+                    <li><a href="{%url 'readerService:compensation'%}">赔偿损失</a></li>
+                    <li class="dropdown"><a href="{%url 'readerService:bookReservation'%}">图书预约</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'readerService:bookReservationTips'%}">图书预约说明</a></li>
+                        <li><a href="{%url 'readerService:bookReservationBooked'%}">已预约图书</a></li>
+                        <li><a href="{%url 'readerService:bookReservation'%}">预约图书</a></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown "><a href="{%url 'readerService:cd'%}">随书光盘</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'readerService:cd'%}">随书光盘检索</a></li>
+                        <li><a href="{%url 'readerService:cdInfo'%}">随书光盘说明</a></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown "><a href="{%url 'readerService:lecture'%}">专题讲座</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'readerService:lecture'%}">专题讲座</a></li>
+                        <li><a href="{%url 'readerService:lectureBook'%}">讲座预约</a></li>
+                        <li><a href="{%url 'readerService:lectureTips'%}">讲座预约须知</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+
+                <li class="dropdown danger">
+                  <a href="{%url 'participate:article_list'%}"><i class="icon-leaf icon-white"></i>读者参与</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{%url 'participate:article_list'%}">读者论坛</a>
+                        <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'participate:article_list'%}">看帖</a></li>
+                        <li><a href="{%url 'participate:article_create'%}">发帖</a></li>
+                        <li><a href="{%url 'participate:listHelp'%}">论坛帮助</a></li>
+                        </ul>
+                    </li>
+                    <li class="{%url 'participate:donation_rules'%}"><a href="#">图书捐赠</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'participate:donation_rules'%}">捐赠须知</a></li>
+                        <li><a href="{%url 'participate:donation_treatments'%}">捐赠处理</a></li>
+                          <li><a href="{%url 'participate:donation_contact'%}">联系方式</a></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown"><a href="{%url 'participate:book_recommendation'%}">读者推荐</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'participate:book_recommendation'%}">好书推荐</a></li>
+                        <li><a href="{%url 'participate:bookrec_list'%}">推荐列表</a></li>
+                      </ul>
+                    </li>
+                    <li><a href="{%url 'participate:groupbook_recom'%}">推荐书目</a></li>
+                    <li><a href="{%url 'participate:curatorMail'%}">馆长信箱</a></li>
+                  </ul>
+                </li>
+                <li class="dropdown info">
+                    <a href="{% url 'infoCenter:newsIntro' %}"><i class="icon-camera icon-white"></i>信息中心</a>
+                    <ul class="dropdown-menu">
+                     <li class="dropdown "><a href="{% url 'infoCenter:newsIntro' %}">新闻公告</a>
+                        <ul class="dropdown-menu sub-menu">
+                          {% for column in news_intro_columns %}
+                          <li><a href="{% url 'infoCenter:newsColumn' column.columnSlug %}">{{ column.columnName }}</a></li>
+                          {% endfor %}
+                        </ul>
+                      </li>
+                      <li class="dropdown"><a href="{% url 'service:libBrief' %}">服务指南</a>
+                        <ul class="dropdown-menu sub-menu">
+                          {% for category in side_cotegories %}
+                          <li><a href="{% url 'service:serviceCategory' category.categorySlug %}">{{ category.categoryName }}</a></li>
+                          {% endfor %}
+                        </ul>
+                      </li>
+                      <li><a href="{% url 'infoCenter:recBookList' %}">每周一书</a></li>
+                      <li><a href="{% url 'infoCenter:rankList' %}">排行榜</a></li>
+                      <li><a href="{% url 'infoCenter:toolDownload' %}">工具下载</a></li>
+                    </ul>
+                </li>
+
+                <li class="success">
+                  <a href="{%url 'librarian:librarian_book' %}"><i class="icon-envelope icon-white"></i> 馆员管理</a>
+                </li>
+              {% if user.is_authenticated %}
+                <li class="dropdown inverse">
+                  <a href="{%url 'readerCenter:profile'%}"><i class="icon-bullhorn icon-white"></i>个人中心</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{%url 'readerCenter:profile'%}">个人资料</a></li>
+                    <li><a href="{%url 'readerCenter:notice'%}">消息列表</a></li>
+                    <li><a href="{%url 'readerCenter:borrowingSituation'%}">我的借阅</a></li>
+                    <li><a href="{%url 'readerCenter:showsearchlist'%}">我的检索历史</a></li>
+                    <li><a href="{%url 'readerCenter:mylib'%}">我的图书馆</a></li>
+                    <li><a href="{%url 'login:user_logout'%}">登出</a></li>
+                  </ul>
+                </li>
+              {%else%}
+                <li class="dropdown inverse">
+                  <a href="#"><i class="icon-bullhorn icon-white"></i> 登录/注册</a>
+                  <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'login:userRegister'%}">读者注册</a></li>
+                        <li><a href="{%url 'login:readerLogin'%}">读者登录</a></li>
+                        <li><a href="{%url 'login:librarianLogin'%}">馆员登录</a></li>
+                        <li><a href="/admin/login/?next=/admin/">后台登录</a></li>
+                  </ul>
+
+                </li>
+              {%endif%}
+              </ul>
+            </nav>
+          </div>
+          <!-- end menu -->
         </div>
       </div>
-    </form>
+    </div>
 
-    <!-- Navbar -->
-    <ul class="navbar-nav ml-auto ml-md-0">
-      <li class="nav-item dropdown no-arrow mx-1">
-        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-bell fa-fw"></i>
-          <span class="badge badge-danger">9+</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li>
-      <li class="nav-item dropdown no-arrow mx-1">
-        <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-envelope fa-fw"></i>
-          <span class="badge badge-danger">7</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li>
-      <li class="nav-item dropdown no-arrow">
-        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-user-circle fa-fw"></i>
-        </a>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-          <a class="dropdown-item" href="#">Settings</a>
-          <a class="dropdown-item" href="#">Activity Log</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
-        </div>
-      </li>
-    </ul>
 
-  </nav>
+  <div class="container", style="margin:0 auto">
+        <!-- left, vertical navbar & content -->
+        <div class="row">
+            <!-- left, vertical navbar -->
+             <div class="col-md-2 bootstrap-admin-col-left">
+                <ul class="nav navbar-collapse collapse bootstrap-admin-navbar-side">
+                    <li>
+                        <a href="{%url 'participate:article_list'%}"><i class="glyphicon glyphicon-chevron-right"></i> 读者论坛</a>
+                    </li>
+                    <li>
+                        <a href="{%url 'participate:donation_rules'%}"><i class="glyphicon glyphicon-chevron-right"></i> 图书捐赠</a>
+                    </li>
+                    <li>
+                        <a href="{%url 'participate:book_recommendation'%}"><i class="glyphicon glyphicon-chevron-right"></i> 读者推荐</a>
+                    </li>
+                    <li>
+                        <a href="{%url 'participate:groupbook_recom'%}"><i class="glyphicon glyphicon-chevron-right"></i> 推荐书目</a>
+                    </li>
 
-  <div id="wrapper">
+                </ul>
 
-    <!-- Sidebar -->
-    <ul class="sidebar navbar-nav">
-      <li class="nav-item dropdown active">
-        <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>读者参与</span>
-        </a>
-        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-          <a class="dropdown-item" href="{% url 'participate:article_list' %}">交流论坛</a>
-          <a class="dropdown-item" href="{% url 'participate:book_recommendation' %}">好书推荐</a>
-          <a class="dropdown-item" href="{% url 'participate:donation_rules' %}">图书捐赠</a>
-          <a class="dropdown-item" href="404.html">推荐书目</a>
-        </div>
-      </li>
-    </ul>
+            </div>
 
-    <div id="content-wrapper">
+<div class="col-md-10">
+
+   <div id="content-wrapper">
 
       <div class="container-fluid">
 
         <!-- Breadcrumbs-->
+
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
             <a href="{% url 'participate:book_recommendation' %}">好书推荐</a>
           </li>
-          <li class="breadcrumb-item active">读者参与</li>
+          <li class="breadcrumb-item">
+            <a href="{% url 'participate:bookrec_list' %}">推荐列表</a>
+          </li>
         </ol>
 
+
         <!--推荐表单-->
-        <div class="pc-kk-form" style="width:800px;margin:auto;">
+
             <p>
-              <img src="../../static/mobankf/images/rec_title.jpg'%}" width="700" height="140" />
+              <img src="{% static 'mobankf/images/rec_title.jpg'%}" width="700" height="140" />
             </p>
             <div class="card-body" >
               <p>亲爱的读者：</p>
@@ -225,63 +360,61 @@
             <hr style="border:1 dashed #987cb9" width="100%" color=#987cb9 size=1>
             <h2 class="text-center cmnt-head ">读者好书推荐信息表</h2>
             <p class="text-center fade-txt">查看 <a href="{% url 'participate:bookrec_list' %}">推荐列表</a></p>
-            <form method="post" action=".">
-                <!--Django中需要POST数据的地方都必须有csrf_token -->
-                {% csrf_token %}
-              <div class="pc-kk-form-list">
-                <input type="text" placeholder="书名" name="bookName">
-              </div>
-              <div class="pc-kk-form-list">
-                <input type="text" placeholder="作者" name="bookAuthor">
-              </div>
-              <div class="pc-kk-form-list">
-                <input type="text" placeholder="出版社" name="bpublisher">
-              </div>
 
-              <div class="pc-kk-form-list">
-                <input type="text" placeholder="ISBN号" name="bookISBN">
-              </div>
-              <div class="pc-kk-form-list" style="height:auto">
-                <textarea type="text" name="bookIntroduction" rows="12">简要介绍</textarea>
-              </div>
-              <div class="pc-kk-form-list">
-                <input type="text" placeholder="推荐者姓名" name="RecName">
-              </div>
-              <div class="pc-kk-form-list">
-                <input type="text" value="推荐者身份"   name="RecIdentity" >
-              </div>
-               <div class="pc-kk-form-list">
-                <input type="text" value="推荐者单位"  name="RecDepartment" >
-               </div>
-              <!--
-              <div class="pc-kk-form-list pc-kk-form-list-clear">
-                <div class="nice-select" name="nice-select" style="float:right">
-                  <input type="text" value="推荐者身份"   name="RecIdentity" >
-                  <ul>
-                    <li data-value="pub">公共管理学院</li>
-                    <li data-value="art">文学与新闻学院</li>
-                  </ul>
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4 ">
+                        <form class='form-login' action="{%url 'participate:book_recommendation'%}" method="POST">
+
+                          {% if message %}
+                              <div class="alert alert-warning">{{ message }}</div>
+                          {% endif %}
+                          {% csrf_token %}
+
+                          <div class="form-group ">
+                              {{readerrecom_form.bookName.label_tag}}
+                              {{readerrecom_form.bookName }}
+                          </div>
+                          <div class="form-group">
+                              {{readerrecom_form.bookAuthor.label_tag}}
+                              {{readerrecom_form.bookAuthor }}
+                          </div>
+                          <div class="form-group">
+                              {{readerrecom_form.bpublisher.label_tag}}
+                              {{readerrecom_form.bpublisher }}
+                          </div>
+                          <div class="form-group">
+                              {{readerrecom_form.bpubTime.label_tag}}
+                              {{readerrecom_form.bpubTime }}
+                          </div>
+                          <div class="form-group">
+                              {{readerrecom_form.bookIntroduction.label_tag}}
+                              {{readerrecom_form.bookIntroduction }}
+                          </div>
+                          
+                          <div class="form-group">
+                              {{readerrecom_form.RecIdentity.label_tag}}
+                              {{readerrecom_form.RecIdentity }}
+                          </div>
+                          <div class="form-group">
+                              {{ readerrecom_form.RecDepartment.label_tag }}
+                              {{ readerrecom_form.RecDepartment }}
+
+                          </div>
+
+                          <button type="reset" class="btn btn-default pull-left">重置</button>
+                          <button type="submit" class="btn btn-primary pull-right">提交</button>
+                           <br><br>
+                           <br><br>
+                      </form>
+
+
+                    </div>
                 </div>
-                <div class="nice-select" name="nice-select">
-                    <input type="text" value="推荐者单位"  name="RecDepartment" >
-                    <ul>
-                      <li data-value="4">四年制本科生</li>
-                      <li data-value="5">五年制本科生</li>
-                      <li data-value="6">硕士生</li>
-                      <li data-value="7">博士生</li>
-                    </ul>
-                  </div>
-              </div>
-              -->
-              <div class="pc-kk-form-btn">
-                <button type="submit">提交</button>
-              </div>
-            </form>
-          </div>
+
         <!--推荐表单结束-->
 
 
-          <script type="text/javascript" src="/static/mobankf/js/jquery.js"></script>
+          <!--<script type="text/javascript" src="/static/mobankf/js/jquery.js"></script>
 
           <script>
 
@@ -321,24 +454,35 @@
 
             });
 
-          </script>
+          </script>-->
 
 
       <!-- /.container-fluid -->
 
-      <!-- Sticky Footer -->
-      <footer class="sticky-footer">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright © 五朵金花</span>
-          </div>
-        </div>
-      </footer>
-
-    </div>
+      </div>
     <!-- /.content-wrapper -->
 
-  </div>
+
+</div>
+<!-- /.col-md-10-->
+
+
+            </div>
+<!-- /.row -->
+
+
+        </div>
+  <!-- /.container -->
+
+
+            <!-- content -->
+
+   <!-- Sticky Footer -->
+        </div>
+
+
+
+
   <!-- /#wrapper -->
 
   <!-- Scroll to Top Button-->
@@ -383,6 +527,26 @@
   <!-- Demo scripts for this page-->
   <script src="/static/mobankf/js/demo/datatables-demo.js"></script>
   <script src="/static/mobankf/js/demo/chart-area-demo.js"></script>
+
+
+  <script src="{%static 'assets/js/jquery-1.8.2.min.js'%}"></script>
+  <script src="{%static 'assets/js/jquery.easing.1.3.js'%}"></script>
+  <script src="{%static 'assets/js/google-code-prettify/prettify.js'%}"></script>
+  <script src="{%static 'assets/js/modernizr.js'%}"></script>
+  <script src="{%static 'assets/js/bootstrap.js'%}"></script>
+  <script src="{%static 'assets/js/jquery.elastislide.js'%}"></script>
+  <script src="{%static 'assets/js/jquery.flexslider.js'%}"></script>
+  <script src="{%static 'assets/js/jquery.prettyPhoto.js'%}"></script>
+  <script src="{%static 'assets/js/application.js'%}"></script>
+  <script src="{%static 'assets/js/hover/jquery-hover-effect.js'%}"></script>
+  <script src="{%static 'assets/js/hover/setting.js'%}"></script>
+  <script src="{%static 'assets/js/camera/camera.min.js'%}"></script>
+  <script src="{%static 'assets/js/camera/setting.js'%}"></script>
+
+  <!-- Template Custom JavaScript File -->
+  <script src="{%static 'assets/js/custom.js'%}"></script>
+
+
 
 </body>
 

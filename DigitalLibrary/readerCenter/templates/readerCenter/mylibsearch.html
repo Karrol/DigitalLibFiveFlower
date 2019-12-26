@@ -1,0 +1,85 @@
+{% extends "readerCenter/pers_base_ver1.html" %}
+{% load static %}
+
+    {%block perscontent%}
+    <!--个人中心网页的核心内容可替换组件-->
+<style>
+input#keyword {
+    padding: 15px;
+    border-radius: 5px;
+    position:center;
+}
+.bootstrap-admin-no-table-panel,
+.bootstrap-admin-no-table-panel-content{
+    float: left;
+    width: 100%;
+}
+
+</style>
+
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+
+        <!-- Breadcrumbs-->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"></li>
+                <li class="breadcrumb-item active">我的资源</li>
+            </ol>
+           <div class="col-lg-12">
+                        <div class="panel panel-default bootstrap-admin-no-table-panel">
+                            <div class="panel-heading">
+
+                                <div class="text-muted bootstrap-admin-box-title">查询</div>
+                            </div>
+                            <div class="bootstrap-admin-no-table-panel-content bootstrap-admin-panel-content collapse in">
+                                <form class="form-horizontal" action="{%url 'readerCenter:mylib_search'%}" method="GET">
+                        			<div class="col-lg-7 form-group">
+                                        <label class="col-lg-4 control-label" >图书查询</label>
+                                        <div class="col-lg-8">
+                                            <input class="form-control" id="keyword" name="keyword" placeholder="关键词：书名/作者名称/图书分类" type="text">
+                                            <label class="control-label" style="display: none;"></label>
+                                             <br><br>
+                                            {% ifequal counter 0 %}
+                                                <p>啊哦，您的图书馆中并未收录此书籍！<a href="{%url 'readerCenter:mylib'%}">点击返回我的图书馆！</a></p>
+                                            {%else%}
+                                                <p>已为您查找到{{counter}}本书籍：</p> {% endifequal %}
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 form-group">
+
+                                        <button type="submit" class="btn btn-primary" id="btn_query" onclick="">查询</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+            <div class="col-lg-12">
+            <div class="row">
+              {%for book in searchResultbook%}
+              <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                  <a href="{% url 'search:bookDetail' book.ISBN%}"><img class="card-img-top" src="/media/bookcover/{{book.cover}}" alt="{{book.title}}封面"></a>
+                  <div class="card-body">
+                    <h4 class="card-title">
+                      <a href="{% url 'search:bookDetail' book.ISBN %}">{{book.title}}</a>
+                    </h4>
+                    <h5>{{book.author }}</h5>
+                    <!--<p class="card-text">{{book.ISBN.description}}</p> -->
+                  </div>
+                  <div class="card-footer">
+                      <small class="text-muted"><a href="{% url 'readerCenter:mylib_del' book.ISBN %}">删除书籍</a></small>
+                  </div>
+                </div>
+              </div>
+              {%endfor%}
+
+            </div>
+          <!--我的书架封面展示页结束-->
+
+
+        </div>
+
+        </div>
+    </div>        {%endblock perscontent%}

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+{% load staticfiles %}
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>读者服务</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="../../static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+  <!-- Page level plugin CSS-->
+  <link href="../../static/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="../../static/css/sb-admin.css" rel="stylesheet">
+
+   <link href="{%static 'assets/css/bootstrap.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/css/bootstrap-responsive.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/css/docs.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/css/prettyPhoto.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/js/google-code-prettify/prettify.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/css/camera.css'%}" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300|Open+Sans:400,300,300italic,400italic" rel="stylesheet">
+  <link href="{%static 'assets/css/style.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/color/success.css'%}" rel="stylesheet">
+
+  <!-- fav and touch icons -->
+  <link rel="shortcut icon" href="{%static 'assets/ico/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{%static 'assets/ico/apple-touch-icon-144-precomposed.png'%}">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{%static 'assets/ico/apple-touch-icon-114-precomposed.png'%}">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{%static 'assets/ico/apple-touch-icon-72-precomposed.png'%}">
+  <link rel="apple-touch-icon-precomposed" href="{%static 'assets/ico/apple-touch-icon-57-precomposed.png'%}">
+  <link rel="stylesheet" href="/baidu/css/bootstrap.min.css"type="text/css"/>
+
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
+</head>
+
+<body id="page-top">
+
+  <body class="bootstrap-admin-with-small-navbar">
+
+  <div class="navbar navbar-fixed-top", style="margin:auto">
+      <div class="navbar-inner">
+        <div class="container">
+          <!-- logo 数字图书馆 注意：需要制作一个大小一致的徽标 -->
+          <a class="brand logo" style="float:left">
+            <img src="{%static 'assets/img/sculogo1.png'%}" alt="scuIS" />
+          </a>
+          <!-- end logo -->
+
+          <!-- top menu -->
+          <div>
+            <nav>
+              <ul class="nav topnav">
+
+                <li class="dropdown  active primary">
+                  <a href="/"><i class="icon-home icon-white"></i>首页</a>
+                  <!--<ul class="dropdown-menu">
+                    <li><a href="index_alt1.html">Index alt 1</a></li>
+                    <li><a href="index_alt2.html">Index alt 2</a></li>
+                  </ul>  -->
+                </li>
+
+                <li class="dropdown warning">
+                  <a href="{%url 'readerService:borrowTips'%}"><i class="icon-star icon-white"></i>读者服务</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{%url 'readerService:borrowTips'%}">借还图书</a></li>
+                    <li><a href="{%url 'readerService:serviceTime'%}">服务时间</a></li>
+                    <li><a href="{%url 'readerService:renewal'%}">续借与到期提醒</a></li>
+                    <li><a href="{%url 'readerService:cableNumber'%}">索取号</a></li>
+                    <li><a href="{%url 'readerService:compensation'%}">赔偿损失</a></li>
+                    <li class="dropdown"><a href="{%url 'readerService:bookReservation'%}">图书预约</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'readerService:bookReservationTips'%}">图书预约说明</a></li>
+                        <li><a href="{%url 'readerService:bookReservationBooked'%}">已预约图书</a></li>
+                        <li><a href="{%url 'readerService:bookReservation'%}">预约图书</a></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown "><a href="{%url 'readerService:cd'%}">随书光盘</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'readerService:cd'%}">随书光盘检索</a></li>
+                        <li><a href="{%url 'readerService:cdInfo'%}">随书光盘说明</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+
+                <li class="dropdown danger">
+                  <a href="{%url 'participate:article_list'%}"><i class="icon-leaf icon-white"></i>读者参与</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{%url 'participate:article_list'%}">读者论坛</a></li>
+                    <li class="{%url 'participate:donation_rules'%}"><a href="#">读者捐赠</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'participate:donation_rules'%}">捐赠须知</a></li>
+                        <li><a href="{%url 'participate:donation_treatments'%}">捐赠处理</a></li>
+                      </ul>
+                    </li>
+                    <li><a href="{%url 'participate:donation_contact'%}">联系方式</a></li>
+                    <li class="dropdown"><a href="{%url 'participate:book_recommendation'%}">读者推荐</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'participate:book_recommendation'%}">好书推荐</a></li>
+                        <li><a href="{%url 'participate:bookrec_list'%}">推荐列表</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li class="dropdown info">
+                    <a href=#"><i class="icon-camera icon-white"></i>信息中心</a>
+                  <ul class="dropdown-menu">
+                     <li class="dropdown "><a href="{% url 'infoCenter:newsIntro' %}">新闻公告</a>
+                      <ul class="dropdown-menu sub-menu">
+                        {% for column in news_columns %}
+                        <li><a href="{{ column.get_absolute_url }}">{{ column.columnName }}</a></li>
+                        {% endfor %}
+                      </ul>
+                    </li>
+                      <li class="dropdown"><a href="{% url 'service:libBrief' %}">服务指南</a>
+                      <ul class="dropdown-menu sub-menu">
+                        {% for cotegory in service_cotegories %}
+                        <li><a href="{{ cotegory.get_absolute_url }}">{{ cotegory.categoryName }}</a></li>
+                        {% endfor %}
+                      </ul>
+                    </li>
+                      <li><a href="{% url 'infoCenter:recBookList' %}">每周一书</a></li>
+                      <li><a href="{% url 'infoCenter:rankList' %}">排行榜</a></li>
+                  </ul>
+                </li>
+
+                <li class="success">
+                  <a href="{%url 'login:librarianLogin'%}"><i class="icon-envelope icon-white"></i> 馆员管理</a>
+                </li>
+              {% if user.is_authenticated %}
+                <li class="dropdown inverse">
+                  <a href="{%url 'readerCenter:profile'%}"><i class="icon-bullhorn icon-white"></i>个人中心</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{%url 'readerCenter:profile'%}">个人资料</a></li>
+                    <li><a href="{%url 'readerCenter:notice'%}">消息列表</a></li>
+                    <li><a href="{%url 'readerCenter:borrowingSituation'%}">我的借阅</a></li>
+                    <li><a href="{%url 'readerCenter:showsearchlist'%}">我的检索历史</a></li>
+                    <li><a href="{%url 'readerCenter:mylib'%}">我的图书馆</a></li>
+                  </ul>
+                </li>
+              {%else%}
+                <li class="dropdown inverse">
+                  <a href="#"><i class="icon-bullhorn icon-white"></i> 登录/注册</a>
+                  <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'login:readerLogin'%}">读者登录</a></li>
+                        <li><a href="{%url 'login:librarianLogin'%}">馆员登录</a></li>
+                        <li><a href="{%url 'login:userRegister'%}">读者注册</a></li>
+                  </ul>
+                </li>
+              {%endif%}
+              </ul>
+            </nav>
+          </div>
+          <!-- end menu -->
+        </div>
+      </div>
+    </div>
+
+  <div class="container", style="margin:0 auto">
+        <!-- left, vertical navbar & content -->
+        <div class="row">
+            <!-- left, vertical navbar -->
+             <div class="col-md-2 bootstrap-admin-col-left">
+                <ul class="nav navbar-collapse collapse bootstrap-admin-navbar-side">
+                    <li>
+                        <a href="../borrowTips"><i class="glyphicon glyphicon-chevron-right"></i> 借还图书</a>
+                    </li>
+                    <li>
+                        <a href="../bookReservation"><i class="glyphicon glyphicon-chevron-right"></i>图书预约</a>
+                    </li>
+                    <li>
+                        <a href="../compensation"><i class="glyphicon glyphicon-chevron-right"></i>赔偿损失</a>
+                    </li>
+                    <li>
+                        <a href="../cd"><i class="glyphicon glyphicon-chevron-right"></i>随书光盘与检索</a>
+                    </li>
+                    <li>
+                        <a href="../lecture"><i class="glyphicon glyphicon-chevron-right"></i>专题讲座</a>
+                    </li>
+
+                </ul>
+
+            </div>
+            <div class="col-md-10">
+
+
+                <div class="row">
+                  <div id="wrapper">
+
+    <div id="content-wrapper">
+
+      <div class="container-fluid">
+
+        <!-- Breadcrumbs-->
+        <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                          <!-- 所有类似地方加上 tag 参数，如排序、翻页等。实现带参数的交叉查询 -->
+                          <a href="{%url 'readerService:lecture'%}">
+                            专题讲座详情
+                          </a>
+                      </li>
+                      <li class="breadcrumb-item">
+                          <a href="{%url 'readerService:lectureBook'%}">
+                            讲座预约
+                          </a>
+                      </li>
+                      <li class="breadcrumb-item">
+                          <a href="{%url 'readerService:lectureTips'%}">
+                            讲座预约说明
+                          </a>
+                      </li>
+                  </ol>
+              </nav>
+
+<!-- DataTables Example -->
+        <div class="card mb-3">
+          <div class="card-header">
+            <i class="fas fa-table"></i>
+            近期讲座</div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>讲座名称</th>
+                    <th>开始时间</th>
+                    <th>主讲人</th>
+                    <th>地点</th>
+                    <th>主要内容</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>“中华优秀文化”系列讲座之“孔子之道” 第八讲——孔子之道的历史命运</td>
+                    <td>2019年12月22日下午2:00 </td>
+                    <td>王炎平 </td>
+                    <td>第一学术报告厅</td>
+                    <td>本周是《孔子之道》系列讲座的最后一讲——孔子之道的历史命运。主讲老师将依次评述孔子之道在孔子生前的命运，孔子之道在汉武尊儒以后的命运，以及近世中国学习西方以来的命运。说明孔子之道在古代中国实行的情况和遭受扭曲的情况，分析20世纪初中国社会开始批孔的原因，阐释孔子之道与复兴中华文化的关系。</td>
+                  </tr>
+                  <tr>
+                    <td>绘本故事《饺子和汤圆》讲读活动</td>
+                    <td>2019年12月21日（周六）14:00-15:00 </td>
+                    <td>悠悦</td>
+                    <td>幼儿阅览区</td>
+                    <td>这是一本用有趣的方式，让你get中国传统文化及传统美食的绘本，童言童语童趣，好吃好玩好看，传统也可以很现代，美食也可以很可爱。北方冬至吃饺子，南方冬至吃汤圆，那么问题来了，什么是饺子和汤圆呢？通过本次绘本讲读活动，生动有趣的让孩子了解中国传统文化及传统美食。</td>
+                  </tr>
+                  <tr>
+                    <td>开启梦想、塑造未来 </td>
+                    <td>2019年11月30日下午2:00</td>
+                    <td>刘成</td>
+                    <td>第二学术报告厅6</td>
+                    <td>为提升大家对航空的了解，促动更多的人关心民航、理解民航、立志民航、建设民航，将中国打造成民航强国，我们邀请到教授级高级工程师刘成老师做客“巴蜀讲坛”，他将以自身加入民航的经历、在民航工作的经验为基础，与有志于民航事业的青年、与经常选择航空交通运输的旅客以及对民航发展感兴趣的志同道合者共同交流和分享航空技术发展、民航运输历史、民航运输系统运营以及民航运输未来展望等知识，真诚欢迎大家积极参加。 </td>
+                  </tr>
+                  <tr>
+                    <td>让我们一起认识癌症</td>
+                    <td>2019年11月1日下午2:00 </td>
+                    <td>龙鑫 </td>
+                    <td>第一学术报告厅</td>
+                    <td>什么是癌症？恶性肿瘤就是人们所说的癌症，它是100多种相关疾病的统称。当身体内细胞发生突变后，它会不断地分裂，不受身体控制，最后形成癌症。,本周《巴蜀讲坛》讲座邀请四川省中西医结合医院肿瘤科内十一病区副主任龙鑫老师来为大家揭开癌症发生发展的面纱，了解癌症常用的治疗手段，正确应用中医药预防癌症，面对癌症，把主动权掌握在自己手中。欢迎广大读者前往聆听。</td>
+                  </tr>
+                  <tr>
+                    <td>医学新视界——OVID Medline数据库</td>
+                    <td>2019年10月24日(星期四) 16:00</td>
+                    <td>孙波</td>
+                    <td>第四学术报告厅</td>
+                    <td>Medline是由美国国立医学图书馆编辑出版的国际生物医学文摘索引数据库。涉及的主要学科领域有：基础医学、临床医学、护理学、口腔医学、兽医学、卫生保健及预防医学等。 </td>
+                  </tr>
+                  <tr>
+                    <td>民族音乐与文化自信</td>
+                    <td>2019年9月28日下午2:00 </td>
+                    <td>李德隆 </td>
+                    <td>第三学术报告厅</td>
+                    <td>为了帮助广大音乐爱好者了解中国音乐文化和中国人的思想情感，准确演绎和诠释民族音乐，本次“周末艺术鉴赏会”我们邀请到四川师范大学音乐学院副院长李德隆教授以“民族音乐与文化自信”为题，向广大读者进行理论和实践阐释。欢迎大家到场聆听。 </td>
+                  </tr>
+                  <tr>
+                    <td>东坡故里·诗话中秋</td>
+                    <td>2019年9月6日晚19:30 </td>
+                    <td>海光</td>
+                    <td>眉山三苏祠披风榭 </td>
+                    <td>为充分发掘传统节日内涵，《巴蜀讲坛》走进眉山，在一代大文豪苏东坡的故乡，举办“东坡故里·诗话中秋” 万人赏月诵中秋眉山分会场活动，让大家熟知经典、吟诵经典、热爱经典、亲近经典，体会中秋节的意蕴，感受中华民族传统文化的悠久历史。</td>
+                  </tr>
+                  <tr>
+                    <td>曲艺：背靠文学，面向现实</td>
+                    <td>2019年8月17日下午2:00</td>
+                    <td>马平 </td>
+                    <td>第一学术报告厅</td>
+                    <td>本周“周末艺术鉴赏会”我们邀请到中国作家协会会员，一级作家马平，以曲艺的文学性和现实性为出发点，以提升受众对曲艺的理解力和亲近感为落脚点，结合自身近年来的创作实践，和大家谈谈曲艺，也谈谈小说、散文或诗歌。欢迎大家到场聆听。 </td>
+                  </tr>
+                  <tr>
+                    <td>高血压/糖尿病的危害与防治</td>
+                    <td>2019年7月14日下午2:00 </td>
+                    <td>张云飞</td>
+                    <td>第二学术报告厅</td>
+                    <td>此次讲座我们邀请到四川省拔尖中青年中医师、副主任中医师张云飞与你分享中西医结合手段预防、治疗高血压和糖尿病，以及急慢性并发症；突发心脑血管疾病的家庭急救常识及现场急救手法演示；常用药物介绍。7月14日四川省图书馆不见不散。</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+
+
+        </div>
+
+
+      <!-- /.container-fluid -->
+
+    </div>
+    <!-- /.content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+
+  </div>
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+
+            <!-- content -->
+   <!-- Sticky Footer -->
+        </div>>
+
+
+
+
+  <!-- /#wrapper -->
+
+
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-primary" href="login.html">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="../../static/vendor/jquery/jquery.min.js"></script>
+  <script src="../../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="../../static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Page level plugin JavaScript-->
+  <script src="../../static/vendor/chart.js/Chart.min.js"></script>
+  <script src="../../static/vendor/datatables/jquery.dataTables.js"></script>
+  <script src="../../static/vendor/datatables/dataTables.bootstrap4.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="../../static/js/sb-admin.min.js"></script>
+
+  <!-- Demo scripts for this page-->
+  <script src="../../static/js/demo/datatables-demo.js"></script>
+  <script src="../../static/js/demo/chart-area-demo.js"></script>
+
+  <script src="{%static 'assets/js/jquery-1.8.2.min.js'%}"></script>
+  <script src="{%static 'assets/js/jquery.easing.1.3.js'%}"></script>
+  <script src="{%static 'assets/js/google-code-prettify/prettify.js'%}"></script>
+  <script src="{%static 'assets/js/modernizr.js'%}"></script>
+  <script src="{%static 'assets/js/bootstrap.js'%}"></script>
+  <script src="{%static 'assets/js/jquery.elastislide.js'%}"></script>
+  <script src="{%static 'assets/js/jquery.flexslider.js'%}"></script>
+  <script src="{%static 'assets/js/jquery.prettyPhoto.js'%}"></script>
+  <script src="{%static 'assets/js/application.js'%}"></script>
+  <script src="{%static 'assets/js/hover/jquery-hover-effect.js'%}"></script>
+  <script src="{%static 'assets/js/hover/setting.js'%}"></script>
+  <script src="{%static 'assets/js/camera/camera.min.js'%}"></script>
+  <script src="{%static 'assets/js/camera/setting.js'%}"></script>
+
+  <!-- Template Custom JavaScript File -->
+  <script src="{%static 'assets/js/custom.js'%}"></script>
+
+</body>
+
+</html>
+

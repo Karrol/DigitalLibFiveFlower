@@ -1,34 +1,15 @@
-{% extends "login/base.html" %}
+{% extends "search/index.html" %}
 {% load staticfiles %}
 {% block title %}搜索{% endblock %}
 
-{% block content %}
 
 
-    <div class="container col-md-12">
 
-        <div class="container">
-            <form action="{%url 'search:searchBook'%}" method="GET">
-                <div class="row col-md-7 col-md-offset-3">
 
-                    {% for radio in searchForm.search_by %}
-                        <div class="radio-inline">
-                            {{ radio }}
-                        </div>
-                    {% endfor %}
-
-                    <div class="input-group">
-                        {{ searchForm.keyword }}
-                        <span class="input-group-btn">
-                        <button class="btn btn-default btn-lg" type="submit"><img src="{%static 'login/img/search_gray.png'%}"></button>
-                    </span>
-                    </div>
-                </div>
-            </form>
-        </div>
+       {% block searchResult %}
 
         <p></p>
-        <p id='hint' class=" col-md-offset-4" style="font-family: Microsoft YaHei;font-weight:bold;">以下是{{ search_by }}匹配'{{ keyword }}'的结果</p>
+        <p id='hint' class=" col-md-offset-4" style="font-family: Microsoft YaHei;font-weight:bold;">以下是{{ search_by }}匹配'{{ keyword }}'的结果,共检索到{{counter}}条记录</p>
         <br>
         <table class="table table-hover">
             <thead>
@@ -60,7 +41,7 @@
                         </a>
                     </td>
                     <td rowspan=$rowspan style='vertical-align: middle;text-align: center;'><a href="/search/bookDetail/{{ book.ISBN }}">{{ book.title }}</a></td>
-                    <td rowspan=$rowspan style='vertical-align: middle;text-align: center;'>{{ book.author }}
+                    <td rowspan=$rowspan style='vertical-align: middle;text-align: center;'>{{ book.author }} </td>
                     <td rowspan=$rowspan style='vertical-align: middle;text-align: center;'>{{ book.category }}</td>
                     <td rowspan=$rowspan style='vertical-align: middle;text-align: center;'>{{ book.bookID.location }}</td>
                     <td rowspan=$rowspan style='vertical-align: middle;text-align: center;'>{{ book.bookID.quantity }}</td>
@@ -98,5 +79,5 @@
             </ul>
         </nav>
     </div>
+ {% endblock searchResult %}
 
-{% endblock %}

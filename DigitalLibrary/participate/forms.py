@@ -15,10 +15,16 @@ class ArticlePostForm(forms.ModelForm):
         fields = ('title', 'body', 'tags', 'avatar')
 
 # 写评论的表单
-class CommentForm(forms.ModelForm):
-    class Meta:
-        model = Comment
-        fields = ['commentbody']
+class CommentForm(forms.Form):
+    commentbody = forms.CharField(
+
+        label="我也要发言",
+        widget=forms.Textarea(attrs={
+            'class': 'form-control  ',
+            'name': 'commentbody',
+        }),
+        required=True, )
+   
 
 
 # 推荐书的表单
@@ -43,6 +49,101 @@ class RecbooklistInfoForm(forms.ModelForm):
         }
 
     # 步骤3： 自定义表单字段的数据清洗
+
+
+class readerrecomForm(forms.Form):
+    RecIdentitychoice = [
+        (u'本科生', u'本科生'),
+        (u'研究生', u'研究生'),
+    ]
+    RecDepartmentchoice = [
+        (u'公共管理学院', u'公共管理学院'),
+        (u'文学与新闻学院', u'文学与新闻学院'),
+        (u'电子信息学院', u'电子信息学院'),
+    ]
+
+    bookName = forms.CharField(
+        max_length=50,
+        label="图书名称",
+        widget=forms.TextInput(attrs={
+            'class': 'form-control  ',
+            'name': 'bookName',
+        }),
+        required=False,)
+
+    bookAuthor = forms.CharField(
+        max_length=20,
+        label="图书作者",
+        widget=forms.TextInput(attrs={
+            'class': 'form-control  ',
+            'name': 'bookAuthor',
+        }),
+        required=False, )
+
+    bpublisher = forms.CharField(
+        max_length=30,
+        label="出版社",
+        widget=forms.TextInput(attrs={
+            'class': 'form-control  ',
+            'name': 'bpublisher',
+        }),
+        required=False, )
+
+    bpubTime = forms.CharField(
+
+        label="出版时间",
+        widget=forms.TextInput(attrs={
+            'class': 'form-control  ',
+            'name': 'bpubTime',
+        }),
+        required=False, )
+
+    bookISBN = forms.CharField(
+
+        label="ISBN编号",
+        widget=forms.TextInput(attrs={
+            'class': 'form-control  ',
+            'name': 'bookISBN',
+        }),
+        required=False, )
+
+    bookIntroduction = forms.CharField(
+
+        label="简短介绍",
+        widget=forms.TextInput(attrs={
+            'class': 'form-control  ',
+            'name': 'bookIntroduction',
+        }),
+        required=False, )
+
+    
+
+    RecIdentity = forms.CharField(
+        max_length=20,
+        label="推荐人身份：",
+        widget=forms.widgets.Select(
+            choices=RecIdentitychoice,
+            attrs={
+                'class': 'form-control input-lg',
+                'name': 'RecIdentity',
+            },
+
+        ),
+        required=False, )
+
+    RecDepartment = forms.CharField(
+        max_length=50,
+        label="推荐人单位：",
+        widget=forms.widgets.Select(
+            choices=RecDepartmentchoice,
+            attrs={
+                'class': 'form-control input-lg',
+                'name': 'RecDepartment',
+            },
+        ),
+        required=False, )
+
+
 
 
 

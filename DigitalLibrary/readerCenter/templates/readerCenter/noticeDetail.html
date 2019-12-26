@@ -1,4 +1,4 @@
-{% extends "readerCenter/pers_base.html" %}
+{% extends "readerCenter/pers_base_ver1.html" %}
 {% load static %}
     {%block perscontent%}
     <div id="content-wrapper">
@@ -17,7 +17,7 @@
           <!--此处显示每周一书的推荐界面-->
                <div class="card mb-3">
                     <div class="card-header">
-                        <i>借阅催还提醒</i>
+                        <i class="fas">借阅催还提醒</i>
                     </div>
 
                     <div class="card-body">
@@ -31,7 +31,7 @@
                          </div>
                         <div class="col-md-5">
                            <div class="img-rounded">
-                              <img src="/media/{{ borrowing.ISBN.cover }}" alt="{{ borrowing.ISBN.title }}">
+                              <img src="/media/bookcover/{{ borrowing.ISBN.cover }}" alt="{{ borrowing.ISBN.title }}">
                             </div>
                             <br><br><br>
                         </div>
@@ -45,14 +45,14 @@
                             <h4>作者：{{ borrowing.ISBN.author }}</h4>
                             <h4>出版社:{{ borrowing.ISBN.press }}</h4>
                             <h4>类别：{{ borrowing.ISBN.category }}</h4>
-                            <h4>价格：{{ borrowing.ISBN.price|floatformat:2 }}</h4>
+                            <h4>价格：{{ borrowing.ISBN.price}}</h4>
                             <h4>位置:{{ borrowing.ISBN.bookID.location }}</h4>
                             <hr>
                             <hr>
                         </div>
                         
                     </div>
-                    <div class="card-footer small text-muted">通知时间{{notice.pubDate}}</div>
+                    <div class="card-footer small text-muted">通知时间{% now "Y-m-d" %}</div>
                 </div>
       </div>
 

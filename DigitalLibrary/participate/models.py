@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 # timezone 用于处理时间相关事务。
 from django.utils import timezone
+from login.models import Reader
 # Django-taggit
 from taggit.managers import TaggableManager
 
@@ -132,9 +133,9 @@ class RecbooklistInfo(models.Model):
     # 出版社
     bpublisher = models.CharField(max_length=30)
     # 出版时间
-    bpubTime = models.DateField()
+    bpubTime = models.CharField(blank=True,max_length=30)
     # ISBN编号
-    bookISBN = models.CharField(max_length=10)
+    bookISBN = models.CharField(max_length=10,blank=True)
     # 简要介绍
     bookIntroduction = models.TextField()
     # 推荐时间

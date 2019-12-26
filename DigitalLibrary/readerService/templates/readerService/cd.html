@@ -43,6 +43,71 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
+
+<style>
+input#keyword {
+    padding: 16px;
+    border-radius: 5px;
+    position:center;
+}
+
+.bootstrap-admin-no-table-panel,
+.bootstrap-admin-no-table-panel-content{
+    float: left;
+    width: 100%;
+}
+ table
+
+        {
+
+            border-collapse: collapse;
+
+            margin: 0 auto;
+
+            text-align: center;
+
+        }
+
+        table td, table th
+
+        {
+
+            border: 1px solid #cad9ea;
+
+            color: #666;
+
+            height: 30px;
+
+        }
+
+        table thead th
+
+        {
+
+            background-color: #CCE8EB;
+
+            width: 100px;
+
+        }
+
+        table tr:nth-child(odd)
+
+        {
+
+            background: #fff;
+
+        }
+
+        table tr:nth-child(even)
+
+        {
+
+            background: #F5FAFA;
+
+        }
+
+</style>
+
 </head>
 
 <body id="page-top">
@@ -92,52 +157,68 @@
                         <li><a href="{%url 'readerService:cdInfo'%}">随书光盘说明</a></li>
                       </ul>
                     </li>
+                    <li class="dropdown "><a href="{%url 'readerService:lecture'%}">专题讲座</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'readerService:lecture'%}">专题讲座</a></li>
+                        <li><a href="{%url 'readerService:lectureBook'%}">讲座预约</a></li>
+                        <li><a href="{%url 'readerService:lectureTips'%}">讲座预约须知</a></li>
+                      </ul>
+                    </li>
                   </ul>
                 </li>
 
                 <li class="dropdown danger">
                   <a href="{%url 'participate:article_list'%}"><i class="icon-leaf icon-white"></i>读者参与</a>
                   <ul class="dropdown-menu">
-                    <li><a href="{%url 'participate:article_list'%}">读者论坛</a></li>
-                    <li class="{%url 'participate:donation_rules'%}"><a href="#">读者捐赠</a>
+                    <li><a href="{%url 'participate:article_list'%}">读者论坛</a>
+                        <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'participate:article_list'%}">看帖</a></li>
+                        <li><a href="{%url 'participate:article_create'%}">发帖</a></li>
+                        <li><a href="{%url 'participate:listHelp'%}">论坛帮助</a></li>
+                        </ul>
+                    </li>
+                    <li class="{%url 'participate:donation_rules'%}"><a href="#">图书捐赠</a>
                       <ul class="dropdown-menu sub-menu">
                         <li><a href="{%url 'participate:donation_rules'%}">捐赠须知</a></li>
                         <li><a href="{%url 'participate:donation_treatments'%}">捐赠处理</a></li>
+                          <li><a href="{%url 'participate:donation_contact'%}">联系方式</a></li>
                       </ul>
                     </li>
-                    <li><a href="{%url 'participate:donation_contact'%}">联系方式</a></li>
                     <li class="dropdown"><a href="{%url 'participate:book_recommendation'%}">读者推荐</a>
                       <ul class="dropdown-menu sub-menu">
                         <li><a href="{%url 'participate:book_recommendation'%}">好书推荐</a></li>
                         <li><a href="{%url 'participate:bookrec_list'%}">推荐列表</a></li>
                       </ul>
                     </li>
+                    <li><a href="{%url 'participate:groupbook_recom'%}">推荐书目</a></li>
+                    <li><a href="{%url 'participate:curatorMail'%}">馆长信箱</a></li>
                   </ul>
                 </li>
                 <li class="dropdown info">
-                  <a href="{% url 'newsIntro' %}"><i class="icon-camera icon-white"></i>信息中心</a>
-                  <ul class="dropdown-menu">
-                    <li class="dropdown "><a href="{% url 'newsIntro' %}">新闻公告</a>
-                      <ul class="dropdown-menu sub-menu">
-                        {% for column in news_columns %}
-                        <li><a href="{{ column.get_absolute_url }}">{{ column.columnName }}</a></li>
-                        {% endfor %}
-                      </ul>
-                    </li>
-                    <li class="dropdown"><a href="{% url 'libBrief' %}">服务指南</a>
-                      <ul class="dropdown-menu sub-menu">
-                        {% for cotegory in service_cotegories %}
-                        <li><a href="{{ cotegory.get_absolute_url }}">{{ cotegory.categoryName }}</a></li>
-                        {% endfor %}
-                      </ul>
-                    </li>
-                    <li><a href="{% url 'recBookList' %}">每周一书</a></li>
-                    <li><a href="{% url 'rankList' %}">排行榜</a></li>
-                  </ul>
+                    <a href="{% url 'infoCenter:newsIntro' %}"><i class="icon-camera icon-white"></i>信息中心</a>
+                    <ul class="dropdown-menu">
+                     <li class="dropdown "><a href="{% url 'infoCenter:newsIntro' %}">新闻公告</a>
+                        <ul class="dropdown-menu sub-menu">
+                          {% for column in news_intro_columns %}
+                          <li><a href="{% url 'infoCenter:newsColumn' column.columnSlug %}">{{ column.columnName }}</a></li>
+                          {% endfor %}
+                        </ul>
+                      </li>
+                      <li class="dropdown"><a href="{% url 'service:libBrief' %}">服务指南</a>
+                        <ul class="dropdown-menu sub-menu">
+                          {% for category in side_cotegories %}
+                          <li><a href="{% url 'service:serviceCategory' category.categorySlug %}">{{ category.categoryName }}</a></li>
+                          {% endfor %}
+                        </ul>
+                      </li>
+                      <li><a href="{% url 'infoCenter:recBookList' %}">每周一书</a></li>
+                      <li><a href="{% url 'infoCenter:rankList' %}">排行榜</a></li>
+                      <li><a href="{% url 'infoCenter:toolDownload' %}">工具下载</a></li>
+                    </ul>
                 </li>
 
                 <li class="success">
-                  <a href="{%url 'login:librarianLogin'%}"><i class="icon-envelope icon-white"></i> 馆员管理</a>
+                  <a href="{%url 'librarian:librarian_book' %}"><i class="icon-envelope icon-white"></i> 馆员管理</a>
                 </li>
               {% if user.is_authenticated %}
                 <li class="dropdown inverse">
@@ -148,16 +229,19 @@
                     <li><a href="{%url 'readerCenter:borrowingSituation'%}">我的借阅</a></li>
                     <li><a href="{%url 'readerCenter:showsearchlist'%}">我的检索历史</a></li>
                     <li><a href="{%url 'readerCenter:mylib'%}">我的图书馆</a></li>
+                    <li><a href="{%url 'login:user_logout'%}">登出</a></li>
                   </ul>
                 </li>
               {%else%}
                 <li class="dropdown inverse">
                   <a href="#"><i class="icon-bullhorn icon-white"></i> 登录/注册</a>
                   <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'login:userRegister'%}">读者注册</a></li>
                         <li><a href="{%url 'login:readerLogin'%}">读者登录</a></li>
                         <li><a href="{%url 'login:librarianLogin'%}">馆员登录</a></li>
-                        <li><a href="{%url 'login:userRegister'%}">读者注册</a></li>
+                        <li><a href="/admin/login/?next=/admin/">后台登录</a></li>
                   </ul>
+
                 </li>
               {%endif%}
               </ul>
@@ -185,6 +269,9 @@
                     </li>
                     <li>
                         <a href="../cd"><i class="glyphicon glyphicon-chevron-right"></i>随书光盘与检索</a>
+                    </li>
+                    <li>
+                        <a href="../lecture"><i class="glyphicon glyphicon-chevron-right"></i>专题讲座</a>
                     </li>
 
                 </ul>
@@ -217,17 +304,58 @@
                   </ol>
               </nav>
 
-<div class="container">
-    <form action="" class="parent">
-        <input type="text" placeholder="&nbsp;&nbsp;请输入光盘的相关信息进行检索：">
-        <input type="button" value="搜索">
-    </form>
-</div>
+                 <form class="form-horizontal" action="{%url 'readerService:cd'%}" method="get">
+                      <div class="col-lg-7 form-group">
+                           <label class="col-lg-4 control-label" >随书光盘查询</label>
+                           <div class="col-lg-8">
+                               <input class="form-control" id="keyword" name="q" placeholder="关键词：书名" type="text">
+                               <label class="control-label" style="display: none;"></label>
+                           </div>
+                      </div>
+                      <div class="col-lg-3 form-group">
 
+                          <button type="submit" class="btn btn-primary" id="btn_query" onclick="">查询</button>
+                      </div>
+                 </form>
 
-
-      </div>
+    <div style="text-align: center">
+        <table style="float: contour; margin:0 auto;text-align: center; width: 800px;" >
+            <tr style="text-align: center" class="success">
+                <td>书名</td>
+                <td>作者</td>
+                <td>光盘号</td>
+            </tr>
+            {% for cd in contacts %}
+                <tr class="info">
+                    <td>{{ cd.title }}</td>
+                    <td>{{ cd.author }}</td>
+                    <td>{{ cd.cdId }}</td>
+                </tr>
+            {% endfor %}
+        </table>
       <!-- /.container-fluid -->
+
+
+    <div class="navigation">
+        <ul>
+            {% for pg in contacts.paginator.page_range %}
+                {% if contacts.number == pg %}
+                    <a href="?page={{ pg }}">{{ pg }}</a>
+                {% else %}
+                    <a href="?page={{ pg }}">{{ pg }}</a>
+                {% endif %}
+            {% endfor %}
+            {% if contacts.has_next %}
+                <a href="?page={{ contacts.next_page_number }}">下一页</a>
+            {% endif %}
+        </ul>
+
+{% if info %}
+    <script>
+        window.alert('{{ info }}');
+    </script>
+{% endif %}
+
 
     </div>
     <!-- /.content-wrapper -->

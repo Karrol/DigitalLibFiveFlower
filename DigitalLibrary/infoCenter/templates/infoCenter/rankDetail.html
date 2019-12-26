@@ -1,0 +1,125 @@
+{% extends "infoCenter/infoCenter_Base.html" %}
+
+{% block title %}排行榜{% endblock title %}
+
+{% block module %}排行榜{% endblock module %}
+
+{% block search %}
+<div class="span4">
+    <div class="input-append">
+        <form method="get" id="searchform" action="{% url 'infoCenter:newsSearch' %}" class="form-search">
+            {% csrf_token %}
+            <input type="search" name="q" placeholder="搜索新闻" class="input-medium search-query">
+            <button type="submit" class="btn btn-inverse">搜索新闻</button>
+        </form>
+    </div>
+</div>
+{% endblock search %}
+
+{% block location %}信息中心>>排行榜>>搜索量排行榜{% endblock location %}
+
+{% block pagecontent %}
+<section id="maincontent">
+    <div class="container">
+      <div class="row">
+        <div class="span4">
+
+          <aside>
+            <div class="widget">
+              <h4 class="heading-success"><a href="{% url 'infoCenter:rankList' %}">
+                  <span class="btn btn-large btn-success"><i class="m-icon-big-swapdown m-icon-white"></i></span>&nbsp;&nbsp;浏览量排行榜
+              </a></h4>
+              <img src="assets/img/avatar.png" class="alignleft" alt="" />
+              <h5>根据图书被浏览的次数排序。</h5>
+            </div>
+          </aside>
+
+          <aside>
+            {% for rank in rankList %}
+            <div class="widget">
+              <h4 class="heading-success"><a href="{% url 'infoCenter:rankDetail' rank.rankID %}">
+                <span class="btn btn-large btn-success"><i class="m-icon-big-swapdown m-icon-white"></i></span>&nbsp;&nbsp;{{ rank.rankName }}
+              </a></h4>
+              <h5>{{ rank.rankIntro }}</h5>
+            </div>
+            {% endfor %}
+          </aside>
+
+        </div>
+
+      <div class="span8">
+        <!-- start article 1 -->
+        <h3 align="center"><b>{{ current_rank.rankName }}</b></h3>
+        {% for book in books  %}
+        <article class="blog-post">
+            <div class="tooltip-demo headline">
+              <h4>No.{{ book.bookOrder }}<a href="#">《{{ book.book.title }}》</a></h4>
+              <span class="comment">浏览量：{{ book.book.bookViews }}</span>
+            </div>
+
+            <div class="row">
+              <div class="span3">
+                <a href="#"><img src="/media/bookcover/{{ book.book.cover }}" alt="{{ book.book.title }}" /></a>
+              </div>
+              <div class="span5">
+                <ul class="post-meta">
+                  <li class="first"><i class="icon-user"></i> <span><a href="#">{{ book.book.author }}</a></span></li>
+                  <li><i class="icon-list-alt"></i> <span><a href="#">{{ book.book.press }}</a></span></li>
+                  <li class="last"><i class="icon-tags"></i> <span><a href="#">{{ book.book.category }}</a></span></li>
+                </ul>
+                <div class="clearfix"></div>
+                <p><b>内容简介：</b></p>
+                <p>
+                  {{ book.book.description | slice:'300' }}......
+                </p>
+
+                <a href="{%url 'search:bookDetail' book.book.ISBN %}">
+                  <button class="btn btn btn-success" type="button" >查看详情</button>
+                </a>
+
+              </div>
+            </div>
+
+          </article>
+        {% endfor %}
+
+      </div>
+      </div>
+    </div>
+</section>
+
+  <!-- Footer
+ ================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+
+      </div>
+    </div>
+
+    <div class="verybottom">
+      <div class="container">
+        <div class="row">
+          <div class="span6">
+            <p>&copy;五朵金花</p>
+          </div>
+          <div class="span6">
+            <div class="pull-right">
+              <div class="credits">
+                <!--
+                  All the links in the footer should remain intact.
+                  You can delete the links only if you purchased the pro version.
+                  Licensing information: https://bootstrapmade.com/license/
+                  Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Scaffold
+                -->
+                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+{% endblock pagecontent %}

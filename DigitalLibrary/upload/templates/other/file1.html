@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+{% load staticfiles %}
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+		<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+    	<script src="https://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    	<script src="https://cdn.bootcss.com/webuploader/0.1.1/webuploader.min.js"></script>
+
+    	<link href="https://cdn.bootcss.com/webuploader/0.1.1/webuploader.css" rel="stylesheet">
+    	<link href="https://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+
+        <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>数字图书馆</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="/static/mobankf/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+  <!-- Page level plugin CSS-->
+  <link href="/static/mobankf/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="/static/mobankf/css/sb-admin.css" rel="stylesheet">
+
+
+    <link href="{%static 'assets/css/bootstrap.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/css/bootstrap-responsive.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/css/docs.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/css/prettyPhoto.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/js/google-code-prettify/prettify.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/css/camera.css'%}" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300|Open+Sans:400,300,300italic,400italic" rel="stylesheet">
+  <link href="{%static 'assets/css/style.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/color/success.css'%}" rel="stylesheet">
+
+  <!-- fav and touch icons -->
+  <link rel="shortcut icon" href="{%static 'assets/ico/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{%static 'assets/ico/apple-touch-icon-144-precomposed.png'%}">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{%static 'assets/ico/apple-touch-icon-114-precomposed.png'%}">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{%static 'assets/ico/apple-touch-icon-72-precomposed.png'%}">
+  <link rel="apple-touch-icon-precomposed" href="{%static 'assets/ico/apple-touch-icon-57-precomposed.png'%}">
+  <link rel="stylesheet" href="/baidu/css/bootstrap.min.css"type="text/css"/>
+
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
+		<title>系统页面</title>
+		<style type="text/css">
+			.d1{
+				width:1000px;
+				height:600px;
+			}
+			.d1a{
+				width:1000px;
+				height:100px;
+				border-bottom:1px solid #ccc;
+				border-left:1px solid #ccc;;
+			}
+			.d1b1{
+				height:500px;
+				width:300px;
+				float:left;
+				border-left:1px solid #ccc;
+				border-right:1px solid #ccc;
+				border-bottom:1px solid #ccc;
+			}
+			.d1b1>p{
+				margin-left:60px;
+			}
+			.d1b1>h3{
+				margin-left:60px;
+			}
+			.d1b2{
+				width:700px;
+				height:500px;
+				margin-left:300px;
+			}
+			h2{
+				float:left;
+				margin-left:50px;
+				color:#0000C6;
+			}
+			#p1{
+				color:#0000C6;
+				margin-left:800px;
+				margin-top:20px;
+			}
+			a{
+				text-decoration:none;
+			}
+			#a2{
+				text-decoration:none;
+				margin-left:725px;
+			}
+			form{
+				margin-left:40px;
+				margin-top:10px;
+			}
+        </style>
+
+</head>
+
+<body class="bootstrap-admin-with-small-navbar">
+
+  <div class="navbar navbar-fixed-top", style="margin:auto">
+      <div class="navbar-inner">
+        <div class="container">
+          <!-- logo 数字图书馆 注意：需要制作一个大小一致的徽标 -->
+          <a class="brand logo" style="float:left">
+            <img src="{%static 'assets/img/sculogo1.png'%}" alt="scuIS" />
+          </a>
+          <!-- end logo -->
+
+          <!-- top menu -->
+          <div>
+            <nav>
+              <ul class="nav topnav">
+
+                <li class="dropdown  active primary">
+                  <a href="/"><i class="icon-home icon-white"></i>首页</a>
+                  <!--<ul class="dropdown-menu">
+                    <li><a href="index_alt1.html">Index alt 1</a></li>
+                    <li><a href="index_alt2.html">Index alt 2</a></li>
+                  </ul>  -->
+                </li>
+
+                <li class="dropdown warning">
+                  <a href="{%url 'readerService:borrowTips'%}"><i class="icon-star icon-white"></i>读者服务</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{%url 'readerService:borrowTips'%}">借还图书</a></li>
+                    <li><a href="{%url 'readerService:serviceTime'%}">服务时间</a></li>
+                    <li><a href="{%url 'readerService:renewal'%}">续借与到期提醒</a></li>
+                    <li><a href="{%url 'readerService:cableNumber'%}">索取号</a></li>
+                    <li><a href="{%url 'readerService:compensation'%}">赔偿损失</a></li>
+                    <li class="dropdown"><a href="{%url 'readerService:bookReservation'%}">图书预约</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'readerService:bookReservationTips'%}">图书预约说明</a></li>
+                        <li><a href="{%url 'readerService:bookReservationBooked'%}">已预约图书</a></li>
+                        <li><a href="{%url 'readerService:bookReservation'%}">预约图书</a></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown "><a href="{%url 'readerService:cd'%}">随书光盘</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'readerService:cd'%}">随书光盘检索</a></li>
+                        <li><a href="{%url 'readerService:cdInfo'%}">随书光盘说明</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+
+                <li class="dropdown danger">
+                  <a href="{%url 'participate:article_list'%}"><i class="icon-leaf icon-white"></i>读者参与</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{%url 'participate:article_list'%}">读者论坛</a>
+                        <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'participate:article_list'%}">看帖</a></li>
+                        <li><a href="{%url 'participate:article_create'%}">发帖</a></li>
+                        </ul>
+                    </li>
+                    <li class="{%url 'participate:donation_rules'%}"><a href="#">图书捐赠</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'participate:donation_rules'%}">捐赠须知</a></li>
+                        <li><a href="{%url 'participate:donation_treatments'%}">捐赠处理</a></li>
+                          <li><a href="{%url 'participate:donation_contact'%}">联系方式</a></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown"><a href="{%url 'participate:book_recommendation'%}">读者推荐</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'participate:book_recommendation'%}">好书推荐</a></li>
+                        <li><a href="{%url 'participate:bookrec_list'%}">推荐列表</a></li>
+                      </ul>
+                    </li>
+                    <li><a href="{%url 'participate:groupbook_recom'%}">推荐书目</a></li>
+                  </ul>
+                </li>
+
+                  <li class="dropdown info">
+                    <a href="{% url 'infoCenter:newsIntro' %}"><i class="icon-camera icon-white"></i>信息中心</a>
+                    <ul class="dropdown-menu">
+                     <li class="dropdown "><a href="{% url 'infoCenter:newsIntro' %}">新闻公告</a>
+                        <ul class="dropdown-menu sub-menu">
+                          {% for column in news_columns %}
+                          <li><a href="{% url 'infoCenter:newsColumn' column.columnSlug %}">{{ column.columnName }}</a></li>
+                          {% endfor %}
+                        </ul>
+                      </li>
+                      <li class="dropdown"><a href="{% url 'service:libBrief' %}">服务指南</a>
+                        <ul class="dropdown-menu sub-menu">
+                          {% for category in service_cotegories %}
+                          <li><a href="{% url 'service:serviceCategory' category.categorySlug %}">{{ category.categoryName }}</a></li>
+                          {% endfor %}
+                        </ul>
+                      </li>
+                      <li><a href="{% url 'infoCenter:recBookList' %}">每周一书</a></li>
+                      <li><a href="{% url 'infoCenter:rankList' %}">排行榜</a></li>
+                    </ul>
+                </li>
+
+                <li class="success">
+                  <a href="{%url 'login:librarianLogin'%}"><i class="icon-envelope icon-white"></i> 馆员管理</a>
+                </li>
+              {% if user.is_authenticated %}
+                <li class="dropdown inverse">
+                  <a href="{%url 'readerCenter:profile'%}"><i class="icon-bullhorn icon-white"></i>个人中心</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{%url 'readerCenter:profile'%}">个人资料</a></li>
+                    <li><a href="{%url 'readerCenter:notice'%}">消息列表</a></li>
+                    <li><a href="{%url 'readerCenter:borrowingSituation'%}">我的借阅</a></li>
+                    <li><a href="{%url 'readerCenter:showsearchlist'%}">我的检索历史</a></li>
+                    <li><a href="{%url 'readerCenter:mylib'%}">我的图书馆</a></li>
+                  </ul>
+                </li>
+              {%else%}
+                <li class="dropdown inverse">
+                  <a href="#"><i class="icon-bullhorn icon-white"></i> 登录/注册</a>
+                  <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'login:readerLogin'%}">读者登录</a></li>
+                        <li><a href="{%url 'login:librarianLogin'%}">馆员登录</a></li>
+                        <li><a href="{%url 'login:userRegister'%}">读者注册</a></li>
+                  </ul>
+                </li>
+              {%endif%}
+              </ul>
+            </nav>
+          </div>
+          <!-- end menu -->
+        </div>
+      </div>
+    </div>
+
+
+  <div class="container", style="margin:0 auto">
+        <!-- left, vertical navbar & content -->
+        <div class="row">
+            <!-- left, vertical navbar -->
+             <div class="col-md-2 bootstrap-admin-col-left">
+                <ul class="nav navbar-collapse collapse bootstrap-admin-navbar-side">
+                    <li>
+                        <a href="{%url 'upload:index'%}"><i class="glyphicon glyphicon-chevron-right"></i> 上传文件</a>
+                    </li>
+                   <li>
+                        <a href="/upload/wother?uname={{uname}}"><i class="glyphicon glyphicon-chevron-right"></i> 我上传的文件</a>
+                    </li>
+                    <li>
+                        <a href="/upload/other?uname={{uname}}"><i class="glyphicon glyphicon-chevron-right"></i> 他人分享的文件</a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+<div class="col-md-10">
+ <div class="row">
+   <div id="content-wrapper">
+
+      <div class="container-fluid">
+          <!-- 定义放置文章标题的div容器 -->
+          <div class="container">
+			<div class='d1b2'>
+				<table>
+					{% for i in L1 %}
+					<tr>
+						<td><a href="/other/open?i={{i.wenjian}}&uname={{uname}}">{{i.wenjian}}</a></td>
+						<td><form action="/upload/wother" method="post">
+							{% csrf_token %}
+							<input type="hidden" name='wenjian' value='{{i.wenjian}}'>
+							<input type="hidden" name="uname" value={{uname}}>
+							共享给好友:<input type="text" name="yonghu">
+							<input type="submit" value='点击共享'>
+						</form></td>
+						<td><form action='/upload/open' method="post">
+							{% csrf_token %}
+							<input type="hidden" name="uname" value='{{uname}}'>
+							<input type="hidden" name='wenjian' value='{{i.wenjian}}'>
+							<input type="hidden" name="lujing" value='{{i.lujing}}'>
+							<input type="submit" value='点击下载'>
+						</form></td>
+					</tr>
+					{% endfor %}
+				</table>
+			</div>
+      </div>
+      <!-- /.container-fluid -->
+    </div>
+    <!-- /.content-wrapper -->
+
+  </div>
+   <!-- /.row-->
+</div>
+<!-- /.col-md-10-->
+
+
+            </div>
+<!-- /.row -->
+
+
+        </div>
+  <!-- /.container -->
+
+
+            <!-- content -->
+
+   <!-- Sticky Footer -->
+        </div>
+
+
+
+
+  <!-- /#wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+                var task_id = WebUploader.Base.guid();//产生task_id，唯一标识该文件
+
+        var flag = false;
+        var list = [];                      // 文件分片上传成功列表
+        var file_path = "";                 // 文件上传成功后返回的路径
+        var md5Mark = "";                   // 文件唯一标识
+
+
+        WebUploader.Uploader.register
+        (
+            {
+                "before-send-file": "beforesendfile",
+                "before-send": "beforeSend"
+            },
+            {
+                beforesendfile: function (file) {            // 每个文件上传之前，验证文件是否存在
+
+                    var task = new WebUploader.Deferred();
+                    $.ajax({
+                        type: "post",
+                        url: "/upload/file_exist/",
+                        data: {
+                            filename: file.source['name'],
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        cache: false,
+                        timeout: 1000,
+                        success: function (res) {
+                            data = res;
+                            flag_exist = data.flag_exist;
+                            list = data.list;
+                            if (flag_exist) {             // 若存在，则不用上传
+                                task.reject();
+                                uploader.skipFile(file);
+                                file_path = data.file_path;
+                                $('.progress-bar').css('width', '100%');
+                                $('.progress-bar').text('上传完成');
+                                alert(file_path);
+                                location.href = '/upload/index/'
+                            } else {
+                                task.resolve();
+                            }
+                        }
+                    });
+                    return task.promise();
+                },
+                beforeSend: function (file) {               // 每个分片上传之前，验证分片是否存在,  这里没有做文件唯一标识的处理， 只是对文件名字进行了关联
+{#                    file.setRequestHeader("X-CSRFtoken","{% csrf_token %}")#}
+                    var task = new WebUploader.Deferred();
+                    var index = file.chunk;
+                    if (list.indexOf(index) > -1) {
+                        console.log('存在');
+                        task.reject();
+                    } else {
+                        task.resolve();
+                    }
+                    return task.promise();
+                }
+            }
+        );
+        var task_id = WebUploader.Base.guid();//产生task_id
+        console.log(task_id)
+        var uploader = WebUploader.create({           //创建上传控件
+            swf: 'https://cdn.bootcss.com/webuploader/0.1.1/Uploader.swf', //swf位置，这个可能与flash有关
+            server: '/upload/index/',                 //接收每一个分片的服务器地址
+            pick: '#picker',                          //填上传按钮的id选择器值
+            auto: false,                               //选择文件后，是否自动上传
+            chunked: true,                            //是否分片
+            chunkSize: 1024 * 1024,                  //每个分片的大小，这里为1M
+            chunkRetry: 3,                            //某分片若上传失败，重试次数
+            threads: 3,                               //线程数量，考虑到服务器，这里就选了3
+            duplicate: true,                          //分片是否自动去重
+            formData: {//每次上传分片，一起携带的数据
+                task_id: task_id,
+            },
+            prepareNextFile: true,                    // 上传本分片时预处理下一分片
+            fileNumLimit: 2,                            // 上传文件限制
+            fileSingleSizeLimit: 3 * 1024 * 1024 * 1024,       // 上传文件大小限制
+
+        });
+
+
+        // 选择完文件后的处理， 在 auto=false的情况下
+        uploader.on('fileQueued', function (file) {
+            $('#file_input').val(file.source['name']);
+        });
+
+
+        $('#submit').click(function () {
+            uploader.upload();           // 出发上传事件
+
+            // 隐藏上传按钮
+            $("#submit").hide();
+            //隐藏选择按钮
+            $("#picker").hide();
+        });
+
+
+        $('#stop').click(function () {
+            if ($('#stop').text() == '暂停') {
+                $('#stop').text('继续')
+                uploader.stop(true);
+            }
+
+            else if ($('#stop').text() == '继续') {
+                $('#stop').text('暂停')
+                //重新开启上传
+                uploader.upload();
+            }
+
+        });
+
+
+        //开始上传时，调用该方法
+        uploader.on('uploadStart', function (file) {
+            $('.progress-bar').css('width', '0%');
+            $('.progress-bar').text('0%');
+        });
+
+
+        //一个分片上传成功后，调用该方法
+        uploader.on('uploadProgress', function (file, percentage) {
+            $('.progress-bar').css('width', percentage * 100 - 1 + '%');
+            $('.progress-bar').text(Math.floor(percentage * 100 - 1) + '%');
+        });
+
+        //整个文件的所有分片都上传成功，调用该方法 // 要是auto=false的时候file 直接为source。 否则需要用file.source
+        uploader.on('uploadSuccess', function (file) {
+            //上传的信息（文件唯一标识符，文件后缀名）
+            var data = {'task_id': task_id,'ext': file['ext'], 'name': file['name'], 'type': file.source['type']};
+            $.post('/upload/success/', data, function (res) {
+                file_path = res;
+                alert(file_path);
+                location.href = '/upload/index/';
+            });          //ajax携带data向该url发请求
+            $('.progress-bar').css('width', '100%');
+            $('.progress-bar').text('上传完成');
+        });
+
+        //上传过程中发生异常，调用该方法
+        uploader.on('uploadError', function (file) {
+            $('.progress-bar').css('width', '100%');
+            $('.progress-bar').text('上传失败');
+        });
+
+        //上传结束，无论文件最终是否上传成功，该方法都会被调用
+        uploader.on('uploadComplete', function (file) {
+            $('.progress-bar').removeClass('active progress-bar-striped');
+        });
+
+    });
+</script>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="/static/mobankf/vendor/jquery/jquery.min.js"></script>
+  <script src="/static/mobankf/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="/static/mobankf/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Page level plugin JavaScript-->
+  <script src="/static/mobankf/vendor/chart.js/Chart.min.js"></script>
+  <script src="/static/mobankf/vendor/datatables/jquery.dataTables.js"></script>
+  <script src="/static/mobankf/vendor/datatables/dataTables.bootstrap4.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="/static/mobankf/js/sb-admin.min.js"></script>
+
+  <!-- Demo scripts for this page-->
+  <script src="/static/mobankf/js/demo/datatables-demo.js"></script>
+  <script src="/static/mobankf/js/demo/chart-area-demo.js"></script>
+
+
+  <script src="{%static 'assets/js/jquery-1.8.2.min.js'%}"></script>
+  <script src="{%static 'assets/js/jquery.easing.1.3.js'%}"></script>
+  <script src="{%static 'assets/js/google-code-prettify/prettify.js'%}"></script>
+  <script src="{%static 'assets/js/modernizr.js'%}"></script>
+  <script src="{%static 'assets/js/bootstrap.js'%}"></script>
+  <script src="{%static 'assets/js/jquery.elastislide.js'%}"></script>
+  <script src="{%static 'assets/js/jquery.flexslider.js'%}"></script>
+  <script src="{%static 'assets/js/jquery.prettyPhoto.js'%}"></script>
+  <script src="{%static 'assets/js/application.js'%}"></script>
+  <script src="{%static 'assets/js/hover/jquery-hover-effect.js'%}"></script>
+  <script src="{%static 'assets/js/hover/setting.js'%}"></script>
+  <script src="{%static 'assets/js/camera/camera.min.js'%}"></script>
+  <script src="{%static 'assets/js/camera/setting.js'%}"></script>
+
+  <!-- Template Custom JavaScript File -->
+  <script src="{%static 'assets/js/custom.js'%}"></script>
+
+
+
+</body>
+
+</html>

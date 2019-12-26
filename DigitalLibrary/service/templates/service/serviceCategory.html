@@ -1,44 +1,39 @@
 {% extends "service/serviceBase.html" %}
 
-{% block search %}
-<form method="get" id="searchform" action="{% url 'serviceSearch' %}" class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-     {% csrf_token %}
-      <div class="input-group">
-        <input type="search" name="q" placeholder="搜索服务指南" class="form-control" aria-label="Search" aria-describedby="basic-addon2" required>
-        <div class="input-group-append">
-          <button class="btn btn-primary" type="submit">搜索服务
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
-      </div>
-</form>
-{% endblock search %}
-
-{% block breadrums %}
-    <div class="container-fluid">
-        <h2>{{ category.categoryName }}</h2>
-        <!-- Breadcrumbs-->
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="{% url 'libBrief' %}">服务指南</a>
-            </li>
-            <li class="breadcrumb-item active">{{ category.categoryName }}</li>
-        </ol>
-    </div>
-{% endblock breadrums %}
+{% block location %}信息中心>>服务指南>>{{ category.categoryName }}{% endblock location %}
 
 {% block pagecontent %}
-    <hr>
-    {% for intro in service_category_intros %}
-        <div class="card mb-3">
-            <div class="card-header">
-                <i class="fas fa-table"></i>
-                {{ intro.servicePubdate }}
-            </div>
-            <div class="card-body">
-                <h5 class="news-title"><a href="{{ intro.get_absolute_url }}">{{ intro.serviceTitle }}</a></h5>
-            </div>
-        </div>
-    {% endfor %}
+<div class="container">
+
+    <!-- Docs nav
+    ================================================== -->
+    <div class="row">
+      <div class="span3 bs-docs-sidebar">
+        <ul class="nav nav-list bs-docs-sidenav">
+          {% for intro in service_category_intros %}
+            <li><a href="#svguide-{{ intro.pk }}"><i class="icon-chevron-right"></i> {{ intro.serviceTitle }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="span9">
+
+
+        <!-- Download
+        ================================================== -->
+
+        {% for intro in service_category_intros %}
+        <section id="svguide-{{ intro.pk }}" class="doc">
+          <div class="page-header">
+            <h3>{{ intro.serviceTitle }}</h3>
+          </div>
+          <p>{{ intro.serviceContent|safe }}</p>
+        </section>
+        {% endfor %}
+
+
+      </div>
+    </div>
+
+  </div>
 {% endblock pagecontent %}
 

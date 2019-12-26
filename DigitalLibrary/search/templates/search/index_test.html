@@ -106,16 +106,15 @@
         </div>
 
         <div class="span3">
-          <div class="well well-success box">
-           <a href="{%url 'readerService:borrowTips'%}"><div class="well well-primary box">
+
+           <a href="{%url 'readerService:borrowTips'%}"><div class="well well-success box">
             <img src="{%static 'assets/img/icons/box-2-white.png'%}" alt="" />
             <h3>借阅服务</h3>
             <p>借阅与预约图书说明 </p>
+
+           </div></a>
           </div>
-           </a>
-          </div>
-        </div>
-          
+
         <div class="span3">
           <a href="{% url 'participate:article_list' %}"><div class="well well-warning box">
             <img src="{%static 'assets/img/icons/box-3-white.png'%}" alt="" />
@@ -124,11 +123,14 @@
                 提供交流、建议的平台
             </p>
           </div>
-        </div>
+          </a></div>
+
+      </div>
+          
+
 
       </div>
 
-    </div>
   </section>
 
   <section id="maincontent">
@@ -137,48 +139,30 @@
       <div class="row">
 
         <div class="span3">
-          <h3 class="heading-success"><span class="btn btn-large btn-success"><i class="m-icon-big-swapright m-icon-white"></i></span>&nbsp;&nbsp;新闻公告</h3>
-          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+          <h3 class="heading-success"><a href="{% url 'infoCenter:newsIntro' %}"><span class="btn btn-large btn-success"><i class="m-icon-big-swapright m-icon-white"></i></span>&nbsp;&nbsp;新闻资讯</a></h3>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关注图书馆新闻资讯，了解图书上新、馆内活动等一切你想知道的信息！</p>
         </div>
-
-        <div class="span3">
-             <table class="table table-condensed">
-                <caption>近期新闻</caption>
-                <thead>
-                  <tr>
-                    <th>标题</th>
-                    <th>日期</th>
-                    <th><a href="{% url 'newsIntro' %}">更多</a></th></tr>
-                </thead>
-                <tbody>
-                 {% for item in news %}
-			<!--张丽：这里的url怎么跳转的和玉和商量一下呢-->
-                  <tr>
-                    <td><a href="{{ item.get_absolute_url }}">{{item.newsTitle}}</a></td>
-                    <td>{{item.newsPubdate}}</td></tr> {%endfor%}
-                </tbody>
-              </table>
-        </div>
-        <div class="span3">
-             <table class="table table-condensed">
-                <caption>公告</caption>
-                <thead>
-                  <tr>
-                    <th>名称</th>
-                    <th>日期</th>
-                    <th><a href="{% url 'newsIntro' %}">更多</a></th></tr>
-                </thead>
-                <tbody>
-                 {% for item in news %}
-			<!--张丽：这里的url怎么跳转的和玉和商量一下呢-->
-                  <tr>
-                    <td><a href="{{ item.get_absolute_url }}">{{item.newsTitle}}</a></td>
-                    <td>{{item.newsPubdate}}</td></tr> {%endfor%}
-                </tbody>
-              </table>
-        </div>
-        
-
+        {%for newsColum in indexnews_queryset%}
+            {% for item in newsColum %}
+              <div class="span3">
+                 <table class="table table-condensed">
+                    <caption>{{item.newsColumn.columnName}}</caption>
+                    <thead>
+                      <tr>
+                        <th>标题</th>
+                        <th>日期</th>
+                        <th><a href="{% url 'infoCenter:newsColumn' item.newsColumn.columnSlug %}">更多</a></th></tr>
+                    </thead>
+                    <tbody>
+                <!--张丽：这里的url怎么跳转的和玉和商量一下呢-->
+                      <tr>
+                        <td><a href="{{ item.get_absolute_url }}">{{item.newsTitle}}</a></td>
+                        <td>{{item.newsPubdate}}</td></tr>
+                    </tbody>
+                  </table>
+              </div>
+            {%endfor%}
+        {%endfor%}
       </div>
 
     </div>
@@ -199,69 +183,32 @@
       <!--每周一书-往期书籍-->
       <div class="row">
         <div class="span12">
-          <h3><a class="btn btn-large btn-success" href="#"><i class="m-icon-big-swapdown m-icon-white"></i></a> 每周推荐</h3>
+          <h3><a class="btn btn-large btn-success" href="{% url 'infoCenter:recBookList' %}"><i class="m-icon-big-swapdown m-icon-white"></i></a> 每周推荐</h3>
           <div id="latest-work" class="carousel btleft">
             <div class="carousel-wrapper">
 
               <ul class="portfolio-home da-thumbs">
+                {% for book in recbooks %}
                 <li>
                   <div class="thumbnail">
                     <div class="image-wrapp">
-                      <img src="{%static 'assets/img/dummies/work1.jpg'%}" alt="Portfolio name" title="" />
+                      <img src="/media/bookcover/index_recbook.jpg" alt="{{ book.ISBN.title }}" title="" />
                       <article class="da-animate da-slideFromRight" style="display: block;">
-                        <a class="link_post" href="portfolio-detail.html"><img src="{%static 'assets/img/icons/link_post_icon.png'%}" alt="" /></a>
-                        <span><a class="zoom" data-pretty="prettyPhoto" href="{%static 'assets/img/dummies/big1.jpg'%}"><img src="{%static 'assets/img/icons/zoom_icon.png'%}" alt="Portfolio name" title="Portfolio name" /></a></span>
+                        <a class="link_post" onclick="location.href='/infoCenter/recBookHis/?pk={{book.pk}}&recID={{book.recID}}';">
+                          <img src="{%static 'assets/img/icons/link_post_icon.png'%}" alt="" />
+                        </a>
+                        <span><a class="zoom" data-pretty="prettyPhoto" href="/media/bookcover/{{ book.ISBN.cover }}">
+                          <img src="{%static 'assets/img/icons/zoom_icon.png'%}" alt="{{ book.ISBN.title }}" title="{{ book.ISBN.title }}" />
+                        </a></span>
                       </article>
                     </div>
                     <div class="caption">
-                      <h5>Portfolio name</h5>
+                      <h5>{{ book.bookName }}</h5>
                     </div>
 
                   </div>
                 </li>
-                <li>
-                  <div class="thumbnail">
-                    <div class="image-wrapp">
-                      <img src="{%static 'assets/img/dummies/work2.jpg'%}" alt="Portfolio name" title="" />
-                      <article class="da-animate da-slideFromRight" style="display: block;">
-                        <a class="link_post" href="portfolio-detail.html"><img src="{%static 'assets/img/icons/link_post_icon.png'%}" alt="" /></a>
-                        <span><a class="zoom" data-pretty="prettyPhoto" href="{%static 'assets/img/dummies/big1.jpg'%}"><img src="{%static 'assets/img/icons/zoom_icon.png'%}" alt="Portfolio name" title="Portfolio name" /></a></span>
-                      </article>
-                    </div>
-                    <div class="caption">
-                      <h5>Portfolio name</h5>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="thumbnail">
-                    <div class="image-wrapp">
-                      <img src="{%static 'assets/img/dummies/work3.jpg'%}" alt="Portfolio name" title="" />
-                      <article class="da-animate da-slideFromRight" style="display: block;">
-                        <a class="link_post" href="portfolio-detail.html"><img src="{%static 'assets/img/icons/link_post_icon.png'%}" alt="" /></a>
-                        <span><a class="zoom" data-pretty="prettyPhoto" href="{%static 'assets/img/dummies/big1.jpg'%}"><img src="{%static 'assets/img/icons/zoom_icon.png'%}" alt="Portfolio name" title="Portfolio name" /></a></span>
-                      </article>
-                    </div>
-                    <div class="caption">
-                      <h5>Portfolio name</h5>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="thumbnail">
-                    <div class="image-wrapp">
-                      <img src="{%static 'assets/img/dummies/work4.jpg'%}" alt="Portfolio name" title="" />
-                      <article class="da-animate da-slideFromRight" style="display: block;">
-                        <a class="link_post" href="portfolio-detail.html"><img src="{%static 'assets/img/icons/link_post_icon.png'%}" alt="" /></a>
-                        <span><a class="zoom" data-pretty="prettyPhoto" href="{%static 'assets/img/dummies/big1.jpg'%}"><img src="{%static 'assets/img/icons/zoom_icon.png'%}" alt="Portfolio name" title="Portfolio name" /></a></span>
-                      </article>
-                    </div>
-                    <div class="caption">
-                      <h5>Portfolio name</h5>
-                    </div>
-                  </div>
-                </li>
-
+                {% endfor %}
               </ul>
             </div>
           </div>

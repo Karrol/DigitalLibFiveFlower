@@ -1,5 +1,8 @@
 {% extends "infoCenter/infoCenter_Base.html" %}
 
+ {% load static %}
+ {% load staticfiles %}
+
 {% block title %}新闻公告{% endblock title %}
 
 {% block module %}新闻公告{% endblock module %}
@@ -7,7 +10,7 @@
 {% block search %}
 <div class="span4">
     <div class="input-append">
-        <form method="get" id="searchform" action="{% url 'newsSearch' %}" class="form-search">
+        <form method="get" id="searchform" action="{% url 'infoCenter:newsSearch' %}" class="form-search">
             {% csrf_token %}
             <input type="search" name="q" placeholder="搜索新闻" class="input-medium search-query">
             <button type="submit" class="btn btn-inverse">搜索新闻</button>
@@ -28,12 +31,9 @@
           <aside>
             {% for column in news_intro_columns %}
             <div class="widget">
-              <h4 class="heading-success"><span class="btn btn-large btn-success"><i class="m-icon-big-swapdown m-icon-white"></i></span>&nbsp;&nbsp;{{ column.columnName }}</h4>
-              <img src="assets/img/avatar.png" class="alignleft" alt="" />
+              <h4 class="heading-success"><a href="{% url 'infoCenter:newsColumn' column.columnSlug %}"><span class="btn btn-large btn-success"><i class="m-icon-big-swapdown m-icon-white"></i></span></a>&nbsp;&nbsp;{{ column.columnName }}</h4>
               <h5>{{ column.abstract }}</h5>
-              <p>
-                这里放近期新闻
-              </p><a href="{{ column.get_absolute_url }}">更多...</a>
+              <p><a href="{% url 'infoCenter:newsColumn' column.columnSlug %}">&nbsp;&nbsp;&nbsp;&nbsp;点击查看更多...</a></p>
             </div>
             {% endfor %}
           </aside>
@@ -41,11 +41,11 @@
 
         <div class="span8">
           <!-- start article 1 -->
-          {% for news in news_articles %}
+          {% for news in articles %}
           <article class="blog-post">
             <div class="tooltip-demo headline">
-              <h4><a href="{{ news.get_absolute_url }}">{{ news.newsTitle }}</a></h4>
-              <span class="comment"><a href="#" rel="tooltip" data-placement="top" title="3 Comments">3 comments</a></span>
+              <h4><a onclick="location.href='/infoCenter/newsDetail/?pk={{news.pk}}&newsSlug={{news.newsSlug}}';">{{ news.newsTitle }}</a></h4>
+              <span class="comment">浏览量：{{ news.newsViews }}</span>
             </div>
             <div class="row">
               <div class="span5">
@@ -59,21 +59,29 @@
             </div>
           </article>
           {% endfor %}
-<!--翻页功能缺
-        <div class="pagination">
+
+        <div class="pagination" align="center" >
+          <nav>
             <ul>
-                <li><a href="#">Prev</a></li>
-                <li><a href="#">1</a></li>
-                <li class="active"><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">Next</a></li>
+              <li>
+                {% if articles.has_previous %}
+                    <a href="?page={{ articles.previous_page_number }}">上一页</a>
+                {% endif %}
+
+                <span>{{ articles.number }}/{{ articles.paginator.num_pages }}</span>
+
+                {% if articles.has_next %}
+                   <a class='active' href="?page={{ articles.next_page_number }}">下一页</a>
+                {% endif %}
+              </li>
             </ul>
+          </nav>
         </div>
--->
+        </div>
       </div>
     </div>
 </section>
+
 
   <!-- Footer
  ================================================== -->

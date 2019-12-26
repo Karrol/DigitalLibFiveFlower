@@ -1,41 +1,44 @@
 {% extends "service/serviceBase.html" %}
 
-{% block search %}
-<form method="get" id="searchform" action="{% url 'serviceSearch' %}" class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-     {% csrf_token %}
-      <div class="input-group">
-        <input type="search" name="q" placeholder="搜索服务指南" class="form-control" aria-label="Search" aria-describedby="basic-addon2" required>
-        <div class="input-group-append">
-          <button class="btn btn-primary" type="submit">搜索服务
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
-      </div>
-</form>
-{% endblock search %}
-
-{% block breadrums %}
-    <h2 align = "center">{{ intro.serviceTitle  }}</h2>
-    <p align = "center" class = "one gray">发表时间：<em>{{ intro.servicePubdate }}</em>&nbsp;&nbsp;&nbsp;&nbsp;作者：<em>{{ intro.serviceAuthor }}</em></p>
-    <div class="container-fluid">
-        <!-- Breadcrumbs-->
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="/service/libBrief">服务指南</a>
-            </li>
-            <li class="breadcrumb-item">
-                <a href="{{ intro.serviceCategory.get_absolute_url }}">{{ intro.serviceCategory.categoryName }}</a>
-            <li class="breadcrumb-item active">详情</li>
-        </ol>
-    </div>
-{% endblock breadrums %}
+{% block location %}信息中心>>服务指南>>指南详情{% endblock location %}
 
 {% block pagecontent %}
-    <hr/>
-    <div id="main">
-        <p>
-            {{ intro.serviceContent|safe }}
-        </p>
+<section id="maincontent">
+    <div class="container">
+      <div class="row">
+        <div class="span4">
+          <aside>
+            <div class="widget">
+              <h4 class="heading-success"><span class="btn btn-large btn-success"><i class="m-icon-big-swapdown m-icon-white"></i></span>&nbsp;&nbsp;全部指南</h4>
+              <img src="assets/img/avatar.png" class="alignleft" alt="" /><br/>
+              {% for category in side_cotegories %}
+                <h5 align="center"><a href="{% url 'service:serviceCategory' category.categorySlug %}">{{ category.categoryName }}</a></h5>
+              {% endfor %}
+            </div>
+          </aside>
+        </div>
+
+      <div class="span8">
+        <!-- start article 1 -->
+        <article class="blog-post">
+          <div class="tooltip-demo headline">
+              <h4><a onclick="location.href='/service/intro/?pk={{intro.pk}}&serviceSlug={{intro.serviceSlug}}';">{{ intro.serviceTitle }}</a></h4>
+          </div>
+          <div class="row">
+            <div class="span5">
+                <ul class="post-meta">
+                  <li class="first"><i class="icon-user"></i> <span>{{ intro.serviceAuthor }}</span></li>
+                  <li><i class="icon-list-alt"></i> <span>{{ intro.servicePubdate }}</span></li>
+                  <li class="last"><i class="icon-tags"></i> <span>{{ intro.serviceCategory.categoryName }}</span></li>
+                </ul>
+              <div class="clearfix"></div>
+                <p>{{ intro.serviceContent|safe }}</p>
+            </div>
+          </div>
+        </article>
+      </div>
+      </div>
     </div>
+</section>
 {% endblock pagecontent %}
 

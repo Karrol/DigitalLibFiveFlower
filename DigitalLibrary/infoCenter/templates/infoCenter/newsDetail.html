@@ -7,7 +7,7 @@
 {% block search %}
 <div class="span4">
     <div class="input-append">
-        <form method="get" id="searchform" action="{% url 'newsSearch' %}" class="form-search">
+        <form method="get" id="searchform" action="{% url 'infoCenter:newsSearch' %}" class="form-search">
             {% csrf_token %}
             <input type="search" name="q" placeholder="搜索新闻" class="input-medium search-query">
             <button type="submit" class="btn btn-inverse">搜索新闻</button>
@@ -30,7 +30,10 @@
               <h4 class="heading-success"><span class="btn btn-large btn-success"><i class="m-icon-big-swapdown m-icon-white"></i></span>&nbsp;&nbsp;{{ news_article.newsColumn }}</h4>
               <img src="assets/img/avatar.png" class="alignleft" alt="" />
               <h5>{{ news_article.newsColumn.abstract }}</h5>
-              <p>这里放前10条新闻</p>
+              {% for item in current_column_news %}
+                <p><a onclick="location.href='/infoCenter/newsDetail/?pk={{item.pk}}&newsSlug={{item.newsSlug}}';">&nbsp;&nbsp;&nbsp;&nbsp;{{ item.newsTitle }}</a></p>
+              {% endfor %}
+               <p><a href="{% url 'infoCenter:newsColumn' news_article.newsColumn.columnSlug %}">&nbsp;&nbsp;&nbsp;&nbsp;查看更多...</a></p>
             </div>
           </aside>
         </div>
@@ -39,7 +42,7 @@
             <article class="blog-post">
                 <div class="tooltip-demo headline">
                     <h4>{{ news_article.newsTitle }}</h4>
-                    <span class="comment"><a href="#" data-rel="tooltip" data-placement="top" title="4 Comments">4 comments</a></span>
+                    <span class="comment">浏览量：{{ news_article.newsViews }}</span>
                 </div>
                 <div class="clearfix"></div>
                 <img src="assets/img/dummies/blog1.jpg" alt="" />
@@ -55,8 +58,8 @@
           <div>
             <nav aria-label="...">
                 <ul class="pager">
-                 <li><a href="{{ previous_article.get_absolute_url }}">上一篇：{{ previous_article.newsTitle }}</a></li>
-                 <li><a href="{{ next_article.get_absolute_url }}">下一篇：{{ next_article.newsTitle }}</a></li>
+                 <li><a onclick="location.href='/infoCenter/newsDetail/?pk={{previous_article.pk}}&newsSlug={{previous_article.newsSlug}}';">上一篇：{{ previous_article.newsTitle }}</a></li>
+                 <li><a onclick="location.href='/infoCenter/newsDetail/?pk={{next_article.pk}}&newsSlug={{next_article.newsSlug}}';">下一篇：{{ next_article.newsTitle }}</a></li>
                 </ul>
             </nav>
           </div>

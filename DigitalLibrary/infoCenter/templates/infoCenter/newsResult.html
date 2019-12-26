@@ -7,7 +7,7 @@
 {% block search %}
 <div class="span4">
     <div class="input-append">
-        <form method="get" id="searchform" action="{% url 'newsSearch' %}" class="form-search">
+        <form method="get" id="searchform" action="{% url 'infoCenter:newsSearch' %}" class="form-search">
             {% csrf_token %}
             <input type="search" name="q" placeholder="搜索新闻" class="input-medium search-query">
             <button type="submit" class="btn btn-inverse">搜索新闻</button>
@@ -31,8 +31,7 @@
             {% for post in post_list %}
                 <article class="blog-post">
                     <div class="tooltip-demo headline">
-                        <h4>{{ post.newsTitle }}</h4>
-                        <span class="comment"><a href="#" data-rel="tooltip" data-placement="top" title="4 Comments">4 comments</a></span>
+                        <h4><a onclick="location.href='/infoCenter/newsDetail/?pk={{post.pk}}&newsSlug={{post.newsSlug}}';">{{ post.newsTitle }}</a></h4>
                     </div>
                     <div class="clearfix"></div>
                     <img src="assets/img/dummies/blog1.jpg" alt="" />
@@ -43,9 +42,26 @@
                     </ul>
                 </article>
                 {% empty %}
-                <div class="no-post">
-                    没有搜索到符合条件的新闻公告
-                </div>
+                <section id="maincontent">
+                    <div class="container">
+                      <div class="row">
+                        <div class="span12">
+                          <div class="error-wrapper">
+                            <div class="error-body">
+                              <h1 class="hidden-phone">404</h1>
+                              <h3>对不起，没有您要查找的新闻</h3>
+                              <p>
+                                换个关键词再试试吧！
+                              </p>
+                            </div>
+                            <div class="error-footer">
+                              <a href="{% url 'infoCenter:newsIntro' %}" class="btn btn-inverse marginleft20">返回新闻公告首页</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
             {% endfor %}
         </div>
     </div>

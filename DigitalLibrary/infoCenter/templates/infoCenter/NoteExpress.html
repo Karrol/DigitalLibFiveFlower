@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+{% load staticfiles %}
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>工具下载-数字图书馆</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="../../static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+  <!-- Page level plugin CSS-->
+  <link href="../../static/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="../../static/css/sb-admin.css" rel="stylesheet">
+
+   <link href="{%static 'assets/css/bootstrap.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/css/bootstrap-responsive.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/css/docs.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/css/prettyPhoto.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/js/google-code-prettify/prettify.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/css/camera.css'%}" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300|Open+Sans:400,300,300italic,400italic" rel="stylesheet">
+  <link href="{%static 'assets/css/style.css'%}" rel="stylesheet">
+  <link href="{%static 'assets/color/success.css'%}" rel="stylesheet">
+
+  <!-- fav and touch icons -->
+  <link rel="shortcut icon" href="{%static 'assets/ico/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{%static 'assets/ico/apple-touch-icon-144-precomposed.png'%}">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{%static 'assets/ico/apple-touch-icon-114-precomposed.png'%}">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{%static 'assets/ico/apple-touch-icon-72-precomposed.png'%}">
+  <link rel="apple-touch-icon-precomposed" href="{%static 'assets/ico/apple-touch-icon-57-precomposed.png'%}">
+  <link rel="stylesheet" href="/baidu/css/bootstrap.min.css"type="text/css"/>
+
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-admin-theme.css' %}">
+</head>
+
+<body id="page-top">
+
+  <body class="bootstrap-admin-with-small-navbar">
+
+  <div class="navbar navbar-fixed-top", style="margin:auto">
+      <div class="navbar-inner">
+        <div class="container">
+          <!-- logo 数字图书馆 注意：需要制作一个大小一致的徽标 -->
+          <a class="brand logo" style="float:left">
+            <img src="{%static 'assets/img/sculogo1.png'%}" alt="scuIS" />
+          </a>
+          <!-- end logo -->
+
+          <!-- top menu -->
+          <div>
+            <nav>
+              <ul class="nav topnav">
+
+                <li class="dropdown  active primary">
+                  <a href="/"><i class="icon-home icon-white"></i>首页</a>
+                  <!--<ul class="dropdown-menu">
+                    <li><a href="index_alt1.html">Index alt 1</a></li>
+                    <li><a href="index_alt2.html">Index alt 2</a></li>
+                  </ul>  -->
+                </li>
+
+                <li class="dropdown warning">
+                  <a href="{%url 'readerService:borrowTips'%}"><i class="icon-star icon-white"></i>读者服务</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{%url 'readerService:borrowTips'%}">借还图书</a></li>
+                    <li><a href="{%url 'readerService:serviceTime'%}">服务时间</a></li>
+                    <li><a href="{%url 'readerService:renewal'%}">续借与到期提醒</a></li>
+                    <li><a href="{%url 'readerService:cableNumber'%}">索取号</a></li>
+                    <li><a href="{%url 'readerService:compensation'%}">赔偿损失</a></li>
+                    <li class="dropdown"><a href="{%url 'readerService:bookReservation'%}">图书预约</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'readerService:bookReservationTips'%}">图书预约说明</a></li>
+                        <li><a href="{%url 'readerService:bookReservationBooked'%}">已预约图书</a></li>
+                        <li><a href="{%url 'readerService:bookReservation'%}">预约图书</a></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown "><a href="{%url 'readerService:cd'%}">随书光盘</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'readerService:cd'%}">随书光盘检索</a></li>
+                        <li><a href="{%url 'readerService:cdInfo'%}">随书光盘说明</a></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown "><a href="{%url 'readerService:lecture'%}">专题讲座</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'readerService:lecture'%}">专题讲座</a></li>
+                        <li><a href="{%url 'readerService:lectureBook'%}">讲座预约</a></li>
+                        <li><a href="{%url 'readerService:lectureTips'%}">讲座预约须知</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+
+                <li class="dropdown danger">
+                  <a href="{%url 'participate:article_list'%}"><i class="icon-leaf icon-white"></i>读者参与</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{%url 'participate:article_list'%}">读者论坛</a>
+                        <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'participate:article_list'%}">看帖</a></li>
+                        <li><a href="{%url 'participate:article_create'%}">发帖</a></li>
+                        <li><a href="{%url 'participate:listHelp'%}">论坛帮助</a></li>
+                        </ul>
+                    </li>
+                    <li class="{%url 'participate:donation_rules'%}"><a href="#">图书捐赠</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'participate:donation_rules'%}">捐赠须知</a></li>
+                        <li><a href="{%url 'participate:donation_treatments'%}">捐赠处理</a></li>
+                          <li><a href="{%url 'participate:donation_contact'%}">联系方式</a></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown"><a href="{%url 'participate:book_recommendation'%}">读者推荐</a>
+                      <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'participate:book_recommendation'%}">好书推荐</a></li>
+                        <li><a href="{%url 'participate:bookrec_list'%}">推荐列表</a></li>
+                      </ul>
+                    </li>
+                    <li><a href="{%url 'participate:groupbook_recom'%}">推荐书目</a></li>
+                    <li><a href="{%url 'participate:curatorMail'%}">馆长信箱</a></li>
+                  </ul>
+                </li>
+                <li class="dropdown info">
+                    <a href="{% url 'infoCenter:newsIntro' %}"><i class="icon-camera icon-white"></i>信息中心</a>
+                    <ul class="dropdown-menu">
+                     <li class="dropdown "><a href="{% url 'infoCenter:newsIntro' %}">新闻公告</a>
+                        <ul class="dropdown-menu sub-menu">
+                          {% for column in news_intro_columns %}
+                          <li><a href="{% url 'infoCenter:newsColumn' column.columnSlug %}">{{ column.columnName }}</a></li>
+                          {% endfor %}
+                        </ul>
+                      </li>
+                      <li class="dropdown"><a href="{% url 'service:libBrief' %}">服务指南</a>
+                        <ul class="dropdown-menu sub-menu">
+                          {% for category in side_cotegories %}
+                          <li><a href="{% url 'service:serviceCategory' category.categorySlug %}">{{ category.categoryName }}</a></li>
+                          {% endfor %}
+                        </ul>
+                      </li>
+                      <li><a href="{% url 'infoCenter:recBookList' %}">每周一书</a></li>
+                      <li><a href="{% url 'infoCenter:rankList' %}">排行榜</a></li>
+                      <li><a href="{% url 'infoCenter:toolDownload' %}">工具下载</a></li>
+                    </ul>
+                </li>
+
+                <li class="success">
+                  <a href="{%url 'librarian:librarian_book' %}"><i class="icon-envelope icon-white"></i> 馆员管理</a>
+                </li>
+              {% if user.is_authenticated %}
+                <li class="dropdown inverse">
+                  <a href="{%url 'readerCenter:profile'%}"><i class="icon-bullhorn icon-white"></i>个人中心</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{%url 'readerCenter:profile'%}">个人资料</a></li>
+                    <li><a href="{%url 'readerCenter:notice'%}">消息列表</a></li>
+                    <li><a href="{%url 'readerCenter:borrowingSituation'%}">我的借阅</a></li>
+                    <li><a href="{%url 'readerCenter:showsearchlist'%}">我的检索历史</a></li>
+                    <li><a href="{%url 'readerCenter:mylib'%}">我的图书馆</a></li>
+                    <li><a href="{%url 'login:user_logout'%}">登出</a></li>
+                  </ul>
+                </li>
+              {%else%}
+                <li class="dropdown inverse">
+                  <a href="#"><i class="icon-bullhorn icon-white"></i> 登录/注册</a>
+                  <ul class="dropdown-menu sub-menu">
+                        <li><a href="{%url 'login:userRegister'%}">读者注册</a></li>
+                        <li><a href="{%url 'login:readerLogin'%}">读者登录</a></li>
+                        <li><a href="{%url 'login:librarianLogin'%}">馆员登录</a></li>
+                        <li><a href="/admin/login/?next=/admin/">后台登录</a></li>
+                  </ul>
+
+                </li>
+              {%endif%}
+              </ul>
+            </nav>
+          </div>
+          <!-- end menu -->
+        </div>
+      </div>
+    </div>
+
+  <div class="container", style="margin:0 auto">
+        <!-- left, vertical navbar & content -->
+        <div class="row">
+            <div class="col-md-10">
+                <div class="row">
+                  <div id="wrapper">
+                      <div id="content-wrapper">
+                          <div class="container-fluid">
+
+                              <!-- Breadcrumbs-->
+                              <nav aria-label="breadcrumb">
+                                  <ol class="breadcrumb">
+                                      <li class="breadcrumb-item">
+                                          <a href="{%url 'infoCenter:newsIntro'%}">信息中心</a>
+                                      </li>
+                                      <li class="breadcrumb-item">
+                                          <a href="{%url 'infoCenter:toolDownload' %}">工具下载</a>
+                                      </li>
+                                      <li class="breadcrumb-item">
+                                          文献管理软件-NoteExpress
+                                      </li>
+                                  </ol>
+                              </nav>
+
+                              <!-- Area Chart Example-->
+                              <div class="card mb-3">
+                                  <div class="card-header">数据库简介</div>
+                                  <div class="card-body">
+                                      <p><b>数据库公司/出版商:</b>北京爱琴海软件公司</p>
+                                      <p><b>数据库名称:</b>NoteExpress文献管理软件</p>
+                                      <p><b>检索入口:</b><a href="http://www.inoteexpress.com/support/cgi-bin/download_sch.cgi?code=ZSDX">
+                                                  http://www.inoteexpress.com/support/cgi-bin/download_sch.cgi?code=ZSDX
+                                      </a></p>
+                                      <p><b>学科范围 :</b>综合, 综合与工具类</p>
+                                      <p><b>文献类型</b>其它</p>
+                                      <p><b>是否全文:</b>其他</p>
+                                      <p><b>数据库简介:</b></p>
+                                      <p>自2008年5月1日起，图书馆已为全校读者正式开通NoteExpress软件使用权，我校读者可以在校园网范围内使用此软件（无帐号密码，通过校园网IP控制），欢迎全校师生使用，为您查阅文献、论文写作提供便利！</p>
+                                      <p>NoteExpress是目前较流行的参考文献管理工具软件，其核心功能是帮助读者在整个科研流程中高效利用电子资源：检索并管理得到的文献摘要、全文；在撰写学术论文、学位论文、专著或报告时，可在正文中的指定位置方便地添加文中注释，然后按照不同的期刊，学位论文格式要求自动生成参考文献索引。 其核心功能如下：</p>
+                                      <p>1) 检索：支持数以百计的全球图书馆书库和电子数据库，如万方、维普、期刊网、Elsevier ScienceDirect、ACS、OCLC、美国国会图书馆等。一次检索，永久保存。</p>
+                                      <p>2) 管理：可以分门别类管理百万级的电子文献题录和全文，独创的虚拟文件夹功能更适合多学科交叉的现代科研。</p>
+                                      <p>3) 分析：对检索结果进行多种统计分析，从而使研究者更快速地了解某领域里的重要专家，研究机构，研究热点等。</p>
+                                      <p><b>语言：</b>中文</p>
+                                  </div>
+                             </div>
+
+                          </div>
+                      </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+  </div>
+
+  <!-- Footer
+ ================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+
+      </div>
+    </div>
+
+    <div class="verybottom">
+      <div class="container">
+        <div class="row">
+          <div class="span6">
+            <p>&copy;五朵金花</p>
+          </div>
+          <div class="span6">
+            <div class="pull-right">
+              <div class="credits">
+                <!--
+                  All the links in the footer should remain intact.
+                  You can delete the links only if you purchased the pro version.
+                  Licensing information: https://bootstrapmade.com/license/
+                  Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Scaffold
+                -->
+                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="{%static 'Scaffold/assets/js/jquery-1.8.2.min.js' %}"></script>
+  <script src="{%static 'Scaffold/assets/js/jquery.easing.1.3.js' %}"></script>
+  <script src="{%static 'Scaffold/assets/js/google-code-prettify/prettify.js' %}"></script>
+  <script src="{%static 'Scaffold/assets/js/modernizr.js' %}"></script>
+  <script src="{%static 'Scaffold/assets/js/bootstrap.js' %}"></script>
+  <script src="{%static 'Scaffold/assets/js/jquery.elastislide.js' %}"></script>
+  <script src="{%static 'Scaffold/assets/js/jquery.prettyPhoto.js' %}"></script>
+  <script src="{%static 'Scaffold/assets/js/application.js' %}"></script>
+
+  <!-- Template Custom JavaScript File -->
+  <script src="{%static 'Scaffold/assets/js/custom.js' %}"></script>
+
+</body>
+
+</html>

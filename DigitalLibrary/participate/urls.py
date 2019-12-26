@@ -39,11 +39,15 @@ urlpatterns = [
     path('donationContact/', views.donation_contact, name='donation_contact'),
 
     # 图书推荐
-    path('bookRecom/', views.book_recom, name='book_recommendation'),
+    path('bookRecom/', views.reader_recom, name='book_recommendation'),
 
     # 读者推荐列表
     path('bookRecList/', views.recom_list, name='bookrec_list'),
 
     # 推荐书目
     path('groupBook/', views.group_book, name='groupbook_recom'),
+    #馆长信箱
+    path('curatorMail/', views.group_book, name='curatorMail'),
+    #论坛帮助
+    path('listHelp/', views.group_book, name='listHelp'),
 ]

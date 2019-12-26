@@ -1,7 +1,9 @@
 {% extends "service/serviceBase.html" %}
 
+{% block location %}信息中心>>服务指南>>搜索结果{% endblock location %}
+
 {% block search %}
-<form method="get" id="searchform" action="{% url 'serviceSearch' %}" class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+<form method="get" id="searchform" action="{% url 'service:serviceSearch' %}" class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
      {% csrf_token %}
       <div class="input-group">
         <input type="search" name="q" placeholder="搜索服务指南" class="form-control" aria-label="Search" aria-describedby="basic-addon2" required>
@@ -14,39 +16,54 @@
 </form>
 {% endblock search %}
 
-{% block breadrums %}
-    <div class="container-fluid">
-        <h2>搜索结果</h2>
-        <!-- Breadcrumbs-->
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="{% url 'libBrief' %}">服务指南</a>
-            </li>
-            <li class="breadcrumb-item active">搜索结果</li>
-        </ol>
-    </div>
-{% endblock breadrums %}
-
 {% block pagecontent %}
-    <hr>
-    {% if error_msg %}
-        <p>{{ error_msg }}</p>
-    {% endif %}
+    <section id="maincontent">
+    <div class="container">
 
-    {% for post in post_list %}
-        <div class="card mb-3">
-            <div class="card-header">
-                <i class="fas fa-table"></i>
-                {{ post.servicePubdate }}
-            </div>
-            <div class="card-body">
-                <h5 class="news-title"><a href="{{ post.get_absolute_url }}">{{ post.serviceTitle }}</a></h5>
-            </div>
+        {% if error_msg %}
+            <p>{{ error_msg }}</p>
+        {% endif %}
+
+    <div class="row">
+        <div class="span12">
+            {% for post in post_list %}
+                <article class="blog-post">
+                    <div class="tooltip-demo headline">
+                        <h4><a onclick="location.href='/service/intro/?pk={{post.pk}}&serviceSlug={{post.serviceSlug}}';">{{ post.serviceTitle }}</a></h4>
+                    </div>
+                    <div class="clearfix"></div>
+                    <img src="assets/img/dummies/blog1.jpg" alt="" />
+                    <ul class="post-meta">
+                        <li class="first"><i class="icon-user"></i> <span><a href="#">{{ post.serviceAuthor }}</a></span></li>
+                        <li><i class="icon-list-alt"></i> <span><a href="#">{{ post.servicePubdate }}</a></span></li>
+                        <li class="last"><i class="icon-tags"></i> <span><a href="#">{{ post.serviceCategory }}</a></span></li>
+                    </ul>
+                </article>
+                {% empty %}
+                <section id="maincontent">
+                    <div class="container">
+                      <div class="row">
+                        <div class="span12">
+                          <div class="error-wrapper">
+                            <div class="error-body">
+                              <h1 class="hidden-phone">404</h1>
+                              <h3>对不起，没有您要查找的指南</h3>
+                              <p>
+                                换个关键词再试试吧！
+                              </p>
+                            </div>
+                            <div class="error-footer">
+                              <a href="{% url 'service:libBrief' %}" class="btn btn-inverse marginleft20">返回服务指南首页</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+            {% endfor %}
         </div>
-    {% empty %}
-    <div class="no-post">
-        没有搜索到符合条件的服务指南
     </div>
-    {% endfor %}
+    </div>
+</section>
 {% endblock pagecontent %}
 

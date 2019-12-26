@@ -82,3 +82,38 @@ class booktype_info(models.Model):
     btID = models.CharField('图书类型ID', primary_key=True, max_length=10)
     btName = models.CharField('图书类型的名字', max_length=50)
     bookType = models.BooleanField('可外借/馆内阅读', default=True)
+
+#四川大学图书馆的书目数据
+class book_shumu(models.Model):
+    id = models.IntegerField('系统ID')
+    category = models.CharField('分类目录', max_length=255)
+    title = models.CharField('题名', max_length=30)
+    cover = models.CharField('封面', max_length=30, blank=True)
+    location = models.CharField('馆藏地点', max_length=70, blank=True)
+    searchID = models.CharField('索书号', max_length=70,blank=True)
+    publishTime = models.CharField('出版年', max_length=10)
+    quantity = models.CharField('馆藏数目',max_length=10, blank=True)
+    author = models.CharField('作者', max_length=200)
+    press = models.CharField('出版社', max_length=200)
+    contentTable = models.CharField('目录', max_length=200)
+    ISBN = models.CharField('ISBN', max_length=200, primary_key=True)
+    price = models.CharField('价格', max_length=200)
+    language = models.CharField('语言', max_length=200)
+    publishInfo = models.CharField('发行信息', max_length=200)
+    pubLocation = models.CharField('出版地点', max_length=200)
+    description = models.CharField('简介', max_length=200)
+    carrierMorphology = models.CharField('载体形态', max_length=200)
+    banci = models.CharField('版次', max_length=200)
+    page = models.CharField('页码', max_length=200)
+    zaiti = models.CharField('载体', max_length=200)
+    length = models.CharField('长度', max_length=200)
+    # 李玉和增加  阅读量字段
+    bookViews = models.PositiveIntegerField(default=0)
+    # 书籍实体与ISBN号对应的书的关联,因为还没有实体书的信息，所以先不管它
+    bookID = models.ForeignKey(bookEntity_info, on_delete=models.CASCADE)
+    def increase_views(self):
+        self.bookViews += 1
+        self.save(update_fields=['bookViews'])
+
+    def __str__(self):
+        return self.title + self.author

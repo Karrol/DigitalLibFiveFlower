@@ -13,13 +13,11 @@ class newsColumn_info(models.Model):
     columnSlug = models.CharField('栏目网址', max_length=200, db_index=True)
     abstract = models.TextField('栏目简介', default='')
 
+    newsIndexDiaplay = models.BooleanField('首页展示', default=False)
     nav_display = models.BooleanField('导航显示', default=False)
 
     def __str__(self):
         return self.columnName
-
-    def get_absolute_url(self):
-        return reverse('newsColumn', kwargs={'columnSlug': self.columnSlug})
 
     class Meta:
         verbose_name = '新闻栏目'
@@ -39,14 +37,16 @@ class newsArticle_info(models.Model):
                            default=u'', blank=True, imagePath="uploads/images/",
                            toolbars='besttome', filePath='uploads/files/')
     newsPubdate = models.DateTimeField('发表时间', auto_now_add=True, editable=True)
-
     newsPublished = models.BooleanField('正式发布', default=True)
+
+    newsViews = models.PositiveIntegerField(default=0)
+
+    def increase_views(self):
+        self.newsViews += 1
+        self.save(update_fields=['newsViews'])
 
     def __str__(self):
         return self.newsTitle
-
-    def get_absolute_url(self):
-        return reverse('newsDetail', kwargs={'pk': self.pk, 'newsSlug':self.newsSlug})
 
     class Meta:
         verbose_name = '新闻公告'
@@ -55,7 +55,8 @@ class newsArticle_info(models.Model):
 @python_2_unicode_compatible
 class weekbook_info(models.Model):
     bookName = models.CharField('书名', max_length=50)
-    bookID =  models.CharField(max_length=13, primary_key=True, verbose_name='ISBN')
+    recID =  models.CharField(max_length=12, verbose_name='推荐ID')
+    ISBN = models.ForeignKey(book_info, on_delete=models.CASCADE, verbose_name='ISBN')
     promugator =  models.ForeignKey('auth.User', blank=True, null=True, verbose_name='发布者', on_delete=models.CASCADE)
     recTime =  models.DateField('推荐时间', auto_now_add=True, editable=True)
     Rec_comment = UEditorField('推荐语', height=300, width=1000,
@@ -65,10 +66,37 @@ class weekbook_info(models.Model):
     def __str__(self):
         return self.bookName
 
-    def get_absolute_url(self):
-        return reverse('recBookDetail', kwargs=({'pk':self.pk, 'bookID':self.bookID}))
-
     class Meta:
         verbose_name = '每周一书'
         verbose_name_plural = '每周一书'
         ordering = ['recTime']
+
+
+@python_2_unicode_compatible
+class rank_info(models.Model):
+    rankName = models.CharField('排行榜名称', max_length=50)
+    rankID = models.AutoField(primary_key=True)
+    pubTime = models.DateField('发布时间', auto_now_add=True, editable=True)
+    rankIntro = models.TextField('栏目简介', default='')
+    rankDisplay = models.BooleanField('正式发布', default=True)
+
+    def __str__(self):
+        return self.rankName
+
+    class Meta:
+        verbose_name = '排行榜'
+        verbose_name_plural = '排行榜'
+        ordering = ['pubTime']
+
+class rank_book(models.Model):
+    bookOrder = models.IntegerField('图书序号', default='0')
+    book = models.ForeignKey(book_info, on_delete=models.CASCADE)
+    rank = models.ForeignKey(rank_info, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.book.title
+
+    class Meta:
+        verbose_name = '排行榜内图书'
+        verbose_name_plural = '排行榜内图书'
+        ordering = ['bookOrder']
