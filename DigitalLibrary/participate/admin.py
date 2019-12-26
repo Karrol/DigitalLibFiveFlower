@@ -1,6 +1,6 @@
 from django.contrib import admin
 # 别忘了导入ArticlerPost
-from .models import ArticlePost ,RecbooklistInfo, ContactInfo
+from .models import ArticlePost ,RecbooklistInfo, ContactInfo, Comment
 
 # 导入文章栏目
 from .models import ArticleColumn
@@ -15,3 +15,5 @@ admin.site.register(ArticleColumn)
 admin.site.register(RecbooklistInfo)
 # 注册馆员联系信息
 admin.site.register(ContactInfo)
+# 注册评论
+admin.site.register(Comment)
